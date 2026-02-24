@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Complete Payment — SimRyoko</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+</head>
+<body style="background:#f5f5f5">
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo"><span class="logo-icon">📡</span><span class="logo-text">SimRyoko</span></a>
+  </div>
+</nav>
+
+<div class="container" style="padding-top:40px;padding-bottom:80px">
+  <div class="payment-box">
+    <div style="font-size:48px;margin-bottom:16px">⏳</div>
+    <h2>Complete Your Payment</h2>
+    <p class="sub">Send exactly this amount of USDT to receive your eSIM</p>
+
+    <div class="usdt-amount">
+      <div class="amount" id="amountDisplay">—</div>
+      <div class="unit">USDT (TRC-20)</div>
+    </div>
+
+    <p style="font-size:13px;color:#888;margin-bottom:8px">Send to this wallet address:</p>
+    <div class="network-tag">TRON (TRC-20) Network Only</div>
+    <div class="wallet-box">
+      <div class="wallet-label">Wallet Address</div>
+      <div class="wallet-addr">
+        <span id="walletAddr">TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL</span>
+        <button class="copy-btn" onclick="copyAddr(this)">Copy</button>
+      </div>
+    </div>
+
+    <!-- QR Code -->
+    <div style="margin:24px 0">
+      <p style="font-size:13px;color:#888;margin-bottom:12px">Or scan to open in your wallet:</p>
+      <canvas id="qrCanvas" style="border-radius:12px;border:3px solid #667eea;padding:8px"></canvas>
+    </div>
+
+    <div style="background:#fff8e1;border-left:4px solid #ffc107;border-radius:4px;padding:12px 16px;text-align:left;font-size:13px;color:#555;margin-bottom:24px">
+      ⚠️ <strong>Send exactly <span id="amountWarn">—</span> USDT.</strong> Wrong amounts cannot be matched. Use TRC-20 network only.
+    </div>
+
+    <div class="status-polling" id="statusBox">
+      <div class="spinner"></div>
+      <span id="statusText">Waiting for payment confirmation…</span>
+    </div>
+
+    <div style="margin-top:24px;font-size:13px;color:#aaa">
+      Order ID: <strong id="orderIdDisplay">—</strong><br>
+      Product: <span id="productDisplay">—</span>
+    </div>
+  </div>
+</div>
+
+<script src="/js/app.js"></script>
+<script>
+const params = new URLSearchParams(window.location.search);
+const orderId = params.get('order');
+const amount = params.get('amount');
+const productName = decodeURIComponent(params.get('product') || '');
+const WALLET = 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
+
+// 填充信息
+document.getElementById('amountDisplay').textContent = amount;
+document.getElementById('amountWarn').textContent = amount;
+document.getElementById('orderIdDisplay').textContent = orderId;
+document.getElementById('productDisplay').textContent = productName;
+document.getElementById('walletAddr').textContent = WALLET;
+
+// 生成 QR Code（USDT TRC-20 转账格式）
+const trc20Uri = `tron:${WALLET}?amount=${amount}&token=TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t`;
+QRCode.toCanvas(document.getElementById('qrCanvas'), trc20Uri, { width: 200, margin: 1 });
+
+// 复制地址
+function copyAddr(btn) { copyToClipboard(WALLET, btn); }
+
+// 轮询支付状态（每15秒查一次）
+let pollCount = 0;
+const MAX_POLLS = 40; // 最多查10分钟
+
+async function pollStatus() {
+  if (!orderId) return;
+  pollCount++;
+
+  try {
+    const res = await apiFetch(`/payment/verify?orderId=${orderId}`);
+
+    if (res.status === 'fulfilled') {
+      document.getElementById('statusBox').innerHTML = `
+        <span style="font-size:28px">✅</span>
+        <span style="color:#22c55e;font-weight:700">Payment confirmed! eSIM sent to your email.</span>
+      `;
+      setTimeout(() => window.location = '/success.html', 2000);
+      return;
+    }
+
+    if (res.status === 'paid') {
+      document.getElementById('statusText').textContent = 'Payment received! Processing your eSIM…';
+      setTimeout(pollStatus, 10000);
+      return;
+    }
+
+    if (res.status === 'failed') {
+      document.getElementById('statusBox').innerHTML = `<span style="color:#ef4444">❌ Order failed. Please contact support.</span>`;
+      return;
+    }
+
+    // 还在等待
+    if (pollCount < MAX_POLLS) {
+      const mins = Math.floor(pollCount * 15 / 60);
+      document.getElementById('statusText').textContent = `Waiting for payment${mins > 0 ? ` (${mins}m elapsed)` : ''}…`;
+      setTimeout(pollStatus, 15000);
+    } else {
+      document.getElementById('statusText').textContent = 'Still waiting… Please check your wallet or contact support.';
+    }
+  } catch(e) {
+    setTimeout(pollStatus, 15000);
+  }
+}
+
+setTimeout(pollStatus, 15000); // 15秒后开始第一次查询
+</script>
+</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout — SimRyoko</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo"><span class="logo-icon">📡</span><span class="logo-text">SimRyoko</span></a>
+    <a href="/shop.html" style="color:#667eea;font-size:15px;margin-left:auto">← Back to plans</a>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="checkout-layout">
+
+    <!-- FORM -->
+    <div>
+      <div class="checkout-form">
+        <h2>Complete Your Order</h2>
+
+        <div class="form-group">
+          <label>Your Email Address *</label>
+          <input type="email" id="emailInput" placeholder="you@email.com" />
+          <small style="color:#999;font-size:12px;margin-top:6px;display:block">eSIM QR code will be sent here instantly after payment</small>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="form-group">
+          <label>Payment Method</label>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:8px">
+            <div class="payment-method active" id="pm-usdt" onclick="selectPayment('usdt')">
+              <div style="font-size:24px;margin-bottom:4px">₮</div>
+              <div style="font-weight:700;font-size:14px">USDT (TRC-20)</div>
+              <div style="font-size:12px;color:#888">No fees</div>
+            </div>
+            <div class="payment-method" id="pm-card" onclick="selectPayment('card')" style="opacity:0.5;pointer-events:none">
+              <div style="font-size:24px;margin-bottom:4px">💳</div>
+              <div style="font-weight:700;font-size:14px">Credit Card</div>
+              <div style="font-size:12px;color:#888">Coming soon</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-block btn-lg" id="payBtn" onclick="submitOrder()">
+          Pay with USDT →
+        </button>
+
+        <div style="text-align:center;margin-top:16px;font-size:13px;color:#aaa">
+          🔒 Secure checkout &nbsp;·&nbsp; eSIM delivered to your email &nbsp;·&nbsp; No hidden fees
+        </div>
+      </div>
+    </div>
+
+    <!-- SUMMARY -->
+    <div>
+      <div class="order-summary">
+        <div class="summary-title">Order Summary</div>
+        <div id="summaryContent" style="color:#999;font-size:14px;text-align:center;padding:20px 0">
+          Loading product…
+        </div>
+      </div>
+
+      <div style="margin-top:20px;background:#f0f9ff;border-radius:12px;padding:20px;font-size:13px;color:#555;line-height:1.8">
+        <strong>✅ What you get:</strong><br>
+        • eSIM QR code by email<br>
+        • Instant activation<br>
+        • 24/7 support via WhatsApp<br>
+        • Works on all eSIM-compatible phones
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.payment-method { border: 2px solid #e8ecf4; border-radius: 12px; padding: 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
+.payment-method.active { border-color: #667eea; background: #f0f4ff; }
+</style>
+
+<script src="/js/app.js"></script>
+<script>
+let product = null;
+let selectedPayment = 'usdt';
+
+async function loadProduct() {
+  const id = new URLSearchParams(window.location.search).get('id');
+  if (!id) { window.location = '/shop.html'; return; }
+
+  try {
+    // 找到对应产品（遍历直到找到）
+    let found = null, page = 1;
+    while (!found) {
+      const res = await apiFetch(`/products?page=${page}&pageSize=100`);
+      if (!res.success) break;
+      found = res.data.list.find(p => p.id == id);
+      if (!found && res.data.list.length < 100) break;
+      page++;
+      if (page > 30) break;
+    }
+
+    if (!found) { document.getElementById('summaryContent').textContent = 'Product not found.'; return; }
+    product = found;
+    renderSummary();
+  } catch(e) {
+    document.getElementById('summaryContent').textContent = 'Error loading product.';
+  }
+}
+
+function renderSummary() {
+  if (!product) return;
+  const country = product.countries?.[0];
+  const flag = country ? flagEmoji(country.code) : '🌍';
+  const dest = country ? (country.en || country.cn) : (product.nameEn || product.name);
+
+  document.getElementById('summaryContent').innerHTML = `
+    <div style="text-align:center;margin-bottom:20px">
+      <div style="font-size:48px">${flag}</div>
+      <div style="font-weight:800;font-size:18px;margin:8px 0">${dest}</div>
+      <div style="color:#666;font-size:14px">${product.nameEn || product.name}</div>
+    </div>
+    <div class="summary-row"><span>Plan</span><span>${product.nameEn || product.name}</span></div>
+    <div class="summary-row"><span>Network</span><span>USDT TRC-20</span></div>
+    <div class="summary-row"><span>Delivery</span><span>Instant ✉️</span></div>
+    <div class="summary-row"><span>Total</span><span>${formatPrice(product.price)}</span></div>
+  `;
+}
+
+function selectPayment(method) {
+  selectedPayment = method;
+  document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
+  document.getElementById(`pm-${method}`).classList.add('active');
+}
+
+async function submitOrder() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    alert('Please enter a valid email address.');
+    return;
+  }
+  if (!product) { alert('Product not loaded. Please try again.'); return; }
+
+  const btn = document.getElementById('payBtn');
+  btn.textContent = 'Creating order…';
+  btn.disabled = true;
+
+  try {
+    const res = await apiFetch('/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ productId: product.id, email, paymentMethod: selectedPayment })
+    });
+
+    if (!res.success) throw new Error(res.error || 'Checkout failed');
+
+    // 跳转到支付页
+    window.location = `/payment.html?order=${res.data.orderId}&amount=${res.data.paymentAmount}&product=${encodeURIComponent(product.nameEn || product.name)}`;
+
+  } catch(e) {
+    alert('Error: ' + e.message);
+    btn.textContent = 'Pay with USDT →';
+    btn.disabled = false;
+  }
+}
+
+loadProduct();
+</script>
+</body>
+</html>

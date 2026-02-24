@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "env": {
+    "API_BASE": "https://ciuh32wky.xigrocoltd.com/api",
+    "AGENT_USERNAME": "lx001",
+    "AGENT_PASSWORD": "123123",
+    "USDT_WALLET": "TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL",
+    "SMTP_HOST": "smtp.exmail.qq.com",
+    "SMTP_PORT": "465",
+    "SMTP_USER": "xilixi@xigrocoltd.com",
+    "SMTP_PASS": "x8F7Jr4gn8i9Y95m",
+    "FROM_EMAIL": "xilixi@xigrocoltd.com",
+    "FROM_NAME": "SimRyoko Support"
+  }
+}
