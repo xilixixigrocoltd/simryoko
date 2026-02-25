@@ -14,6 +14,16 @@
       "permanent": true
     }
   ],
+  "rewrites": [
+    { "source": "/api/stripe/:action", "destination": "/api/stripe" },
+    { "source": "/api/paddle/:action", "destination": "/api/paddle" },
+    { "source": "/api/ton/:action",    "destination": "/api/ton" },
+    { "source": "/api/payment/:action","destination": "/api/checkout" },
+    { "source": "/api/user/:action",   "destination": "/api/user" },
+    { "source": "/api/esim/:action",   "destination": "/api/esim" },
+    { "source": "/api/push/:action",   "destination": "/api/esim" },
+    { "source": "/api/renewal/:action","destination": "/api/esim" }
+  ],
   "env": {
     "API_BASE": "https://ciuh32wky.xigrocoltd.com/api",
     "AGENT_USERNAME": "lx001",
