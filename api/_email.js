@@ -185,6 +185,62 @@ function getFlagEmoji(countryCode) {
   return map[countryCode.toUpperCase()] || '🌍';
 }
 
+// 续费提醒邮件
+async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate, renewUrl, price }) {
+  const urgencyColor = daysLeft <= 1 ? '#e53e3e' : daysLeft <= 2 ? '#dd6b20' : '#d69e2e';
+  const urgencyText = daysLeft <= 1 ? '🚨 Expiring Tomorrow!' : `⏰ Expiring in ${daysLeft} days`;
+
+  const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 40px auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .header { background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); padding: 40px; text-align: center; }
+    .header h1 { color: white; margin: 0; font-size: 24px; }
+    .body { padding: 40px; }
+    .urgency { background: ${urgencyColor}; color: white; padding: 16px; border-radius: 12px; text-align: center; font-size: 18px; font-weight: 700; margin-bottom: 24px; }
+    .plan-box { background: #f0f4ff; border-radius: 12px; padding: 20px; margin: 20px 0; }
+    .plan-name { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+    .expiry { color: #666; font-size: 14px; margin-top: 4px; }
+    .renew-btn { display: block; background: #667eea; color: white; text-decoration: none; padding: 16px 32px; border-radius: 12px; text-align: center; font-size: 16px; font-weight: 700; margin: 24px 0; }
+    .price-note { text-align: center; color: #666; font-size: 14px; margin-top: -16px; margin-bottom: 24px; }
+    .footer { text-align: center; padding: 24px; background: #f9fafb; font-size: 13px; color: #999; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header"><h1>📡 eSIM Renewal Reminder</h1></div>
+    <div class="body">
+      <div class="urgency">${urgencyText}</div>
+      <p>Your eSIM plan is about to expire. Renew now to stay connected without interruption.</p>
+      <div class="plan-box">
+        <div class="plan-name">📱 ${productName}</div>
+        <div class="expiry">Expires: ${new Date(expiryDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
+      </div>
+      <a href="${renewUrl}" class="renew-btn">🔄 Renew My eSIM Now</a>
+      ${price ? `<p class="price-note">Same plan from $${price.toFixed(2)}</p>` : ''}
+      <p style="color:#666;font-size:14px;">Click the button above to quickly renew the same plan and stay connected.</p>
+    </div>
+    <div class="footer">
+      <p>Questions? Contact us at <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea;">xilixi@xigrocoltd.com</a></p>
+      <p>SimRyoko — Powered by Xigro Co Limited, Hong Kong</p>
+      <p style="margin-top:8px"><a href="${renewUrl}?unsubscribe=1" style="color:#ccc;">Unsubscribe from renewal reminders</a></p>
+    </div>
+  </div>
+</body>
+</html>`;
+
+  await transporter.sendMail({
+    from: `"SimRyoko" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
+    to,
+    subject: `${urgencyText} — Your ${productName} eSIM`,
+    html
+  });
+}
+
 // Generic raw email sender
 async function sendRawEmail({ to, subject, html }) {
   await transporter.sendMail({
@@ -195,4 +251,4 @@ async function sendRawEmail({ to, subject, html }) {
   });
 }
 
-module.exports = { sendEsimEmail, sendPaymentPendingEmail, sendRawEmail };
+module.exports = { sendEsimEmail, sendPaymentPendingEmail, sendRenewalReminderEmail, sendRawEmail };
