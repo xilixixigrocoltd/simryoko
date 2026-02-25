@@ -3,7 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>SimRyoko eSIM</title>
+<title>SimRyoko eSIM — Global Travel SIM</title>
+<meta name="description" content="Instant eSIM for 200+ countries. Buy, scan, go. No physical SIM needed. From $2.">
+<meta name="theme-color" content="#667eea">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/img/icon-192.png" type="image/png">
+<!-- Open Graph -->
+<meta property="og:title" content="SimRyoko eSIM — Stay Connected Anywhere">
+<meta property="og:description" content="Instant eSIM for 200+ countries. From $2. No physical SIM needed.">
+<meta property="og:image" content="https://simryoko.com/img/tma-banner.png">
+<meta property="og:url" content="https://simryoko.com/app.html">
+<meta property="og:type" content="website">
 <!-- Telegram Mini App SDK -->
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <style>
@@ -585,42 +595,42 @@ async function submitOrder() {
       return;
     }
 
-    if (selectedPayMethod === 'usdt' || selectedPayMethod === 'ton') {
-      // 创建订单
+    if (selectedPayMethod === 'usdt') {
+      // USDT TRC-20: 创建订单 → 跳转到付款页面
       const res = await fetch('/api/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId: selectedPlan.id, email, paymentMethod: selectedPayMethod })
+        body: JSON.stringify({ productId: selectedPlan.id, email, paymentMethod: 'usdt' })
       });
       const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'Checkout failed');
+      closeSheet();
+      const payUrl = `/payment.html?order=${data.data.orderId}&amount=${data.data.paymentAmount}&product=${encodeURIComponent(selectedPlan.nameEn || selectedPlan.name || '')}`;
+      // Mini App 内用 openLink 打开（Telegram 内置浏览器）
+      tg?.openLink ? tg.openLink(payUrl) : (window.location.href = payUrl);
 
-      if (data.success) {
-        closeSheet();
-        if (selectedPayMethod === 'usdt') {
-          // 显示 USDT 付款信息
-          const msg = currentLang === 'zh'
-            ? `💳 请发送 $${data.data.paymentAmount} USDT (TRC-20) 到:\n\n\`${data.data.walletAddress}\`\n\n订单号: ${data.data.orderId}\neSIM 确认收款后自动发至您的邮箱。`
-            : `💳 Please send $${data.data.paymentAmount} USDT (TRC-20) to:\n\n\`${data.data.walletAddress}\`\n\nOrder ID: ${data.data.orderId}\neSIM will be sent to your email after payment confirmation.`;
-          tg?.showAlert ? tg.showAlert(msg) : alert(msg);
-        } else if (selectedPayMethod === 'ton') {
-          // TON/CryptoPay 支付
-          const tonRes = await fetch('/api/ton/create', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId: selectedPlan.id, email })
-          });
-          const tonData = await tonRes.json();
-          if (tonData.success && tonData.data.payUrl) {
-            tg?.openLink ? tg.openLink(tonData.data.payUrl) : window.open(tonData.data.payUrl);
-          } else {
-            const msg = currentLang === 'zh'
-              ? `💎 TON 支付暂不可用，请选择 USDT 或信用卡支付\n订单号: ${data.data.orderId}`
-              : `💎 TON payment not available yet. Please use USDT or card.\nOrder ID: ${data.data.orderId}`;
-            tg?.showAlert ? tg.showAlert(msg) : alert(msg);
-          }
-        }
-        showSuccess(email);
+    } else if (selectedPayMethod === 'ton') {
+      // TON/CryptoPay: 直接创建发票（不重复创建订单）
+      const res = await fetch('/api/ton/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: selectedPlan.id, email })
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.error || 'TON invoice failed');
+      closeSheet();
+      if (data.data?.payUrl) {
+        // 跳转到 @CryptoBot 完成支付
+        tg?.openLink ? tg.openLink(data.data.payUrl) : window.open(data.data.payUrl, '_blank');
+      } else {
+        // CryptoPay 未配置，降级显示钱包地址
+        const msg = currentLang === 'zh'
+          ? `💎 请发送 $${data.data?.amount || '—'} USDT (TRC-20) 到:\n\nTBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL\n\n订单号: ${data.data?.orderId || '—'}\neSIM 确认收款后自动发至您的邮箱。`
+          : `💎 Send $${data.data?.amount || '—'} USDT (TRC-20) to:\n\nTBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL\n\nOrder: ${data.data?.orderId || '—'}\neSIM delivered after payment confirmation.`;
+        tg?.showAlert ? tg.showAlert(msg) : alert(msg);
       }
+      // TON 支付后不立即显示 success（需等待 webhook 确认）
+      return;
     }
   } catch (e) {
     tg?.HapticFeedback?.notificationOccurred('error');
@@ -821,6 +831,12 @@ if (tgUser?.id && !userEmail) {
 
 applyLang();
 loadPlans();
+</script>
+<script>
+// PWA Service Worker 注册
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/js/sw.js').catch(() => {});
+}
 </script>
 </body>
 </html>

@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Browse eSIM Plans — SimRyoko</title>
   <meta name="description" content="2,600+ eSIM data plans for 200+ countries. Instant delivery. Find your perfect plan from $2."/>
+  <meta property="og:title" content="Browse eSIM Plans — SimRyoko"/>
+  <meta property="og:description" content="2,600+ eSIM plans. Japan, Korea, Europe & more. From $2. Instant delivery."/>
+  <meta property="og:image" content="https://simryoko.com/img/tma-banner.png"/>
+  <meta property="og:url" content="https://simryoko.com/shop.html"/>
+  <meta property="og:type" content="website"/>
+  <link rel="canonical" href="https://simryoko.com/shop.html"/>
+  <link rel="manifest" href="/manifest.json"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236C63FF'/><text y='.9em' font-size='65' x='15'>📡</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
@@ -239,5 +246,6 @@ document.getElementById('heroSearch').addEventListener('keydown', e => { if (e.k
 loadProducts();
 </script>
 <script src="/js/i18n.js"></script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/js/sw.js").catch(()=>{});</script>
 </body>
 </html>

@@ -4,6 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout — SimRyoko</title>
+  <meta name="description" content="Secure eSIM checkout. Pay with USDT, TON, or card. Instant delivery to email."/>
+  <meta name="robots" content="noindex"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
   <script src="https://js.stripe.com/v3/"></script>
@@ -142,8 +144,20 @@ async function initStripe() {
 }
 
 async function loadProduct() {
-  const id = new URLSearchParams(window.location.search).get('id');
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id') || params.get('productId');
   if (!id) { window.location = '/shop.html'; return; }
+
+  // 预填 email 和支付方式（来自 Mini App 跳转）
+  const emailParam = params.get('email');
+  const methodParam = params.get('method');
+  if (emailParam) {
+    const emailEl = document.getElementById('emailInput');
+    if (emailEl) emailEl.value = decodeURIComponent(emailParam);
+  }
+  if (methodParam && ['usdt','ton','card'].includes(methodParam)) {
+    selectPayment(methodParam);
+  }
 
   try {
     let found = null, page = 1;
