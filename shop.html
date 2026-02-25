@@ -871,7 +871,6 @@ function renderPlans() {
 
   // 加载更多按钮
   const showing = Math.min(plans.length, 12);
-  const total   = countCache[curCode] || allCurPlans.length;
   if (total > showing) {
     document.getElementById('planList').insertAdjacentHTML('beforeend', `
       <button class="load-more-btn" onclick="loadMorePlans(this)">
