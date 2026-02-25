@@ -388,6 +388,49 @@ body { background: #f5f6fa; }
 
 /* Loading state in sheet */
 .sh-spin { text-align: center; padding: 48px; font-size: 32px; color: #ddd; flex: 1; }
+
+/* ── Sort bar ─────────────────────────────────────── */
+.sh-sort-bar {
+  background: #fff; padding: 8px 16px 10px;
+  display: flex; align-items: center; gap: 8px;
+  border-bottom: 1px solid #ececf0; flex-shrink: 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.sh-sort-bar::-webkit-scrollbar { display: none; }
+.sh-sort-lbl { font-size: 11px; color: #ccc; white-space: nowrap; font-weight: 700; letter-spacing: .3px; flex-shrink: 0; }
+.sh-sort-btn {
+  flex-shrink: 0; padding: 5px 13px; border-radius: 99px;
+  border: 1.5px solid #e5e5ec; background: #fff;
+  font-size: 12px; font-weight: 700; color: #888;
+  cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap;
+}
+.sh-sort-btn.on { background: #f0eeff; border-color: #6C63FF; color: #6C63FF; }
+.sh-sort-btn:hover:not(.on) { border-color: #c4bdff; color: #555; }
+
+/* Plan card: sel-dot (inline checkmark) */
+.pc-sel-dot {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid #dce0ec; background: #fff;
+  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 9px; color: transparent; font-weight: 900;
+  transition: background .2s, border-color .2s, color .2s;
+}
+.pc.sel .pc-sel-dot { background: #6C63FF; border-color: #6C63FF; color: #fff; }
+.pc.unlimited-card.sel .pc-sel-dot { background: #9333EA; border-color: #9333EA; }
+
+/* Plan name (replaces pc-provider) */
+.pc-plan-name {
+  font-size: 12.5px; font-weight: 700; color: #444;
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+/* Skeleton plan cards */
+.pc.sk-plan {
+  height: 140px; border: none; cursor: default; pointer-events: none;
+  background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%);
+  background-size: 200% 100%; animation: sh 1.4s linear infinite;
+}
 </style>
 </head>
 <body>
@@ -541,9 +584,20 @@ body { background: #f5f6fa; }
     <button class="sh-type-btn"    data-type="global"   onclick="filterType('global',this)">全球</button>
   </div>
 
+  <!-- Sort bar -->
+  <div class="sh-sort-bar" id="sortBar">
+    <span class="sh-sort-lbl">排序</span>
+    <button class="sh-sort-btn on" data-sort="price" onclick="setSort('price',this)">💰 价格</button>
+    <button class="sh-sort-btn"   data-sort="data"  onclick="setSort('data',this)">📶 流量</button>
+    <button class="sh-sort-btn"   data-sort="days"  onclick="setSort('days',this)">📅 时长</button>
+    <button class="sh-sort-btn"   data-sort="value" onclick="setSort('value',this)">💡 性价比</button>
+  </div>
+
   <!-- Plans -->
   <div class="sh-plan-list" id="planList">
-    <div class="sh-spin">⏳</div>
+    <div class="pc sk-plan"></div>
+    <div class="pc sk-plan"></div>
+    <div class="pc sk-plan"></div>
   </div>
 
   <!-- Checkout bar -->
@@ -677,6 +731,7 @@ let countCache = {};   // code→total
 let planCache  = {};   // code→plans[]
 let allCurPlans= [];   // 当前国家的完整套餐列表（用于筛选）
 let curType   = 'all';
+let curSort   = 'price'; // price | data | days | value
 let curCode   = '';
 let selPlan   = null;
 let selPay    = 'usdt-ton';
@@ -780,16 +835,19 @@ async function openCountry(code) {
   const d = DEST[code]; if(!d) return;
   curCode  = code;
   curType  = 'all';
+  curSort  = 'price';
   selPlan  = null;
 
   // Reset type buttons
   document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.toggle('on', b.dataset.type==='all'));
+  // Reset sort buttons
+  document.querySelectorAll('.sh-sort-btn').forEach(b=>b.classList.toggle('on', b.dataset.sort==='price'));
 
   document.getElementById('shFlag').textContent = d.f;
   document.getElementById('shName').textContent = d.n + ' eSIM';
   document.getElementById('shSub').textContent  = '加载中…';
   document.getElementById('typeBar').style.display = 'none';
-  document.getElementById('planList').innerHTML  = '<div class="sh-spin">⏳</div>';
+  document.getElementById('planList').innerHTML  = '<div class="pc sk-plan"></div><div class="pc sk-plan"></div><div class="pc sk-plan"></div>';
   document.getElementById('checkoutBar').classList.remove('on');
 
   openSheet();
@@ -839,32 +897,46 @@ function updateCard(code) {
    Render plan list
 ═══════════════════════════════════════════════════════ */
 function renderPlans() {
-  const base  = curType==='all' ? allCurPlans : allCurPlans.filter(p=>planType(p)===curType);
-  const plans = filterByChip(base);
+  const base     = curType==='all' ? allCurPlans : allCurPlans.filter(p=>planType(p)===curType);
+  const filtered = filterByChip(base);
+  const plans    = sortPlans(filtered);
 
   const total = countCache[curCode] || allCurPlans.length;
-  document.getElementById('shSub').textContent = `共 ${total} 个套餐`;
+
+  // Price range in sub-header
+  if (plans.length > 0) {
+    const prices = plans.map(p => parseFloat(p.price));
+    const minP = Math.min(...prices);
+    const maxP = Math.max(...prices);
+    const fmt  = v => v%1===0 ? '$'+v : '$'+v.toFixed(2);
+    const range = plans.length > 1 && maxP > minP ? ` · ${fmt(minP)}–${fmt(maxP)}` : '';
+    document.getElementById('shSub').textContent = `共 ${total} 个套餐${range}`;
+  } else {
+    document.getElementById('shSub').textContent = `共 ${total} 个套餐`;
+  }
 
   // Show type filter only if multiple types exist
   const types = new Set(allCurPlans.map(planType));
   document.getElementById('typeBar').style.display = types.size > 1 ? 'flex' : 'none';
 
   if (!plans.length) {
-    document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">📭</div><p>该类型暂无套餐</p></div>`;
+    document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">📭</div><p>该筛选条件下暂无套餐</p></div>`;
     return;
   }
 
-  // 计算最优性价比（$/GB，忽略无限套餐）
-  const dataPlans = plans.filter(p => (p.dataAmount||p.dataSize) > 0);
+  // 计算最优性价比（$/GB，仅在价格排序时标注）
   let bestGBIdx = -1;
-  if (dataPlans.length > 1) {
-    let bestRatio = Infinity;
-    plans.forEach((p,i) => {
-      const mb = p.dataAmount||p.dataSize;
-      if (!mb) return;
-      const ratio = parseFloat(p.price) / (mb/1024);
-      if (ratio < bestRatio) { bestRatio = ratio; bestGBIdx = i; }
-    });
+  if (curSort === 'price') {
+    const dataPlans = plans.filter(p => (p.dataAmount||p.dataSize) > 0);
+    if (dataPlans.length > 1) {
+      let bestRatio = Infinity;
+      plans.forEach((p,i) => {
+        const mb = p.dataAmount||p.dataSize;
+        if (!mb) return;
+        const ratio = parseFloat(p.price) / (mb/1024);
+        if (ratio < bestRatio) { bestRatio = ratio; bestGBIdx = i; }
+      });
+    }
   }
 
   document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => buildPlanCard(p, i, bestGBIdx)).join('');
@@ -874,7 +946,7 @@ function renderPlans() {
   if (total > showing) {
     document.getElementById('planList').insertAdjacentHTML('beforeend', `
       <button class="load-more-btn" onclick="loadMorePlans(this)">
-        加载更多套餐 (还有 ${total - showing} 个)
+        加载更多套餐（还有 ${total - showing} 个）
       </button>`);
   }
 
@@ -888,6 +960,39 @@ function filterType(type, btn) {
   document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderPlans();
+}
+
+function setSort(sort, btn) {
+  curSort = sort;
+  document.querySelectorAll('.sh-sort-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderPlans();
+}
+
+function sortPlans(plans) {
+  return [...plans].sort((a, b) => {
+    switch (curSort) {
+      case 'data': {
+        const aInf = !(a.dataAmount||a.dataSize);
+        const bInf = !(b.dataAmount||b.dataSize);
+        if (aInf && !bInf) return -1;
+        if (!aInf && bInf) return 1;
+        return (b.dataAmount||b.dataSize||0) - (a.dataAmount||a.dataSize||0);
+      }
+      case 'days':
+        return parseFloat(b.validityDays||b.validDays||0) - parseFloat(a.validityDays||a.validDays||0);
+      case 'value': {
+        const aM = a.dataAmount||a.dataSize;
+        const bM = b.dataAmount||b.dataSize;
+        // Unlimited = 0 $/GB (best value, float to top)
+        const aR = aM ? parseFloat(a.price)/(aM/1024) : 0;
+        const bR = bM ? parseFloat(b.price)/(bM/1024) : 0;
+        return aR - bR;
+      }
+      default: // price
+        return parseFloat(a.price) - parseFloat(b.price);
+    }
+  });
 }
 
 async function loadMorePlans(btn) {
@@ -1018,10 +1123,9 @@ function applyChip(chip, btn) {
   renderGrid();
   // If we're already in a country sheet, refilter plans
   if (document.getElementById('sheet').classList.contains('on') && allCurPlans.length) {
-    const filtered = filterByChip(allCurPlans);
     curType = 'all';
     document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.toggle('on', b.dataset.type==='all'));
-    renderFilteredPlans(filtered);
+    renderPlans();
   }
 }
 function filterByChip(plans) {
@@ -1045,28 +1149,31 @@ function buildPlanCard(p, i, bestGBIdx) {
   const isInf = data==='∞';
   const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/,'');
   const dataUnit = isInf ? '' : data.replace(/[\d.]+/,'');
-  const provider = pn.split('-')[0].trim() || 'SimRyoko';
   const perGB  = (!isInf && dataMB) ? (price/(dataMB/1024)).toFixed(2) : null;
-  const perDay = (price/parseFloat(days)).toFixed(2);
+  const perDay = days && days!=='?' ? (price/parseFloat(days)).toFixed(2) : null;
 
+  // Ribbon: 只在价格排序时标注推荐/最优
   let ribbon = '';
   if (isInf)              ribbon = `<div class="pc-ribbon inf">✦ 无限流量</div>`;
   else if (i===bestGBIdx) ribbon = `<div class="pc-ribbon best">💡 最优性价比</div>`;
-  else if (i===0)         ribbon = `<div class="pc-ribbon hot">⭐ 推荐</div>`;
+  else if (i===0 && curSort==='price') ribbon = `<div class="pc-ribbon hot">⭐ 推荐</div>`;
 
   let metaHtml = '';
-  if (isInf) {
+  if (isInf && perDay) {
     metaHtml = `<span style="color:#9333EA;font-size:11.5px;font-weight:700;">≈ $${perDay}/天</span>`;
   } else if (perGB) {
-    metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span><br><span class="per-day">$${perDay}/天</span></span>`;
+    const dayStr = perDay ? ` <span class="per-day">· $${perDay}/天</span>` : '';
+    metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span>${dayStr}</span>`;
   }
 
+  const isFirst = i===0;
   return `
-  <div class="pc${isInf?' unlimited-card':''}${i===0?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
+  <div class="pc${isInf?' unlimited-card':''}${isFirst?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
     ${ribbon}
     <div class="pc-body">
       <div class="pc-hd">
-        <span class="pc-provider">${provider}</span>
+        <div class="pc-sel-dot">✓</div>
+        <span class="pc-plan-name" title="${pn}">${pn}</span>
         <span class="pc-type-tag ${type}">${typeLabel(type)}</span>
       </div>
       <div class="pc-specs">
@@ -1093,35 +1200,7 @@ function buildPlanCard(p, i, bestGBIdx) {
   </div>`;
 }
 
-function renderFilteredPlans(plans) {
-  if (!plans.length) {
-    document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">🔍</div><p>该筛选条件下暂无套餐</p></div>`;
-    return;
-  }
-  // 计算最优性价比
-  let bestGBIdx = -1;
-  if (plans.filter(p=>(p.dataAmount||p.dataSize)>0).length > 1) {
-    let bestRatio = Infinity;
-    plans.forEach((p,i) => {
-      const mb = p.dataAmount||p.dataSize;
-      if (!mb) return;
-      const ratio = parseFloat(p.price)/(mb/1024);
-      if (ratio < bestRatio) { bestRatio = ratio; bestGBIdx = i; }
-    });
-  }
-  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => buildPlanCard(p, i, bestGBIdx)).join('');
-  // 加载更多
-  const total = countCache[curCode] || allCurPlans.length;
-  if (total > 12) {
-    document.getElementById('planList').insertAdjacentHTML('beforeend', `
-      <button class="load-more-btn" onclick="loadMorePlans(this)">
-        加载更多套餐 (还有 ${total - 12} 个)
-      </button>`);
-  }
-  allCurPlans = plans;
-  selPlan = plans[0];
-  showCheckout();
-}
+// renderFilteredPlans 已合并至 renderPlans()
 
 /* ═══════════════════════════════════════════════════════
    Preload popular prices
