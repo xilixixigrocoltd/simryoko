@@ -113,7 +113,8 @@
   .c-card:active { transform: translateY(-2px); }
   .c-flag { font-size: 40px; line-height: 1; margin-bottom: 10px; }
   .c-name { font-size: 12.5px; font-weight: 700; color: #1a1a2e; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .c-price { font-size: 12px; font-weight: 600; color: #6C63FF; }
+  .c-count { font-size: 11px; color: #aaa; margin-bottom: 2px; }
+  .c-price { font-size: 12px; font-weight: 700; color: #6C63FF; }
   .c-price.tbd { color: #ccc; }
   .c-badge {
     position: absolute; top: 8px; right: 8px;
@@ -207,6 +208,8 @@
   }
   .p-spec:last-child { border-right: none; }
   .p-spec-val { font-size: 18px; font-weight: 900; color: #1a1a2e; line-height: 1; }
+  .p-spec-val.unlimited { font-size: 22px; color: #6C63FF; }
+  .p-spec-val.price { color: #6C63FF; }
   .p-spec-lbl { font-size: 10.5px; color: #aaa; font-weight: 600; margin-top: 3px; text-transform: uppercase; letter-spacing: .4px; }
 
   .p-card-footer { display: flex; align-items: center; justify-content: space-between; }
@@ -409,8 +412,8 @@
 <script>
 /* ══ Destination Data ════════════════════════════════════ */
 const TABS = {
-  popular:  { label:'🔥 Popular',     list:['JP','KR','TH','SG','TW','HK','MY','AU','DE','US','GB','FR','AE','IN','IT','ES'] },
-  asia:     { label:'🌏 Asia',         list:['JP','KR','TW','HK','MO','TH','SG','MY','ID','PH','VN','IN','KH','MM','LA','BD','LK','NP','PK','MN','KZ','UZ','GE','AM','AZ'] },
+  popular:  { label:'🔥 Popular',     list:['JP','KR','CN','TH','SG','TW','HK','MY','AU','DE','US','GB','FR','AE','IN','IT','ES'] },
+  asia:     { label:'🌏 Asia',         list:['JP','KR','CN','TW','HK','MO','TH','SG','MY','ID','PH','VN','IN','KH','MM','LA','BD','LK','NP','PK','MN','KZ','UZ','GE','AM','AZ'] },
   europe:   { label:'🇪🇺 Europe',      list:['GB','DE','FR','IT','ES','NL','CH','AT','SE','NO','DK','FI','BE','PT','GR','PL','CZ','HU','RO','HR','BG','SK','SI','EE','LV','LT','IE','IS','UA','RS','TR','AL','ME','MK','BA'] },
   americas: { label:'🌎 Americas',     list:['US','CA','MX','BR','AR','CL','CO','PE','EC','BO','PY','UY','VE','CR','PA','GT','DO','JM','TT','BS','BZ','GY'] },
   mideast:  { label:'🌙 Middle East',  list:['AE','SA','QA','KW','BH','OM','JO','IL','LB','EG','TR','IR','IQ','MA','TN'] },
@@ -420,7 +423,8 @@ const TABS = {
 };
 
 const DEST_INFO = {
-  JP:{name:'Japan',         flag:'🇯🇵'}, KR:{name:'South Korea',   flag:'🇰🇷'}, TW:{name:'Taiwan',        flag:'🇹🇼'},
+  JP:{name:'Japan',         flag:'🇯🇵'}, KR:{name:'South Korea',   flag:'🇰🇷'}, CN:{name:'China',         flag:'🇨🇳'},
+  TW:{name:'Taiwan',        flag:'🇹🇼'},
   HK:{name:'Hong Kong',     flag:'🇭🇰'}, MO:{name:'Macau',         flag:'🇲🇴'}, TH:{name:'Thailand',      flag:'🇹🇭'},
   SG:{name:'Singapore',     flag:'🇸🇬'}, MY:{name:'Malaysia',      flag:'🇲🇾'}, ID:{name:'Indonesia',     flag:'🇮🇩'},
   PH:{name:'Philippines',   flag:'🇵🇭'}, VN:{name:'Vietnam',       flag:'🇻🇳'}, IN:{name:'India',         flag:'🇮🇳'},
@@ -466,17 +470,23 @@ const DEST_INFO = {
 };
 
 /* ══ State ═══════════════════════════════════════════════ */
-let currentTab = 'popular';
-let searchMode = false;
-let planCache  = {};   // code → plans[]
-let priceCache = {};   // code → minPrice
+let currentTab  = 'popular';
+let searchMode  = false;
+let planCache   = {};   // code → plans[]
+let priceCache  = {};   // code → minPrice
+let countCache  = {};   // code → total plan count
 let selectedPlan = null;
 let selectedPay  = 'usdt-ton';
 let currentCode  = '';
 
 /* ══ Utilities ═══════════════════════════════════════════ */
-function fmtMB(mb) {
-  if (!mb) return '?';
+function fmtMB(mb, name) {
+  if (!mb) {
+    // 从套餐名称判断是否为无限流量
+    const n = (name || '').toLowerCase();
+    if (n.includes('unlimited') || n.includes('无限')) return '∞';
+    return '?';
+  }
   const v = parseFloat(mb);
   return v >= 1024 ? (v % 1024 === 0 ? v/1024 : (v/1024).toFixed(1)) + 'GB' : v + 'MB';
 }
@@ -534,12 +544,15 @@ function renderGrid(list) {
     const d = DEST_INFO[code];
     if (!d) return '';
     const price = priceCache[code];
+    const count = countCache[code];
     const badge = d.badge ? `<div class="c-badge">${d.badge}</div>` : '';
+    const sub   = count ? `${count} plans` : (price ? '' : '');
     return `
-    <div class="c-card" onclick="openCountry('${code}')">
+    <div class="c-card" id="card-${code}" onclick="openCountry('${code}')">
       ${badge}
       <div class="c-flag">${d.flag || code}</div>
       <div class="c-name">${d.name}</div>
+      ${sub ? `<div class="c-count">${sub}</div>` : ''}
       <div class="c-price ${price ? '' : 'tbd'}">${price ? 'From ' + fmtUSD(price) : '›'}</div>
     </div>`;
   }).join('');
@@ -569,6 +582,7 @@ async function openCountry(code) {
       planCache[code] = (j.data?.list || []).sort((a,b) => parseFloat(a.price)-parseFloat(b.price));
       if (planCache[code].length) {
         priceCache[code] = planCache[code][0].price;
+        countCache[code] = j.data?.total || planCache[code].length;
         // Update card price silently
         document.querySelectorAll('.c-card').forEach(el => {
           if (el.getAttribute('onclick') === `openCountry('${code}')`) {
@@ -591,14 +605,15 @@ async function openCountry(code) {
     return;
   }
 
-  document.getElementById('sheetSub').textContent = `${plans.length} plan${plans.length > 1 ? 's' : ''} available`;
+  const totalCount = countCache[code] || plans.length;
+  document.getElementById('sheetSub').textContent = `${totalCount} plan${totalCount > 1 ? 's' : ''} available`;
   document.getElementById('planList').innerHTML = plans.slice(0, 10).map((p, i) => {
-    const data   = fmtMB(p.dataAmount || p.dataSize);
+    const pname  = p.nameEn || p.name || '';
+    const data   = fmtMB(p.dataAmount || p.dataSize, pname);
     const days   = p.validityDays || p.validDays || '?';
     const price  = fmtUSD(p.price);
-    const nameEn = p.nameEn || p.name || '';
     // Provider: use first word(s) before dash
-    const provider = nameEn.split('-')[0].trim() || 'SimRyoko';
+    const provider = pname.split('-')[0].trim() || 'SimRyoko';
     return `
     <div class="p-card${i===0?' sel':''}" onclick="selectPlan(${i},this)">
       <div class="p-card-top">
@@ -606,7 +621,7 @@ async function openCountry(code) {
       </div>
       <div class="p-specs">
         <div class="p-spec">
-          <div class="p-spec-val">${data}</div>
+          <div class="p-spec-val ${data==='∞'?'unlimited':''}">${data}</div>
           <div class="p-spec-lbl">Data</div>
         </div>
         <div class="p-spec">
@@ -614,12 +629,12 @@ async function openCountry(code) {
           <div class="p-spec-lbl">Days</div>
         </div>
         <div class="p-spec">
-          <div class="p-spec-val">${price}</div>
+          <div class="p-spec-val price">${price}</div>
           <div class="p-spec-lbl">Price</div>
         </div>
       </div>
       <div class="p-card-footer">
-        <span style="font-size:12px;color:#aaa">${nameEn}</span>
+        <span style="font-size:12px;color:#aaa">${pname}</span>
         <button class="p-buy" onclick="event.stopPropagation();quickBuy(${i})">Buy →</button>
       </div>
     </div>`;
@@ -648,7 +663,8 @@ function quickBuy(idx) {
 
 function showCheckout() {
   if (!selectedPlan) return;
-  const d    = fmtMB(selectedPlan.dataAmount || selectedPlan.dataSize);
+  const pn   = selectedPlan.nameEn || selectedPlan.name || '';
+  const d    = fmtMB(selectedPlan.dataAmount || selectedPlan.dataSize, pn);
   const days = selectedPlan.validityDays || selectedPlan.validDays || '?';
   document.getElementById('checkoutPrice').textContent = fmtUSD(selectedPlan.price);
   document.getElementById('checkoutPlan').textContent  = `${d} · ${days} days`;
@@ -718,6 +734,49 @@ function closeSheet() {
   document.body.style.overflow = '';
 }
 
+/* ══ Preload popular destinations ═══════════════════════ */
+async function preloadPopular() {
+  const popular = TABS.popular.list;
+  // Fetch 3 products per country in parallel (just enough for min price + total count)
+  const fetches = popular.map(code =>
+    fetch(`/api/products?country=${code}&pageSize=3`)
+      .then(r => r.json())
+      .then(j => {
+        const list  = j.data?.list || [];
+        const total = j.data?.total || 0;
+        if (list.length && !priceCache[code]) {
+          priceCache[code] = Math.min(...list.map(p => parseFloat(p.price)));
+        }
+        if (total && !countCache[code]) {
+          countCache[code] = total;
+        }
+        // Update the card in DOM if already rendered
+        const card = document.getElementById(`card-${code}`);
+        if (card) {
+          const priceEl = card.querySelector('.c-price');
+          const countEl = card.querySelector('.c-count');
+          if (priceEl && priceCache[code]) {
+            priceEl.textContent = 'From ' + fmtUSD(priceCache[code]);
+            priceEl.classList.remove('tbd');
+          }
+          if (!countEl && countCache[code]) {
+            const nameEl = card.querySelector('.c-name');
+            if (nameEl) {
+              const c = document.createElement('div');
+              c.className = 'c-count';
+              c.textContent = countCache[code] + ' plans';
+              nameEl.after(c);
+            }
+          } else if (countEl && countCache[code]) {
+            countEl.textContent = countCache[code] + ' plans';
+          }
+        }
+      })
+      .catch(() => {})
+  );
+  await Promise.all(fetches);
+}
+
 /* ══ URL params ══════════════════════════════════════════ */
 (function() {
   const p = new URLSearchParams(location.search);
@@ -735,6 +794,7 @@ document.getElementById('searchInput').addEventListener('input', function() {
 
 /* ══ Init ════════════════════════════════════════════════ */
 renderGrid();
+preloadPopular(); // 后台并发拉取热门国家价格和套餐数（不阻塞首屏）
 </script>
 <script src="/js/i18n.js"></script>
 <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
