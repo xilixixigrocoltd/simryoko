@@ -409,33 +409,18 @@ let selectedPlan = null;
 let selectedPayMethod = 'card';
 
 // ── Load Plans ────────────────────────────────────────
+// 懒加载：只拉目的地列表，产品在用户点击时按需加载
 async function loadPlans() {
   try {
     const res = await fetch('/api/products?destinations=1');
     const data = await res.json();
     const destinations = data.data || [];
 
-    // 为每个目的地分别加载套餐（并发，确保完整）
-    const countryFetches = destinations.map(d =>
-      fetch(`/api/products?country=${d.code}&pageSize=100`)
-        .then(r => r.json())
-        .then(j => ({ code: d.code, plans: j.data?.list || [] }))
-        .catch(() => ({ code: d.code, plans: [] }))
-    );
-    const countryResults = await Promise.all(countryFetches);
-
-    const byCountry = {};
-    for (const { code, plans } of countryResults) {
-      if (plans.length > 0) byCountry[code] = plans;
-    }
-
     allPlans = destinations.map(d => ({
       ...d,
-      plans: byCountry[d.code] || [],
-      minPrice: byCountry[d.code]
-        ? Math.min(...byCountry[d.code].map(p => parseFloat(p.price)))
-        : null
-    })).filter(d => d.plans.length > 0 && d.minPrice !== null);
+      plans: null,     // null = 尚未加载
+      minPrice: null,
+    }));
 
     allPlans.sort((a, b) => {
       const ai = POPULAR.indexOf(a.code);
@@ -494,9 +479,9 @@ function renderPlans() {
       <div class="plan-flag">${d.flag || '🌐'}</div>
       <div class="plan-info">
         <div class="plan-country">${d.name}</div>
-        <div class="plan-detail">${d.plans.length} ${currentLang === 'zh' ? '个套餐' : 'plans'}</div>
+        <div class="plan-detail">${d.plans ? d.plans.length + ' ' + (currentLang === 'zh' ? '个套餐' : 'plans') : (currentLang === 'zh' ? '点击查看套餐' : 'Tap to view plans')}</div>
       </div>
-      <div class="plan-price">${t('from')} $${d.minPrice?.toFixed(2)}</div>
+      <div class="plan-price">${d.minPrice ? (t('from') + ' $' + d.minPrice.toFixed(2)) : '›'}</div>
     </div>
   `).join('');
 }
@@ -504,16 +489,45 @@ function renderPlans() {
 // ── Sheet ─────────────────────────────────────────────
 let currentCountryPlans = [];
 
-function openPlan(code) {
+async function openPlan(code) {
   const dest = allPlans.find(d => d.code === code);
   if (!dest) return;
 
-  currentCountryPlans = dest.plans.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  // 先打开 sheet，显示加载状态
+  document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${dest.name}`;
+  document.getElementById('sheetSub').textContent = currentLang === 'zh' ? '加载中...' : 'Loading...';
+  document.getElementById('planOptions').innerHTML = `<div style="text-align:center;padding:30px;color:#888;font-size:24px">⏳</div>`;
+  selectedPlan = null;
+  updateBuyBtn();
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  tg?.HapticFeedback?.impactOccurred('light');
+
+  // 懒加载：如果套餐尚未加载，现在才拉取
+  if (!dest.plans) {
+    try {
+      const r = await fetch(`/api/products?country=${code}&pageSize=20`);
+      const j = await r.json();
+      dest.plans = j.data?.list || [];
+      dest.minPrice = dest.plans.length > 0
+        ? Math.min(...dest.plans.map(p => parseFloat(p.price)))
+        : null;
+      // 更新列表中的价格显示
+      renderPlans();
+    } catch (e) {
+      document.getElementById('sheetSub').textContent = currentLang === 'zh' ? '加载失败，请重试' : 'Failed to load. Please retry.';
+      document.getElementById('planOptions').innerHTML = '';
+      return;
+    }
+  }
+
+  currentCountryPlans = [...dest.plans].sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
   document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${dest.name}`;
   document.getElementById('sheetSub').textContent = `${dest.plans.length} ${currentLang === 'zh' ? '款套餐可选' : 'plans available'}`;
 
-  // Render plan options
-  document.getElementById('planOptions').innerHTML = currentCountryPlans.slice(0, 6).map((p, i) => `
+  // 渲染套餐选项
+  document.getElementById('planOptions').innerHTML = currentCountryPlans.slice(0, 8).map((p, i) => `
     <div class="plan-option${i === 0 ? ' selected' : ''}" onclick="selectOption(${i}, this)" data-id="${i}">
       <div class="plan-option-left">
         <div class="plan-option-data">${p.name || (p.description || '').split(' ').slice(0, 3).join(' ')}</div>
@@ -525,14 +539,6 @@ function openPlan(code) {
 
   selectedPlan = currentCountryPlans[0];
   updateBuyBtn();
-
-  // Open sheet
-  document.getElementById('sheet').classList.add('open');
-  document.getElementById('overlay').classList.add('show');
-  document.body.style.overflow = 'hidden';
-
-  // Telegram haptic
-  tg?.HapticFeedback?.impactOccurred('light');
 }
 
 function selectOption(idx, el) {

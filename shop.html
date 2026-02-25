@@ -163,7 +163,7 @@
 let allProducts = [];
 let currentPage = 1;
 const PAGE_SIZE = 24;       // 每屏展示数
-const API_PAGE_SIZE = 100;  // 每次向服务端请求的数量
+const API_PAGE_SIZE = 24;   // 每次向服务端请求的数量（避免 B2B 后端限速）
 let apiPage = 1;            // 当前已加载到第几个 API 页
 let totalProducts = 0;      // 后端实际总数
 
