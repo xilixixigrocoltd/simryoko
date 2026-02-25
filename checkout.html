@@ -304,5 +304,19 @@ loadProduct();
 initStripe();
 </script>
 <script src="/js/i18n.js"></script>
+
+<!-- WhatsApp 悬浮客服按钮 -->
+<style>
+.wa-float{position:fixed;bottom:24px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+.wa-float-btn{width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);text-decoration:none;font-size:28px;animation:wa-pulse 2.5s ease-in-out infinite;transition:transform .2s;}
+.wa-float-btn:hover{transform:scale(1.1);}
+@keyframes wa-pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45);}50%{box-shadow:0 4px 32px rgba(37,211,102,.75);}}
+.wa-float-label{background:#fff;color:#1a1a2e;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(8px);transition:opacity .3s,transform .3s;}
+.wa-float:hover .wa-float-label{opacity:1;transform:translateX(0);}
+</style>
+<div class="wa-float">
+  <div class="wa-float-label">💬 30-min support</div>
+  <a class="wa-float-btn" href="https://wa.me/19402382990?text=Hi%2C%20I%20need%20help%20with%20my%20SimRyoko%20checkout." target="_blank" rel="noopener" title="WhatsApp Support">💬</a>
+</div>
 </body>
 </html>

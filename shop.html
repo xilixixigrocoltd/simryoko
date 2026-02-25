@@ -358,6 +358,7 @@ body { background: #f5f6fa; }
 .sh-confirm:not(:disabled):hover { opacity: .92; transform: translateY(-1px); }
 .sh-confirm:disabled { opacity: .6; cursor: not-allowed; }
 .sh-fine { text-align: center; font-size: 11px; color: #ccc; }
+.sh-guarantee { text-align: center; font-size: 11.5px; color: #aaa; margin-top: 6px; }
 
 /* Loading state in sheet */
 .sh-spin { text-align: center; padding: 48px; font-size: 32px; color: #ddd; flex: 1; }
@@ -536,6 +537,7 @@ body { background: #f5f6fa; }
     </div>
     <button class="sh-confirm" id="confirmBtn" onclick="doConfirm()">继续支付</button>
     <div class="sh-fine">⚡ 即时发货 · 安全结账 · 无需合约</div>
+    <div class="sh-guarantee">🛡️ 未激活7天内全额退款 &nbsp;|&nbsp; 💬 <a href="https://wa.me/19402382990" target="_blank" style="color:#25d366;text-decoration:none;font-weight:600;">WhatsApp 30分钟人工客服</a></div>
   </div>
 </div>
 
@@ -1078,5 +1080,39 @@ preloadPopular();
 </script>
 <script src="/js/i18n.js"></script>
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
+
+<!-- WhatsApp 悬浮客服按钮 -->
+<style>
+.wa-float {
+  position: fixed; bottom: 24px; right: 20px; z-index: 9999;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+.wa-float-btn {
+  width: 56px; height: 56px; background: #25d366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,.45);
+  text-decoration: none; font-size: 28px;
+  animation: wa-pulse 2.5s ease-in-out infinite;
+  transition: transform .2s;
+}
+.wa-float-btn:hover { transform: scale(1.1); }
+@keyframes wa-pulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.45); }
+  50%      { box-shadow: 0 4px 32px rgba(37,211,102,.75); }
+}
+.wa-float-label {
+  background: #fff; color: #1a1a2e; font-size: 12px; font-weight: 600;
+  padding: 6px 12px; border-radius: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,.12);
+  white-space: nowrap; pointer-events: none;
+  opacity: 0; transform: translateX(8px);
+  transition: opacity .3s, transform .3s;
+}
+.wa-float:hover .wa-float-label { opacity: 1; transform: translateX(0); }
+</style>
+<div class="wa-float">
+  <div class="wa-float-label">💬 30-min support</div>
+  <a class="wa-float-btn" href="https://wa.me/19402382990?text=Hi%2C%20I%20need%20help%20with%20a%20SimRyoko%20eSIM." target="_blank" rel="noopener" title="WhatsApp Support">💬</a>
+</div>
 </body>
 </html>
