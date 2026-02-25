@@ -755,10 +755,6 @@ async function loadOrders() {
               ${o.esim?.iccid ? `<div class="esim-code">ICCID: ${o.esim.iccid}</div>` : ''}
               ${o.esim?.activationCode ? `<div class="esim-code" style="margin-top:4px">Code: ${o.esim.activationCode}</div>` : ''}
               <div id="usage-${o.orderId}"></div>
-              ${o.esim?.iccid ? `
-              <button class="usage-btn" onclick="fetchUsage('${o.orderId}','${o.esim.iccid}',this)">
-                📊 ${currentLang === 'zh' ? '查看剩余流量' : 'Check Data Usage'}
-              </button>` : ''}
               <button class="renew-btn-sm" onclick="renewPlan('${o.productName}','${o.orderId}')">
                 🔄 ${currentLang === 'zh' ? '续费同款套餐' : 'Renew Same Plan'}
               </button>
