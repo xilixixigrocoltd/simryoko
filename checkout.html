@@ -6,6 +6,7 @@
   <title>Checkout — SimRyoko</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -37,13 +38,22 @@
             <div class="payment-method active" id="pm-usdt" onclick="selectPayment('usdt')">
               <div style="font-size:24px;margin-bottom:4px">₮</div>
               <div style="font-weight:700;font-size:14px">USDT (TRC-20)</div>
-              <div style="font-size:12px;color:#888">No fees</div>
+              <div style="font-size:12px;color:#888">No fees · Crypto</div>
             </div>
-            <div class="payment-method" id="pm-card" onclick="selectPayment('card')" style="opacity:0.5;pointer-events:none">
+            <div class="payment-method" id="pm-card" onclick="selectPayment('card')">
               <div style="font-size:24px;margin-bottom:4px">💳</div>
               <div style="font-weight:700;font-size:14px">Credit Card</div>
-              <div style="font-size:12px;color:#888">Coming soon</div>
+              <div style="font-size:12px;color:#888">Visa / Mastercard</div>
             </div>
+          </div>
+        </div>
+
+        <!-- Stripe Card Element (hidden unless card selected) -->
+        <div id="card-section" style="display:none">
+          <div class="form-group">
+            <label>Card Details</label>
+            <div id="card-element" style="border:1.5px solid #e8ecf4;border-radius:10px;padding:14px 16px;background:#fff;font-size:16px;"></div>
+            <div id="card-errors" style="color:#e74c3c;font-size:13px;margin-top:8px;"></div>
           </div>
         </div>
 
@@ -80,19 +90,39 @@
 <style>
 .payment-method { border: 2px solid #e8ecf4; border-radius: 12px; padding: 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
 .payment-method.active { border-color: #667eea; background: #f0f4ff; }
+.payment-method:hover { border-color: #667eea; }
+#card-element { transition: border-color 0.2s; }
+#card-element.StripeElement--focus { border-color: #667eea !important; }
+#card-element.StripeElement--invalid { border-color: #e74c3c !important; }
 </style>
 
 <script src="/js/app.js"></script>
 <script>
 let product = null;
 let selectedPayment = 'usdt';
+let stripe = null;
+let cardElement = null;
+
+// 从 API 动态加载 Stripe PK 并初始化
+async function initStripe() {
+  const cfg = await apiFetch('/config');
+  if (cfg.stripePk) {
+    stripe = Stripe(cfg.stripePk);
+    const elements = stripe.elements();
+    cardElement = elements.create('card', {
+      style: {
+        base: { fontSize: '16px', color: '#333', fontFamily: 'Inter, sans-serif', '::placeholder': { color: '#aaa' } },
+        invalid: { color: '#e74c3c' }
+      }
+    });
+  }
+}
 
 async function loadProduct() {
   const id = new URLSearchParams(window.location.search).get('id');
   if (!id) { window.location = '/shop.html'; return; }
 
   try {
-    // 找到对应产品（遍历直到找到）
     let found = null, page = 1;
     while (!found) {
       const res = await apiFetch(`/products?page=${page}&pageSize=100`);
@@ -102,7 +132,6 @@ async function loadProduct() {
       page++;
       if (page > 30) break;
     }
-
     if (!found) { document.getElementById('summaryContent').textContent = 'Product not found.'; return; }
     product = found;
     renderSummary();
@@ -124,9 +153,8 @@ function renderSummary() {
       <div style="color:#666;font-size:14px">${product.nameEn || product.name}</div>
     </div>
     <div class="summary-row"><span>Plan</span><span>${product.nameEn || product.name}</span></div>
-    <div class="summary-row"><span>Network</span><span>USDT TRC-20</span></div>
     <div class="summary-row"><span>Delivery</span><span>Instant ✉️</span></div>
-    <div class="summary-row"><span>Total</span><span>${formatPrice(product.price)}</span></div>
+    <div class="summary-row"><span>Total</span><span style="font-weight:800;color:#667eea">${formatPrice(product.price)}</span></div>
   `;
 }
 
@@ -134,6 +162,23 @@ function selectPayment(method) {
   selectedPayment = method;
   document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
   document.getElementById(`pm-${method}`).classList.add('active');
+
+  const cardSection = document.getElementById('card-section');
+  const payBtn = document.getElementById('payBtn');
+
+  if (method === 'card') {
+    cardSection.style.display = 'block';
+    // 挂载 Stripe Card Element
+    cardElement.mount('#card-element');
+    cardElement.on('change', e => {
+      document.getElementById('card-errors').textContent = e.error ? e.error.message : '';
+    });
+    payBtn.textContent = 'Pay with Card →';
+  } else {
+    cardSection.style.display = 'none';
+    cardElement.unmount();
+    payBtn.textContent = 'Pay with USDT →';
+  }
 }
 
 async function submitOrder() {
@@ -145,28 +190,67 @@ async function submitOrder() {
   if (!product) { alert('Product not loaded. Please try again.'); return; }
 
   const btn = document.getElementById('payBtn');
-  btn.textContent = 'Creating order…';
   btn.disabled = true;
 
-  try {
-    const res = await apiFetch('/checkout', {
-      method: 'POST',
-      body: JSON.stringify({ productId: product.id, email, paymentMethod: selectedPayment })
-    });
+  if (selectedPayment === 'usdt') {
+    // USDT 支付流程
+    btn.textContent = 'Creating order…';
+    try {
+      const res = await apiFetch('/checkout', {
+        method: 'POST',
+        body: JSON.stringify({ productId: product.id, email, paymentMethod: 'usdt' })
+      });
+      if (!res.success) throw new Error(res.error || 'Checkout failed');
+      window.location = `/payment.html?order=${res.data.orderId}&amount=${res.data.paymentAmount}&product=${encodeURIComponent(product.nameEn || product.name)}`;
+    } catch(e) {
+      alert('Error: ' + e.message);
+      btn.textContent = 'Pay with USDT →';
+      btn.disabled = false;
+    }
 
-    if (!res.success) throw new Error(res.error || 'Checkout failed');
+  } else {
+    // Stripe 信用卡支付流程
+    btn.textContent = 'Processing…';
+    try {
+      // 1. 创建 PaymentIntent
+      const intentRes = await apiFetch('/stripe/intent', {
+        method: 'POST',
+        body: JSON.stringify({ productId: product.id, email })
+      });
+      if (!intentRes.success) throw new Error(intentRes.error || 'Failed to create payment');
 
-    // 跳转到支付页
-    window.location = `/payment.html?order=${res.data.orderId}&amount=${res.data.paymentAmount}&product=${encodeURIComponent(product.nameEn || product.name)}`;
+      // 2. 用 Stripe.js 确认支付
+      const { error, paymentIntent } = await stripe.confirmCardPayment(intentRes.clientSecret, {
+        payment_method: { card: cardElement, billing_details: { email } }
+      });
 
-  } catch(e) {
-    alert('Error: ' + e.message);
-    btn.textContent = 'Pay with USDT →';
-    btn.disabled = false;
+      if (error) {
+        document.getElementById('card-errors').textContent = error.message;
+        btn.textContent = 'Pay with Card →';
+        btn.disabled = false;
+        return;
+      }
+
+      // 3. 支付成功 → 通知后端发货
+      btn.textContent = 'Delivering eSIM…';
+      const confirmRes = await apiFetch('/stripe/confirm', {
+        method: 'POST',
+        body: JSON.stringify({ paymentIntentId: paymentIntent.id, orderId: intentRes.orderId })
+      });
+
+      // 4. 跳转成功页
+      window.location = `/success.html?order=${intentRes.orderId}&method=card&product=${encodeURIComponent(product.nameEn || product.name)}`;
+
+    } catch(e) {
+      alert('Payment error: ' + e.message);
+      btn.textContent = 'Pay with Card →';
+      btn.disabled = false;
+    }
   }
 }
 
 loadProduct();
+initStripe();
 </script>
 </body>
 </html>

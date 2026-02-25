@@ -10,6 +10,8 @@
     "SMTP_USER": "xilixi@xigrocoltd.com",
     "SMTP_PASS": "x8F7Jr4gn8i9Y95m",
     "FROM_EMAIL": "xilixi@xigrocoltd.com",
-    "FROM_NAME": "SimRyoko Support"
+    "FROM_NAME": "SimRyoko Support",
+    "STRIPE_PUBLISHABLE_KEY": "pk_test_placeholder",
+    "STRIPE_SECRET_KEY": "sk_test_placeholder"
   }
 }
