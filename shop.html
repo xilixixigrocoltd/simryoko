@@ -867,75 +867,7 @@ function renderPlans() {
     });
   }
 
-  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => {
-    const pn    = p.nameEn||p.name||'';
-    const dataMB = p.dataAmount||p.dataSize;
-    const data  = fmtData(dataMB, pn);
-    const days  = fmtDays(p);
-    const price = parseFloat(p.price);
-    const type  = planType(p);
-    const isInf = data==='∞';
-
-    // 解析数值和单位
-    const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/,'');
-    const dataUnit = isInf ? '' : data.replace(/[\d.]+/,'');
-
-    // 运营商名称（取第一段）
-    const provider = pn.split('-')[0].trim() || 'SimRyoko';
-
-    // 性价比计算
-    const perGB  = (!isInf && dataMB) ? (price/(dataMB/1024)).toFixed(2) : null;
-    const perDay = (price/parseFloat(days)).toFixed(2);
-
-    // Badge 决策：第一个=推荐，最优性价比=最优，无限=无限流量
-    let ribbon = '';
-    if (isInf) {
-      ribbon = `<div class="pc-ribbon inf">✦ 无限流量</div>`;
-    } else if (i === bestGBIdx) {
-      ribbon = `<div class="pc-ribbon best">💡 最优性价比</div>`;
-    } else if (i === 0 && !isInf) {
-      ribbon = `<div class="pc-ribbon hot">⭐ 推荐</div>`;
-    }
-
-    // 底部元信息
-    let metaHtml = '';
-    if (isInf) {
-      metaHtml = `<span class="unlimited-card" style="color:#9333EA;font-size:11.5px;font-weight:700;">≈ $${perDay}/天</span>`;
-    } else if (perGB) {
-      metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span><br><span class="per-day">$${perDay}/天</span></span>`;
-    }
-
-    return `
-    <div class="pc${isInf?' unlimited-card':''}${i===0?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
-      ${ribbon}
-      <div class="pc-body">
-        <div class="pc-hd">
-          <span class="pc-provider">${provider}</span>
-          <span class="pc-type-tag ${type}">${typeLabel(type)}</span>
-        </div>
-        <div class="pc-specs">
-          <div class="pc-spec">
-            <div class="pc-sv${isInf?' inf-val':''}">
-              ${dataVal}${dataUnit?`<span class="u">${dataUnit}</span>`:''}
-            </div>
-            <div class="pc-sl">${isInf?'无限流量':'流量'}</div>
-          </div>
-          <div class="pc-spec">
-            <div class="pc-sv">${days}<span class="u">天</span></div>
-            <div class="pc-sl">有效期</div>
-          </div>
-          <div class="pc-spec">
-            <div class="pc-sv price-val">$${price%1===0?price:price.toFixed(2)}</div>
-            <div class="pc-sl">总价</div>
-          </div>
-        </div>
-        <div class="pc-ft">
-          ${metaHtml}
-          <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">购买 →</button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => buildPlanCard(p, i, bestGBIdx)).join('');
 
   // 加载更多按钮
   const showing = Math.min(plans.length, 12);
@@ -1048,7 +980,11 @@ async function doConfirm() {
     } else throw new Error();
   } catch(e) {
     btn.disabled=false; btn.textContent=`支付 ${fmtUSD(selPlan.price)}`;
-    alert('支付初始化失败，请选择信用卡支付或联系客服。');
+    // TON 失败时自动降级到 USDT TRC-20
+    const fallback = confirm('USDT Telegram 支付初始化失败。\n\n是否改用 USDT TRC-20 手动转账？\n（点确定继续，点取消联系客服）');
+    if (fallback) {
+      window.location = `/checkout.html?productId=${pid}&email=${encodeURIComponent(email)}&method=usdt`;
+    }
   }
 }
 
@@ -1099,32 +1035,90 @@ function filterByChip(plans) {
   if (curChip === 'cheap')  return plans.filter(p => parseFloat(p.price) < 5);
   return plans;
 }
+// ── 统一套餐卡片构建函数 ─────────────────────────────
+function buildPlanCard(p, i, bestGBIdx) {
+  const pn    = p.nameEn||p.name||'';
+  const dataMB = p.dataAmount||p.dataSize;
+  const data  = fmtData(dataMB, pn);
+  const days  = fmtDays(p);
+  const price = parseFloat(p.price);
+  const type  = planType(p);
+  const isInf = data==='∞';
+  const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/,'');
+  const dataUnit = isInf ? '' : data.replace(/[\d.]+/,'');
+  const provider = pn.split('-')[0].trim() || 'SimRyoko';
+  const perGB  = (!isInf && dataMB) ? (price/(dataMB/1024)).toFixed(2) : null;
+  const perDay = (price/parseFloat(days)).toFixed(2);
+
+  let ribbon = '';
+  if (isInf)              ribbon = `<div class="pc-ribbon inf">✦ 无限流量</div>`;
+  else if (i===bestGBIdx) ribbon = `<div class="pc-ribbon best">💡 最优性价比</div>`;
+  else if (i===0)         ribbon = `<div class="pc-ribbon hot">⭐ 推荐</div>`;
+
+  let metaHtml = '';
+  if (isInf) {
+    metaHtml = `<span style="color:#9333EA;font-size:11.5px;font-weight:700;">≈ $${perDay}/天</span>`;
+  } else if (perGB) {
+    metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span><br><span class="per-day">$${perDay}/天</span></span>`;
+  }
+
+  return `
+  <div class="pc${isInf?' unlimited-card':''}${i===0?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
+    ${ribbon}
+    <div class="pc-body">
+      <div class="pc-hd">
+        <span class="pc-provider">${provider}</span>
+        <span class="pc-type-tag ${type}">${typeLabel(type)}</span>
+      </div>
+      <div class="pc-specs">
+        <div class="pc-spec">
+          <div class="pc-sv${isInf?' inf-val':''}">
+            ${dataVal}${dataUnit?`<span class="u">${dataUnit}</span>`:''}
+          </div>
+          <div class="pc-sl">${isInf?'无限流量':'流量'}</div>
+        </div>
+        <div class="pc-spec">
+          <div class="pc-sv">${days}<span class="u">天</span></div>
+          <div class="pc-sl">有效期</div>
+        </div>
+        <div class="pc-spec">
+          <div class="pc-sv price-val">$${price%1===0?price:price.toFixed(2)}</div>
+          <div class="pc-sl">总价</div>
+        </div>
+      </div>
+      <div class="pc-ft">
+        ${metaHtml}
+        <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">购买 →</button>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderFilteredPlans(plans) {
   if (!plans.length) {
     document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">🔍</div><p>该筛选条件下暂无套餐</p></div>`;
     return;
   }
-  // Re-render plan list with same card structure
-  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i)=>{
-    const pn=p.nameEn||p.name||'';
-    const data=fmtData(p.dataAmount||p.dataSize,pn);
-    const days=fmtDays(p); const price=fmtUSD(p.price);
-    const type=planType(p); const isInf=data==='∞';
-    const dataVal=isInf?'∞':data.replace(/[A-Za-z]+/,'');
-    const dataUnit=isInf?'':data.replace(/[\d.]+/,'');
-    const priceVal=price.replace('$','');
-    const provider=pn.split('-')[0].trim()||'SimRyoko';
-    return `<div class="pc type-${type}${i===0?' sel':''}" onclick="selectPlan(${i},this)">
-      <div class="pc-hd"><span class="pc-provider">${provider}</span><span class="pc-type-badge">${typeLabel(type)}</span></div>
-      <div class="pc-specs">
-        <div class="pc-spec"><div class="pc-spec-val${isInf?' inf':''}">${dataVal}${dataUnit?`<span class="unit">${dataUnit}</span>`:''}</div><div class="pc-spec-lbl">流量</div></div>
-        <div class="pc-spec"><div class="pc-spec-val">${days}<span class="unit">天</span></div><div class="pc-spec-lbl">有效期</div></div>
-        <div class="pc-spec"><div class="pc-spec-val pv">$${priceVal}</div><div class="pc-spec-lbl">价格</div></div>
-      </div>
-      <div class="pc-ft"><span class="pc-ft-name">${pn}</span><button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">立即购买</button></div>
-    </div>`;
-  }).join('');
-  // Re-bind allCurPlans view for selectPlan
+  // 计算最优性价比
+  let bestGBIdx = -1;
+  if (plans.filter(p=>(p.dataAmount||p.dataSize)>0).length > 1) {
+    let bestRatio = Infinity;
+    plans.forEach((p,i) => {
+      const mb = p.dataAmount||p.dataSize;
+      if (!mb) return;
+      const ratio = parseFloat(p.price)/(mb/1024);
+      if (ratio < bestRatio) { bestRatio = ratio; bestGBIdx = i; }
+    });
+  }
+  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => buildPlanCard(p, i, bestGBIdx)).join('');
+  // 加载更多
+  const total = countCache[curCode] || allCurPlans.length;
+  if (total > 12) {
+    document.getElementById('planList').insertAdjacentHTML('beforeend', `
+      <button class="load-more-btn" onclick="loadMorePlans(this)">
+        加载更多套餐 (还有 ${total - 12} 个)
+      </button>`);
+  }
   allCurPlans = plans;
   selPlan = plans[0];
   showCheckout();

@@ -3,13 +3,34 @@
   "redirects": [
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "simkaze.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.simryoko.com"
+        }
+      ],
       "destination": "https://simryoko.com/:path*",
       "permanent": true
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.simkaze.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "simkaze.com"
+        }
+      ],
+      "destination": "https://simryoko.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.simkaze.com"
+        }
+      ],
       "destination": "https://simryoko.com/:path*",
       "permanent": true
     }
@@ -17,46 +38,85 @@
   "headers": [
     {
       "source": "/css/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=3600" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=3600"
+        }
+      ]
     },
     {
       "source": "/js/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=3600" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=3600"
+        }
+      ]
     },
     {
       "source": "/img/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, immutable" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800, immutable"
+        }
+      ]
     },
     {
       "source": "/manifest.json",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400"
+        }
+      ]
     },
     {
       "source": "/sitemap.xml",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=43200" }]
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=43200"
+        }
+      ]
     }
   ],
   "rewrites": [
-    { "source": "/api/stripe/:action", "destination": "/api/stripe" },
-    { "source": "/api/paddle/:action", "destination": "/api/paddle" },
-    { "source": "/api/ton/:action",    "destination": "/api/ton" },
-    { "source": "/api/payment/:action","destination": "/api/checkout" },
-    { "source": "/api/user/:action",   "destination": "/api/user" },
-    { "source": "/api/esim/:action",   "destination": "/api/esim" },
-    { "source": "/api/push/:action",   "destination": "/api/esim" },
-    { "source": "/api/renewal/:action","destination": "/api/esim" }
+    {
+      "source": "/api/stripe/:action",
+      "destination": "/api/stripe"
+    },
+    {
+      "source": "/api/paddle/:action",
+      "destination": "/api/paddle"
+    },
+    {
+      "source": "/api/ton/:action",
+      "destination": "/api/ton"
+    },
+    {
+      "source": "/api/payment/:action",
+      "destination": "/api/checkout"
+    },
+    {
+      "source": "/api/user/:action",
+      "destination": "/api/user"
+    },
+    {
+      "source": "/api/esim/:action",
+      "destination": "/api/esim"
+    },
+    {
+      "source": "/api/push/:action",
+      "destination": "/api/esim"
+    },
+    {
+      "source": "/api/renewal/:action",
+      "destination": "/api/esim"
+    }
   ],
   "env": {
-    "API_BASE": "https://ciuh32wky.xigrocoltd.com/api",
-    "AGENT_USERNAME": "lx001",
-    "AGENT_PASSWORD": "123123",
-    "USDT_WALLET": "TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL",
-    "SMTP_HOST": "smtp.exmail.qq.com",
-    "SMTP_PORT": "465",
-    "SMTP_USER": "xilixi@xigrocoltd.com",
-    "SMTP_PASS": "x8F7Jr4gn8i9Y95m",
-    "FROM_EMAIL": "xilixi@xigrocoltd.com",
-    "FROM_NAME": "SimRyoko Support",
     "PADDLE_ENV": "production"
   }
 }
