@@ -3,7 +3,7 @@ const { setCors } = require('./_ratelimit');
 module.exports = (req, res) => {
   setCors(req, res, 'GET, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  res.setHeader('Cache-Control', 'public, max-age=3600');
+  res.setHeader('Cache-Control', 'private, no-store');
   return res.json({
     stripePk: process.env.STRIPE_PUBLISHABLE_KEY || '',
     paddleToken: process.env.PADDLE_CLIENT_TOKEN || '',
