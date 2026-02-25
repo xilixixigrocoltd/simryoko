@@ -415,18 +415,18 @@ async function loadPlans() {
     const data = await res.json();
     const destinations = data.data || [];
 
-    // 为每个目的地加载代表性套餐
-    const planRes = await fetch('/api/products?pageSize=100');
-    const planData = await planRes.json();
-    const plans = planData.data?.list || [];
+    // 为每个目的地分别加载套餐（并发，确保完整）
+    const countryFetches = destinations.map(d =>
+      fetch(`/api/products?country=${d.code}&pageSize=100`)
+        .then(r => r.json())
+        .then(j => ({ code: d.code, plans: j.data?.list || [] }))
+        .catch(() => ({ code: d.code, plans: [] }))
+    );
+    const countryResults = await Promise.all(countryFetches);
 
-    // 按国家分组
     const byCountry = {};
-    for (const p of plans) {
-      const code = p.countries?.[0]?.code || p.countries?.[0];
-      if (!code) continue;
-      if (!byCountry[code]) byCountry[code] = [];
-      byCountry[code].push(p);
+    for (const { code, plans } of countryResults) {
+      if (plans.length > 0) byCountry[code] = plans;
     }
 
     allPlans = destinations.map(d => ({
