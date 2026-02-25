@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>SimRyoko eSIM</title>
+<!-- Telegram Mini App SDK -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<style>
+  :root {
+    --bg: var(--tg-theme-bg-color, #ffffff);
+    --text: var(--tg-theme-text-color, #1a1a2e);
+    --hint: var(--tg-theme-hint-color, #888);
+    --link: var(--tg-theme-link-color, #667eea);
+    --btn: var(--tg-theme-button-color, #667eea);
+    --btn-text: var(--tg-theme-button-text-color, #ffffff);
+    --secondary-bg: var(--tg-theme-secondary-bg-color, #f8f9ff);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body { font-family:-apple-system,'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* Header */
+  .header { background:linear-gradient(135deg,#667eea,#764ba2); color:white; padding:20px 16px 16px; }
+  .header-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .logo { font-size:1.1rem; font-weight:800; }
+  .lang-btn { background:rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.3); color:white; padding:4px 12px; border-radius:20px; font-size:.8rem; font-weight:600; cursor:pointer; }
+  .header h1 { font-size:1.35rem; font-weight:800; margin-bottom:4px; }
+  .header p { font-size:.85rem; opacity:.85; }
+
+  /* Search */
+  .search-wrap { padding:12px 16px; background:var(--secondary-bg); border-bottom:1px solid rgba(0,0,0,.06); }
+  .search-input { width:100%; padding:10px 14px 10px 38px; border:1px solid rgba(0,0,0,.1); border-radius:12px; font-size:.95rem; background:var(--bg); color:var(--text); outline:none; }
+  .search-wrap { position:relative; }
+  .search-icon { position:absolute; left:28px; top:50%; transform:translateY(-50%); color:var(--hint); pointer-events:none; }
+
+  /* Filters */
+  .filters { display:flex; gap:8px; padding:12px 16px; overflow-x:auto; scrollbar-width:none; background:var(--bg); border-bottom:1px solid rgba(0,0,0,.06); }
+  .filters::-webkit-scrollbar { display:none; }
+  .filter-btn { flex-shrink:0; padding:6px 16px; border-radius:20px; border:1.5px solid rgba(0,0,0,.1); background:var(--bg); color:var(--text); font-size:.85rem; font-weight:500; cursor:pointer; white-space:nowrap; }
+  .filter-btn.active { background:var(--btn); color:var(--btn-text); border-color:var(--btn); }
+
+  /* Plans list */
+  .plans-list { padding:8px 0; }
+  .plan-item { display:flex; align-items:center; padding:14px 16px; border-bottom:1px solid rgba(0,0,0,.05); cursor:pointer; active:background:var(--secondary-bg); transition:background .15s; }
+  .plan-item:active { background:var(--secondary-bg); }
+  .plan-flag { font-size:1.8rem; margin-right:12px; flex-shrink:0; }
+  .plan-info { flex:1; min-width:0; }
+  .plan-country { font-weight:700; font-size:.95rem; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .plan-detail { font-size:.8rem; color:var(--hint); margin-top:2px; }
+  .plan-price { font-weight:800; font-size:1rem; color:var(--btn); flex-shrink:0; margin-left:8px; }
+
+  /* Detail sheet */
+  .sheet { position:fixed; bottom:0; left:0; right:0; background:var(--bg); border-radius:20px 20px 0 0; padding:20px 20px 0; max-height:85vh; overflow-y:auto; transform:translateY(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); z-index:100; box-shadow:0 -8px 40px rgba(0,0,0,.15); }
+  .sheet.open { transform:translateY(0); }
+  .sheet-handle { width:36px; height:4px; background:rgba(0,0,0,.15); border-radius:2px; margin:0 auto 20px; }
+  .sheet-country { font-size:1.5rem; font-weight:800; margin-bottom:4px; }
+  .sheet-sub { color:var(--hint); font-size:.9rem; margin-bottom:20px; }
+  .plan-options { display:flex; flex-direction:column; gap:10px; margin-bottom:20px; }
+  .plan-option { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; border:2px solid rgba(0,0,0,.08); border-radius:14px; cursor:pointer; transition:border-color .15s; }
+  .plan-option.selected { border-color:var(--btn); background:rgba(102,126,234,.06); }
+  .plan-option-left { font-size:.95rem; }
+  .plan-option-data { font-weight:700; }
+  .plan-option-dur { font-size:.82rem; color:var(--hint); margin-top:2px; }
+  .plan-option-price { font-size:1.1rem; font-weight:800; color:var(--btn); }
+
+  /* Email input */
+  .email-section { margin-bottom:16px; }
+  .email-label { font-size:.85rem; font-weight:600; color:var(--hint); margin-bottom:6px; display:block; }
+  .email-input { width:100%; padding:12px 14px; border:1.5px solid rgba(0,0,0,.1); border-radius:12px; font-size:.95rem; background:var(--bg); color:var(--text); outline:none; }
+  .email-input:focus { border-color:var(--btn); }
+
+  /* Pay methods */
+  .pay-section { margin-bottom:20px; }
+  .pay-label { font-size:.85rem; font-weight:600; color:var(--hint); margin-bottom:8px; display:block; }
+  .pay-methods { display:flex; gap:8px; flex-wrap:wrap; }
+  .pay-method { flex:1; min-width:80px; padding:10px 8px; border:2px solid rgba(0,0,0,.08); border-radius:12px; text-align:center; cursor:pointer; font-size:.82rem; font-weight:600; transition:border-color .15s; }
+  .pay-method.selected { border-color:var(--btn); background:rgba(102,126,234,.06); }
+  .pay-method .pay-icon { font-size:1.3rem; display:block; margin-bottom:3px; }
+
+  /* Buy button */
+  .buy-btn { width:100%; padding:16px; background:var(--btn); color:var(--btn-text); border:none; border-radius:14px; font-size:1.05rem; font-weight:700; cursor:pointer; margin-bottom:12px; letter-spacing:.02em; }
+  .buy-btn:disabled { opacity:.5; }
+  .secure-note { text-align:center; color:var(--hint); font-size:.78rem; padding-bottom:env(safe-area-inset-bottom,16px); margin-bottom:8px; }
+
+  /* Overlay */
+  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:99; opacity:0; pointer-events:none; transition:opacity .3s; }
+  .overlay.show { opacity:1; pointer-events:all; }
+
+  /* Loading */
+  .loading { text-align:center; padding:60px 20px; color:var(--hint); }
+  .spinner { width:32px; height:32px; border:3px solid rgba(102,126,234,.2); border-top-color:var(--btn); border-radius:50%; animation:spin .8s linear infinite; margin:0 auto 12px; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+
+  /* Success */
+  .success-screen { display:none; position:fixed; inset:0; background:var(--bg); z-index:200; flex-direction:column; align-items:center; justify-content:center; padding:32px; text-align:center; }
+  .success-screen.show { display:flex; }
+  .success-icon { font-size:4rem; margin-bottom:16px; }
+  .success-title { font-size:1.5rem; font-weight:800; margin-bottom:8px; }
+  .success-sub { color:var(--hint); line-height:1.7; margin-bottom:32px; }
+  .success-btn { padding:14px 32px; background:var(--btn); color:var(--btn-text); border:none; border-radius:14px; font-size:1rem; font-weight:700; cursor:pointer; }
+
+  /* Empty state */
+  .empty { text-align:center; padding:48px 24px; color:var(--hint); }
+  .empty-icon { font-size:3rem; margin-bottom:12px; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-top">
+    <div class="logo">🌐 SimRyoko</div>
+    <button class="lang-btn" id="langBtn" onclick="toggleLang()">中文</button>
+  </div>
+  <h1 id="headerTitle">Global eSIM Store</h1>
+  <p id="headerSub">2,600+ plans · Instant delivery · From $2</p>
+</div>
+
+<!-- Search -->
+<div class="search-wrap">
+  <span class="search-icon">
+    <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+  </span>
+  <input class="search-input" id="searchInput" type="search" placeholder="Search country…" oninput="filterPlans()" autocomplete="off">
+</div>
+
+<!-- Filters -->
+<div class="filters">
+  <button class="filter-btn active" onclick="setFilter('all', this)" id="f-all">🌍 All</button>
+  <button class="filter-btn" onclick="setFilter('asia', this)">🌏 Asia</button>
+  <button class="filter-btn" onclick="setFilter('europe', this)">🇪🇺 Europe</button>
+  <button class="filter-btn" onclick="setFilter('americas', this)">🌎 Americas</button>
+  <button class="filter-btn" onclick="setFilter('popular', this)">⭐ Popular</button>
+</div>
+
+<!-- Plans List -->
+<div class="plans-list" id="plansList">
+  <div class="loading"><div class="spinner"></div><div>Loading plans…</div></div>
+</div>
+
+<!-- Overlay -->
+<div class="overlay" id="overlay" onclick="closeSheet()"></div>
+
+<!-- Detail Sheet -->
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-country" id="sheetCountry"></div>
+  <div class="sheet-sub" id="sheetSub"></div>
+  <div class="plan-options" id="planOptions"></div>
+  <div class="email-section">
+    <label class="email-label" id="emailLabel">📧 Delivery email (eSIM will be sent here)</label>
+    <input class="email-input" id="emailInput" type="email" placeholder="your@email.com" autocomplete="email">
+  </div>
+  <div class="pay-section">
+    <label class="pay-label" id="payLabel">💳 Payment method</label>
+    <div class="pay-methods">
+      <div class="pay-method selected" onclick="selectPay('card', this)">
+        <span class="pay-icon">💳</span>Card
+      </div>
+      <div class="pay-method" onclick="selectPay('usdt', this)">
+        <span class="pay-icon">₮</span>USDT
+      </div>
+      <div class="pay-method" onclick="selectPay('ton', this)">
+        <span class="pay-icon">💎</span>TON
+      </div>
+    </div>
+  </div>
+  <button class="buy-btn" id="buyBtn" onclick="submitOrder()">Buy Now — $0.00</button>
+  <p class="secure-note" id="secureNote">🔒 Secure · Instant eSIM delivery to email</p>
+</div>
+
+<!-- Success Screen -->
+<div class="success-screen" id="successScreen">
+  <div class="success-icon">✅</div>
+  <div class="success-title" id="successTitle">eSIM Sent!</div>
+  <div class="success-sub" id="successSub">Check your email for the QR code.<br/>Scan it in phone Settings → Mobile → Add eSIM.</div>
+  <button class="success-btn" id="successBtn" onclick="window.Telegram?.WebApp?.close()">Done</button>
+</div>
+
+<script>
+// ── Telegram WebApp Init ─────────────────────────────
+const tg = window.Telegram?.WebApp;
+if (tg) {
+  tg.ready();
+  tg.expand();
+  // 从用户语言检测
+  if (tg.initDataUnsafe?.user?.language_code?.startsWith('zh')) {
+    currentLang = 'zh';
+  }
+}
+
+// ── i18n ─────────────────────────────────────────────
+let currentLang = localStorage.getItem('lang') || 
+  (navigator.language.startsWith('zh') ? 'zh' : 'en');
+
+const I18N = {
+  en: {
+    headerTitle: 'Global eSIM Store',
+    headerSub: '2,600+ plans · Instant delivery · From $2',
+    searchPlaceholder: 'Search country…',
+    filterAll: '🌍 All', filterAsia: '🌏 Asia', filterEurope: '🇪🇺 Europe',
+    filterAmericas: '🌎 Americas', filterPopular: '⭐ Popular',
+    emailLabel: '📧 Delivery email (eSIM will be sent here)',
+    emailPlaceholder: 'your@email.com',
+    payLabel: '💳 Payment method',
+    payCard: 'Card', payUsdt: 'USDT', payTon: 'TON',
+    buyBtn: 'Buy Now',
+    secureNote: '🔒 Secure · Instant eSIM delivery to email',
+    successTitle: 'eSIM Sent!',
+    successSub: 'Check your email for the QR code.\nScan it in Settings → Mobile → Add eSIM.',
+    successBtn: 'Done',
+    loading: 'Loading plans…',
+    days: 'days', from: 'From',
+  },
+  zh: {
+    headerTitle: 'eSIM 全球商城',
+    headerSub: '2600+ 款套餐 · 即时发货 · 最低 $2',
+    searchPlaceholder: '搜索目的地…',
+    filterAll: '🌍 全部', filterAsia: '🌏 亚洲', filterEurope: '🇪🇺 欧洲',
+    filterAmericas: '🌎 美洲', filterPopular: '⭐ 热门',
+    emailLabel: '📧 收件邮箱（eSIM 将发送至此处）',
+    emailPlaceholder: 'your@email.com',
+    payLabel: '💳 付款方式',
+    payCard: '信用卡', payUsdt: 'USDT', payTon: 'TON',
+    buyBtn: '立即购买',
+    secureNote: '🔒 安全支付 · eSIM 即时发送到邮箱',
+    successTitle: 'eSIM 已发送！',
+    successSub: '请查收邮件中的二维码。\n进入设置 → 移动网络 → 添加 eSIM 扫码安装。',
+    successBtn: '完成',
+    loading: '加载套餐中…',
+    days: '天', from: '低至',
+  }
+};
+
+function t(key) { return I18N[currentLang]?.[key] || I18N.en[key] || key; }
+
+function toggleLang() {
+  currentLang = currentLang === 'zh' ? 'en' : 'zh';
+  localStorage.setItem('lang', currentLang);
+  document.getElementById('langBtn').textContent = currentLang === 'zh' ? 'EN' : '中文';
+  applyLang();
+  renderPlans();
+}
+
+function applyLang() {
+  document.getElementById('headerTitle').textContent = t('headerTitle');
+  document.getElementById('headerSub').textContent = t('headerSub');
+  document.getElementById('searchInput').placeholder = t('searchPlaceholder');
+  document.getElementById('emailLabel').textContent = t('emailLabel');
+  document.getElementById('emailInput').placeholder = t('emailPlaceholder');
+  document.getElementById('payLabel').textContent = t('payLabel');
+  document.getElementById('secureNote').textContent = t('secureNote');
+  document.getElementById('langBtn').textContent = currentLang === 'zh' ? 'EN' : '中文';
+  document.getElementById('successTitle').textContent = t('successTitle');
+  document.getElementById('successSub').textContent = t('successSub');
+  document.getElementById('successBtn').textContent = t('successBtn');
+  // update buy button
+  updateBuyBtn();
+}
+
+// ── Data ─────────────────────────────────────────────
+const POPULAR = ['JP', 'KR', 'TH', 'SG', 'DE', 'US', 'TW', 'HK', 'MY', 'AU', 'GB', 'FR'];
+const ASIA = ['JP', 'KR', 'TH', 'SG', 'TW', 'HK', 'MY', 'ID', 'PH', 'VN', 'IN', 'CN'];
+const EUROPE = ['DE', 'FR', 'GB', 'IT', 'ES', 'NL', 'CH', 'AT', 'SE', 'NO', 'DK', 'PT', 'GR', 'PL'];
+const AMERICAS = ['US', 'CA', 'MX', 'BR', 'AR', 'CL', 'CO', 'PE'];
+
+let allPlans = [];
+let filteredPlans = [];
+let currentFilter = 'all';
+let selectedPlan = null;
+let selectedPayMethod = 'card';
+
+// ── Load Plans ────────────────────────────────────────
+async function loadPlans() {
+  try {
+    const res = await fetch('/api/products?destinations=1');
+    const data = await res.json();
+    const destinations = data.data || [];
+
+    // 为每个目的地加载代表性套餐
+    const planRes = await fetch('/api/products?pageSize=100');
+    const planData = await planRes.json();
+    const plans = planData.data?.list || [];
+
+    // 按国家分组
+    const byCountry = {};
+    for (const p of plans) {
+      const code = p.countries?.[0]?.code || p.countries?.[0];
+      if (!code) continue;
+      if (!byCountry[code]) byCountry[code] = [];
+      byCountry[code].push(p);
+    }
+
+    allPlans = destinations.map(d => ({
+      ...d,
+      plans: byCountry[d.code] || [],
+      minPrice: byCountry[d.code]
+        ? Math.min(...byCountry[d.code].map(p => parseFloat(p.price)))
+        : null
+    })).filter(d => d.plans.length > 0 && d.minPrice !== null);
+
+    allPlans.sort((a, b) => {
+      const ai = POPULAR.indexOf(a.code);
+      const bi = POPULAR.indexOf(b.code);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return a.name.localeCompare(b.name);
+    });
+
+    filteredPlans = [...allPlans];
+    renderPlans();
+  } catch (e) {
+    document.getElementById('plansList').innerHTML =
+      `<div class="empty"><div class="empty-icon">⚠️</div><div>Failed to load. Please retry.</div></div>`;
+  }
+}
+
+function filterByRegion(plans) {
+  if (currentFilter === 'all') return plans;
+  if (currentFilter === 'popular') return plans.filter(p => POPULAR.includes(p.code));
+  if (currentFilter === 'asia') return plans.filter(p => ASIA.includes(p.code));
+  if (currentFilter === 'europe') return plans.filter(p => EUROPE.includes(p.code));
+  if (currentFilter === 'americas') return plans.filter(p => AMERICAS.includes(p.code));
+  return plans;
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterPlans();
+}
+
+function filterPlans() {
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
+  let result = allPlans;
+  if (q) {
+    result = result.filter(p =>
+      p.name?.toLowerCase().includes(q) ||
+      p.code?.toLowerCase().includes(q)
+    );
+  }
+  filteredPlans = filterByRegion(result);
+  renderPlans();
+}
+
+function renderPlans() {
+  const list = document.getElementById('plansList');
+  if (filteredPlans.length === 0) {
+    list.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><div>No plans found</div></div>`;
+    return;
+  }
+  list.innerHTML = filteredPlans.map(d => `
+    <div class="plan-item" onclick="openPlan('${d.code}')">
+      <div class="plan-flag">${d.flag || '🌐'}</div>
+      <div class="plan-info">
+        <div class="plan-country">${d.name}</div>
+        <div class="plan-detail">${d.plans.length} ${currentLang === 'zh' ? '个套餐' : 'plans'}</div>
+      </div>
+      <div class="plan-price">${t('from')} $${d.minPrice?.toFixed(2)}</div>
+    </div>
+  `).join('');
+}
+
+// ── Sheet ─────────────────────────────────────────────
+let currentCountryPlans = [];
+
+function openPlan(code) {
+  const dest = allPlans.find(d => d.code === code);
+  if (!dest) return;
+
+  currentCountryPlans = dest.plans.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+  document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${dest.name}`;
+  document.getElementById('sheetSub').textContent = `${dest.plans.length} ${currentLang === 'zh' ? '款套餐可选' : 'plans available'}`;
+
+  // Render plan options
+  document.getElementById('planOptions').innerHTML = currentCountryPlans.slice(0, 6).map((p, i) => `
+    <div class="plan-option${i === 0 ? ' selected' : ''}" onclick="selectOption(${i}, this)" data-id="${i}">
+      <div class="plan-option-left">
+        <div class="plan-option-data">${p.name || (p.description || '').split(' ').slice(0, 3).join(' ')}</div>
+        <div class="plan-option-dur">${currentLang === 'zh' ? '有效期: ' : 'Valid: '}${p.validityDays ? p.validityDays + (currentLang === 'zh' ? '天' : ' days') : '—'}</div>
+      </div>
+      <div class="plan-option-price">$${parseFloat(p.price).toFixed(2)}</div>
+    </div>
+  `).join('');
+
+  selectedPlan = currentCountryPlans[0];
+  updateBuyBtn();
+
+  // Open sheet
+  document.getElementById('sheet').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+
+  // Telegram haptic
+  tg?.HapticFeedback?.impactOccurred('light');
+}
+
+function selectOption(idx, el) {
+  document.querySelectorAll('.plan-option').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedPlan = currentCountryPlans[idx];
+  updateBuyBtn();
+  tg?.HapticFeedback?.selectionChanged();
+}
+
+function selectPay(method, el) {
+  selectedPayMethod = method;
+  document.querySelectorAll('.pay-method').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function updateBuyBtn() {
+  const btn = document.getElementById('buyBtn');
+  if (selectedPlan) {
+    const price = parseFloat(selectedPlan.price).toFixed(2);
+    btn.textContent = `${t('buyBtn')} — $${price}`;
+    btn.disabled = false;
+  } else {
+    btn.textContent = t('buyBtn');
+    btn.disabled = true;
+  }
+}
+
+function closeSheet() {
+  document.getElementById('sheet').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// ── Order ─────────────────────────────────────────────
+async function submitOrder() {
+  const email = document.getElementById('emailInput').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    tg?.HapticFeedback?.notificationOccurred('error');
+    document.getElementById('emailInput').focus();
+    document.getElementById('emailInput').style.borderColor = '#e53e3e';
+    setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
+    return;
+  }
+  if (!selectedPlan) return;
+
+  const btn = document.getElementById('buyBtn');
+  btn.disabled = true;
+  btn.textContent = currentLang === 'zh' ? '处理中…' : 'Processing…';
+
+  try {
+    if (selectedPayMethod === 'card') {
+      // Stripe 支付 — 跳转到结账页
+      const url = `/checkout.html?productId=${selectedPlan.id}&email=${encodeURIComponent(email)}&method=card`;
+      if (tg) {
+        tg.openLink(url);
+      } else {
+        window.location.href = url;
+      }
+      return;
+    }
+
+    if (selectedPayMethod === 'usdt' || selectedPayMethod === 'ton') {
+      // 创建订单
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId: selectedPlan.id, email, paymentMethod: selectedPayMethod })
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        closeSheet();
+        if (selectedPayMethod === 'usdt') {
+          // 显示 USDT 付款信息
+          const msg = currentLang === 'zh'
+            ? `💳 请发送 $${data.data.paymentAmount} USDT (TRC-20) 到:\n\n\`${data.data.walletAddress}\`\n\n订单号: ${data.data.orderId}\neSIM 确认收款后自动发至您的邮箱。`
+            : `💳 Please send $${data.data.paymentAmount} USDT (TRC-20) to:\n\n\`${data.data.walletAddress}\`\n\nOrder ID: ${data.data.orderId}\neSIM will be sent to your email after payment confirmation.`;
+          tg?.showAlert ? tg.showAlert(msg) : alert(msg);
+        } else if (selectedPayMethod === 'ton') {
+          // TON 支付跳转
+          const tonAmount = (parseFloat(selectedPlan.price) / 5).toFixed(2); // TON 汇率估算
+          const tonAddr = 'UQD...'; // TODO: TON wallet address
+          tg?.openLink(`ton://transfer/${tonAddr}?amount=${tonAmount}&text=SimRyoko_${data.data.orderId}`);
+        }
+        showSuccess(email);
+      }
+    }
+  } catch (e) {
+    tg?.HapticFeedback?.notificationOccurred('error');
+    alert('Error: ' + e.message);
+  } finally {
+    updateBuyBtn();
+  }
+}
+
+function showSuccess(email) {
+  const screen = document.getElementById('successScreen');
+  document.getElementById('successSub').textContent =
+    (currentLang === 'zh'
+      ? `确认付款后，eSIM 将发送至\n${email}`
+      : `After payment confirmation, eSIM will be sent to\n${email}`);
+  screen.classList.add('show');
+  tg?.HapticFeedback?.notificationOccurred('success');
+}
+
+// ── Init ──────────────────────────────────────────────
+applyLang();
+loadPlans();
+</script>
+</body>
+</html>
