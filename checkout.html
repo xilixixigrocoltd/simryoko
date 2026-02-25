@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
   <script src="https://js.stripe.com/v3/"></script>
-  <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
 </head>
 <body>
 
@@ -69,11 +68,15 @@
           </div>
         </div>
 
-        <!-- 信用卡提示（Paddle 弹窗处理，无需填写） -->
+        <!-- 信用卡 — Stripe Elements -->
         <div id="card-section" style="display:none">
-          <div style="background:#f0f9ff;border-radius:10px;padding:14px 16px;font-size:13px;color:#555;border:1.5px solid #d0eaff;">
-            💳 Click the button below to securely enter your card details.<br>
-            <span style="color:#999;font-size:12px;">Powered by Paddle · Visa / Mastercard / Amex</span>
+          <div style="background:#fff;border:2px solid #e8ecf4;border-radius:14px;padding:18px;margin-bottom:4px;">
+            <div style="font-size:12px;font-weight:700;color:#888;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;">Card Details</div>
+            <div id="stripe-card-element" style="padding:13px 14px;border:1.5px solid #e0e0ea;border-radius:10px;background:#fafafa;min-height:44px;font-size:15px;"></div>
+            <div id="stripe-card-error" style="color:#e53e3e;font-size:12.5px;margin-top:8px;display:none;"></div>
+          </div>
+          <div style="font-size:11.5px;color:#bbb;text-align:center;margin-top:6px;">
+            🔒 Secured by Stripe · Visa / Mastercard / Amex · 3D Secure
           </div>
         </div>
 
@@ -119,28 +122,46 @@ let product = null;
 let selectedPayment = 'usdt';
 let stripe = null;
 let cardElement = null;
+let stripeElements = null;
 
-// 初始化支付 SDK
+// 初始化 Stripe
 async function initStripe() {
-  const cfg = await apiFetch('/config');
-  // 初始化 Stripe（备用）
-  if (cfg.stripePk && typeof Stripe !== 'undefined') {
-    stripe = Stripe(cfg.stripePk);
+  try {
+    const cfg = await apiFetch('/config');
+    if (cfg.stripePk && typeof Stripe !== 'undefined') {
+      stripe = Stripe(cfg.stripePk);
+    }
+  } catch(e) {
+    console.warn('[initStripe]', e.message);
   }
-  // 初始化 Paddle（主要信用卡通道）
-  if (cfg.paddleToken && typeof Paddle !== 'undefined') {
-    Paddle.Initialize({
-      token: cfg.paddleToken,
-      environment: cfg.paddleEnv === 'production' ? undefined : 'sandbox',
-      eventCallback: function(data) {
-        if (data.name === 'checkout.completed') {
-          // Paddle 支付完成，跳转成功页
-          const orderId = window._currentPaddleOrderId || '';
-          window.location = `/success.html?order=${orderId}&method=card&product=${encodeURIComponent(product?.nameEn || '')}`;
-        }
-      }
-    });
-  }
+}
+
+function mountStripeCard() {
+  if (!stripe || cardElement) return;
+  stripeElements = stripe.elements();
+  cardElement = stripeElements.create('card', {
+    style: {
+      base: {
+        fontFamily: 'Inter, -apple-system, sans-serif',
+        fontSize: '15px',
+        color: '#1a1a2e',
+        '::placeholder': { color: '#bbb' },
+        iconColor: '#6C63FF',
+      },
+      invalid: { color: '#e53e3e', iconColor: '#e53e3e' }
+    },
+    hidePostalCode: false
+  });
+  cardElement.mount('#stripe-card-element');
+  cardElement.on('change', function(event) {
+    const errEl = document.getElementById('stripe-card-error');
+    if (event.error) {
+      errEl.textContent = event.error.message;
+      errEl.style.display = 'block';
+    } else {
+      errEl.style.display = 'none';
+    }
+  });
 }
 
 async function loadProduct() {
@@ -202,6 +223,11 @@ function selectPayment(method) {
 
   cardSection.style.display = method === 'card' ? 'block' : 'none';
   tonSection.style.display = method === 'ton' ? 'block' : 'none';
+
+  // 选中信用卡时挂载 Stripe Elements
+  if (method === 'card') {
+    setTimeout(mountStripeCard, 100);
+  }
 
   const labels = {
     usdt: 'Pay with USDT →',
@@ -266,35 +292,68 @@ async function submitOrder() {
     }
 
   } else {
-    // Paddle 信用卡支付流程
-    btn.textContent = 'Opening checkout…';
+    // Stripe 信用卡支付流程
+    if (!stripe || !cardElement) {
+      alert('Card payment is loading, please wait a moment and try again.');
+      btn.textContent = '💳 Pay with Card →';
+      btn.disabled = false;
+      return;
+    }
+
+    btn.textContent = 'Processing…';
+    const errEl = document.getElementById('stripe-card-error');
+    errEl.style.display = 'none';
+
     try {
-      // 1. 创建 Paddle 交易
-      const intentRes = await apiFetch('/paddle/intent', {
+      // 1. 创建 PaymentIntent
+      const intentRes = await apiFetch('/stripe/intent', {
         method: 'POST',
         body: JSON.stringify({ productId: product.id, email })
       });
       if (!intentRes.success) throw new Error(intentRes.error || 'Failed to create payment');
 
-      window._currentPaddleOrderId = intentRes.orderId;
+      const { clientSecret, orderId, amount } = intentRes;
+      btn.textContent = `Confirming $${parseFloat(amount).toFixed(2)}…`;
 
-      // 2. 打开 Paddle 结账弹窗
-      Paddle.Checkout.open({
-        transactionId: intentRes.transactionId,
-        settings: {
-          displayMode: 'overlay',
-          locale: 'en',
-          theme: 'light',
-          successUrl: `/success.html?order=${intentRes.orderId}&method=card&product=${encodeURIComponent(product.nameEn || product.name)}`
+      // 2. Stripe 确认卡支付（含 3D Secure）
+      const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: { email }
         }
       });
 
-      btn.textContent = 'Pay with Card →';
-      btn.disabled = false;
+      if (error) {
+        errEl.textContent = error.message;
+        errEl.style.display = 'block';
+        btn.textContent = '💳 Pay with Card →';
+        btn.disabled = false;
+        return;
+      }
+
+      if (paymentIntent.status === 'succeeded') {
+        btn.textContent = '✅ Payment confirmed! Delivering eSIM…';
+
+        // 3. 通知后端触发履单
+        try {
+          await apiFetch('/stripe/confirm', {
+            method: 'POST',
+            body: JSON.stringify({ paymentIntentId: paymentIntent.id, orderId })
+          });
+        } catch(e) { /* 履单失败会有人工介入 */ }
+
+        // 4. 跳转成功页
+        window.location = `/success.html?order=${orderId}&method=card&product=${encodeURIComponent(product.nameEn || product.name)}`;
+      } else {
+        throw new Error(`Payment status: ${paymentIntent.status}`);
+      }
 
     } catch(e) {
-      alert('Payment error: ' + e.message);
-      btn.textContent = 'Pay with Card →';
+      if (!errEl.style.display || errEl.style.display === 'none') {
+        errEl.textContent = e.message || 'Payment failed. Please try again.';
+        errEl.style.display = 'block';
+      }
+      btn.textContent = '💳 Pay with Card →';
       btn.disabled = false;
     }
   }
