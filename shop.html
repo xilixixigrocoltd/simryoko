@@ -284,8 +284,8 @@ body { background: #f5f6fa; }
 /* Header */
 .pc-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
 .pc-provider {
-  font-size: 11px; font-weight: 800; text-transform: uppercase;
-  letter-spacing: .8px; color: #aaa; flex: 1;
+  font-size: 12px; font-weight: 600; color: #666;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 .pc-type-tag {
   font-size: 10px; font-weight: 800; letter-spacing: .4px;
@@ -391,39 +391,23 @@ body { background: #f5f6fa; }
 
 /* ── Sort bar ─────────────────────────────────────── */
 .sh-sort-bar {
-  background: #fff; padding: 8px 16px 10px;
-  display: flex; align-items: center; gap: 8px;
+  background: #f5f6fa; padding: 6px 16px;
+  display: flex; align-items: center; gap: 6px;
   border-bottom: 1px solid #ececf0; flex-shrink: 0;
   overflow-x: auto; scrollbar-width: none;
 }
 .sh-sort-bar::-webkit-scrollbar { display: none; }
-.sh-sort-lbl { font-size: 11px; color: #ccc; white-space: nowrap; font-weight: 700; letter-spacing: .3px; flex-shrink: 0; }
+.sh-sort-lbl { font-size: 11px; color: #bbb; white-space: nowrap; font-weight: 600; flex-shrink: 0; margin-right: 2px; }
 .sh-sort-btn {
-  flex-shrink: 0; padding: 5px 13px; border-radius: 99px;
+  flex-shrink: 0; padding: 4px 11px; border-radius: 99px;
   border: 1.5px solid #e5e5ec; background: #fff;
-  font-size: 12px; font-weight: 700; color: #888;
+  font-size: 11.5px; font-weight: 600; color: #999;
   cursor: pointer; font-family: inherit; transition: all .15s; white-space: nowrap;
 }
 .sh-sort-btn.on { background: #f0eeff; border-color: #6C63FF; color: #6C63FF; }
 .sh-sort-btn:hover:not(.on) { border-color: #c4bdff; color: #555; }
 
-/* Plan card: sel-dot (inline checkmark) */
-.pc-sel-dot {
-  width: 16px; height: 16px; border-radius: 50%;
-  border: 2px solid #dce0ec; background: #fff;
-  flex-shrink: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 9px; color: transparent; font-weight: 900;
-  transition: background .2s, border-color .2s, color .2s;
-}
-.pc.sel .pc-sel-dot { background: #6C63FF; border-color: #6C63FF; color: #fff; }
-.pc.unlimited-card.sel .pc-sel-dot { background: #9333EA; border-color: #9333EA; }
 
-/* Plan name (replaces pc-provider) */
-.pc-plan-name {
-  font-size: 12.5px; font-weight: 700; color: #444;
-  flex: 1; min-width: 0;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
 
 /* Skeleton plan cards */
 .pc.sk-plan {
@@ -585,8 +569,8 @@ body { background: #f5f6fa; }
   </div>
 
   <!-- Sort bar -->
-  <div class="sh-sort-bar" id="sortBar">
-    <span class="sh-sort-lbl">排序</span>
+  <div class="sh-sort-bar" id="sortBar" style="display:none">
+    <span class="sh-sort-lbl">排序：</span>
     <button class="sh-sort-btn on" data-sort="price" onclick="setSort('price',this)">💰 价格</button>
     <button class="sh-sort-btn"   data-sort="data"  onclick="setSort('data',this)">📶 流量</button>
     <button class="sh-sort-btn"   data-sort="days"  onclick="setSort('days',this)">📅 时长</button>
@@ -847,6 +831,7 @@ async function openCountry(code) {
   document.getElementById('shName').textContent = d.n + ' eSIM';
   document.getElementById('shSub').textContent  = '加载中…';
   document.getElementById('typeBar').style.display = 'none';
+  document.getElementById('sortBar').style.display  = 'none';
   document.getElementById('planList').innerHTML  = '<div class="pc sk-plan"></div><div class="pc sk-plan"></div><div class="pc sk-plan"></div>';
   document.getElementById('checkoutBar').classList.remove('on');
 
@@ -918,6 +903,8 @@ function renderPlans() {
   // Show type filter only if multiple types exist
   const types = new Set(allCurPlans.map(planType));
   document.getElementById('typeBar').style.display = types.size > 1 ? 'flex' : 'none';
+  // Show sort bar only when plans are loaded
+  document.getElementById('sortBar').style.display = plans.length ? 'flex' : 'none';
 
   if (!plans.length) {
     document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">📭</div><p>该筛选条件下暂无套餐</p></div>`;
@@ -1167,14 +1154,15 @@ function buildPlanCard(p, i, bestGBIdx) {
   }
 
   const isFirst = i===0;
+  // 有 ribbon 时不显示 type-tag，避免右上角重叠
+  const typeTag = ribbon ? '' : `<span class="pc-type-tag ${type}">${typeLabel(type)}</span>`;
   return `
   <div class="pc${isInf?' unlimited-card':''}${isFirst?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
     ${ribbon}
     <div class="pc-body">
       <div class="pc-hd">
-        <div class="pc-sel-dot">✓</div>
-        <span class="pc-plan-name" title="${pn}">${pn}</span>
-        <span class="pc-type-tag ${type}">${typeLabel(type)}</span>
+        <span class="pc-provider" title="${pn}">${pn}</span>
+        ${typeTag}
       </div>
       <div class="pc-specs">
         <div class="pc-spec">
