@@ -26,12 +26,12 @@
     </a>
     <div class="nav-links">
       <a href="/shop.html" style="color:var(--brand)">Shop eSIMs</a>
-      <a href="/b2b.html">For Business</a>
+      <a href="/b2b.html" data-i18n="nav.business">For Business</a>
       <a href="/#how">How It Works</a>
     </div>
     <div class="nav-actions">
       <a href="/b2b.html" class="btn btn-ghost">Wholesale →</a>
-      <a href="/shop.html" class="btn btn-nav">Get eSIM</a>
+      <a href="/shop.html" class="btn btn-nav" data-i18n="nav.getesim">Get eSIM</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
@@ -238,5 +238,6 @@ document.getElementById('heroSearch').addEventListener('keydown', e => { if (e.k
 
 loadProducts();
 </script>
+<script src="/js/i18n.js"></script>
 </body>
 </html>

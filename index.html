@@ -35,24 +35,24 @@
       <span>SimRyoko</span>
     </a>
     <div class="nav-links">
-      <a href="/shop.html">Shop eSIMs</a>
-      <a href="/b2b.html">For Business</a>
-      <a href="#how">How It Works</a>
+      <a href="/shop.html" data-i18n="nav.shop">Shop eSIMs</a>
+      <a href="/b2b.html" data-i18n="nav.business">For Business</a>
+      <a href="#how" data-i18n="nav.how">How It Works</a>
     </div>
     <div class="nav-actions">
-      <a href="/b2b.html" class="btn btn-ghost">Wholesale →</a>
-      <a href="/shop.html" class="btn btn-nav">Get eSIM</a>
+      <a href="/b2b.html" class="btn btn-ghost" data-i18n="nav.wholesale">Wholesale →</a>
+      <a href="/shop.html" class="btn btn-nav" data-i18n="nav.getesim">Get eSIM</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
     </button>
   </div>
   <div class="mobile-nav" id="mobileNav">
-    <a href="/shop.html">🛒 Shop eSIMs</a>
-    <a href="/b2b.html">🤝 For Business</a>
-    <a href="#how">📖 How It Works</a>
-    <a href="#faq">❓ FAQ</a>
-    <a href="/shop.html" class="btn btn-primary btn-block" style="margin-top:8px">Get eSIM →</a>
+    <a href="/shop.html" data-i18n="nav.shop.m">🛒 Shop eSIMs</a>
+    <a href="/b2b.html" data-i18n="nav.business.m">🤝 For Business</a>
+    <a href="#how" data-i18n="nav.how.m">📖 How It Works</a>
+    <a href="#faq" data-i18n="nav.faq.m">❓ FAQ</a>
+    <a href="/shop.html" class="btn btn-primary btn-block" style="margin-top:8px" data-i18n="nav.getesim.m">Get eSIM →</a>
   </div>
 </nav>
 
@@ -60,15 +60,15 @@
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-pill">✈️ &nbsp;Trusted by travelers in 200+ countries</div>
-      <h1>Travel SIM-free.<br/><span class="hero-accent">Stay connected.</span></h1>
-      <p class="hero-desc">Instant eSIM for every destination. Buy, scan, go.<br/>No queues. No physical SIM card. From <strong>$2</strong>.</p>
+      <div class="hero-pill" data-i18n="hero.pill">✈️ &nbsp;Trusted by travelers in 200+ countries</div>
+      <h1 data-i18n="hero.h1" data-i18n-html>Travel SIM-free.<br/><span class="hero-accent">Stay connected.</span></h1>
+      <p class="hero-desc" data-i18n="hero.desc" data-i18n-html>Instant eSIM for every destination. Buy, scan, go.<br/>No queues. No physical SIM card. From <strong>$2</strong>.</p>
 
       <!-- Destination Search -->
       <div class="search-wrap">
         <div class="search-bar" id="searchBar">
           <svg class="search-ico" width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#999" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="#999" stroke-width="2" stroke-linecap="round"/></svg>
-          <input id="destInput" type="text" placeholder="Search destination… e.g. Japan, Europe" autocomplete="off" spellcheck="false"/>
+          <input id="destInput" type="text" placeholder="Search destination… e.g. Japan, Europe" data-i18n-placeholder="hero.search.placeholder" autocomplete="off" spellcheck="false"/>
           <button class="search-btn" onclick="goSearch()">Search</button>
         </div>
         <div id="destDropdown" class="dest-dropdown"></div>
@@ -113,13 +113,13 @@
 
   <!-- Stats bar -->
   <div class="stats-bar">
-    <div class="stat-item"><span class="stat-n">200+</span><span class="stat-l">Countries</span></div>
+    <div class="stat-item"><span class="stat-n">200+</span><span class="stat-l" data-i18n="hero.stats.countries">Countries</span></div>
     <div class="stat-sep"></div>
-    <div class="stat-item"><span class="stat-n">2,600+</span><span class="stat-l">Data Plans</span></div>
+    <div class="stat-item"><span class="stat-n">2,600+</span><span class="stat-l" data-i18n="hero.stats.plans">Data Plans</span></div>
     <div class="stat-sep"></div>
-    <div class="stat-item"><span class="stat-n">Instant</span><span class="stat-l">Delivery</span></div>
+    <div class="stat-item"><span class="stat-n">Instant</span><span class="stat-l" data-i18n="hero.stats.delivery">Delivery</span></div>
     <div class="stat-sep"></div>
-    <div class="stat-item"><span class="stat-n">99%+</span><span class="stat-l">Activation Rate</span></div>
+    <div class="stat-item"><span class="stat-n">99%+</span><span class="stat-l" data-i18n="hero.stats.support">Activation Rate</span></div>
   </div>
 </section>
 
@@ -132,22 +132,22 @@
       <div class="how-card">
         <div class="how-num">01</div>
         <div class="how-icon">🌍</div>
-        <h3>Choose Your Plan</h3>
-        <p>Search your destination. Pick the data plan that fits your trip — daily, weekly or monthly.</p>
+        <h3 data-i18n="how.step1.title">Choose Your Plan</h3>
+        <p data-i18n="how.step1.desc">Search your destination. Pick the data plan that fits your trip — daily, weekly or monthly.</p>
       </div>
       <div class="how-arrow">→</div>
       <div class="how-card">
         <div class="how-num">02</div>
         <div class="how-icon">💳</div>
-        <h3>Pay Securely</h3>
-        <p>Pay by USDT crypto or credit card. Your eSIM QR code is sent to your email immediately.</p>
+        <h3 data-i18n="how.step2.title">Pay Securely</h3>
+        <p data-i18n="how.step2.desc">Pay by USDT crypto or credit card. Your eSIM QR code is sent to your email immediately.</p>
       </div>
       <div class="how-arrow">→</div>
       <div class="how-card">
         <div class="how-num">03</div>
         <div class="how-icon">📱</div>
-        <h3>Scan & Go</h3>
-        <p>Scan the QR code in your phone Settings. Activate when you land. No SIM swap needed.</p>
+        <h3 data-i18n="how.step3.title">Scan & Go</h3>
+        <p data-i18n="how.step3.desc">Scan the QR code in your phone Settings. Activate when you land. No SIM swap needed.</p>
       </div>
     </div>
   </div>
@@ -238,33 +238,33 @@
 </section>
 
 <!-- FAQ -->
-<section class="faq">
+<section class="faq" id="faq">
   <div class="container">
-    <h2 class="section-h" style="text-align:center;margin-bottom:48px">Common questions</h2>
+    <h2 class="section-h" style="text-align:center;margin-bottom:48px" data-i18n="faq.title">Common questions</h2>
     <div class="faq-grid">
       <div class="faq-item">
-        <h4>Is my phone eSIM compatible?</h4>
-        <p>Most phones from 2019 onwards support eSIM, including iPhone XS+, Samsung Galaxy S20+, Google Pixel 3+. Check your phone's settings under "Cellular" or "Mobile Data" for "Add eSIM".</p>
+        <h4 data-i18n="faq.q1">Is my phone eSIM compatible?</h4>
+        <p data-i18n="faq.a1">Most phones from 2019 onwards support eSIM, including iPhone XS+, Samsung Galaxy S20+, Google Pixel 3+. Check your phone's settings under "Cellular" or "Mobile Data" for "Add eSIM".</p>
       </div>
       <div class="faq-item">
-        <h4>When should I install the eSIM?</h4>
-        <p>You can install the eSIM anytime after purchase, but activate it only when you arrive at your destination. Data validity starts from first use.</p>
+        <h4 data-i18n="faq.q3">When should I install the eSIM?</h4>
+        <p data-i18n="faq.a3">You can install the eSIM anytime after purchase, but activate it only when you arrive at your destination. Data validity starts from first use.</p>
       </div>
       <div class="faq-item">
-        <h4>Will I lose my regular phone number?</h4>
-        <p>No. The eSIM works alongside your physical SIM. You keep your regular number for calls and texts. The eSIM handles your data connection abroad.</p>
+        <h4 data-i18n="faq.q4">Will I lose my regular phone number?</h4>
+        <p data-i18n="faq.a4">No. The eSIM works alongside your physical SIM. You keep your regular number for calls and texts. The eSIM handles your data connection abroad.</p>
       </div>
       <div class="faq-item">
-        <h4>What payment methods are accepted?</h4>
-        <p>We accept USDT (TRC-20) cryptocurrency. Credit card payments coming soon. USDT offers zero transaction fees and instant confirmation.</p>
+        <h4 data-i18n="faq.q5">What payment methods are accepted?</h4>
+        <p data-i18n="faq.a5">We accept USDT (TRC-20) cryptocurrency. Credit card payments coming soon. USDT offers zero transaction fees and instant confirmation.</p>
       </div>
       <div class="faq-item">
-        <h4>How fast is delivery?</h4>
-        <p>Instant. After payment is confirmed, the eSIM QR code is automatically sent to your email. Typically within 1–3 minutes.</p>
+        <h4 data-i18n="faq.q2">How fast is delivery?</h4>
+        <p data-i18n="faq.a2">Instant. After payment is confirmed, the eSIM QR code is automatically sent to your email. Typically within 1–3 minutes.</p>
       </div>
       <div class="faq-item">
-        <h4>What if the eSIM doesn't work?</h4>
-        <p>We offer full support via WhatsApp and email. If there's a technical issue with activation, we'll replace or refund — no questions asked.</p>
+        <h4 data-i18n="faq.q6">What if the eSIM doesn't work?</h4>
+        <p data-i18n="faq.a6">We offer full support via WhatsApp and email. If there's a technical issue with activation, we'll replace or refund — no questions asked.</p>
       </div>
     </div>
   </div>
@@ -326,5 +326,6 @@
 
 <script src="/js/app.js"></script>
 <script src="/js/home.js"></script>
+<script src="/js/i18n.js"></script>
 </body>
 </html>
