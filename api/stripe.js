@@ -58,25 +58,39 @@ async function handleConfirm(req, res) {
     if (intent.status !== 'succeeded') return res.status(400).json({ error: `Payment not succeeded: ${intent.status}` });
     if (intent.metadata.orderId !== orderId) return res.status(400).json({ error: 'Order ID mismatch' });
 
-    const order = store.getOrder(orderId);
-    if (!order) return res.status(404).json({ error: 'Order not found' });
+    // 从 store 获取订单；若 /tmp 因冷启动丢失，从 Stripe metadata 重建
+    let order = store.getOrder(orderId);
+    let recovered = false;
+    if (!order) {
+      const { productId: metaPid, email: metaEmail } = intent.metadata;
+      const product = await getProductById(parseInt(metaPid));
+      if (!product) {
+        await notifyError('stripe/confirm', `Order ${orderId} not in store and product ${metaPid} not found`).catch(() => {});
+        return res.status(404).json({ error: 'Order not found. Please contact support with your payment ID.' });
+      }
+      order = { orderId, productId: parseInt(metaPid), productName: product.nameEn || product.name,
+        productPrice: parseFloat(product.price), email: metaEmail,
+        country: product.countries?.[0]?.code || 'INT', paymentIntentId, status: 'paid' };
+      recovered = true;
+    }
     if (order.status === 'fulfilled') return res.json({ success: true, status: 'fulfilled', message: 'eSIM already sent to your email' });
 
-    store.updateOrder(orderId, { status: 'paid', paymentIntentId });
+    if (!recovered) store.updateOrder(orderId, { status: 'paid', paymentIntentId });
     try {
-      store.updateOrder(orderId, { status: 'processing' });
+      if (!recovered) store.updateOrder(orderId, { status: 'processing' });
       const orderResult = await placeOrder(order.productId, 1);
       if (!orderResult.success) {
-        store.updateOrder(orderId, { status: 'failed', note: orderResult.message });
+        if (!recovered) store.updateOrder(orderId, { status: 'failed', note: orderResult.message });
+        await notifyError('stripe/confirm-b2b', `Order ${orderId}: ${orderResult.message}`).catch(() => {});
         return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
       }
       const esimData = extractEsim(orderResult);
-      store.updateOrder(orderId, { status: 'fulfilled', esimData });
+      if (!recovered) store.updateOrder(orderId, { status: 'fulfilled', esimData });
       await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: esimData.qrCodeUrl, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
     } catch (e) {
-      store.updateOrder(orderId, { status: 'pending_fulfillment', note: e.message });
+      if (!recovered) store.updateOrder(orderId, { status: 'pending_fulfillment', note: e.message });
       await notifyError('stripe/confirm', e.message).catch(() => {});
       return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
     }

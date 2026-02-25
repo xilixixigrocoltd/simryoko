@@ -8,7 +8,7 @@ module.exports = (req, res) => {
     stripePk: process.env.STRIPE_PUBLISHABLE_KEY || '',
     paddleToken: process.env.PADDLE_CLIENT_TOKEN || '',
     paddleEnv: process.env.PADDLE_ENV || 'sandbox',
-    usdtWallet: process.env.USDT_WALLET || ''
+    usdtWallet: process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL'
   });
 };
 // Stripe live mode Wed Feb 25 17:04:53 CST 2026
