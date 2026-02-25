@@ -4,279 +4,269 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Browse eSIM Plans — SimRyoko</title>
-  <meta name="description" content="2,600+ eSIM data plans for 200+ countries. Instant delivery. Find your perfect plan from $2."/>
+  <meta name="description" content="2,600+ eSIM plans for 200+ countries. Instant delivery from $2."/>
   <meta property="og:title" content="Browse eSIM Plans — SimRyoko"/>
-  <meta property="og:description" content="2,600+ eSIM plans. Japan, Korea, Europe & more. From $2. Instant delivery."/>
+  <meta property="og:description" content="eSIM for Japan, Korea, Europe & 200+ countries. From $2. Instant."/>
   <meta property="og:image" content="https://simryoko.com/img/tma-banner.png"/>
-  <meta property="og:url" content="https://simryoko.com/shop.html"/>
-  <meta property="og:type" content="website"/>
   <link rel="canonical" href="https://simryoko.com/shop.html"/>
   <link rel="manifest" href="/manifest.json"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236C63FF'/><text y='.9em' font-size='65' x='15'>📡</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
   <style>
-    /* ── Shop v2 styles ── */
-    .shop-tabs-wrap {
-      background: #fff;
-      border-bottom: 1px solid #f0f0f5;
-      position: sticky;
-      top: 64px;
-      z-index: 90;
-    }
-    .shop-tabs {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .shop-tabs::-webkit-scrollbar { display: none; }
-    .shop-tab {
-      flex-shrink: 0;
-      padding: 14px 18px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #888;
-      border-bottom: 2px solid transparent;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: all .2s;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-      font-family: inherit;
-    }
-    .shop-tab:hover { color: #444; }
-    .shop-tab.active {
-      color: var(--brand, #6C63FF);
-      border-bottom-color: var(--brand, #6C63FF);
-    }
+  /* ══ Shop Page ══════════════════════════════════════ */
+  body { background: #f7f8fc; }
 
-    /* Search bar in hero */
-    .shop-search-v2 {
-      max-width: 560px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .shop-search-v2 input {
-      width: 100%;
-      padding: 14px 20px 14px 46px;
-      border-radius: 50px;
-      border: none;
-      font-size: 15px;
-      background: rgba(255,255,255,.15);
-      color: #fff;
-      backdrop-filter: blur(10px);
-      outline: none;
-      box-sizing: border-box;
-    }
-    .shop-search-v2 input::placeholder { color: rgba(255,255,255,.6); }
-    .shop-search-v2 input:focus { background: rgba(255,255,255,.25); }
-    .shop-search-v2 .search-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      opacity: .6;
-    }
+  /* Hero */
+  .s-hero {
+    background: linear-gradient(135deg, #6C63FF 0%, #9333ea 100%);
+    padding: 52px 24px 40px;
+    text-align: center;
+  }
+  .s-hero h1 { font-size: clamp(22px,5vw,36px); font-weight: 900; color: #fff; margin-bottom: 6px; }
+  .s-hero p  { color: rgba(255,255,255,.75); font-size: 15px; margin-bottom: 24px; }
+  .s-search {
+    max-width: 520px; margin: 0 auto;
+    background: #fff;
+    border-radius: 14px;
+    display: flex; align-items: center;
+    padding: 0 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.15);
+  }
+  .s-search svg { color: #aaa; flex-shrink: 0; }
+  .s-search input {
+    flex: 1; border: none; outline: none;
+    padding: 14px 12px;
+    font-size: 15px; font-family: inherit;
+    background: transparent;
+    color: #1a1a2e;
+  }
+  .s-search input::placeholder { color: #bbb; }
+  .s-search-clear {
+    background: none; border: none; cursor: pointer;
+    color: #ccc; font-size: 18px; padding: 4px;
+    display: none;
+  }
 
-    /* Destination grid */
-    .dest-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 14px;
-      padding: 28px 0;
-    }
-    @media (max-width: 600px) {
-      .dest-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    }
-    .dest-card {
-      background: #fff;
-      border: 1px solid #f0f0f5;
-      border-radius: 14px;
-      padding: 18px 14px 14px;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-    .dest-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(108,99,255,.12);
-      border-color: #d8d5ff;
-    }
-    .dest-flag { font-size: 36px; line-height: 1; margin-bottom: 8px; }
-    .dest-name { font-size: 13px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
-    .dest-price {
-      font-size: 12px;
-      color: var(--brand, #6C63FF);
-      font-weight: 600;
-    }
-    .dest-price.loading { color: #ccc; }
-    .dest-card.skeleton { animation: shimmer 1.4s infinite linear; background: linear-gradient(90deg,#f5f5f5 25%,#eee 50%,#f5f5f5 75%); background-size: 200% 100%; border-color: transparent; cursor: default; height: 118px; }
-    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+  /* Tab bar */
+  .s-tabs-wrap {
+    background: #fff;
+    border-bottom: 1px solid #ebebf0;
+    position: sticky; top: 64px; z-index: 90;
+  }
+  .s-tabs {
+    max-width: 1200px; margin: 0 auto;
+    padding: 0 16px;
+    display: flex; gap: 4px;
+    overflow-x: auto; scrollbar-width: none;
+    padding-bottom: 1px;
+  }
+  .s-tabs::-webkit-scrollbar { display: none; }
+  .s-tab {
+    flex-shrink: 0;
+    padding: 13px 16px;
+    font-size: 13.5px; font-weight: 600;
+    color: #888;
+    border: none; background: none;
+    border-bottom: 2.5px solid transparent;
+    cursor: pointer; white-space: nowrap;
+    font-family: inherit;
+    transition: color .15s;
+  }
+  .s-tab:hover { color: #333; }
+  .s-tab.on { color: #6C63FF; border-bottom-color: #6C63FF; }
 
-    /* Plan sheet (slide-up panel) */
-    .sheet-overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,.45);
-      z-index: 200;
-    }
-    .sheet-overlay.show { display: block; }
-    .plan-sheet {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      background: #fff;
-      border-radius: 22px 22px 0 0;
-      max-height: 90vh;
-      overflow-y: auto;
-      z-index: 201;
-      transform: translateY(100%);
-      transition: transform .32s cubic-bezier(.32,0,.67,0);
-      padding: 0 0 40px;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-    .plan-sheet.open { transform: translateY(0); }
-    .sheet-handle {
-      width: 36px; height: 4px;
-      background: #e0e0e0;
-      border-radius: 2px;
-      margin: 12px auto 0;
-    }
-    .sheet-header {
-      padding: 16px 20px 12px;
-      border-bottom: 1px solid #f0f0f5;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .sheet-back {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: #f5f5f5;
-      border: none;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 16px;
-      flex-shrink: 0;
-    }
-    .sheet-title { font-size: 17px; font-weight: 700; flex: 1; }
-    .sheet-sub { font-size: 12px; color: #888; }
+  /* Grid wrapper */
+  .s-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
+  .s-grid-head {
+    display: flex; align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .s-grid-head h2 { font-size: 18px; font-weight: 800; color: #1a1a2e; }
+  .s-grid-head span { font-size: 13px; color: #aaa; }
 
-    /* Plan options */
-    .plan-options { padding: 16px 20px; display: flex; flex-direction: column; gap: 10px; }
-    .plan-opt {
-      border: 2px solid #f0f0f5;
-      border-radius: 12px;
-      padding: 14px 16px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: all .15s;
-    }
-    .plan-opt:hover { border-color: #c5c0ff; background: #fafaff; }
-    .plan-opt.selected { border-color: var(--brand, #6C63FF); background: #f8f7ff; }
-    .plan-opt-left { display: flex; flex-direction: column; gap: 3px; }
-    .plan-opt-data { font-size: 15px; font-weight: 700; color: #1a1a2e; }
-    .plan-opt-days { font-size: 12px; color: #888; }
-    .plan-opt-price { font-size: 16px; font-weight: 800; color: var(--brand, #6C63FF); }
+  /* Country grid */
+  .s-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  @media(max-width:520px){ .s-grid { grid-template-columns: repeat(2,1fr); gap:10px; } }
 
-    /* Email + Buy */
-    .sheet-checkout {
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 4px;
-    }
-    .sheet-checkout input {
-      border: 1.5px solid #e8e8f0;
-      border-radius: 10px;
-      padding: 13px 16px;
-      font-size: 15px;
-      outline: none;
-      font-family: inherit;
-      transition: border .15s;
-    }
-    .sheet-checkout input:focus { border-color: var(--brand, #6C63FF); }
-    .buy-btn {
-      background: linear-gradient(135deg, #6C63FF, #9333ea);
-      color: #fff;
-      border: none;
-      border-radius: 12px;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      font-family: inherit;
-      transition: opacity .2s;
-    }
-    .buy-btn:disabled { opacity: .6; cursor: not-allowed; }
-    .pay-methods {
-      display: flex;
-      gap: 8px;
-    }
-    .pay-method-btn {
-      flex: 1;
-      padding: 10px 4px;
-      border: 1.5px solid #e8e8f0;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-      text-align: center;
-      background: #fff;
-      color: #555;
-      font-family: inherit;
-      transition: all .15s;
-    }
-    .pay-method-btn.active { border-color: var(--brand, #6C63FF); background: #f8f7ff; color: var(--brand, #6C63FF); }
+  /* Country card */
+  .c-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px 12px 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform .18s, box-shadow .18s;
+    border: 1.5px solid transparent;
+    position: relative;
+  }
+  .c-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 28px rgba(108,99,255,.13);
+    border-color: #e0deff;
+  }
+  .c-card:active { transform: translateY(-2px); }
+  .c-flag { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+  .c-name { font-size: 12.5px; font-weight: 700; color: #1a1a2e; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .c-price { font-size: 12px; font-weight: 600; color: #6C63FF; }
+  .c-price.tbd { color: #ccc; }
+  .c-badge {
+    position: absolute; top: 8px; right: 8px;
+    background: linear-gradient(135deg,#f59e0b,#ef4444);
+    color: #fff; font-size: 8.5px; font-weight: 800;
+    padding: 2px 6px; border-radius: 5px;
+    letter-spacing: .4px; text-transform: uppercase;
+  }
+  .c-card.sk {
+    background: linear-gradient(90deg,#f0f0f5 25%,#e8e8f0 50%,#f0f0f5 75%);
+    background-size: 200% 100%;
+    animation: sk 1.4s linear infinite;
+    border: none; height: 120px; cursor: default;
+  }
+  @keyframes sk { 0%{background-position:200% 0}100%{background-position:-200% 0} }
 
-    /* Section header */
-    .section-hd {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 28px 0 4px;
-    }
-    .section-hd h2 { font-size: 22px; font-weight: 800; }
-    .section-hd span { font-size: 13px; color: #888; }
+  /* Empty */
+  .s-empty {
+    text-align: center; padding: 64px 20px;
+    color: #bbb; grid-column: 1/-1;
+  }
+  .s-empty .ei { font-size: 42px; margin-bottom: 12px; }
+  .s-empty p { font-size: 15px; }
 
-    /* Empty state */
-    .dest-empty {
-      text-align: center;
-      padding: 60px 20px;
-      color: #888;
-      grid-column: 1 / -1;
-    }
-    .dest-empty .icon { font-size: 40px; margin-bottom: 12px; }
+  /* ══ Plan Sheet (Airalo-style slide-up) ═════════════ */
+  .ps-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(15,14,23,.5);
+    z-index: 200; backdrop-filter: blur(2px);
+  }
+  .ps-overlay.on { display: block; }
 
-    /* Global badge */
-    .dest-badge {
-      position: absolute;
-      top: 8px; right: 8px;
-      background: linear-gradient(135deg,#f59e0b,#ef4444);
-      color: #fff;
-      font-size: 9px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-      letter-spacing: .5px;
-    }
+  .ps {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #f7f8fc;
+    border-radius: 24px 24px 0 0;
+    max-height: 92vh; z-index: 201;
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(.32,0,.67,0);
+    display: flex; flex-direction: column;
+    max-width: 680px; margin: 0 auto;
+  }
+  .ps.on { transform: translateY(0); }
 
-    /* Fullscreen mode on mobile for sheet */
-    @media (max-width: 640px) {
-      .plan-sheet { border-radius: 22px 22px 0 0; }
-    }
+  /* Sheet header */
+  .ps-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 10px auto; flex-shrink: 0; }
+  .ps-head {
+    background: #fff;
+    padding: 12px 20px 16px;
+    border-bottom: 1px solid #ebebf0;
+    flex-shrink: 0;
+  }
+  .ps-head-top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
+  .ps-back {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: #f5f5f5; border: none; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .15s;
+  }
+  .ps-back:hover { background: #ebebf0; }
+  .ps-country-flag { font-size: 28px; }
+  .ps-country-name { font-size: 18px; font-weight: 800; color: #1a1a2e; flex: 1; }
+  .ps-sub { font-size: 13px; color: #888; padding-left: 44px; }
+
+  /* Plan list */
+  .ps-list { overflow-y: auto; padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+  /* Plan card (Airalo-style) */
+  .p-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px 18px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: border-color .15s, box-shadow .15s;
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .p-card:hover { border-color: #d8d5ff; }
+  .p-card.sel { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.08); }
+  .p-card-top { display: flex; align-items: center; justify-content: space-between; }
+  .p-provider { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #aaa; }
+  .p-card-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
+  .p-specs {
+    display: flex; gap: 0;
+    background: #f7f8fc; border-radius: 10px;
+    overflow: hidden;
+  }
+  .p-spec {
+    flex: 1; padding: 10px 0; text-align: center;
+    border-right: 1px solid #ebebf0;
+  }
+  .p-spec:last-child { border-right: none; }
+  .p-spec-val { font-size: 18px; font-weight: 900; color: #1a1a2e; line-height: 1; }
+  .p-spec-lbl { font-size: 10.5px; color: #aaa; font-weight: 600; margin-top: 3px; text-transform: uppercase; letter-spacing: .4px; }
+
+  .p-card-footer { display: flex; align-items: center; justify-content: space-between; }
+  .p-price { font-size: 22px; font-weight: 900; color: #6C63FF; }
+  .p-buy {
+    background: #6C63FF; color: #fff;
+    border: none; border-radius: 10px;
+    padding: 10px 20px; font-size: 14px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+    transition: background .15s, transform .15s;
+  }
+  .p-buy:hover { background: #5A52E0; transform: translateY(-1px); }
+  .p-buy:active { transform: translateY(0); }
+
+  /* Checkout strip at bottom */
+  .ps-checkout {
+    background: #fff;
+    border-top: 1px solid #ebebf0;
+    padding: 16px 20px 24px;
+    flex-shrink: 0;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ps-checkout.on { display: flex; }
+  .ps-checkout-title {
+    font-size: 13px; font-weight: 700; color: #1a1a2e;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .ps-checkout-plan { font-size: 12px; color: #888; }
+  .ps-email {
+    border: 1.5px solid #e8e8f0; border-radius: 12px;
+    padding: 13px 16px; font-size: 15px;
+    outline: none; font-family: inherit; width: 100%;
+    transition: border .15s; box-sizing: border-box;
+  }
+  .ps-email:focus { border-color: #6C63FF; }
+  .ps-pay-row { display: flex; gap: 8px; }
+  .ps-pay-opt {
+    flex: 1; border: 1.5px solid #e8e8f0; border-radius: 10px;
+    padding: 9px 6px; font-size: 11.5px; font-weight: 600;
+    cursor: pointer; text-align: center; background: #fff;
+    color: #555; font-family: inherit; transition: all .15s;
+    line-height: 1.4;
+  }
+  .ps-pay-opt.on { border-color: #6C63FF; background: #f8f7ff; color: #6C63FF; }
+  .ps-confirm {
+    width: 100%; padding: 15px; border: none; border-radius: 14px;
+    background: linear-gradient(135deg,#6C63FF,#9333ea);
+    color: #fff; font-size: 16px; font-weight: 800;
+    cursor: pointer; font-family: inherit;
+    transition: opacity .2s, transform .2s;
+  }
+  .ps-confirm:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+  .ps-confirm:not(:disabled):hover { transform: translateY(-1px); opacity: .95; }
+  .ps-fine { text-align: center; font-size: 11px; color: #ccc; }
+
+  /* Loading plan state */
+  .ps-loading { text-align: center; padding: 40px; color: #ccc; font-size: 32px; }
+
   </style>
 </head>
 <body>
@@ -286,24 +276,24 @@
   <div class="nav-inner">
     <a href="/" class="logo">
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="url(#gn1)"/>
-        <path d="M8 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <path d="M10.5 14c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
-        <circle cx="14" cy="14" r="1.5" fill="white"/>
-        <defs><linearGradient id="gn1" x1="0" y1="0" x2="28" y2="28" gradientUnits="userSpaceOnUse"><stop stop-color="#667eea"/><stop offset="1" stop-color="#764ba2"/></linearGradient></defs>
+        <circle cx="14" cy="14" r="14" fill="url(#gn)"/>
+        <path d="M8 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M10.5 14c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="14" cy="14" r="1.5" fill="#fff"/>
+        <defs><linearGradient id="gn" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#667eea"/><stop offset="1" stop-color="#764ba2"/></linearGradient></defs>
       </svg>
-      <span>SimRyoko</span>
+      SimRyoko
     </a>
     <div class="nav-links">
-      <a href="/shop.html" style="color:var(--brand)">Shop eSIMs</a>
-      <a href="/b2b.html">For Business</a>
+      <a href="/shop.html" style="color:var(--brand)">Shop</a>
+      <a href="/b2b.html">Wholesale</a>
       <a href="/#how">How It Works</a>
     </div>
     <div class="nav-actions">
-      <a href="/b2b.html" class="btn btn-ghost">Wholesale →</a>
+      <a href="/b2b.html" class="btn btn-ghost">For Business →</a>
       <a href="/shop.html" class="btn btn-nav">Get eSIM</a>
     </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu">
+    <button class="nav-toggle" id="navToggle">
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
     </button>
   </div>
@@ -316,74 +306,85 @@
 </nav>
 
 <!-- HERO -->
-<div class="shop-hero">
-  <div class="container" style="text-align:center">
-    <h1>Find Your eSIM</h1>
-    <p>200+ countries · 2,600+ plans · Instant delivery</p>
-    <div class="shop-search-v2">
-      <svg class="search-icon" width="18" height="18" fill="none" viewBox="0 0 24 24">
-        <circle cx="11" cy="11" r="7" stroke="rgba(255,255,255,0.6)" stroke-width="2"/>
-        <path d="m16.5 16.5 4 4" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round"/>
-      </svg>
-      <input type="text" id="heroSearch" placeholder="Search country… e.g. Japan, Europe" autocomplete="off"/>
-    </div>
+<div class="s-hero">
+  <h1>Find Your eSIM</h1>
+  <p>200+ countries · 2,600+ plans · Delivered instantly</p>
+  <div class="s-search">
+    <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="7" stroke="#bbb" stroke-width="2"/>
+      <path d="m16.5 16.5 4 4" stroke="#bbb" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <input id="searchInput" type="text" placeholder="Search country…" autocomplete="off"/>
+    <button class="s-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
 </div>
 
 <!-- TABS -->
-<div class="shop-tabs-wrap">
-  <div class="shop-tabs" id="tabBar">
-    <button class="shop-tab active" onclick="switchTab('popular', this)">🔥 Popular</button>
-    <button class="shop-tab" onclick="switchTab('asia', this)">🌏 Asia</button>
-    <button class="shop-tab" onclick="switchTab('europe', this)">🇪🇺 Europe</button>
-    <button class="shop-tab" onclick="switchTab('americas', this)">🌎 Americas</button>
-    <button class="shop-tab" onclick="switchTab('mideast', this)">🌙 Middle East</button>
-    <button class="shop-tab" onclick="switchTab('africa', this)">🌍 Africa</button>
-    <button class="shop-tab" onclick="switchTab('pacific', this)">🌊 Pacific</button>
-    <button class="shop-tab" onclick="switchTab('global', this)">🌐 Global</button>
+<div class="s-tabs-wrap">
+  <div class="s-tabs" id="tabBar">
+    <button class="s-tab on" data-tab="popular" onclick="setTab(this)">🔥 Popular</button>
+    <button class="s-tab" data-tab="asia"     onclick="setTab(this)">🌏 Asia</button>
+    <button class="s-tab" data-tab="europe"   onclick="setTab(this)">🇪🇺 Europe</button>
+    <button class="s-tab" data-tab="americas" onclick="setTab(this)">🌎 Americas</button>
+    <button class="s-tab" data-tab="mideast"  onclick="setTab(this)">🌙 Middle East</button>
+    <button class="s-tab" data-tab="africa"   onclick="setTab(this)">🌍 Africa</button>
+    <button class="s-tab" data-tab="pacific"  onclick="setTab(this)">🌊 Pacific</button>
+    <button class="s-tab" data-tab="global"   onclick="setTab(this)">🌐 Global</button>
   </div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div style="max-width:1200px;margin:0 auto;padding:0 20px 80px">
-  <div class="section-hd">
-    <h2 id="tabTitle">🔥 Popular Destinations</h2>
-    <span id="destCount"></span>
+<!-- GRID -->
+<div class="s-wrap">
+  <div class="s-grid-head">
+    <h2 id="gridTitle">🔥 Popular Destinations</h2>
+    <span id="gridCount"></span>
   </div>
-  <div class="dest-grid" id="destGrid">
-    <!-- Skeleton cards -->
-    <div class="dest-card skeleton"></div>
-    <div class="dest-card skeleton"></div>
-    <div class="dest-card skeleton"></div>
-    <div class="dest-card skeleton"></div>
-    <div class="dest-card skeleton"></div>
-    <div class="dest-card skeleton"></div>
+  <div class="s-grid" id="grid">
+    <div class="c-card sk"></div><div class="c-card sk"></div>
+    <div class="c-card sk"></div><div class="c-card sk"></div>
+    <div class="c-card sk"></div><div class="c-card sk"></div>
   </div>
 </div>
 
-<!-- PLAN SHEET OVERLAY -->
-<div class="sheet-overlay" id="overlay" onclick="closeSheet()"></div>
+<!-- OVERLAY -->
+<div class="ps-overlay" id="overlay" onclick="closeSheet()"></div>
 
 <!-- PLAN SHEET -->
-<div class="plan-sheet" id="planSheet">
-  <div class="sheet-handle"></div>
-  <div class="sheet-header">
-    <button class="sheet-back" onclick="closeSheet()">←</button>
-    <div>
-      <div class="sheet-title" id="sheetTitle">Japan eSIM</div>
-      <div class="sheet-sub" id="sheetSub">Loading plans…</div>
+<div class="ps" id="sheet">
+  <div class="ps-handle"></div>
+
+  <!-- Header -->
+  <div class="ps-head">
+    <div class="ps-head-top">
+      <button class="ps-back" onclick="closeSheet()">←</button>
+      <span class="ps-country-flag" id="sheetFlag">🇯🇵</span>
+      <span class="ps-country-name" id="sheetName">Japan eSIM</span>
     </div>
+    <div class="ps-sub" id="sheetSub">Loading plans…</div>
   </div>
-  <div class="plan-options" id="planOptions"></div>
-  <div class="sheet-checkout">
-    <input type="email" id="emailInput" placeholder="your@email.com — eSIM delivered here" autocomplete="email"/>
-    <div class="pay-methods">
-      <button class="pay-method-btn active" onclick="setPay('usdt-ton', this)">💎 USDT<br/>(Telegram)</button>
-      <button class="pay-method-btn" onclick="setPay('usdt-trc', this)">💵 USDT<br/>(TRC-20)</button>
-      <button class="pay-method-btn" onclick="setPay('card', this)">💳 Card</button>
+
+  <!-- Plans -->
+  <div class="ps-list" id="planList">
+    <div class="ps-loading">⏳</div>
+  </div>
+
+  <!-- Checkout strip -->
+  <div class="ps-checkout" id="checkoutStrip">
+    <div>
+      <div class="ps-checkout-title">
+        <span>Checkout</span>
+        <span id="checkoutPrice" style="color:#6C63FF;font-size:16px">$0.00</span>
+      </div>
+      <div class="ps-checkout-plan" id="checkoutPlan"></div>
     </div>
-    <button class="buy-btn" id="buyBtn" onclick="submitOrder()">Buy Now</button>
-    <p style="text-align:center;font-size:11px;color:#aaa;margin:0">⚡ Instant delivery · Secure checkout</p>
+    <input class="ps-email" id="emailInput" type="email" placeholder="your@email.com — eSIM delivered here"/>
+    <div class="ps-pay-row">
+      <button class="ps-pay-opt on" onclick="setPay('usdt-ton',this)">💎 USDT<br/><small>Telegram</small></button>
+      <button class="ps-pay-opt" onclick="setPay('usdt-trc',this)">💵 USDT<br/><small>TRC-20</small></button>
+      <button class="ps-pay-opt" onclick="setPay('card',this)">💳 Card<br/><small>Visa/MC</small></button>
+    </div>
+    <button class="ps-confirm" id="confirmBtn" onclick="confirmOrder()">Continue to Payment</button>
+    <div class="ps-fine">⚡ Instant delivery · Secure checkout · No subscription</div>
   </div>
 </div>
 
@@ -397,454 +398,343 @@
   </div>
 </footer>
 
-<!-- Floating WhatsApp -->
 <div class="float-support">
-  <a href="https://wa.me/19402382990" target="_blank" rel="noopener">
+  <a href="https://wa.me/19402382990" target="_blank">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-    <span>Live Support</span>
+    <span>Support</span>
   </a>
 </div>
 
 <script src="/js/app.js"></script>
 <script>
-// ── Destination Data ──────────────────────────────────
-const ALL_DESTINATIONS = {
-  popular: [
-    {code:'JP',name:'Japan',flag:'🇯🇵'},
-    {code:'KR',name:'South Korea',flag:'🇰🇷'},
-    {code:'TH',name:'Thailand',flag:'🇹🇭'},
-    {code:'SG',name:'Singapore',flag:'🇸🇬'},
-    {code:'TW',name:'Taiwan',flag:'🇹🇼'},
-    {code:'HK',name:'Hong Kong',flag:'🇭🇰'},
-    {code:'MY',name:'Malaysia',flag:'🇲🇾'},
-    {code:'AU',name:'Australia',flag:'🇦🇺'},
-    {code:'DE',name:'Europe',flag:'🇪🇺'},
-    {code:'US',name:'USA',flag:'🇺🇸'},
-    {code:'GB',name:'UK',flag:'🇬🇧'},
-    {code:'FR',name:'France',flag:'🇫🇷'},
-    {code:'AE',name:'UAE',flag:'🇦🇪'},
-    {code:'IN',name:'India',flag:'🇮🇳'},
-    {code:'IT',name:'Italy',flag:'🇮🇹'},
-    {code:'ES',name:'Spain',flag:'🇪🇸'},
-  ],
-  asia: [
-    {code:'JP',name:'Japan',flag:'🇯🇵'},
-    {code:'KR',name:'South Korea',flag:'🇰🇷'},
-    {code:'TW',name:'Taiwan',flag:'🇹🇼'},
-    {code:'HK',name:'Hong Kong',flag:'🇭🇰'},
-    {code:'MO',name:'Macau',flag:'🇲🇴'},
-    {code:'TH',name:'Thailand',flag:'🇹🇭'},
-    {code:'SG',name:'Singapore',flag:'🇸🇬'},
-    {code:'MY',name:'Malaysia',flag:'🇲🇾'},
-    {code:'ID',name:'Indonesia',flag:'🇮🇩'},
-    {code:'PH',name:'Philippines',flag:'🇵🇭'},
-    {code:'VN',name:'Vietnam',flag:'🇻🇳'},
-    {code:'IN',name:'India',flag:'🇮🇳'},
-    {code:'KH',name:'Cambodia',flag:'🇰🇭'},
-    {code:'MM',name:'Myanmar',flag:'🇲🇲'},
-    {code:'LA',name:'Laos',flag:'🇱🇦'},
-    {code:'BD',name:'Bangladesh',flag:'🇧🇩'},
-    {code:'LK',name:'Sri Lanka',flag:'🇱🇰'},
-    {code:'NP',name:'Nepal',flag:'🇳🇵'},
-    {code:'PK',name:'Pakistan',flag:'🇵🇰'},
-    {code:'MN',name:'Mongolia',flag:'🇲🇳'},
-    {code:'KZ',name:'Kazakhstan',flag:'🇰🇿'},
-    {code:'UZ',name:'Uzbekistan',flag:'🇺🇿'},
-    {code:'GE',name:'Georgia',flag:'🇬🇪'},
-    {code:'AM',name:'Armenia',flag:'🇦🇲'},
-    {code:'AZ',name:'Azerbaijan',flag:'🇦🇿'},
-  ],
-  europe: [
-    {code:'GB',name:'UK',flag:'🇬🇧'},
-    {code:'DE',name:'Germany',flag:'🇩🇪'},
-    {code:'FR',name:'France',flag:'🇫🇷'},
-    {code:'IT',name:'Italy',flag:'🇮🇹'},
-    {code:'ES',name:'Spain',flag:'🇪🇸'},
-    {code:'NL',name:'Netherlands',flag:'🇳🇱'},
-    {code:'CH',name:'Switzerland',flag:'🇨🇭'},
-    {code:'AT',name:'Austria',flag:'🇦🇹'},
-    {code:'SE',name:'Sweden',flag:'🇸🇪'},
-    {code:'NO',name:'Norway',flag:'🇳🇴'},
-    {code:'DK',name:'Denmark',flag:'🇩🇰'},
-    {code:'FI',name:'Finland',flag:'🇫🇮'},
-    {code:'BE',name:'Belgium',flag:'🇧🇪'},
-    {code:'PT',name:'Portugal',flag:'🇵🇹'},
-    {code:'GR',name:'Greece',flag:'🇬🇷'},
-    {code:'PL',name:'Poland',flag:'🇵🇱'},
-    {code:'CZ',name:'Czech Rep.',flag:'🇨🇿'},
-    {code:'HU',name:'Hungary',flag:'🇭🇺'},
-    {code:'RO',name:'Romania',flag:'🇷🇴'},
-    {code:'HR',name:'Croatia',flag:'🇭🇷'},
-    {code:'BG',name:'Bulgaria',flag:'🇧🇬'},
-    {code:'SK',name:'Slovakia',flag:'🇸🇰'},
-    {code:'SI',name:'Slovenia',flag:'🇸🇮'},
-    {code:'EE',name:'Estonia',flag:'🇪🇪'},
-    {code:'LV',name:'Latvia',flag:'🇱🇻'},
-    {code:'LT',name:'Lithuania',flag:'🇱🇹'},
-    {code:'IE',name:'Ireland',flag:'🇮🇪'},
-    {code:'IS',name:'Iceland',flag:'🇮🇸'},
-    {code:'UA',name:'Ukraine',flag:'🇺🇦'},
-    {code:'RS',name:'Serbia',flag:'🇷🇸'},
-    {code:'TR',name:'Turkey',flag:'🇹🇷'},
-    {code:'AL',name:'Albania',flag:'🇦🇱'},
-    {code:'ME',name:'Montenegro',flag:'🇲🇪'},
-    {code:'MK',name:'N. Macedonia',flag:'🇲🇰'},
-    {code:'BA',name:'Bosnia',flag:'🇧🇦'},
-  ],
-  americas: [
-    {code:'US',name:'USA',flag:'🇺🇸'},
-    {code:'CA',name:'Canada',flag:'🇨🇦'},
-    {code:'MX',name:'Mexico',flag:'🇲🇽'},
-    {code:'BR',name:'Brazil',flag:'🇧🇷'},
-    {code:'AR',name:'Argentina',flag:'🇦🇷'},
-    {code:'CL',name:'Chile',flag:'🇨🇱'},
-    {code:'CO',name:'Colombia',flag:'🇨🇴'},
-    {code:'PE',name:'Peru',flag:'🇵🇪'},
-    {code:'EC',name:'Ecuador',flag:'🇪🇨'},
-    {code:'BO',name:'Bolivia',flag:'🇧🇴'},
-    {code:'PY',name:'Paraguay',flag:'🇵🇾'},
-    {code:'UY',name:'Uruguay',flag:'🇺🇾'},
-    {code:'VE',name:'Venezuela',flag:'🇻🇪'},
-    {code:'CR',name:'Costa Rica',flag:'🇨🇷'},
-    {code:'PA',name:'Panama',flag:'🇵🇦'},
-    {code:'GT',name:'Guatemala',flag:'🇬🇹'},
-    {code:'DO',name:'Dominican Rep.',flag:'🇩🇴'},
-    {code:'JM',name:'Jamaica',flag:'🇯🇲'},
-    {code:'TT',name:'Trinidad',flag:'🇹🇹'},
-    {code:'BS',name:'Bahamas',flag:'🇧🇸'},
-    {code:'BZ',name:'Belize',flag:'🇧🇿'},
-    {code:'GY',name:'Guyana',flag:'🇬🇾'},
-  ],
-  mideast: [
-    {code:'AE',name:'UAE',flag:'🇦🇪'},
-    {code:'SA',name:'Saudi Arabia',flag:'🇸🇦'},
-    {code:'QA',name:'Qatar',flag:'🇶🇦'},
-    {code:'KW',name:'Kuwait',flag:'🇰🇼'},
-    {code:'BH',name:'Bahrain',flag:'🇧🇭'},
-    {code:'OM',name:'Oman',flag:'🇴🇲'},
-    {code:'JO',name:'Jordan',flag:'🇯🇴'},
-    {code:'IL',name:'Israel',flag:'🇮🇱'},
-    {code:'LB',name:'Lebanon',flag:'🇱🇧'},
-    {code:'EG',name:'Egypt',flag:'🇪🇬'},
-    {code:'TR',name:'Turkey',flag:'🇹🇷'},
-    {code:'IR',name:'Iran',flag:'🇮🇷'},
-    {code:'IQ',name:'Iraq',flag:'🇮🇶'},
-    {code:'MA',name:'Morocco',flag:'🇲🇦'},
-    {code:'TN',name:'Tunisia',flag:'🇹🇳'},
-  ],
-  africa: [
-    {code:'ZA',name:'South Africa',flag:'🇿🇦'},
-    {code:'NG',name:'Nigeria',flag:'🇳🇬'},
-    {code:'KE',name:'Kenya',flag:'🇰🇪'},
-    {code:'GH',name:'Ghana',flag:'🇬🇭'},
-    {code:'ET',name:'Ethiopia',flag:'🇪🇹'},
-    {code:'TZ',name:'Tanzania',flag:'🇹🇿'},
-    {code:'UG',name:'Uganda',flag:'🇺🇬'},
-    {code:'RW',name:'Rwanda',flag:'🇷🇼'},
-    {code:'SN',name:'Senegal',flag:'🇸🇳'},
-    {code:'CI',name:"Côte d'Ivoire",flag:'🇨🇮'},
-    {code:'CM',name:'Cameroon',flag:'🇨🇲'},
-    {code:'MU',name:'Mauritius',flag:'🇲🇺'},
-    {code:'MG',name:'Madagascar',flag:'🇲🇬'},
-    {code:'EG',name:'Egypt',flag:'🇪🇬'},
-    {code:'MA',name:'Morocco',flag:'🇲🇦'},
-    {code:'TN',name:'Tunisia',flag:'🇹🇳'},
-    {code:'DZ',name:'Algeria',flag:'🇩🇿'},
-    {code:'ZM',name:'Zambia',flag:'🇿🇲'},
-    {code:'ZW',name:'Zimbabwe',flag:'🇿🇼'},
-    {code:'BW',name:'Botswana',flag:'🇧🇼'},
-    {code:'NA',name:'Namibia',flag:'🇳🇦'},
-  ],
-  pacific: [
-    {code:'AU',name:'Australia',flag:'🇦🇺'},
-    {code:'NZ',name:'New Zealand',flag:'🇳🇿'},
-    {code:'FJ',name:'Fiji',flag:'🇫🇯'},
-    {code:'PG',name:'Papua New Guinea',flag:'🇵🇬'},
-    {code:'SB',name:'Solomon Islands',flag:'🇸🇧'},
-    {code:'VU',name:'Vanuatu',flag:'🇻🇺'},
-    {code:'WS',name:'Samoa',flag:'🇼🇸'},
-    {code:'TO',name:'Tonga',flag:'🇹🇴'},
-  ],
-  global: [
-    {code:'GLOBAL',name:'Global (100+ countries)',flag:'🌐', badge:'BEST VALUE'},
-    {code:'REGIONAL',name:'Asia Regional',flag:'🌏', badge:'HOT'},
-    {code:'DE',name:'Europe (28 countries)',flag:'🇪🇺'},
-    {code:'LATAM',name:'Latin America',flag:'🌎'},
-  ],
+/* ══ Destination Data ════════════════════════════════════ */
+const TABS = {
+  popular:  { label:'🔥 Popular',     list:['JP','KR','TH','SG','TW','HK','MY','AU','DE','US','GB','FR','AE','IN','IT','ES'] },
+  asia:     { label:'🌏 Asia',         list:['JP','KR','TW','HK','MO','TH','SG','MY','ID','PH','VN','IN','KH','MM','LA','BD','LK','NP','PK','MN','KZ','UZ','GE','AM','AZ'] },
+  europe:   { label:'🇪🇺 Europe',      list:['GB','DE','FR','IT','ES','NL','CH','AT','SE','NO','DK','FI','BE','PT','GR','PL','CZ','HU','RO','HR','BG','SK','SI','EE','LV','LT','IE','IS','UA','RS','TR','AL','ME','MK','BA'] },
+  americas: { label:'🌎 Americas',     list:['US','CA','MX','BR','AR','CL','CO','PE','EC','BO','PY','UY','VE','CR','PA','GT','DO','JM','TT','BS','BZ','GY'] },
+  mideast:  { label:'🌙 Middle East',  list:['AE','SA','QA','KW','BH','OM','JO','IL','LB','EG','TR','IR','IQ','MA','TN'] },
+  africa:   { label:'🌍 Africa',       list:['ZA','NG','KE','GH','ET','TZ','UG','RW','SN','CI','CM','MU','MG','EG','MA','TN','DZ','ZM','ZW','BW','NA'] },
+  pacific:  { label:'🌊 Pacific',      list:['AU','NZ','FJ','PG','SB','VU','WS','TO'] },
+  global:   { label:'🌐 Global',       list:['GLOBAL','ASIA_REG','DE','US'] },
 };
 
-const TAB_TITLES = {
-  popular:'🔥 Popular Destinations',
-  asia:'🌏 Asia & Central Asia',
-  europe:'🇪🇺 Europe',
-  americas:'🌎 Americas',
-  mideast:'🌙 Middle East',
-  africa:'🌍 Africa',
-  pacific:'🌊 Pacific',
-  global:'🌐 Global Plans',
+const DEST_INFO = {
+  JP:{name:'Japan',         flag:'🇯🇵'}, KR:{name:'South Korea',   flag:'🇰🇷'}, TW:{name:'Taiwan',        flag:'🇹🇼'},
+  HK:{name:'Hong Kong',     flag:'🇭🇰'}, MO:{name:'Macau',         flag:'🇲🇴'}, TH:{name:'Thailand',      flag:'🇹🇭'},
+  SG:{name:'Singapore',     flag:'🇸🇬'}, MY:{name:'Malaysia',      flag:'🇲🇾'}, ID:{name:'Indonesia',     flag:'🇮🇩'},
+  PH:{name:'Philippines',   flag:'🇵🇭'}, VN:{name:'Vietnam',       flag:'🇻🇳'}, IN:{name:'India',         flag:'🇮🇳'},
+  KH:{name:'Cambodia',      flag:'🇰🇭'}, MM:{name:'Myanmar',       flag:'🇲🇲'}, LA:{name:'Laos',          flag:'🇱🇦'},
+  BD:{name:'Bangladesh',    flag:'🇧🇩'}, LK:{name:'Sri Lanka',     flag:'🇱🇰'}, NP:{name:'Nepal',         flag:'🇳🇵'},
+  PK:{name:'Pakistan',      flag:'🇵🇰'}, MN:{name:'Mongolia',      flag:'🇲🇳'}, KZ:{name:'Kazakhstan',    flag:'🇰🇿'},
+  UZ:{name:'Uzbekistan',    flag:'🇺🇿'}, GE:{name:'Georgia',       flag:'🇬🇪'}, AM:{name:'Armenia',       flag:'🇦🇲'},
+  AZ:{name:'Azerbaijan',    flag:'🇦🇿'}, GB:{name:'UK',            flag:'🇬🇧'}, DE:{name:'Germany',       flag:'🇩🇪'},
+  FR:{name:'France',        flag:'🇫🇷'}, IT:{name:'Italy',         flag:'🇮🇹'}, ES:{name:'Spain',         flag:'🇪🇸'},
+  NL:{name:'Netherlands',   flag:'🇳🇱'}, CH:{name:'Switzerland',   flag:'🇨🇭'}, AT:{name:'Austria',       flag:'🇦🇹'},
+  SE:{name:'Sweden',        flag:'🇸🇪'}, NO:{name:'Norway',        flag:'🇳🇴'}, DK:{name:'Denmark',       flag:'🇩🇰'},
+  FI:{name:'Finland',       flag:'🇫🇮'}, BE:{name:'Belgium',       flag:'🇧🇪'}, PT:{name:'Portugal',      flag:'🇵🇹'},
+  GR:{name:'Greece',        flag:'🇬🇷'}, PL:{name:'Poland',        flag:'🇵🇱'}, CZ:{name:'Czech Rep.',    flag:'🇨🇿'},
+  HU:{name:'Hungary',       flag:'🇭🇺'}, RO:{name:'Romania',       flag:'🇷🇴'}, HR:{name:'Croatia',       flag:'🇭🇷'},
+  BG:{name:'Bulgaria',      flag:'🇧🇬'}, SK:{name:'Slovakia',      flag:'🇸🇰'}, SI:{name:'Slovenia',      flag:'🇸🇮'},
+  EE:{name:'Estonia',       flag:'🇪🇪'}, LV:{name:'Latvia',        flag:'🇱🇻'}, LT:{name:'Lithuania',     flag:'🇱🇹'},
+  IE:{name:'Ireland',       flag:'🇮🇪'}, IS:{name:'Iceland',       flag:'🇮🇸'}, UA:{name:'Ukraine',       flag:'🇺🇦'},
+  RS:{name:'Serbia',        flag:'🇷🇸'}, TR:{name:'Turkey',        flag:'🇹🇷'}, AL:{name:'Albania',       flag:'🇦🇱'},
+  ME:{name:'Montenegro',    flag:'🇲🇪'}, MK:{name:'N. Macedonia',  flag:'🇲🇰'}, BA:{name:'Bosnia',        flag:'🇧🇦'},
+  US:{name:'USA',           flag:'🇺🇸'}, CA:{name:'Canada',        flag:'🇨🇦'}, MX:{name:'Mexico',        flag:'🇲🇽'},
+  BR:{name:'Brazil',        flag:'🇧🇷'}, AR:{name:'Argentina',     flag:'🇦🇷'}, CL:{name:'Chile',         flag:'🇨🇱'},
+  CO:{name:'Colombia',      flag:'🇨🇴'}, PE:{name:'Peru',          flag:'🇵🇪'}, EC:{name:'Ecuador',       flag:'🇪🇨'},
+  BO:{name:'Bolivia',       flag:'🇧🇴'}, PY:{name:'Paraguay',      flag:'🇵🇾'}, UY:{name:'Uruguay',       flag:'🇺🇾'},
+  VE:{name:'Venezuela',     flag:'🇻🇪'}, CR:{name:'Costa Rica',    flag:'🇨🇷'}, PA:{name:'Panama',        flag:'🇵🇦'},
+  GT:{name:'Guatemala',     flag:'🇬🇹'}, DO:{name:'Dominican Rep.',flag:'🇩🇴'}, JM:{name:'Jamaica',       flag:'🇯🇲'},
+  TT:{name:'Trinidad',      flag:'🇹🇹'}, BS:{name:'Bahamas',       flag:'🇧🇸'}, BZ:{name:'Belize',        flag:'🇧🇿'},
+  GY:{name:'Guyana',        flag:'🇬🇾'}, AE:{name:'UAE',           flag:'🇦🇪'}, SA:{name:'Saudi Arabia',  flag:'🇸🇦'},
+  QA:{name:'Qatar',         flag:'🇶🇦'}, KW:{name:'Kuwait',        flag:'🇰🇼'}, BH:{name:'Bahrain',       flag:'🇧🇭'},
+  OM:{name:'Oman',          flag:'🇴🇲'}, JO:{name:'Jordan',        flag:'🇯🇴'}, IL:{name:'Israel',        flag:'🇮🇱'},
+  LB:{name:'Lebanon',       flag:'🇱🇧'}, EG:{name:'Egypt',         flag:'🇪🇬'}, IR:{name:'Iran',          flag:'🇮🇷'},
+  IQ:{name:'Iraq',          flag:'🇮🇶'}, MA:{name:'Morocco',       flag:'🇲🇦'}, TN:{name:'Tunisia',       flag:'🇹🇳'},
+  ZA:{name:'South Africa',  flag:'🇿🇦'}, NG:{name:'Nigeria',       flag:'🇳🇬'}, KE:{name:'Kenya',         flag:'🇰🇪'},
+  GH:{name:'Ghana',         flag:'🇬🇭'}, ET:{name:'Ethiopia',      flag:'🇪🇹'}, TZ:{name:'Tanzania',      flag:'🇹🇿'},
+  UG:{name:'Uganda',        flag:'🇺🇬'}, RW:{name:'Rwanda',        flag:'🇷🇼'}, SN:{name:'Senegal',       flag:'🇸🇳'},
+  CI:{name:"Côte d'Ivoire", flag:'🇨🇮'}, CM:{name:'Cameroon',      flag:'🇨🇲'}, MU:{name:'Mauritius',     flag:'🇲🇺'},
+  MG:{name:'Madagascar',    flag:'🇲🇬'}, DZ:{name:'Algeria',       flag:'🇩🇿'}, ZM:{name:'Zambia',        flag:'🇿🇲'},
+  ZW:{name:'Zimbabwe',      flag:'🇿🇼'}, BW:{name:'Botswana',      flag:'🇧🇼'}, NA:{name:'Namibia',       flag:'🇳🇦'},
+  AU:{name:'Australia',     flag:'🇦🇺'}, NZ:{name:'New Zealand',   flag:'🇳🇿'}, FJ:{name:'Fiji',          flag:'🇫🇯'},
+  PG:{name:'Papua N.G.',    flag:'🇵🇬'}, SB:{name:'Solomon Is.',   flag:'🇸🇧'}, VU:{name:'Vanuatu',       flag:'🇻🇺'},
+  WS:{name:'Samoa',         flag:'🇼🇸'}, TO:{name:'Tonga',         flag:'🇹🇴'},
+  GLOBAL:{name:'Global (100+ countries)', flag:'🌐', badge:'BEST VALUE'},
+  ASIA_REG:{name:'Asia Regional',         flag:'🌏', badge:'HOT'},
 };
 
-// ── State ─────────────────────────────────────────────
-let currentTab  = 'popular';
-let searchQuery = '';
-let priceCache  = {};          // code → minPrice
-let planCache   = {};          // code → plans[]
-let selectedPlan    = null;
-let selectedPayMethod = 'usdt-ton';
-let currentPlans  = [];
+/* ══ State ═══════════════════════════════════════════════ */
+let currentTab = 'popular';
+let searchMode = false;
+let planCache  = {};   // code → plans[]
+let priceCache = {};   // code → minPrice
+let selectedPlan = null;
+let selectedPay  = 'usdt-ton';
+let currentCode  = '';
 
-// ── Helpers ───────────────────────────────────────────
-function flag(code) {
-  if (!code || code.length !== 2) return '🌐';
-  return [...code.toUpperCase()].map(c => String.fromCodePoint(c.charCodeAt(0) + 127397)).join('');
-}
-
-function fmtPrice(p) { return '$' + parseFloat(p).toFixed(2); }
-
-function formatData(mb) {
+/* ══ Utilities ═══════════════════════════════════════════ */
+function fmtMB(mb) {
   if (!mb) return '?';
   const v = parseFloat(mb);
-  return v >= 1024 ? (v/1024).toFixed(v%1024===0?0:1)+'GB' : v+'MB';
+  return v >= 1024 ? (v % 1024 === 0 ? v/1024 : (v/1024).toFixed(1)) + 'GB' : v + 'MB';
+}
+function fmtUSD(p) { return '$' + parseFloat(p).toFixed(2); }
+
+/* ══ Tab switching ═══════════════════════════════════════ */
+function setTab(btn) {
+  currentTab = btn.dataset.tab;
+  searchMode = false;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').style.display = 'none';
+  document.querySelectorAll('.s-tab').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('gridTitle').textContent = TABS[currentTab].label + ' Destinations';
+  renderGrid();
 }
 
-// ── Tab switching ─────────────────────────────────────
-function switchTab(tab, btn) {
-  currentTab  = tab;
-  searchQuery = '';
-  document.getElementById('heroSearch').value = '';
-  document.querySelectorAll('.shop-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tabTitle').textContent = TAB_TITLES[tab] || tab;
-  renderDests();
-}
-
-// ── Search ────────────────────────────────────────────
+/* ══ Search ══════════════════════════════════════════════ */
 function onSearch(q) {
-  searchQuery = q.toLowerCase().trim();
-  if (searchQuery) {
-    // Search across ALL destinations
-    document.querySelectorAll('.shop-tab').forEach(b => b.classList.remove('active'));
-    document.getElementById('tabTitle').textContent = `🔍 Results for "${q}"`;
-  } else {
-    // Restore active tab
-    document.querySelectorAll('.shop-tab')[
-      ['popular','asia','europe','americas','mideast','africa','pacific','global'].indexOf(currentTab)
-    ]?.classList.add('active');
-    document.getElementById('tabTitle').textContent = TAB_TITLES[currentTab];
+  q = q.trim();
+  document.getElementById('searchClear').style.display = q ? 'block' : 'none';
+  searchMode = !!q;
+  if (!q) {
+    document.getElementById('gridTitle').textContent = TABS[currentTab].label + ' Destinations';
+    renderGrid(); return;
   }
-  renderDests();
+  const ql = q.toLowerCase();
+  const seen = new Set();
+  const all = Object.values(TABS).flatMap(t => t.list);
+  const results = all.filter(code => {
+    if (seen.has(code)) return false;
+    seen.add(code);
+    const d = DEST_INFO[code];
+    return d && (d.name.toLowerCase().includes(ql) || code.toLowerCase().includes(ql));
+  });
+  document.getElementById('gridTitle').textContent = `Results for "${q}"`;
+  renderGrid(results);
+}
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  onSearch('');
 }
 
-// ── Render destination grid ───────────────────────────
-function renderDests() {
-  const grid = document.getElementById('destGrid');
-  let list;
+/* ══ Render country grid ═════════════════════════════════ */
+function renderGrid(list) {
+  if (!list) list = TABS[currentTab].list;
+  const grid = document.getElementById('grid');
+  document.getElementById('gridCount').textContent = list.length + ' destinations';
 
-  if (searchQuery) {
-    // Search all dests
-    const all = Object.values(ALL_DESTINATIONS).flat();
-    const seen = new Set();
-    list = all.filter(d => {
-      if (seen.has(d.code)) return false;
-      seen.add(d.code);
-      return d.name.toLowerCase().includes(searchQuery) || d.code.toLowerCase().includes(searchQuery);
-    });
-  } else {
-    list = ALL_DESTINATIONS[currentTab] || [];
-  }
-
-  document.getElementById('destCount').textContent = list.length + ' destinations';
-
-  if (list.length === 0) {
-    grid.innerHTML = `<div class="dest-empty"><div class="icon">🔍</div><div>No destinations found</div></div>`;
+  if (!list.length) {
+    grid.innerHTML = `<div class="s-empty"><div class="ei">🔍</div><p>No destinations found</p></div>`;
     return;
   }
-
-  grid.innerHTML = list.map(d => {
-    const price = priceCache[d.code];
-    const priceStr = price ? `From ${fmtPrice(price)}` : '›';
-    const priceClass = price ? '' : 'loading';
-    const badge = d.badge ? `<div class="dest-badge">${d.badge}</div>` : '';
+  grid.innerHTML = list.map(code => {
+    const d = DEST_INFO[code];
+    if (!d) return '';
+    const price = priceCache[code];
+    const badge = d.badge ? `<div class="c-badge">${d.badge}</div>` : '';
     return `
-    <div class="dest-card" onclick="openDest('${d.code}', '${d.name}', '${d.flag || ''}')">
+    <div class="c-card" onclick="openCountry('${code}')">
       ${badge}
-      <div class="dest-flag">${d.flag || flag(d.code)}</div>
-      <div class="dest-name">${d.name}</div>
-      <div class="dest-price ${priceClass}">${priceStr}</div>
+      <div class="c-flag">${d.flag || code}</div>
+      <div class="c-name">${d.name}</div>
+      <div class="c-price ${price ? '' : 'tbd'}">${price ? 'From ' + fmtUSD(price) : '›'}</div>
     </div>`;
   }).join('');
 }
 
-// ── Open destination (lazy-load plans) ───────────────
-async function openDest(code, name, flagEmoji) {
-  // Show sheet immediately with loading state
-  document.getElementById('sheetTitle').textContent = `${flagEmoji || flag(code)} ${name} eSIM`;
-  document.getElementById('sheetSub').textContent = 'Loading plans…';
-  document.getElementById('planOptions').innerHTML = `<div style="text-align:center;padding:30px;color:#ccc;font-size:28px">⏳</div>`;
-  document.getElementById('buyBtn').disabled = true;
-  document.getElementById('buyBtn').textContent = 'Select a plan';
+/* ══ Open country sheet ══════════════════════════════════ */
+async function openCountry(code) {
+  const d = DEST_INFO[code];
+  if (!d) return;
+  currentCode  = code;
   selectedPlan = null;
-  currentPlans = [];
+
+  // Show sheet with loading state
+  document.getElementById('sheetFlag').textContent = d.flag || '🌐';
+  document.getElementById('sheetName').textContent = d.name + ' eSIM';
+  document.getElementById('sheetSub').textContent  = 'Loading plans…';
+  document.getElementById('planList').innerHTML    = '<div class="ps-loading">⏳</div>';
+  document.getElementById('checkoutStrip').classList.remove('on');
   openSheet();
 
-  // Fetch plans (use cache if available)
+  // Fetch plans (cached)
   if (!planCache[code]) {
     try {
-      const apiCode = code === 'GLOBAL' || code === 'REGIONAL' || code === 'LATAM' ? '' : code;
+      const apiCode = ['GLOBAL','ASIA_REG'].includes(code) ? '' : code;
       const r = await fetch(`/api/products?country=${apiCode}&pageSize=20`);
       const j = await r.json();
-      planCache[code] = (j.data?.list || []).sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
-      if (planCache[code].length > 0) {
-        priceCache[code] = parseFloat(planCache[code][0].price);
-        // Update card price if visible
-        renderDests();
+      planCache[code] = (j.data?.list || []).sort((a,b) => parseFloat(a.price)-parseFloat(b.price));
+      if (planCache[code].length) {
+        priceCache[code] = planCache[code][0].price;
+        // Update card price silently
+        document.querySelectorAll('.c-card').forEach(el => {
+          if (el.getAttribute('onclick') === `openCountry('${code}')`) {
+            const priceEl = el.querySelector('.c-price');
+            if (priceEl) { priceEl.textContent = 'From ' + fmtUSD(priceCache[code]); priceEl.classList.remove('tbd'); }
+          }
+        });
       }
     } catch(e) {
-      document.getElementById('sheetSub').textContent = 'Failed to load. Please retry.';
-      document.getElementById('planOptions').innerHTML = '';
+      document.getElementById('sheetSub').textContent = 'Failed to load. Tap to retry.';
+      document.getElementById('planList').innerHTML = '';
       return;
     }
   }
 
-  currentPlans = planCache[code];
-
-  if (currentPlans.length === 0) {
+  const plans = planCache[code];
+  if (!plans.length) {
     document.getElementById('sheetSub').textContent = 'No plans available for this destination.';
-    document.getElementById('planOptions').innerHTML = `<div style="text-align:center;padding:20px;color:#aaa">Check back soon or try another destination.</div>`;
+    document.getElementById('planList').innerHTML = `<div class="s-empty"><div class="ei">📭</div><p>Check back soon.</p></div>`;
     return;
   }
 
-  document.getElementById('sheetSub').textContent = `${currentPlans.length} plan${currentPlans.length>1?'s':''} available`;
-
-  // Render plan options (first 8)
-  document.getElementById('planOptions').innerHTML = currentPlans.slice(0, 8).map((p, i) => {
-    const data = formatData(p.dataAmount || p.dataSize);
-    const days = p.validityDays || p.validDays || '?';
-    const priceFmt = fmtPrice(p.price);
+  document.getElementById('sheetSub').textContent = `${plans.length} plan${plans.length > 1 ? 's' : ''} available`;
+  document.getElementById('planList').innerHTML = plans.slice(0, 10).map((p, i) => {
+    const data   = fmtMB(p.dataAmount || p.dataSize);
+    const days   = p.validityDays || p.validDays || '?';
+    const price  = fmtUSD(p.price);
+    const nameEn = p.nameEn || p.name || '';
+    // Provider: use first word(s) before dash
+    const provider = nameEn.split('-')[0].trim() || 'SimRyoko';
     return `
-    <div class="plan-opt${i===0?' selected':''}" onclick="selectPlan(${i}, this)">
-      <div class="plan-opt-left">
-        <div class="plan-opt-data">📶 ${data} · ${days} days</div>
-        <div class="plan-opt-days">${p.nameEn || p.name || ''}</div>
+    <div class="p-card${i===0?' sel':''}" onclick="selectPlan(${i},this)">
+      <div class="p-card-top">
+        <span class="p-provider">${provider}</span>
       </div>
-      <div class="plan-opt-price">${priceFmt}</div>
+      <div class="p-specs">
+        <div class="p-spec">
+          <div class="p-spec-val">${data}</div>
+          <div class="p-spec-lbl">Data</div>
+        </div>
+        <div class="p-spec">
+          <div class="p-spec-val">${days}</div>
+          <div class="p-spec-lbl">Days</div>
+        </div>
+        <div class="p-spec">
+          <div class="p-spec-val">${price}</div>
+          <div class="p-spec-lbl">Price</div>
+        </div>
+      </div>
+      <div class="p-card-footer">
+        <span style="font-size:12px;color:#aaa">${nameEn}</span>
+        <button class="p-buy" onclick="event.stopPropagation();quickBuy(${i})">Buy →</button>
+      </div>
     </div>`;
   }).join('');
 
-  selectedPlan = currentPlans[0];
-  updateBuyBtn();
+  // Auto-select first
+  selectedPlan = plans[0];
+  showCheckout();
 }
 
+/* ══ Plan selection ══════════════════════════════════════ */
 function selectPlan(idx, el) {
-  document.querySelectorAll('.plan-opt').forEach(e => e.classList.remove('selected'));
-  el.classList.add('selected');
-  selectedPlan = currentPlans[idx];
-  updateBuyBtn();
+  document.querySelectorAll('.p-card').forEach(c => c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedPlan = planCache[currentCode][idx];
+  showCheckout();
 }
 
-function setPay(method, el) {
-  selectedPayMethod = method;
-  document.querySelectorAll('.pay-method-btn').forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
+function quickBuy(idx) {
+  selectedPlan = planCache[currentCode][idx];
+  showCheckout();
+  // Scroll to checkout strip
+  document.getElementById('checkoutStrip').scrollIntoView({ behavior: 'smooth', block: 'end' });
+  document.getElementById('emailInput').focus();
 }
 
-function updateBuyBtn() {
-  const btn = document.getElementById('buyBtn');
-  if (selectedPlan) {
-    btn.textContent = `Buy Now — ${fmtPrice(selectedPlan.price)}`;
-    btn.disabled = false;
-  } else {
-    btn.textContent = 'Select a plan';
-    btn.disabled = true;
-  }
+function showCheckout() {
+  if (!selectedPlan) return;
+  const d    = fmtMB(selectedPlan.dataAmount || selectedPlan.dataSize);
+  const days = selectedPlan.validityDays || selectedPlan.validDays || '?';
+  document.getElementById('checkoutPrice').textContent = fmtUSD(selectedPlan.price);
+  document.getElementById('checkoutPlan').textContent  = `${d} · ${days} days`;
+  document.getElementById('confirmBtn').textContent    = `Pay ${fmtUSD(selectedPlan.price)} →`;
+  document.getElementById('checkoutStrip').classList.add('on');
 }
 
-// ── Submit order ──────────────────────────────────────
-async function submitOrder() {
+/* ══ Payment method ══════════════════════════════════════ */
+function setPay(method, btn) {
+  selectedPay = method;
+  document.querySelectorAll('.ps-pay-opt').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ══ Confirm order ═══════════════════════════════════════ */
+async function confirmOrder() {
   const email = document.getElementById('emailInput').value.trim();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    document.getElementById('emailInput').style.borderColor = '#e53e3e';
+    document.getElementById('emailInput').style.borderColor = '#ef4444';
     document.getElementById('emailInput').focus();
     setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
     return;
   }
   if (!selectedPlan) return;
 
-  const btn = document.getElementById('buyBtn');
+  const btn = document.getElementById('confirmBtn');
   btn.disabled = true;
   btn.textContent = 'Processing…';
 
   const pid = selectedPlan.id;
 
   try {
-    if (selectedPayMethod === 'card') {
-      window.location = `/checkout.html?productId=${pid}&email=${encodeURIComponent(email)}&pay=card`;
+    if (selectedPay === 'card' || selectedPay === 'usdt-trc') {
+      const method = selectedPay === 'card' ? 'card' : 'usdt';
+      window.location = `/checkout.html?productId=${pid}&email=${encodeURIComponent(email)}&method=${method}`;
       return;
     }
 
-    if (selectedPayMethod === 'usdt-trc') {
-      window.location = `/checkout.html?productId=${pid}&email=${encodeURIComponent(email)}&pay=usdt`;
-      return;
-    }
-
-    // USDT via Telegram (CryptoPay)
+    // USDT via CryptoPay (Telegram native)
     const r = await fetch('/api/ton/create', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({productId: pid, email}),
+      body: JSON.stringify({ productId: pid, email }),
     });
     const data = await r.json();
     if (data.data?.payUrl) {
       window.open(data.data.payUrl, '_blank');
-      btn.textContent = `Buy Now — ${fmtPrice(selectedPlan.price)}`;
       btn.disabled = false;
-    } else {
-      throw new Error('No payment URL');
-    }
+      btn.textContent = `Pay ${fmtUSD(selectedPlan.price)} →`;
+    } else throw new Error('No payUrl');
   } catch(e) {
-    btn.textContent = `Buy Now — ${fmtPrice(selectedPlan.price)}`;
     btn.disabled = false;
-    alert('Payment setup failed. Please try card payment or contact support.');
+    btn.textContent = `Pay ${fmtUSD(selectedPlan.price)} →`;
+    alert('Payment setup failed. Please try card payment.');
   }
 }
 
-// ── Sheet open/close ──────────────────────────────────
+/* ══ Sheet open / close ══════════════════════════════════ */
 function openSheet() {
-  document.getElementById('planSheet').classList.add('open');
-  document.getElementById('overlay').classList.add('show');
+  document.getElementById('sheet').classList.add('on');
+  document.getElementById('overlay').classList.add('on');
   document.body.style.overflow = 'hidden';
 }
 function closeSheet() {
-  document.getElementById('planSheet').classList.remove('open');
-  document.getElementById('overlay').classList.remove('show');
+  document.getElementById('sheet').classList.remove('on');
+  document.getElementById('overlay').classList.remove('on');
   document.body.style.overflow = '';
 }
 
-// ── URL param support ─────────────────────────────────
-const urlP = new URLSearchParams(window.location.search);
-if (urlP.get('country')) {
-  const cc = urlP.get('country').toUpperCase();
-  // Find destination info across all tabs
-  const allDests = Object.values(ALL_DESTINATIONS).flat();
-  const dest = allDests.find(d => d.code === cc);
-  if (dest) setTimeout(() => openDest(dest.code, dest.name, dest.flag), 300);
-}
-if (urlP.get('search')) {
-  document.getElementById('heroSearch').value = urlP.get('search');
-  onSearch(urlP.get('search'));
-}
+/* ══ URL params ══════════════════════════════════════════ */
+(function() {
+  const p = new URLSearchParams(location.search);
+  if (p.get('country')) {
+    const c = p.get('country').toUpperCase();
+    if (DEST_INFO[c]) setTimeout(() => openCountry(c), 200);
+  }
+})();
 
-// ── Search event ──────────────────────────────────────
-document.getElementById('heroSearch').addEventListener('input', e => {
-  clearTimeout(window._searchTimer);
-  window._searchTimer = setTimeout(() => onSearch(e.target.value), 300);
-});
-document.getElementById('heroSearch').addEventListener('keydown', e => {
-  if (e.key === 'Escape') { e.target.value = ''; onSearch(''); }
+/* ══ Events ══════════════════════════════════════════════ */
+document.getElementById('searchInput').addEventListener('input', function() {
+  clearTimeout(this._t);
+  this._t = setTimeout(() => onSearch(this.value), 280);
 });
 
-// ── Init ──────────────────────────────────────────────
-renderDests();
+/* ══ Init ════════════════════════════════════════════════ */
+renderGrid();
 </script>
 <script src="/js/i18n.js"></script>
 <script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
