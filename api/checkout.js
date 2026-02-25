@@ -2,6 +2,7 @@
 const store = require('./_store');
 const { sendPaymentPendingEmail } = require('./_email');
 const { getProducts } = require('./_agent');
+const { applyRateLimit } = require('./_ratelimit');
 
 const USDT_WALLET = process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
 
@@ -11,6 +12,7 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!applyRateLimit(req, res, 10, 60000)) return; // 10 orders/min per IP
 
   try {
     const { productId, email, paymentMethod = 'usdt' } = req.body;

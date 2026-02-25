@@ -1,5 +1,6 @@
 // GET /api/products?country=JP&page=1&pageSize=20
 const { getProducts } = require('./_agent');
+const { applyRateLimit } = require('./_ratelimit');
 
 // 热门目的地（前端展示用）
 const POPULAR_DESTINATIONS = [
@@ -22,6 +23,7 @@ module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
+  if (!applyRateLimit(req, res, 60, 60000)) return; // 60 req/min per IP
 
   try {
     const { country, page = 1, pageSize = 50, search } = req.query;
