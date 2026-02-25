@@ -38,7 +38,8 @@ module.exports = async (req, res) => {
 
     const amountCents = Math.round(parseFloat(product.price) * 100);
 
-    // 创建 Paddle 交易
+    // 创建 Paddle 交易（关联已审核产品 ID，税务合规）
+    const PADDLE_PRODUCT_ID = process.env.PADDLE_PRODUCT_ID || 'pro_01kj9na9x31t57npmmsm99vfj9';
     const { data } = await axios.post(
       'https://api.paddle.com/transactions',
       {
@@ -48,11 +49,7 @@ module.exports = async (req, res) => {
             name: order.productName,
             unit_price: { amount: String(amountCents), currency_code: 'USD' },
             tax_mode: 'inclusive',
-            product: {
-              name: 'SimRyoko eSIM',
-              description: order.productName,
-              tax_category: 'standard'
-            }
+            product_id: PADDLE_PRODUCT_ID
           },
           quantity: 1
         }],
