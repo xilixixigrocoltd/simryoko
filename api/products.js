@@ -1,6 +1,6 @@
 // GET /api/products?country=JP&page=1&pageSize=50
 // B2B 后台每页最多10条，本层并发拉取多页合并返回
-const { getProducts: b2bGetProducts } = require('./_agent');
+const { getProducts: b2bGetProducts, getProductById } = require('./_agent');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 
 const B2B_MAX      = 10;   // B2B 单页上限
@@ -88,6 +88,14 @@ module.exports = async (req, res) => {
     if (req.query.destinations === '1') {
       res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=300');
       return res.json({ success: true, data: POPULAR_DESTINATIONS });
+    }
+
+    // 单品查询 ?id=141 — checkout 页面专用，毫秒级响应
+    if (req.query.id) {
+      const p = await getProductById(req.query.id);
+      if (!p) return res.status(404).json({ success: false, error: 'Product not found' });
+      res.setHeader('Cache-Control', 'public, s-maxage=600, stale-while-revalidate=120');
+      return res.json({ success: true, data: formatProduct(p) });
     }
 
     const country  = req.query.country  || '';

@@ -160,20 +160,16 @@ async function loadProduct() {
   }
 
   try {
-    let found = null, page = 1;
-    while (!found) {
-      const res = await apiFetch(`/products?page=${page}&pageSize=100`);
-      if (!res.success) break;
-      found = res.data.list.find(p => p.id == id);
-      if (!found && res.data.list.length < 100) break;
-      page++;
-      if (page > 30) break;
+    // 直接按 ID 查询单个产品，毫秒级响应
+    const res = await apiFetch(`/products?id=${encodeURIComponent(id)}`);
+    if (!res.success || !res.data) {
+      document.getElementById('summaryContent').textContent = 'Product not found. Please go back and try again.';
+      return;
     }
-    if (!found) { document.getElementById('summaryContent').textContent = 'Product not found.'; return; }
-    product = found;
+    product = res.data;
     renderSummary();
   } catch(e) {
-    document.getElementById('summaryContent').textContent = 'Error loading product.';
+    document.getElementById('summaryContent').textContent = 'Error loading product. Please refresh.';
   }
 }
 
