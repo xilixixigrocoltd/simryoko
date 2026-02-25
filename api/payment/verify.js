@@ -3,6 +3,7 @@ const store = require('../_store');
 const { placeOrder, getBalance, apiCall } = require('../_agent');
 const { sendEsimEmail } = require('../_email');
 const { applyRateLimit, setCors } = require('../_ratelimit');
+const { notifyOrderFulfilled, notifyLowBalance } = require('../_notify');
 const axios = require('axios');
 
 const USDT_WALLET = process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
@@ -123,6 +124,9 @@ async function fulfillOrder(orderId, order) {
       country: order.country
     });
 
+    // 通知管理员发货成功
+    await notifyOrderFulfilled(order, esimData).catch(() => {});
+
   } catch (err) {
     console.error('[fulfillOrder]', err.message);
     store.updateOrder(orderId, { status: 'failed', note: err.message });
@@ -131,7 +135,6 @@ async function fulfillOrder(orderId, order) {
 
 // 从订单响应中提取 eSIM 信息
 function extractEsimData(orderResult) {
-  // 根据实际 API 响应结构解析
   const data = orderResult.data || orderResult;
   return {
     qrCodeUrl: data.qrCodeUrl || data.qrCode || data.lpa || data.activationQrCode || '',
@@ -141,8 +144,8 @@ function extractEsimData(orderResult) {
   };
 }
 
-// 余额不足时通知管理员（可扩展为 Telegram 通知）
+// 余额不足时通知管理员
 async function notifyAdminLowBalance(order, currentBalance) {
-  console.warn(`[ADMIN ALERT] Low balance! Order ${order.orderId} needs fulfillment. Current balance: $${currentBalance}, needed: $${order.productPrice}`);
-  // TODO: 接入 Telegram Bot 发消息给 gg
+  console.warn(`[ADMIN ALERT] Low balance! Order ${order.orderId}, balance: $${currentBalance}, needed: $${order.productPrice}`);
+  await notifyLowBalance(order, currentBalance).catch(() => {});
 }

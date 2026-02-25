@@ -3,6 +3,7 @@ const store = require('./_store');
 const { sendPaymentPendingEmail } = require('./_email');
 const { getProducts } = require('./_agent');
 const { applyRateLimit, setCors } = require('./_ratelimit');
+const { notifyNewOrder } = require('./_notify');
 
 const USDT_WALLET = process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
 
@@ -47,6 +48,9 @@ module.exports = async (req, res) => {
       email,
       country: product.countries?.[0]?.code || 'INT'
     });
+
+    // 通知管理员有新订单
+    notifyNewOrder({ ...order, paymentMethod: 'usdt' }).catch(() => {});
 
     // 发送支付指引邮件
     try {

@@ -3,13 +3,14 @@ const Stripe = require('stripe');
 const store = require('../_store');
 const { placeOrder } = require('../_agent');
 const { sendEsimEmail } = require('../_email');
+const { applyRateLimit, setCors } = require('../_ratelimit');
+const { notifyOrderFulfilled, notifyError } = require('../_notify');
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCors(req, res, 'POST, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  if (!applyRateLimit(req, res, 10, 60000)) return;
 
   try {
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
@@ -64,11 +65,13 @@ module.exports = async (req, res) => {
         country: order.country
       });
 
+      await notifyOrderFulfilled(order, esimData).catch(() => {});
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
 
     } catch (fulfillErr) {
       console.error('[stripe/confirm] fulfill error:', fulfillErr.message);
       store.updateOrder(orderId, { status: 'pending_fulfillment', note: fulfillErr.message });
+      await notifyError('stripe/confirm', fulfillErr.message).catch(() => {});
       return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
     }
 

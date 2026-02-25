@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const store = require('../_store');
 const { placeOrder } = require('../_agent');
 const { sendEsimEmail } = require('../_email');
+const { notifyOrderFulfilled, notifyError } = require('../_notify');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).end();
@@ -67,9 +68,12 @@ module.exports = async (req, res) => {
         country: order.country
       });
 
+      await notifyOrderFulfilled(order, esimData).catch(() => {});
+
     } catch (fulfillErr) {
       console.error('[paddle/webhook] fulfill error:', fulfillErr.message);
       store.updateOrder(orderId, { status: 'pending_fulfillment', note: fulfillErr.message });
+      await notifyError('paddle/webhook', fulfillErr.message).catch(() => {});
     }
 
     return res.json({ received: true });

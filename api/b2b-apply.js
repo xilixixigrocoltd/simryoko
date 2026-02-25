@@ -1,5 +1,6 @@
 const { sendRawEmail } = require('./_email');
 const { applyRateLimit, setCors } = require('./_ratelimit');
+const { notifyB2BApply } = require('./_notify');
 
 module.exports = async (req, res) => {
   setCors(req, res, 'POST, OPTIONS');
@@ -16,6 +17,9 @@ module.exports = async (req, res) => {
     if (!name || !company || !email || !btype) {
       return res.status(400).json({ success: false, error: 'Missing required fields' });
     }
+
+    // 即时 Telegram 通知管理员（比邮件快）
+    notifyB2BApply({ name, company, email, whatsapp, btype, volume }).catch(() => {});
 
     // Send notification email to admin
     await sendRawEmail({
