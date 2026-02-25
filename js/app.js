@@ -17,7 +17,7 @@ function flagEmoji(code) {
   if (!code) return '🌍';
   const c = code.toUpperCase();
   // Special cases
-  if (c === 'EU' || c === 'DE') return '🇪🇺';
+  if (c === 'EU') return '🇪🇺';
   // Convert country code to regional indicator symbols
   try {
     return [...c].map(ch => String.fromCodePoint(ch.charCodeAt(0) + 127397)).join('');
