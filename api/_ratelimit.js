@@ -58,4 +58,24 @@ function applyRateLimit(req, res, limit = 30, windowMs = 60000) {
   return true;
 }
 
-module.exports = { applyRateLimit, getClientIp };
+// Allowed origins for CORS
+const ALLOWED_ORIGINS = [
+  'https://simryoko.com',
+  'https://www.simryoko.com',
+  'https://simryoko-xilixixigrocoltdcoms-projects.vercel.app',
+];
+
+/**
+ * Set CORS headers — restricts to known origins only
+ * Falls back to first allowed origin if unknown
+ */
+function setCors(req, res, methods = 'GET, POST, OPTIONS') {
+  const origin = req.headers.origin || '';
+  const allowed = ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', allowed);
+  res.setHeader('Access-Control-Allow-Methods', methods);
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
+}
+
+module.exports = { applyRateLimit, getClientIp, setCors, ALLOWED_ORIGINS };

@@ -1,6 +1,8 @@
 // GET /api/config — 返回前端所需公开配置（安全，无敏感信息）
+const { setCors } = require('./_ratelimit');
 module.exports = (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  setCors(req, res, 'GET, OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(200).end();
   res.setHeader('Cache-Control', 'public, max-age=3600');
   return res.json({
     stripePk: process.env.STRIPE_PUBLISHABLE_KEY || '',

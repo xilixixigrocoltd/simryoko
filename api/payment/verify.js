@@ -2,6 +2,7 @@
 const store = require('../_store');
 const { placeOrder, getBalance, apiCall } = require('../_agent');
 const { sendEsimEmail } = require('../_email');
+const { applyRateLimit, setCors } = require('../_ratelimit');
 const axios = require('axios');
 
 const USDT_WALLET = process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
@@ -11,14 +12,18 @@ const USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
 const TRON_API = 'https://api.trongrid.io';
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCors(req, res, 'POST, GET, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
+  // 轮询限速：每IP每分钟最多20次（前端每3秒轮询一次，远低于此阈值）
+  if (!applyRateLimit(req, res, 20, 60000)) return;
 
   try {
     const { orderId } = req.method === 'GET' ? req.query : req.body;
     if (!orderId) return res.status(400).json({ error: 'Missing orderId' });
+    // 基础输入校验：orderId 只允许字母数字和连字符
+    if (!/^[A-Za-z0-9-]{6,40}$/.test(orderId)) {
+      return res.status(400).json({ error: 'Invalid orderId format' });
+    }
 
     const order = store.getOrder(orderId);
     if (!order) return res.status(404).json({ error: 'Order not found' });

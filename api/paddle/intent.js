@@ -2,13 +2,14 @@
 const axios = require('axios');
 const store = require('../_store');
 const { getProducts } = require('../_agent');
+const { applyRateLimit, setCors } = require('../_ratelimit');
 
 module.exports = async (req, res) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCors(req, res, 'POST, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  // Paddle 支付意图：每IP每分钟最多5次
+  if (!applyRateLimit(req, res, 5, 60000)) return;
 
   try {
     const { productId, email } = req.body;

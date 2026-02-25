@@ -1,9 +1,14 @@
 const { sendRawEmail } = require('./_email');
+const { applyRateLimit, setCors } = require('./_ratelimit');
 
 module.exports = async (req, res) => {
+  setCors(req, res, 'POST, OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') {
     return res.status(405).json({ success: false, error: 'Method not allowed' });
   }
+  // 严格限制：每IP每分钟最多3次申请，防垃圾申请刷邮件
+  if (!applyRateLimit(req, res, 3, 60000)) return;
 
   try {
     const { name, company, email, whatsapp, btype, volume, notes } = req.body;
