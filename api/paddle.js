@@ -4,7 +4,7 @@
 const crypto = require('crypto');
 const axios = require('axios');
 const store = require('./_store');
-const { getProducts, placeOrder } = require('./_agent');
+const { getProductById, placeOrder } = require('./_agent');
 const { sendEsimEmail } = require('./_email');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyOrderFulfilled, notifyError } = require('./_notify');
@@ -20,14 +20,7 @@ async function handleIntent(req, res) {
     if (!productId || !email) return res.status(400).json({ error: 'Missing fields' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
 
-    let product = null, page = 1;
-    while (!product) {
-      const r = await getProducts({ page, pageSize: 100 });
-      product = r.data.list.find(p => p.id == productId);
-      if (!product && r.data.list.length < 100) break;
-      if (!product) page++;
-      if (page > 30) break;
-    }
+    const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
     const order = store.createOrder({

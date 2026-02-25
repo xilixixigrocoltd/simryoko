@@ -3,7 +3,7 @@
 // /api/ton/webhook  → 支付回调自动发货
 const store = require('./_store');
 const { createInvoice, verifyWebhookSignature } = require('./_cryptopay');
-const { getProducts, placeOrder } = require('./_agent');
+const { getProductById, placeOrder } = require('./_agent');
 const { sendEsimEmail, sendPaymentPendingEmail } = require('./_email');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyNewOrder, notifyOrderFulfilled, notifyError } = require('./_notify');
@@ -31,14 +31,7 @@ async function handleCreate(req, res) {
     if (!productId || !email) return res.status(400).json({ error: 'Missing productId or email' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email address' });
 
-    let product = null, page = 1;
-    while (!product) {
-      const r = await getProducts({ page, pageSize: 100 });
-      const found = r.data.list.find(p => p.id == productId);
-      if (found) { product = found; break; }
-      if (r.data.list.length < 100) break;
-      page++; if (page > 30) break;
-    }
+    const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
     const usdPrice = parseFloat(product.price);

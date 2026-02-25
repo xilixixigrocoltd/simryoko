@@ -29,6 +29,7 @@ module.exports = async (req, res) => {
 
     // 如果只请求目的地列表
     if (req.query.destinations === '1') {
+      res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=300');
       return res.json({ success: true, data: POPULAR_DESTINATIONS });
     }
 
@@ -52,6 +53,8 @@ module.exports = async (req, res) => {
       validityDays: p.validDays || p.validityDays || p.validity_days || null,
     }));
 
+    // CDN 缓存5分钟（s-maxage），浏览器不缓存（no-store），过期时继续服务旧内容（stale-while-revalidate）
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
     return res.json({
       success: true,
       data: {

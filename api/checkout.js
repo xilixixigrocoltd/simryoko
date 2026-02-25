@@ -3,7 +3,7 @@
 // GET/POST /api/payment/verify → 检查 USDT 链上付款并自动发货
 const store = require('./_store');
 const { sendPaymentPendingEmail, sendEsimEmail } = require('./_email');
-const { getProducts, placeOrder, getBalance } = require('./_agent');
+const { getProductById, placeOrder, getBalance } = require('./_agent');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyNewOrder, notifyOrderFulfilled, notifyLowBalance } = require('./_notify');
 const axios = require('axios');
@@ -23,14 +23,7 @@ async function handleCheckout(req, res) {
     if (!productId || !email) return res.status(400).json({ error: 'Missing productId or email' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email address' });
 
-    let product = null, page = 1;
-    while (!product) {
-      const r = await getProducts({ page, pageSize: 100 });
-      const found = r.data.list.find(p => p.id == productId);
-      if (found) { product = found; break; }
-      if (r.data.list.length < 100) break;
-      page++; if (page > 30) break;
-    }
+    const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
     const order = store.createOrder({
