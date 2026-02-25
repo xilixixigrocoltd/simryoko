@@ -3,400 +3,461 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Browse eSIM Plans — SimRyoko</title>
-  <meta name="description" content="2,600+ eSIM plans for 200+ countries. Instant delivery from $2."/>
-  <meta property="og:title" content="Browse eSIM Plans — SimRyoko"/>
-  <meta property="og:description" content="eSIM for Japan, Korea, Europe & 200+ countries. From $2. Instant."/>
+  <title>eSIM Shop — SimRyoko</title>
+  <meta name="description" content="Buy eSIM for 200+ countries. Japan, Korea, Europe & more. From $2. Instant delivery."/>
+  <meta property="og:title" content="SimRyoko eSIM Shop — 200+ Countries"/>
+  <meta property="og:description" content="Instant eSIM for travel. 2,600+ plans. From $2."/>
   <meta property="og:image" content="https://simryoko.com/img/tma-banner.png"/>
   <link rel="canonical" href="https://simryoko.com/shop.html"/>
   <link rel="manifest" href="/manifest.json"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236C63FF'/><text y='.9em' font-size='65' x='15'>📡</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
-  <style>
-  /* ══ Shop Page ══════════════════════════════════════ */
-  body { background: #f7f8fc; }
+<style>
+/* ═══════════════════════════════════════════════════════
+   SimRyoko Shop — clean Airalo-inspired layout
+═══════════════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; }
 
-  /* Hero */
-  .s-hero {
-    background: linear-gradient(135deg, #6C63FF 0%, #9333ea 100%);
-    padding: 52px 24px 40px;
-    text-align: center;
-  }
-  .s-hero h1 { font-size: clamp(22px,5vw,36px); font-weight: 900; color: #fff; margin-bottom: 6px; }
-  .s-hero p  { color: rgba(255,255,255,.75); font-size: 15px; margin-bottom: 24px; }
-  .s-search {
-    max-width: 520px; margin: 0 auto;
-    background: #fff;
-    border-radius: 14px;
-    display: flex; align-items: center;
-    padding: 0 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,.15);
-  }
-  .s-search svg { color: #aaa; flex-shrink: 0; }
-  .s-search input {
-    flex: 1; border: none; outline: none;
-    padding: 14px 12px;
-    font-size: 15px; font-family: inherit;
-    background: transparent;
-    color: #1a1a2e;
-  }
-  .s-search input::placeholder { color: #bbb; }
-  .s-search-clear {
-    background: none; border: none; cursor: pointer;
-    color: #ccc; font-size: 18px; padding: 4px;
-    display: none;
-  }
+body { background: #f5f6fa; }
 
-  /* Tab bar */
-  .s-tabs-wrap {
-    background: #fff;
-    border-bottom: 1px solid #ebebf0;
-    position: sticky; top: 64px; z-index: 90;
-  }
-  .s-tabs {
-    max-width: 1200px; margin: 0 auto;
-    padding: 0 16px;
-    display: flex; gap: 4px;
-    overflow-x: auto; scrollbar-width: none;
-    padding-bottom: 1px;
-  }
-  .s-tabs::-webkit-scrollbar { display: none; }
-  .s-tab {
-    flex-shrink: 0;
-    padding: 13px 16px;
-    font-size: 13.5px; font-weight: 600;
-    color: #888;
-    border: none; background: none;
-    border-bottom: 2.5px solid transparent;
-    cursor: pointer; white-space: nowrap;
-    font-family: inherit;
-    transition: color .15s;
-  }
-  .s-tab:hover { color: #333; }
-  .s-tab.on { color: #6C63FF; border-bottom-color: #6C63FF; }
+/* ── Hero ─────────────────────────────────────────────── */
+.sh-hero {
+  background: linear-gradient(150deg, #5A4FE8 0%, #7C3AED 60%, #9333EA 100%);
+  padding: 44px 20px 36px;
+  text-align: center;
+}
+.sh-hero h1 {
+  font-size: clamp(20px, 5vw, 32px);
+  font-weight: 900; color: #fff;
+  margin-bottom: 4px; letter-spacing: -.3px;
+}
+.sh-hero .sub { color: rgba(255,255,255,.7); font-size: 14px; margin-bottom: 22px; }
 
-  /* Grid wrapper */
-  .s-wrap { max-width: 1200px; margin: 0 auto; padding: 24px 20px 80px; }
-  .s-grid-head {
-    display: flex; align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 18px;
-  }
-  .s-grid-head h2 { font-size: 18px; font-weight: 800; color: #1a1a2e; }
-  .s-grid-head span { font-size: 13px; color: #aaa; }
+/* Search */
+.sh-search-box {
+  display: flex; align-items: center;
+  background: #fff; border-radius: 16px;
+  padding: 4px 16px 4px 20px;
+  max-width: 540px; margin: 0 auto;
+  box-shadow: 0 8px 40px rgba(0,0,0,.18);
+  gap: 10px;
+}
+.sh-search-box svg { color: #bbb; flex-shrink: 0; }
+.sh-search-box input {
+  flex: 1; border: none; outline: none;
+  font-size: 15px; font-family: inherit;
+  padding: 13px 0; background: transparent;
+  color: #1a1a2e; min-width: 0;
+}
+.sh-search-box input::placeholder { color: #ccc; }
+.sh-search-clear {
+  background: #f0f0f5; border: none; border-radius: 50%;
+  width: 26px; height: 26px; cursor: pointer;
+  font-size: 13px; color: #999;
+  display: none; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sh-search-clear.show { display: flex; }
 
-  /* Country grid */
-  .s-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-  }
-  @media(max-width:520px){ .s-grid { grid-template-columns: repeat(2,1fr); gap:10px; } }
+/* ── Region Tabs ─────────────────────────────────────── */
+.sh-tabs-bar {
+  background: #fff;
+  border-bottom: 1px solid #ececf0;
+  position: sticky; top: 64px; z-index: 90;
+}
+.sh-tabs {
+  max-width: 1160px; margin: 0 auto;
+  padding: 0 16px;
+  display: flex; overflow-x: auto;
+  scrollbar-width: none; gap: 0;
+}
+.sh-tabs::-webkit-scrollbar { display: none; }
+.sh-tab {
+  flex-shrink: 0; border: none; background: none;
+  font-family: inherit; font-size: 13.5px; font-weight: 600;
+  color: #999; padding: 14px 18px;
+  border-bottom: 2.5px solid transparent;
+  cursor: pointer; white-space: nowrap;
+  transition: color .15s;
+}
+.sh-tab:hover { color: #555; }
+.sh-tab.on { color: #6C63FF; border-bottom-color: #6C63FF; }
 
-  /* Country card */
-  .c-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px 12px 14px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform .18s, box-shadow .18s;
-    border: 1.5px solid transparent;
-    position: relative;
-  }
-  .c-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 28px rgba(108,99,255,.13);
-    border-color: #e0deff;
-  }
-  .c-card:active { transform: translateY(-2px); }
-  .c-flag { font-size: 40px; line-height: 1; margin-bottom: 10px; }
-  .c-name { font-size: 12.5px; font-weight: 700; color: #1a1a2e; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .c-count { font-size: 11px; color: #aaa; margin-bottom: 2px; }
-  .c-price { font-size: 12px; font-weight: 700; color: #6C63FF; }
-  .c-price.tbd { color: #ccc; }
-  .c-badge {
-    position: absolute; top: 8px; right: 8px;
-    background: linear-gradient(135deg,#f59e0b,#ef4444);
-    color: #fff; font-size: 8.5px; font-weight: 800;
-    padding: 2px 6px; border-radius: 5px;
-    letter-spacing: .4px; text-transform: uppercase;
-  }
-  .c-card.sk {
-    background: linear-gradient(90deg,#f0f0f5 25%,#e8e8f0 50%,#f0f0f5 75%);
-    background-size: 200% 100%;
-    animation: sk 1.4s linear infinite;
-    border: none; height: 120px; cursor: default;
-  }
-  @keyframes sk { 0%{background-position:200% 0}100%{background-position:-200% 0} }
+/* ── Grid ────────────────────────────────────────────── */
+.sh-body { max-width: 1160px; margin: 0 auto; padding: 24px 16px 100px; }
+.sh-row {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.sh-row h2 { font-size: 17px; font-weight: 800; color: #111; }
+.sh-row span { font-size: 13px; color: #bbb; }
 
-  /* Empty */
-  .s-empty {
-    text-align: center; padding: 64px 20px;
-    color: #bbb; grid-column: 1/-1;
-  }
-  .s-empty .ei { font-size: 42px; margin-bottom: 12px; }
-  .s-empty p { font-size: 15px; }
+.sh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 12px;
+}
+@media(max-width:480px) { .sh-grid { grid-template-columns: repeat(2,1fr); gap:10px; } }
+@media(min-width:900px) { .sh-grid { grid-template-columns: repeat(6,1fr); } }
 
-  /* ══ Plan Sheet (Airalo-style slide-up) ═════════════ */
-  .ps-overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(15,14,23,.5);
-    z-index: 200; backdrop-filter: blur(2px);
-  }
-  .ps-overlay.on { display: block; }
+/* Country card */
+.cc {
+  background: #fff;
+  border-radius: 18px;
+  padding: 18px 10px 14px;
+  text-align: center;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: border-color .18s, box-shadow .18s, transform .18s;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.cc:hover { border-color: #d4d0ff; box-shadow: 0 6px 24px rgba(108,99,255,.12); transform: translateY(-3px); }
+.cc:active { transform: translateY(-1px); }
+.cc .flag { font-size: 38px; line-height: 1.1; margin-bottom: 8px; display: block; }
+.cc .cname { font-size: 12.5px; font-weight: 700; color: #111; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cc .ccount { font-size: 11px; color: #bbb; margin-bottom: 4px; }
+.cc .cprice { font-size: 12.5px; font-weight: 700; color: #6C63FF; }
+.cc .cprice.nd { color: #ddd; font-weight: 500; }
+.cc .cbadge {
+  position: absolute; top: 8px; right: 8px;
+  font-size: 8px; font-weight: 800; letter-spacing: .5px;
+  text-transform: uppercase; color: #fff;
+  background: linear-gradient(135deg,#f59e0b,#ef4444);
+  padding: 2px 5px; border-radius: 4px;
+}
+/* Skeleton */
+.cc.sk {
+  background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%);
+  background-size: 200% 100%;
+  animation: sh 1.4s linear infinite;
+  height: 120px; border: none; cursor: default;
+}
+@keyframes sh { 0%{background-position:200% 0}100%{background-position:-200% 0} }
 
-  .ps {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: #f7f8fc;
-    border-radius: 24px 24px 0 0;
-    max-height: 92vh; z-index: 201;
-    transform: translateY(100%);
-    transition: transform .3s cubic-bezier(.32,0,.67,0);
-    display: flex; flex-direction: column;
-    max-width: 680px; margin: 0 auto;
-  }
-  .ps.on { transform: translateY(0); }
+/* Empty */
+.sh-empty { text-align: center; padding: 60px 0; color: #ccc; grid-column: 1/-1; }
+.sh-empty .ico { font-size: 40px; margin-bottom: 10px; }
 
-  /* Sheet header */
-  .ps-handle { width: 36px; height: 4px; background: #ddd; border-radius: 2px; margin: 10px auto; flex-shrink: 0; }
-  .ps-head {
-    background: #fff;
-    padding: 12px 20px 16px;
-    border-bottom: 1px solid #ebebf0;
-    flex-shrink: 0;
-  }
-  .ps-head-top { display: flex; align-items: center; gap: 10px; margin-bottom: 4px; }
-  .ps-back {
-    width: 34px; height: 34px; border-radius: 50%;
-    background: #f5f5f5; border: none; cursor: pointer;
-    font-size: 18px; display: flex; align-items: center; justify-content: center;
-    flex-shrink: 0; transition: background .15s;
-  }
-  .ps-back:hover { background: #ebebf0; }
-  .ps-country-flag { font-size: 28px; }
-  .ps-country-name { font-size: 18px; font-weight: 800; color: #1a1a2e; flex: 1; }
-  .ps-sub { font-size: 13px; color: #888; padding-left: 44px; }
+/* ═══════════════════════════════════════════════════════
+   Plan Sheet (full-screen on mobile, like a page)
+═══════════════════════════════════════════════════════ */
+.sh-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,14,23,.55);
+  backdrop-filter: blur(3px);
+  z-index: 200;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s;
+}
+.sh-overlay.on { opacity: 1; pointer-events: auto; }
 
-  /* Plan list */
-  .ps-list { overflow-y: auto; padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+.sh-sheet {
+  position: fixed;
+  inset: 0; top: auto;
+  height: 94vh;
+  background: #f5f6fa;
+  border-radius: 24px 24px 0 0;
+  z-index: 201;
+  transform: translateY(100%);
+  transition: transform .32s cubic-bezier(.17,.67,.3,1.1);
+  display: flex; flex-direction: column;
+  max-width: 680px; margin: 0 auto;
+  left: 0; right: 0;
+}
+.sh-sheet.on { transform: translateY(0); }
 
-  /* Plan card (Airalo-style) */
-  .p-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 16px 18px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    transition: border-color .15s, box-shadow .15s;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .p-card:hover { border-color: #d8d5ff; }
-  .p-card.sel { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.08); }
-  .p-card-top { display: flex; align-items: center; justify-content: space-between; }
-  .p-provider { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: #aaa; }
-  .p-card-name { font-size: 14px; font-weight: 700; color: #1a1a2e; }
-  .p-specs {
-    display: flex; gap: 0;
-    background: #f7f8fc; border-radius: 10px;
-    overflow: hidden;
-  }
-  .p-spec {
-    flex: 1; padding: 10px 0; text-align: center;
-    border-right: 1px solid #ebebf0;
-  }
-  .p-spec:last-child { border-right: none; }
-  .p-spec-val { font-size: 18px; font-weight: 900; color: #1a1a2e; line-height: 1; }
-  .p-spec-val.unlimited { font-size: 22px; color: #6C63FF; }
-  .p-spec-val.price { color: #6C63FF; }
-  .p-spec-lbl { font-size: 10.5px; color: #aaa; font-weight: 600; margin-top: 3px; text-transform: uppercase; letter-spacing: .4px; }
+/* Sheet handle */
+.sh-handle { width: 36px; height: 4px; background: #ddd; border-radius: 99px; margin: 10px auto 0; flex-shrink: 0; }
 
-  .p-card-footer { display: flex; align-items: center; justify-content: space-between; }
-  .p-price { font-size: 22px; font-weight: 900; color: #6C63FF; }
-  .p-buy {
-    background: #6C63FF; color: #fff;
-    border: none; border-radius: 10px;
-    padding: 10px 20px; font-size: 14px; font-weight: 700;
-    cursor: pointer; font-family: inherit;
-    transition: background .15s, transform .15s;
-  }
-  .p-buy:hover { background: #5A52E0; transform: translateY(-1px); }
-  .p-buy:active { transform: translateY(0); }
+/* Sheet header */
+.sh-hd {
+  background: #fff; padding: 14px 20px 16px;
+  border-bottom: 1px solid #ececf0; flex-shrink: 0;
+}
+.sh-hd-top { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+.sh-back {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: #f2f2f7; border: none; cursor: pointer;
+  font-size: 20px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; transition: background .15s; color: #333;
+}
+.sh-back:hover { background: #e5e5ec; }
+.sh-dest-flag { font-size: 32px; }
+.sh-dest-name { font-size: 20px; font-weight: 900; color: #111; flex: 1; }
+.sh-dest-sub { font-size: 13px; color: #aaa; padding-left: 48px; }
 
-  /* Checkout strip at bottom */
-  .ps-checkout {
-    background: #fff;
-    border-top: 1px solid #ebebf0;
-    padding: 16px 20px 24px;
-    flex-shrink: 0;
-    display: none;
-    flex-direction: column;
-    gap: 12px;
-  }
-  .ps-checkout.on { display: flex; }
-  .ps-checkout-title {
-    font-size: 13px; font-weight: 700; color: #1a1a2e;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .ps-checkout-plan { font-size: 12px; color: #888; }
-  .ps-email {
-    border: 1.5px solid #e8e8f0; border-radius: 12px;
-    padding: 13px 16px; font-size: 15px;
-    outline: none; font-family: inherit; width: 100%;
-    transition: border .15s; box-sizing: border-box;
-  }
-  .ps-email:focus { border-color: #6C63FF; }
-  .ps-pay-row { display: flex; gap: 8px; }
-  .ps-pay-opt {
-    flex: 1; border: 1.5px solid #e8e8f0; border-radius: 10px;
-    padding: 9px 6px; font-size: 11.5px; font-weight: 600;
-    cursor: pointer; text-align: center; background: #fff;
-    color: #555; font-family: inherit; transition: all .15s;
-    line-height: 1.4;
-  }
-  .ps-pay-opt.on { border-color: #6C63FF; background: #f8f7ff; color: #6C63FF; }
-  .ps-confirm {
-    width: 100%; padding: 15px; border: none; border-radius: 14px;
-    background: linear-gradient(135deg,#6C63FF,#9333ea);
-    color: #fff; font-size: 16px; font-weight: 800;
-    cursor: pointer; font-family: inherit;
-    transition: opacity .2s, transform .2s;
-  }
-  .ps-confirm:disabled { opacity: .6; cursor: not-allowed; transform: none; }
-  .ps-confirm:not(:disabled):hover { transform: translateY(-1px); opacity: .95; }
-  .ps-fine { text-align: center; font-size: 11px; color: #ccc; }
+/* Plan type filter */
+.sh-type-bar {
+  background: #fff; padding: 0 20px 12px;
+  display: flex; gap: 8px; flex-shrink: 0;
+  border-bottom: 1px solid #ececf0;
+}
+.sh-type-btn {
+  padding: 6px 14px; border-radius: 99px;
+  border: 1.5px solid #e5e5ec; background: #fff;
+  font-size: 13px; font-weight: 600; color: #888;
+  cursor: pointer; font-family: inherit; transition: all .15s;
+}
+.sh-type-btn.on { background: #6C63FF; border-color: #6C63FF; color: #fff; }
 
-  /* Loading plan state */
-  .ps-loading { text-align: center; padding: 40px; color: #ccc; font-size: 32px; }
+/* Plan list */
+.sh-plan-list { flex: 1; overflow-y: auto; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px; }
 
-  </style>
+/* ── Plan Card (Airalo style) ────────────────────────── */
+.pc {
+  background: #fff;
+  border-radius: 18px;
+  padding: 16px 18px 14px;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+  position: relative;
+  overflow: hidden;
+}
+.pc:hover { border-color: #d4d0ff; box-shadow: 0 4px 20px rgba(108,99,255,.1); }
+.pc.sel { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.08); }
+
+/* Type stripe at left edge */
+.pc::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: #6C63FF;
+}
+.pc.type-local::before   { background: #10b981; }
+.pc.type-regional::before{ background: #3b82f6; }
+.pc.type-global::before  { background: #8b5cf6; }
+
+/* Card header */
+.pc-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.pc-provider { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: #aaa; }
+.pc-type-badge {
+  font-size: 10px; font-weight: 800; letter-spacing: .6px;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 99px;
+}
+.type-local    .pc-type-badge { background: #d1fae5; color: #059669; }
+.type-regional .pc-type-badge { background: #dbeafe; color: #2563eb; }
+.type-global   .pc-type-badge { background: #ede9fe; color: #7c3aed; }
+
+/* Specs row */
+.pc-specs {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  background: #f8f8fc; border-radius: 12px;
+  overflow: hidden; margin-bottom: 14px;
+}
+.pc-spec {
+  padding: 12px 8px; text-align: center;
+  border-right: 1px solid #ececf2;
+}
+.pc-spec:last-child { border-right: none; }
+.pc-spec-val {
+  font-size: 20px; font-weight: 900; color: #111;
+  line-height: 1; margin-bottom: 4px;
+  display: flex; align-items: baseline;
+  justify-content: center; gap: 1px;
+}
+.pc-spec-val .unit { font-size: 13px; font-weight: 700; color: #555; }
+.pc-spec-val.inf { font-size: 24px; color: #6C63FF; }
+.pc-spec-val.pv  { color: #6C63FF; }
+.pc-spec-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #bbb; }
+
+/* Footer */
+.pc-ft { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pc-ft-name { font-size: 12px; color: #bbb; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pc-buy {
+  background: linear-gradient(135deg,#6C63FF,#9333EA);
+  color: #fff; border: none; border-radius: 10px;
+  padding: 10px 18px; font-size: 13.5px; font-weight: 700;
+  cursor: pointer; font-family: inherit; white-space: nowrap;
+  transition: opacity .15s, transform .15s;
+  flex-shrink: 0;
+}
+.pc-buy:hover { opacity: .9; transform: translateY(-1px); }
+
+/* Loading skeleton in plan list */
+.pc.sk { height: 136px; background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%); background-size:200% 100%; animation:sh 1.4s linear infinite; border:none; cursor:default; }
+.pc.sk::before { display: none; }
+
+/* ── Checkout bar ────────────────────────────────────── */
+.sh-checkout {
+  background: #fff;
+  border-top: 1px solid #ececf0;
+  padding: 16px 20px 28px;
+  flex-shrink: 0;
+  display: none; flex-direction: column; gap: 12px;
+}
+.sh-checkout.on { display: flex; }
+.sh-co-row { display: flex; align-items: center; justify-content: space-between; }
+.sh-co-plan { font-size: 13.5px; font-weight: 700; color: #111; }
+.sh-co-price { font-size: 18px; font-weight: 900; color: #6C63FF; }
+.sh-co-sub { font-size: 12px; color: #bbb; }
+.sh-email {
+  border: 1.5px solid #e5e5ec; border-radius: 12px;
+  padding: 13px 16px; font-size: 15px; font-family: inherit;
+  outline: none; width: 100%; transition: border-color .15s;
+}
+.sh-email:focus { border-color: #6C63FF; }
+.sh-pay-row { display: flex; gap: 8px; }
+.sh-pay-btn {
+  flex: 1; border: 1.5px solid #e5e5ec; border-radius: 12px;
+  background: #fff; cursor: pointer; font-family: inherit;
+  padding: 10px 4px; font-size: 11.5px; font-weight: 600;
+  color: #777; text-align: center; line-height: 1.5;
+  transition: all .15s;
+}
+.sh-pay-btn.on { border-color: #6C63FF; background: #f5f4ff; color: #6C63FF; }
+.sh-confirm {
+  width: 100%; padding: 16px;
+  background: linear-gradient(135deg,#6C63FF 0%,#9333EA 100%);
+  color: #fff; border: none; border-radius: 14px;
+  font-size: 16px; font-weight: 800; font-family: inherit;
+  cursor: pointer; transition: opacity .15s, transform .15s;
+}
+.sh-confirm:not(:disabled):hover { opacity: .92; transform: translateY(-1px); }
+.sh-confirm:disabled { opacity: .6; cursor: not-allowed; }
+.sh-fine { text-align: center; font-size: 11px; color: #ccc; }
+
+/* Loading state in sheet */
+.sh-spin { text-align: center; padding: 48px; font-size: 32px; color: #ddd; flex: 1; }
+</style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ── NAV ───────────────────────────────────────────── -->
 <nav class="nav">
   <div class="nav-inner">
     <a href="/" class="logo">
       <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-        <circle cx="14" cy="14" r="14" fill="url(#gn)"/>
+        <circle cx="14" cy="14" r="14" fill="url(#lg)"/>
         <path d="M8 14c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
         <path d="M10.5 14c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
         <circle cx="14" cy="14" r="1.5" fill="#fff"/>
-        <defs><linearGradient id="gn" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#667eea"/><stop offset="1" stop-color="#764ba2"/></linearGradient></defs>
+        <defs><linearGradient id="lg" x1="0" y1="0" x2="28" y2="28"><stop stop-color="#667eea"/><stop offset="1" stop-color="#764ba2"/></linearGradient></defs>
       </svg>
       SimRyoko
     </a>
     <div class="nav-links">
-      <a href="/shop.html" style="color:var(--brand)">Shop</a>
-      <a href="/b2b.html">Wholesale</a>
-      <a href="/#how">How It Works</a>
+      <a href="/shop.html" style="color:var(--brand)">eSIM 商店</a>
+      <a href="/b2b.html">批发合作</a>
+      <a href="/#how">使用教程</a>
     </div>
     <div class="nav-actions">
-      <a href="/b2b.html" class="btn btn-ghost">For Business →</a>
-      <a href="/shop.html" class="btn btn-nav">Get eSIM</a>
+      <a href="/b2b.html" class="btn btn-ghost">代理商入口 →</a>
+      <a href="/shop.html" class="btn btn-nav">购买 eSIM</a>
     </div>
-    <button class="nav-toggle" id="navToggle">
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
     </button>
   </div>
   <div class="mobile-nav" id="mobileNav">
-    <a href="/shop.html">🛒 Shop eSIMs</a>
-    <a href="/b2b.html">🤝 For Business</a>
-    <a href="/#how">📖 How It Works</a>
-    <a href="/shop.html" class="btn btn-primary btn-block" style="margin-top:8px">Get eSIM →</a>
+    <a href="/shop.html">🛒 eSIM 商店</a>
+    <a href="/b2b.html">🤝 批发合作</a>
+    <a href="/#how">📖 使用教程</a>
+    <a href="/shop.html" class="btn btn-primary btn-block" style="margin-top:8px">购买 eSIM →</a>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="s-hero">
-  <h1>Find Your eSIM</h1>
-  <p>200+ countries · 2,600+ plans · Delivered instantly</p>
-  <div class="s-search">
+<!-- ── HERO ──────────────────────────────────────────── -->
+<div class="sh-hero">
+  <h1>购买 eSIM，畅游全球</h1>
+  <p class="sub">200+ 个国家 · 2,600+ 套餐 · 付款后即时发货</p>
+  <div class="sh-search-box">
     <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
-      <circle cx="11" cy="11" r="7" stroke="#bbb" stroke-width="2"/>
-      <path d="m16.5 16.5 4 4" stroke="#bbb" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="11" cy="11" r="7" stroke="#ccc" stroke-width="2"/>
+      <path d="m16.5 16.5 4 4" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    <input id="searchInput" type="text" placeholder="Search country…" autocomplete="off"/>
-    <button class="s-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+    <input id="searchInput" type="text" placeholder="搜索目的地，如：日本、欧洲、美国…" autocomplete="off"/>
+    <button class="sh-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
 </div>
 
-<!-- TABS -->
-<div class="s-tabs-wrap">
-  <div class="s-tabs" id="tabBar">
-    <button class="s-tab on" data-tab="popular" onclick="setTab(this)">🔥 Popular</button>
-    <button class="s-tab" data-tab="asia"     onclick="setTab(this)">🌏 Asia</button>
-    <button class="s-tab" data-tab="europe"   onclick="setTab(this)">🇪🇺 Europe</button>
-    <button class="s-tab" data-tab="americas" onclick="setTab(this)">🌎 Americas</button>
-    <button class="s-tab" data-tab="mideast"  onclick="setTab(this)">🌙 Middle East</button>
-    <button class="s-tab" data-tab="africa"   onclick="setTab(this)">🌍 Africa</button>
-    <button class="s-tab" data-tab="pacific"  onclick="setTab(this)">🌊 Pacific</button>
-    <button class="s-tab" data-tab="global"   onclick="setTab(this)">🌐 Global</button>
+<!-- ── TABS ──────────────────────────────────────────── -->
+<div class="sh-tabs-bar">
+  <div class="sh-tabs">
+    <button class="sh-tab on" data-tab="popular"  onclick="setTab(this)">🔥 热门</button>
+    <button class="sh-tab"    data-tab="asia"      onclick="setTab(this)">🌏 亚洲</button>
+    <button class="sh-tab"    data-tab="europe"    onclick="setTab(this)">🇪🇺 欧洲</button>
+    <button class="sh-tab"    data-tab="americas"  onclick="setTab(this)">🌎 美洲</button>
+    <button class="sh-tab"    data-tab="mideast"   onclick="setTab(this)">🌙 中东</button>
+    <button class="sh-tab"    data-tab="africa"    onclick="setTab(this)">🌍 非洲</button>
+    <button class="sh-tab"    data-tab="pacific"   onclick="setTab(this)">🌊 大洋洲</button>
+    <button class="sh-tab"    data-tab="global"    onclick="setTab(this)">🌐 全球</button>
   </div>
 </div>
 
-<!-- GRID -->
-<div class="s-wrap">
-  <div class="s-grid-head">
-    <h2 id="gridTitle">🔥 Popular Destinations</h2>
+<!-- ── COUNTRY GRID ───────────────────────────────────── -->
+<div class="sh-body">
+  <div class="sh-row">
+    <h2 id="gridTitle">🔥 热门目的地</h2>
     <span id="gridCount"></span>
   </div>
-  <div class="s-grid" id="grid">
-    <div class="c-card sk"></div><div class="c-card sk"></div>
-    <div class="c-card sk"></div><div class="c-card sk"></div>
-    <div class="c-card sk"></div><div class="c-card sk"></div>
+  <div class="sh-grid" id="grid">
+    <div class="cc sk"></div><div class="cc sk"></div>
+    <div class="cc sk"></div><div class="cc sk"></div>
+    <div class="cc sk"></div><div class="cc sk"></div>
   </div>
 </div>
 
-<!-- OVERLAY -->
-<div class="ps-overlay" id="overlay" onclick="closeSheet()"></div>
+<!-- ── OVERLAY ────────────────────────────────────────── -->
+<div class="sh-overlay" id="overlay" onclick="closeSheet()"></div>
 
-<!-- PLAN SHEET -->
-<div class="ps" id="sheet">
-  <div class="ps-handle"></div>
+<!-- ── PLAN SHEET ─────────────────────────────────────── -->
+<div class="sh-sheet" id="sheet">
+  <div class="sh-handle"></div>
 
   <!-- Header -->
-  <div class="ps-head">
-    <div class="ps-head-top">
-      <button class="ps-back" onclick="closeSheet()">←</button>
-      <span class="ps-country-flag" id="sheetFlag">🇯🇵</span>
-      <span class="ps-country-name" id="sheetName">Japan eSIM</span>
+  <div class="sh-hd">
+    <div class="sh-hd-top">
+      <button class="sh-back" onclick="closeSheet()">←</button>
+      <span class="sh-dest-flag" id="shFlag"></span>
+      <span class="sh-dest-name" id="shName"></span>
     </div>
-    <div class="ps-sub" id="sheetSub">Loading plans…</div>
+    <div class="sh-dest-sub" id="shSub">加载中…</div>
+  </div>
+
+  <!-- Plan type filter -->
+  <div class="sh-type-bar" id="typeBar" style="display:none">
+    <button class="sh-type-btn on" data-type="all"      onclick="filterType('all',this)">全部</button>
+    <button class="sh-type-btn"    data-type="local"    onclick="filterType('local',this)">本地</button>
+    <button class="sh-type-btn"    data-type="regional" onclick="filterType('regional',this)">区域</button>
+    <button class="sh-type-btn"    data-type="global"   onclick="filterType('global',this)">全球</button>
   </div>
 
   <!-- Plans -->
-  <div class="ps-list" id="planList">
-    <div class="ps-loading">⏳</div>
+  <div class="sh-plan-list" id="planList">
+    <div class="sh-spin">⏳</div>
   </div>
 
-  <!-- Checkout strip -->
-  <div class="ps-checkout" id="checkoutStrip">
-    <div>
-      <div class="ps-checkout-title">
-        <span>Checkout</span>
-        <span id="checkoutPrice" style="color:#6C63FF;font-size:16px">$0.00</span>
+  <!-- Checkout bar -->
+  <div class="sh-checkout" id="checkoutBar">
+    <div class="sh-co-row">
+      <div>
+        <div class="sh-co-plan" id="coName"></div>
+        <div class="sh-co-sub" id="coSpec"></div>
       </div>
-      <div class="ps-checkout-plan" id="checkoutPlan"></div>
+      <div class="sh-co-price" id="coPrice"></div>
     </div>
-    <input class="ps-email" id="emailInput" type="email" placeholder="your@email.com — eSIM delivered here"/>
-    <div class="ps-pay-row">
-      <button class="ps-pay-opt on" onclick="setPay('usdt-ton',this)">💎 USDT<br/><small>Telegram</small></button>
-      <button class="ps-pay-opt" onclick="setPay('usdt-trc',this)">💵 USDT<br/><small>TRC-20</small></button>
-      <button class="ps-pay-opt" onclick="setPay('card',this)">💳 Card<br/><small>Visa/MC</small></button>
+    <input class="sh-email" id="emailInput" type="email" placeholder="你的邮箱 — eSIM 将发送到这里"/>
+    <div class="sh-pay-row">
+      <button class="sh-pay-btn on" onclick="setPay('usdt-ton',this)">💎 USDT<br><small style="font-weight:500;color:inherit">Telegram</small></button>
+      <button class="sh-pay-btn"   onclick="setPay('usdt-trc',this)">💵 USDT<br><small style="font-weight:500;color:inherit">TRC-20</small></button>
+      <button class="sh-pay-btn"   onclick="setPay('card',this)">💳 信用卡<br><small style="font-weight:500;color:inherit">Visa/MC</small></button>
     </div>
-    <button class="ps-confirm" id="confirmBtn" onclick="confirmOrder()">Continue to Payment</button>
-    <div class="ps-fine">⚡ Instant delivery · Secure checkout · No subscription</div>
+    <button class="sh-confirm" id="confirmBtn" onclick="doConfirm()">继续支付</button>
+    <div class="sh-fine">⚡ 即时发货 · 安全结账 · 无需合约</div>
   </div>
 </div>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ─────────────────────────────────────────── -->
 <footer class="footer">
   <div class="container">
     <div class="footer-bottom">
       <span>© 2026 Xigro Co Limited. All rights reserved.</span>
-      <div><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a></div>
+      <div><a href="/terms.html">服务条款</a><a href="/privacy.html">隐私政策</a></div>
     </div>
   </div>
 </footer>
@@ -404,399 +465,458 @@
 <div class="float-support">
   <a href="https://wa.me/19402382990" target="_blank">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-    <span>Support</span>
+    客服支持
   </a>
 </div>
 
 <script src="/js/app.js"></script>
 <script>
-/* ══ Destination Data ════════════════════════════════════ */
-const TABS = {
-  popular:  { label:'🔥 Popular',     list:['JP','KR','CN','TH','SG','TW','HK','MY','AU','DE','US','GB','FR','AE','IN','IT','ES'] },
-  asia:     { label:'🌏 Asia',         list:['JP','KR','CN','TW','HK','MO','TH','SG','MY','ID','PH','VN','IN','KH','MM','LA','BD','LK','NP','PK','MN','KZ','UZ','GE','AM','AZ'] },
-  europe:   { label:'🇪🇺 Europe',      list:['GB','DE','FR','IT','ES','NL','CH','AT','SE','NO','DK','FI','BE','PT','GR','PL','CZ','HU','RO','HR','BG','SK','SI','EE','LV','LT','IE','IS','UA','RS','TR','AL','ME','MK','BA'] },
-  americas: { label:'🌎 Americas',     list:['US','CA','MX','BR','AR','CL','CO','PE','EC','BO','PY','UY','VE','CR','PA','GT','DO','JM','TT','BS','BZ','GY'] },
-  mideast:  { label:'🌙 Middle East',  list:['AE','SA','QA','KW','BH','OM','JO','IL','LB','EG','TR','IR','IQ','MA','TN'] },
-  africa:   { label:'🌍 Africa',       list:['ZA','NG','KE','GH','ET','TZ','UG','RW','SN','CI','CM','MU','MG','EG','MA','TN','DZ','ZM','ZW','BW','NA'] },
-  pacific:  { label:'🌊 Pacific',      list:['AU','NZ','FJ','PG','SB','VU','WS','TO'] },
-  global:   { label:'🌐 Global',       list:['GLOBAL','ASIA_REG','DE','US'] },
+/* ═══════════════════════════════════════════════════════
+   Data
+═══════════════════════════════════════════════════════ */
+const TABS_DATA = {
+  popular:  { zh:'🔥 热门目的地',   list:['JP','KR','CN','TH','SG','TW','HK','MY','AU','DE','US','GB','FR','AE','IN','IT','ES','ID'] },
+  asia:     { zh:'🌏 亚洲',         list:['JP','KR','CN','TW','HK','MO','TH','SG','MY','ID','PH','VN','IN','KH','MM','LA','BD','LK','NP','PK','MN','KZ','UZ','GE','AM','AZ'] },
+  europe:   { zh:'🇪🇺 欧洲',         list:['GB','DE','FR','IT','ES','NL','CH','AT','SE','NO','DK','FI','BE','PT','GR','PL','CZ','HU','RO','HR','BG','SK','SI','EE','LV','LT','IE','IS','UA','RS','TR','AL','ME','MK','BA'] },
+  americas: { zh:'🌎 美洲',         list:['US','CA','MX','BR','AR','CL','CO','PE','EC','BO','PY','UY','VE','CR','PA','GT','DO','JM','TT','BS','BZ','GY'] },
+  mideast:  { zh:'🌙 中东',         list:['AE','SA','QA','KW','BH','OM','JO','IL','LB','EG','TR','IR','IQ','MA','TN'] },
+  africa:   { zh:'🌍 非洲',         list:['ZA','NG','KE','GH','ET','TZ','UG','RW','SN','CI','CM','MU','MG','EG','MA','TN','DZ','ZM','ZW','BW','NA'] },
+  pacific:  { zh:'🌊 大洋洲',       list:['AU','NZ','FJ','PG','SB','VU','WS','TO'] },
+  global:   { zh:'🌐 全球套餐',     list:['GLOBAL','ASIA_REG','EU_REG','US'] },
 };
 
-const DEST_INFO = {
-  JP:{name:'Japan',         flag:'🇯🇵'}, KR:{name:'South Korea',   flag:'🇰🇷'}, CN:{name:'China',         flag:'🇨🇳'},
-  TW:{name:'Taiwan',        flag:'🇹🇼'},
-  HK:{name:'Hong Kong',     flag:'🇭🇰'}, MO:{name:'Macau',         flag:'🇲🇴'}, TH:{name:'Thailand',      flag:'🇹🇭'},
-  SG:{name:'Singapore',     flag:'🇸🇬'}, MY:{name:'Malaysia',      flag:'🇲🇾'}, ID:{name:'Indonesia',     flag:'🇮🇩'},
-  PH:{name:'Philippines',   flag:'🇵🇭'}, VN:{name:'Vietnam',       flag:'🇻🇳'}, IN:{name:'India',         flag:'🇮🇳'},
-  KH:{name:'Cambodia',      flag:'🇰🇭'}, MM:{name:'Myanmar',       flag:'🇲🇲'}, LA:{name:'Laos',          flag:'🇱🇦'},
-  BD:{name:'Bangladesh',    flag:'🇧🇩'}, LK:{name:'Sri Lanka',     flag:'🇱🇰'}, NP:{name:'Nepal',         flag:'🇳🇵'},
-  PK:{name:'Pakistan',      flag:'🇵🇰'}, MN:{name:'Mongolia',      flag:'🇲🇳'}, KZ:{name:'Kazakhstan',    flag:'🇰🇿'},
-  UZ:{name:'Uzbekistan',    flag:'🇺🇿'}, GE:{name:'Georgia',       flag:'🇬🇪'}, AM:{name:'Armenia',       flag:'🇦🇲'},
-  AZ:{name:'Azerbaijan',    flag:'🇦🇿'}, GB:{name:'UK',            flag:'🇬🇧'}, DE:{name:'Germany',       flag:'🇩🇪'},
-  FR:{name:'France',        flag:'🇫🇷'}, IT:{name:'Italy',         flag:'🇮🇹'}, ES:{name:'Spain',         flag:'🇪🇸'},
-  NL:{name:'Netherlands',   flag:'🇳🇱'}, CH:{name:'Switzerland',   flag:'🇨🇭'}, AT:{name:'Austria',       flag:'🇦🇹'},
-  SE:{name:'Sweden',        flag:'🇸🇪'}, NO:{name:'Norway',        flag:'🇳🇴'}, DK:{name:'Denmark',       flag:'🇩🇰'},
-  FI:{name:'Finland',       flag:'🇫🇮'}, BE:{name:'Belgium',       flag:'🇧🇪'}, PT:{name:'Portugal',      flag:'🇵🇹'},
-  GR:{name:'Greece',        flag:'🇬🇷'}, PL:{name:'Poland',        flag:'🇵🇱'}, CZ:{name:'Czech Rep.',    flag:'🇨🇿'},
-  HU:{name:'Hungary',       flag:'🇭🇺'}, RO:{name:'Romania',       flag:'🇷🇴'}, HR:{name:'Croatia',       flag:'🇭🇷'},
-  BG:{name:'Bulgaria',      flag:'🇧🇬'}, SK:{name:'Slovakia',      flag:'🇸🇰'}, SI:{name:'Slovenia',      flag:'🇸🇮'},
-  EE:{name:'Estonia',       flag:'🇪🇪'}, LV:{name:'Latvia',        flag:'🇱🇻'}, LT:{name:'Lithuania',     flag:'🇱🇹'},
-  IE:{name:'Ireland',       flag:'🇮🇪'}, IS:{name:'Iceland',       flag:'🇮🇸'}, UA:{name:'Ukraine',       flag:'🇺🇦'},
-  RS:{name:'Serbia',        flag:'🇷🇸'}, TR:{name:'Turkey',        flag:'🇹🇷'}, AL:{name:'Albania',       flag:'🇦🇱'},
-  ME:{name:'Montenegro',    flag:'🇲🇪'}, MK:{name:'N. Macedonia',  flag:'🇲🇰'}, BA:{name:'Bosnia',        flag:'🇧🇦'},
-  US:{name:'USA',           flag:'🇺🇸'}, CA:{name:'Canada',        flag:'🇨🇦'}, MX:{name:'Mexico',        flag:'🇲🇽'},
-  BR:{name:'Brazil',        flag:'🇧🇷'}, AR:{name:'Argentina',     flag:'🇦🇷'}, CL:{name:'Chile',         flag:'🇨🇱'},
-  CO:{name:'Colombia',      flag:'🇨🇴'}, PE:{name:'Peru',          flag:'🇵🇪'}, EC:{name:'Ecuador',       flag:'🇪🇨'},
-  BO:{name:'Bolivia',       flag:'🇧🇴'}, PY:{name:'Paraguay',      flag:'🇵🇾'}, UY:{name:'Uruguay',       flag:'🇺🇾'},
-  VE:{name:'Venezuela',     flag:'🇻🇪'}, CR:{name:'Costa Rica',    flag:'🇨🇷'}, PA:{name:'Panama',        flag:'🇵🇦'},
-  GT:{name:'Guatemala',     flag:'🇬🇹'}, DO:{name:'Dominican Rep.',flag:'🇩🇴'}, JM:{name:'Jamaica',       flag:'🇯🇲'},
-  TT:{name:'Trinidad',      flag:'🇹🇹'}, BS:{name:'Bahamas',       flag:'🇧🇸'}, BZ:{name:'Belize',        flag:'🇧🇿'},
-  GY:{name:'Guyana',        flag:'🇬🇾'}, AE:{name:'UAE',           flag:'🇦🇪'}, SA:{name:'Saudi Arabia',  flag:'🇸🇦'},
-  QA:{name:'Qatar',         flag:'🇶🇦'}, KW:{name:'Kuwait',        flag:'🇰🇼'}, BH:{name:'Bahrain',       flag:'🇧🇭'},
-  OM:{name:'Oman',          flag:'🇴🇲'}, JO:{name:'Jordan',        flag:'🇯🇴'}, IL:{name:'Israel',        flag:'🇮🇱'},
-  LB:{name:'Lebanon',       flag:'🇱🇧'}, EG:{name:'Egypt',         flag:'🇪🇬'}, IR:{name:'Iran',          flag:'🇮🇷'},
-  IQ:{name:'Iraq',          flag:'🇮🇶'}, MA:{name:'Morocco',       flag:'🇲🇦'}, TN:{name:'Tunisia',       flag:'🇹🇳'},
-  ZA:{name:'South Africa',  flag:'🇿🇦'}, NG:{name:'Nigeria',       flag:'🇳🇬'}, KE:{name:'Kenya',         flag:'🇰🇪'},
-  GH:{name:'Ghana',         flag:'🇬🇭'}, ET:{name:'Ethiopia',      flag:'🇪🇹'}, TZ:{name:'Tanzania',      flag:'🇹🇿'},
-  UG:{name:'Uganda',        flag:'🇺🇬'}, RW:{name:'Rwanda',        flag:'🇷🇼'}, SN:{name:'Senegal',       flag:'🇸🇳'},
-  CI:{name:"Côte d'Ivoire", flag:'🇨🇮'}, CM:{name:'Cameroon',      flag:'🇨🇲'}, MU:{name:'Mauritius',     flag:'🇲🇺'},
-  MG:{name:'Madagascar',    flag:'🇲🇬'}, DZ:{name:'Algeria',       flag:'🇩🇿'}, ZM:{name:'Zambia',        flag:'🇿🇲'},
-  ZW:{name:'Zimbabwe',      flag:'🇿🇼'}, BW:{name:'Botswana',      flag:'🇧🇼'}, NA:{name:'Namibia',       flag:'🇳🇦'},
-  AU:{name:'Australia',     flag:'🇦🇺'}, NZ:{name:'New Zealand',   flag:'🇳🇿'}, FJ:{name:'Fiji',          flag:'🇫🇯'},
-  PG:{name:'Papua N.G.',    flag:'🇵🇬'}, SB:{name:'Solomon Is.',   flag:'🇸🇧'}, VU:{name:'Vanuatu',       flag:'🇻🇺'},
-  WS:{name:'Samoa',         flag:'🇼🇸'}, TO:{name:'Tonga',         flag:'🇹🇴'},
-  GLOBAL:{name:'Global (100+ countries)', flag:'🌐', badge:'BEST VALUE'},
-  ASIA_REG:{name:'Asia Regional',         flag:'🌏', badge:'HOT'},
+const DEST = {
+  JP:{n:'日本',     en:'Japan',         f:'🇯🇵'}, KR:{n:'韩国',     en:'Korea',         f:'🇰🇷'},
+  CN:{n:'中国',     en:'China',         f:'🇨🇳'}, TW:{n:'台湾',     en:'Taiwan',        f:'🇹🇼'},
+  HK:{n:'香港',     en:'Hong Kong',     f:'🇭🇰'}, MO:{n:'澳门',     en:'Macau',         f:'🇲🇴'},
+  TH:{n:'泰国',     en:'Thailand',      f:'🇹🇭'}, SG:{n:'新加坡',   en:'Singapore',     f:'🇸🇬'},
+  MY:{n:'马来西亚', en:'Malaysia',      f:'🇲🇾'}, ID:{n:'印尼',     en:'Indonesia',     f:'🇮🇩'},
+  PH:{n:'菲律宾',   en:'Philippines',   f:'🇵🇭'}, VN:{n:'越南',     en:'Vietnam',       f:'🇻🇳'},
+  IN:{n:'印度',     en:'India',         f:'🇮🇳'}, KH:{n:'柬埔寨',   en:'Cambodia',      f:'🇰🇭'},
+  MM:{n:'缅甸',     en:'Myanmar',       f:'🇲🇲'}, LA:{n:'老挝',     en:'Laos',          f:'🇱🇦'},
+  BD:{n:'孟加拉',   en:'Bangladesh',    f:'🇧🇩'}, LK:{n:'斯里兰卡', en:'Sri Lanka',     f:'🇱🇰'},
+  NP:{n:'尼泊尔',   en:'Nepal',         f:'🇳🇵'}, PK:{n:'巴基斯坦', en:'Pakistan',      f:'🇵🇰'},
+  MN:{n:'蒙古',     en:'Mongolia',      f:'🇲🇳'}, KZ:{n:'哈萨克',   en:'Kazakhstan',    f:'🇰🇿'},
+  UZ:{n:'乌兹别克', en:'Uzbekistan',    f:'🇺🇿'}, GE:{n:'格鲁吉亚', en:'Georgia',       f:'🇬🇪'},
+  AM:{n:'亚美尼亚', en:'Armenia',       f:'🇦🇲'}, AZ:{n:'阿塞拜疆', en:'Azerbaijan',    f:'🇦🇿'},
+  GB:{n:'英国',     en:'UK',            f:'🇬🇧'}, DE:{n:'德国',     en:'Germany',       f:'🇩🇪'},
+  FR:{n:'法国',     en:'France',        f:'🇫🇷'}, IT:{n:'意大利',   en:'Italy',         f:'🇮🇹'},
+  ES:{n:'西班牙',   en:'Spain',         f:'🇪🇸'}, NL:{n:'荷兰',     en:'Netherlands',   f:'🇳🇱'},
+  CH:{n:'瑞士',     en:'Switzerland',   f:'🇨🇭'}, AT:{n:'奥地利',   en:'Austria',       f:'🇦🇹'},
+  SE:{n:'瑞典',     en:'Sweden',        f:'🇸🇪'}, NO:{n:'挪威',     en:'Norway',        f:'🇳🇴'},
+  DK:{n:'丹麦',     en:'Denmark',       f:'🇩🇰'}, FI:{n:'芬兰',     en:'Finland',       f:'🇫🇮'},
+  BE:{n:'比利时',   en:'Belgium',       f:'🇧🇪'}, PT:{n:'葡萄牙',   en:'Portugal',      f:'🇵🇹'},
+  GR:{n:'希腊',     en:'Greece',        f:'🇬🇷'}, PL:{n:'波兰',     en:'Poland',        f:'🇵🇱'},
+  CZ:{n:'捷克',     en:'Czech Rep.',    f:'🇨🇿'}, HU:{n:'匈牙利',   en:'Hungary',       f:'🇭🇺'},
+  RO:{n:'罗马尼亚', en:'Romania',       f:'🇷🇴'}, HR:{n:'克罗地亚', en:'Croatia',       f:'🇭🇷'},
+  BG:{n:'保加利亚', en:'Bulgaria',      f:'🇧🇬'}, SK:{n:'斯洛伐克', en:'Slovakia',      f:'🇸🇰'},
+  SI:{n:'斯洛文尼亚',en:'Slovenia',     f:'🇸🇮'}, EE:{n:'爱沙尼亚', en:'Estonia',       f:'🇪🇪'},
+  LV:{n:'拉脱维亚', en:'Latvia',        f:'🇱🇻'}, LT:{n:'立陶宛',   en:'Lithuania',     f:'🇱🇹'},
+  IE:{n:'爱尔兰',   en:'Ireland',       f:'🇮🇪'}, IS:{n:'冰岛',     en:'Iceland',       f:'🇮🇸'},
+  UA:{n:'乌克兰',   en:'Ukraine',       f:'🇺🇦'}, RS:{n:'塞尔维亚', en:'Serbia',        f:'🇷🇸'},
+  TR:{n:'土耳其',   en:'Turkey',        f:'🇹🇷'}, AL:{n:'阿尔巴尼亚',en:'Albania',      f:'🇦🇱'},
+  ME:{n:'黑山',     en:'Montenegro',    f:'🇲🇪'}, MK:{n:'北马其顿', en:'N.Macedonia',   f:'🇲🇰'},
+  BA:{n:'波黑',     en:'Bosnia',        f:'🇧🇦'}, US:{n:'美国',     en:'USA',           f:'🇺🇸'},
+  CA:{n:'加拿大',   en:'Canada',        f:'🇨🇦'}, MX:{n:'墨西哥',   en:'Mexico',        f:'🇲🇽'},
+  BR:{n:'巴西',     en:'Brazil',        f:'🇧🇷'}, AR:{n:'阿根廷',   en:'Argentina',     f:'🇦🇷'},
+  CL:{n:'智利',     en:'Chile',         f:'🇨🇱'}, CO:{n:'哥伦比亚', en:'Colombia',      f:'🇨🇴'},
+  PE:{n:'秘鲁',     en:'Peru',          f:'🇵🇪'}, EC:{n:'厄瓜多尔', en:'Ecuador',       f:'🇪🇨'},
+  BO:{n:'玻利维亚', en:'Bolivia',       f:'🇧🇴'}, PY:{n:'巴拉圭',   en:'Paraguay',      f:'🇵🇾'},
+  UY:{n:'乌拉圭',   en:'Uruguay',       f:'🇺🇾'}, VE:{n:'委内瑞拉', en:'Venezuela',     f:'🇻🇪'},
+  CR:{n:'哥斯达黎加',en:'Costa Rica',   f:'🇨🇷'}, PA:{n:'巴拿马',   en:'Panama',        f:'🇵🇦'},
+  GT:{n:'危地马拉', en:'Guatemala',     f:'🇬🇹'}, DO:{n:'多米尼加', en:'Dominican Rep.',f:'🇩🇴'},
+  JM:{n:'牙买加',   en:'Jamaica',       f:'🇯🇲'}, TT:{n:'特立尼达', en:'Trinidad',      f:'🇹🇹'},
+  BS:{n:'巴哈马',   en:'Bahamas',       f:'🇧🇸'}, BZ:{n:'伯利兹',   en:'Belize',        f:'🇧🇿'},
+  GY:{n:'圭亚那',   en:'Guyana',        f:'🇬🇾'}, AE:{n:'阿联酋',   en:'UAE',           f:'🇦🇪'},
+  SA:{n:'沙特',     en:'Saudi Arabia',  f:'🇸🇦'}, QA:{n:'卡塔尔',   en:'Qatar',         f:'🇶🇦'},
+  KW:{n:'科威特',   en:'Kuwait',        f:'🇰🇼'}, BH:{n:'巴林',     en:'Bahrain',       f:'🇧🇭'},
+  OM:{n:'阿曼',     en:'Oman',          f:'🇴🇲'}, JO:{n:'约旦',     en:'Jordan',        f:'🇯🇴'},
+  IL:{n:'以色列',   en:'Israel',        f:'🇮🇱'}, LB:{n:'黎巴嫩',   en:'Lebanon',       f:'🇱🇧'},
+  EG:{n:'埃及',     en:'Egypt',         f:'🇪🇬'}, IR:{n:'伊朗',     en:'Iran',          f:'🇮🇷'},
+  IQ:{n:'伊拉克',   en:'Iraq',          f:'🇮🇶'}, MA:{n:'摩洛哥',   en:'Morocco',       f:'🇲🇦'},
+  TN:{n:'突尼斯',   en:'Tunisia',       f:'🇹🇳'}, ZA:{n:'南非',     en:'South Africa',  f:'🇿🇦'},
+  NG:{n:'尼日利亚', en:'Nigeria',       f:'🇳🇬'}, KE:{n:'肯尼亚',   en:'Kenya',         f:'🇰🇪'},
+  GH:{n:'加纳',     en:'Ghana',         f:'🇬🇭'}, ET:{n:'埃塞俄比亚',en:'Ethiopia',     f:'🇪🇹'},
+  TZ:{n:'坦桑尼亚', en:'Tanzania',      f:'🇹🇿'}, UG:{n:'乌干达',   en:'Uganda',        f:'🇺🇬'},
+  RW:{n:'卢旺达',   en:'Rwanda',        f:'🇷🇼'}, SN:{n:'塞内加尔', en:'Senegal',       f:'🇸🇳'},
+  CI:{n:"科特迪瓦", en:"Côte d'Ivoire",f:'🇨🇮'}, CM:{n:'喀麦隆',   en:'Cameroon',      f:'🇨🇲'},
+  MU:{n:'毛里求斯', en:'Mauritius',     f:'🇲🇺'}, MG:{n:'马达加斯加',en:'Madagascar',   f:'🇲🇬'},
+  DZ:{n:'阿尔及利亚',en:'Algeria',      f:'🇩🇿'}, ZM:{n:'赞比亚',   en:'Zambia',        f:'🇿🇲'},
+  ZW:{n:'津巴布韦', en:'Zimbabwe',      f:'🇿🇼'}, BW:{n:'博茨瓦纳', en:'Botswana',      f:'🇧🇼'},
+  NA:{n:'纳米比亚', en:'Namibia',       f:'🇳🇦'}, AU:{n:'澳大利亚', en:'Australia',     f:'🇦🇺'},
+  NZ:{n:'新西兰',   en:'New Zealand',   f:'🇳🇿'}, FJ:{n:'斐济',     en:'Fiji',          f:'🇫🇯'},
+  PG:{n:'巴布亚新几内亚',en:'Papua N.G.',f:'🇵🇬'},SB:{n:'所罗门群岛',en:'Solomon Is.',  f:'🇸🇧'},
+  VU:{n:'瓦努阿图', en:'Vanuatu',       f:'🇻🇺'}, WS:{n:'萨摩亚',   en:'Samoa',         f:'🇼🇸'},
+  TO:{n:'汤加',     en:'Tonga',         f:'🇹🇴'},
+  GLOBAL:   {n:'全球通用',   en:'Global (100+ countries)', f:'🌐', badge:'超值'},
+  ASIA_REG: {n:'亚洲通用',   en:'Asia Regional',           f:'🌏', badge:'热门'},
+  EU_REG:   {n:'欧洲通用',   en:'Europe (28 countries)',   f:'🇪🇺'},
 };
 
-/* ══ State ═══════════════════════════════════════════════ */
-let currentTab  = 'popular';
-let searchMode  = false;
-let planCache   = {};   // code → plans[]
-let priceCache  = {};   // code → minPrice
-let countCache  = {};   // code → total plan count
-let selectedPlan = null;
-let selectedPay  = 'usdt-ton';
-let currentCode  = '';
+/* ═══════════════════════════════════════════════════════
+   State
+═══════════════════════════════════════════════════════ */
+let curTab    = 'popular';
+let priceCache = {};   // code→minPrice
+let countCache = {};   // code→total
+let planCache  = {};   // code→plans[]
+let allCurPlans= [];   // 当前国家的完整套餐列表（用于筛选）
+let curType   = 'all';
+let curCode   = '';
+let selPlan   = null;
+let selPay    = 'usdt-ton';
 
-/* ══ Utilities ═══════════════════════════════════════════ */
-function fmtMB(mb, name) {
-  if (!mb) {
-    // 从套餐名称判断是否为无限流量
-    const n = (name || '').toLowerCase();
-    if (n.includes('unlimited') || n.includes('无限')) return '∞';
-    return '?';
-  }
+/* ═══════════════════════════════════════════════════════
+   Helpers
+═══════════════════════════════════════════════════════ */
+function fmtData(mb, name) {
+  const n = (name||'').toLowerCase();
+  if (!mb) return (n.includes('unlimited')||n.includes('无限')) ? '∞' : '?';
   const v = parseFloat(mb);
-  return v >= 1024 ? (v % 1024 === 0 ? v/1024 : (v/1024).toFixed(1)) + 'GB' : v + 'MB';
+  return v >= 1024 ? (v%1024===0 ? v/1024 : (v/1024).toFixed(1))+'GB' : v+'MB';
 }
-function fmtUSD(p) { return '$' + parseFloat(p).toFixed(2); }
+function fmtDays(p) {
+  return p.validityDays || p.validDays || '?';
+}
+function fmtUSD(v) { return '$'+parseFloat(v).toFixed(2); }
+function planType(p) {
+  const t = (p.type||'').toLowerCase();
+  if (t==='global') return 'global';
+  if (t==='regional') return 'regional';
+  return 'local';
+}
+function typeLabel(t) {
+  return {local:'本地',regional:'区域',global:'全球'}[t]||t;
+}
 
-/* ══ Tab switching ═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   Tab switching
+═══════════════════════════════════════════════════════ */
 function setTab(btn) {
-  currentTab = btn.dataset.tab;
-  searchMode = false;
-  document.getElementById('searchInput').value = '';
-  document.getElementById('searchClear').style.display = 'none';
-  document.querySelectorAll('.s-tab').forEach(b => b.classList.remove('on'));
+  curTab = btn.dataset.tab;
+  document.querySelectorAll('.sh-tab').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  document.getElementById('gridTitle').textContent = TABS[currentTab].label + ' Destinations';
+  document.getElementById('gridTitle').textContent = TABS_DATA[curTab].zh;
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('show');
   renderGrid();
 }
 
-/* ══ Search ══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   Search
+═══════════════════════════════════════════════════════ */
 function onSearch(q) {
   q = q.trim();
-  document.getElementById('searchClear').style.display = q ? 'block' : 'none';
-  searchMode = !!q;
+  document.getElementById('searchClear').classList.toggle('show', !!q);
   if (!q) {
-    document.getElementById('gridTitle').textContent = TABS[currentTab].label + ' Destinations';
+    document.getElementById('gridTitle').textContent = TABS_DATA[curTab].zh;
     renderGrid(); return;
   }
   const ql = q.toLowerCase();
   const seen = new Set();
-  const all = Object.values(TABS).flatMap(t => t.list);
-  const results = all.filter(code => {
-    if (seen.has(code)) return false;
-    seen.add(code);
-    const d = DEST_INFO[code];
-    return d && (d.name.toLowerCase().includes(ql) || code.toLowerCase().includes(ql));
+  const all = Object.values(TABS_DATA).flatMap(t=>t.list);
+  const res = all.filter(code => {
+    if (seen.has(code)) return false; seen.add(code);
+    const d = DEST[code];
+    return d && (d.n.includes(q)||d.en.toLowerCase().includes(ql)||code.toLowerCase()===ql);
   });
-  document.getElementById('gridTitle').textContent = `Results for "${q}"`;
-  renderGrid(results);
+  document.getElementById('gridTitle').textContent = `"${q}" 的搜索结果`;
+  renderGrid(res);
 }
 function clearSearch() {
   document.getElementById('searchInput').value = '';
-  onSearch('');
+  document.getElementById('searchClear').classList.remove('show');
+  document.getElementById('gridTitle').textContent = TABS_DATA[curTab].zh;
+  renderGrid();
 }
 
-/* ══ Render country grid ═════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   Country grid
+═══════════════════════════════════════════════════════ */
 function renderGrid(list) {
-  if (!list) list = TABS[currentTab].list;
+  list = list || TABS_DATA[curTab].list;
   const grid = document.getElementById('grid');
-  document.getElementById('gridCount').textContent = list.length + ' destinations';
+  document.getElementById('gridCount').textContent = list.length + ' 个目的地';
 
   if (!list.length) {
-    grid.innerHTML = `<div class="s-empty"><div class="ei">🔍</div><p>No destinations found</p></div>`;
+    grid.innerHTML = `<div class="sh-empty"><div class="ico">🔍</div><p>未找到相关目的地</p></div>`;
     return;
   }
   grid.innerHTML = list.map(code => {
-    const d = DEST_INFO[code];
-    if (!d) return '';
+    const d = DEST[code]; if(!d) return '';
     const price = priceCache[code];
     const count = countCache[code];
-    const badge = d.badge ? `<div class="c-badge">${d.badge}</div>` : '';
-    const sub   = count ? `${count} plans` : (price ? '' : '');
+    const badge = d.badge ? `<div class="cbadge">${d.badge}</div>`:'';
     return `
-    <div class="c-card" id="card-${code}" onclick="openCountry('${code}')">
+    <div class="cc" id="cc-${code}" onclick="openCountry('${code}')">
       ${badge}
-      <div class="c-flag">${d.flag || code}</div>
-      <div class="c-name">${d.name}</div>
-      ${sub ? `<div class="c-count">${sub}</div>` : ''}
-      <div class="c-price ${price ? '' : 'tbd'}">${price ? 'From ' + fmtUSD(price) : '›'}</div>
+      <span class="flag">${d.f}</span>
+      <div class="cname">${d.n}</div>
+      ${count?`<div class="ccount">${count} 个套餐</div>`:''}
+      <div class="cprice ${price?'':'nd'}">${price?'起 '+fmtUSD(price):'›'}</div>
     </div>`;
   }).join('');
 }
 
-/* ══ Open country sheet ══════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   Open country sheet
+═══════════════════════════════════════════════════════ */
 async function openCountry(code) {
-  const d = DEST_INFO[code];
-  if (!d) return;
-  currentCode  = code;
-  selectedPlan = null;
+  const d = DEST[code]; if(!d) return;
+  curCode  = code;
+  curType  = 'all';
+  selPlan  = null;
 
-  // Show sheet with loading state
-  document.getElementById('sheetFlag').textContent = d.flag || '🌐';
-  document.getElementById('sheetName').textContent = d.name + ' eSIM';
-  document.getElementById('sheetSub').textContent  = 'Loading plans…';
-  document.getElementById('planList').innerHTML    = '<div class="ps-loading">⏳</div>';
-  document.getElementById('checkoutStrip').classList.remove('on');
+  // Reset type buttons
+  document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.toggle('on', b.dataset.type==='all'));
+
+  document.getElementById('shFlag').textContent = d.f;
+  document.getElementById('shName').textContent = d.n + ' eSIM';
+  document.getElementById('shSub').textContent  = '加载中…';
+  document.getElementById('typeBar').style.display = 'none';
+  document.getElementById('planList').innerHTML  = '<div class="sh-spin">⏳</div>';
+  document.getElementById('checkoutBar').classList.remove('on');
+
   openSheet();
 
-  // Fetch plans (cached)
+  // Fetch (cached)
   if (!planCache[code]) {
     try {
-      const apiCode = ['GLOBAL','ASIA_REG'].includes(code) ? '' : code;
+      const apiCode = ['GLOBAL','ASIA_REG','EU_REG'].includes(code)?'':code;
       const r = await fetch(`/api/products?country=${apiCode}&pageSize=20`);
       const j = await r.json();
-      planCache[code] = (j.data?.list || []).sort((a,b) => parseFloat(a.price)-parseFloat(b.price));
+      planCache[code] = (j.data?.list||[]).sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
       if (planCache[code].length) {
         priceCache[code] = planCache[code][0].price;
         countCache[code] = j.data?.total || planCache[code].length;
-        // Update card price silently
-        document.querySelectorAll('.c-card').forEach(el => {
-          if (el.getAttribute('onclick') === `openCountry('${code}')`) {
-            const priceEl = el.querySelector('.c-price');
-            if (priceEl) { priceEl.textContent = 'From ' + fmtUSD(priceCache[code]); priceEl.classList.remove('tbd'); }
-          }
-        });
+        updateCard(code);
       }
     } catch(e) {
-      document.getElementById('sheetSub').textContent = 'Failed to load. Tap to retry.';
+      document.getElementById('shSub').textContent = '加载失败，请重试';
       document.getElementById('planList').innerHTML = '';
       return;
     }
   }
 
-  const plans = planCache[code];
+  allCurPlans = planCache[code];
+  renderPlans();
+}
+
+function updateCard(code) {
+  const card = document.getElementById(`cc-${code}`);
+  if (!card) return;
+  const priceEl = card.querySelector('.cprice');
+  if (priceEl && priceCache[code]) {
+    priceEl.textContent = '起 ' + fmtUSD(priceCache[code]);
+    priceEl.classList.remove('nd');
+  }
+  const cname = card.querySelector('.cname');
+  if (cname && countCache[code] && !card.querySelector('.ccount')) {
+    const el = document.createElement('div');
+    el.className = 'ccount';
+    el.textContent = countCache[code] + ' 个套餐';
+    cname.after(el);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Render plan list
+═══════════════════════════════════════════════════════ */
+function renderPlans() {
+  const plans = curType==='all' ? allCurPlans
+    : allCurPlans.filter(p => planType(p)===curType);
+
+  const total = countCache[curCode] || allCurPlans.length;
+  document.getElementById('shSub').textContent = `共 ${total} 个套餐`;
+
+  // Show type filter only if multiple types exist
+  const types = new Set(allCurPlans.map(planType));
+  document.getElementById('typeBar').style.display = types.size > 1 ? 'flex' : 'none';
+
   if (!plans.length) {
-    document.getElementById('sheetSub').textContent = 'No plans available for this destination.';
-    document.getElementById('planList').innerHTML = `<div class="s-empty"><div class="ei">📭</div><p>Check back soon.</p></div>`;
+    document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">📭</div><p>该类型暂无套餐</p></div>`;
     return;
   }
 
-  const totalCount = countCache[code] || plans.length;
-  document.getElementById('sheetSub').textContent = `${totalCount} plan${totalCount > 1 ? 's' : ''} available`;
-  document.getElementById('planList').innerHTML = plans.slice(0, 10).map((p, i) => {
-    const pname  = p.nameEn || p.name || '';
-    const data   = fmtMB(p.dataAmount || p.dataSize, pname);
-    const days   = p.validityDays || p.validDays || '?';
-    const price  = fmtUSD(p.price);
-    // Provider: use first word(s) before dash
-    const provider = pname.split('-')[0].trim() || 'SimRyoko';
+  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => {
+    const pn    = p.nameEn||p.name||'';
+    const data  = fmtData(p.dataAmount||p.dataSize, pn);
+    const days  = fmtDays(p);
+    const price = fmtUSD(p.price);
+    const type  = planType(p);
+    const isInf = data==='∞';
+
+    // Parse data value and unit separately
+    const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/,'');
+    const dataUnit = isInf ? '' : data.replace(/[\d.]+/,'');
+    const priceVal = price.replace('$','');
+
+    const provider = pn.split('-')[0].trim() || 'SimRyoko';
+
     return `
-    <div class="p-card${i===0?' sel':''}" onclick="selectPlan(${i},this)">
-      <div class="p-card-top">
-        <span class="p-provider">${provider}</span>
+    <div class="pc type-${type}${i===0?' sel':''}" onclick="selectPlan(${i},this)">
+      <div class="pc-hd">
+        <span class="pc-provider">${provider}</span>
+        <span class="pc-type-badge">${typeLabel(type)}</span>
       </div>
-      <div class="p-specs">
-        <div class="p-spec">
-          <div class="p-spec-val ${data==='∞'?'unlimited':''}">${data}</div>
-          <div class="p-spec-lbl">Data</div>
+      <div class="pc-specs">
+        <div class="pc-spec">
+          <div class="pc-spec-val${isInf?' inf':''}">
+            ${dataVal}${dataUnit?`<span class="unit">${dataUnit}</span>`:''}
+          </div>
+          <div class="pc-spec-lbl">流量</div>
         </div>
-        <div class="p-spec">
-          <div class="p-spec-val">${days}</div>
-          <div class="p-spec-lbl">Days</div>
+        <div class="pc-spec">
+          <div class="pc-spec-val">${days}<span class="unit">天</span></div>
+          <div class="pc-spec-lbl">有效期</div>
         </div>
-        <div class="p-spec">
-          <div class="p-spec-val price">${price}</div>
-          <div class="p-spec-lbl">Price</div>
+        <div class="pc-spec">
+          <div class="pc-spec-val pv">$${priceVal}</div>
+          <div class="pc-spec-lbl">价格</div>
         </div>
       </div>
-      <div class="p-card-footer">
-        <span style="font-size:12px;color:#aaa">${pname}</span>
-        <button class="p-buy" onclick="event.stopPropagation();quickBuy(${i})">Buy →</button>
+      <div class="pc-ft">
+        <span class="pc-ft-name">${pn}</span>
+        <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">立即购买</button>
       </div>
     </div>`;
   }).join('');
 
-  // Auto-select first
-  selectedPlan = plans[0];
+  // Auto select first
+  selPlan = plans[0];
   showCheckout();
 }
 
-/* ══ Plan selection ══════════════════════════════════════ */
+function filterType(type, btn) {
+  curType = type;
+  document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderPlans();
+}
+
+/* ═══════════════════════════════════════════════════════
+   Plan selection & checkout
+═══════════════════════════════════════════════════════ */
 function selectPlan(idx, el) {
-  document.querySelectorAll('.p-card').forEach(c => c.classList.remove('sel'));
+  document.querySelectorAll('.pc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  selectedPlan = planCache[currentCode][idx];
+  const plans = curType==='all'?allCurPlans:allCurPlans.filter(p=>planType(p)===curType);
+  selPlan = plans[idx];
   showCheckout();
 }
 
 function quickBuy(idx) {
-  selectedPlan = planCache[currentCode][idx];
+  const plans = curType==='all'?allCurPlans:allCurPlans.filter(p=>planType(p)===curType);
+  selPlan = plans[idx];
   showCheckout();
-  // Scroll to checkout strip
-  document.getElementById('checkoutStrip').scrollIntoView({ behavior: 'smooth', block: 'end' });
-  document.getElementById('emailInput').focus();
+  setTimeout(()=>{
+    document.getElementById('checkoutBar').scrollIntoView({behavior:'smooth',block:'nearest'});
+    document.getElementById('emailInput').focus();
+  },100);
 }
 
 function showCheckout() {
-  if (!selectedPlan) return;
-  const pn   = selectedPlan.nameEn || selectedPlan.name || '';
-  const d    = fmtMB(selectedPlan.dataAmount || selectedPlan.dataSize, pn);
-  const days = selectedPlan.validityDays || selectedPlan.validDays || '?';
-  document.getElementById('checkoutPrice').textContent = fmtUSD(selectedPlan.price);
-  document.getElementById('checkoutPlan').textContent  = `${d} · ${days} days`;
-  document.getElementById('confirmBtn').textContent    = `Pay ${fmtUSD(selectedPlan.price)} →`;
-  document.getElementById('checkoutStrip').classList.add('on');
+  if (!selPlan) return;
+  const pn   = selPlan.nameEn||selPlan.name||'';
+  const data = fmtData(selPlan.dataAmount||selPlan.dataSize, pn);
+  const days = fmtDays(selPlan);
+  document.getElementById('coName').textContent  = pn;
+  document.getElementById('coSpec').textContent  = `${data} · ${days}天`;
+  document.getElementById('coPrice').textContent = fmtUSD(selPlan.price);
+  document.getElementById('confirmBtn').textContent = `支付 ${fmtUSD(selPlan.price)}`;
+  document.getElementById('checkoutBar').classList.add('on');
 }
 
-/* ══ Payment method ══════════════════════════════════════ */
 function setPay(method, btn) {
-  selectedPay = method;
-  document.querySelectorAll('.ps-pay-opt').forEach(b => b.classList.remove('on'));
+  selPay = method;
+  document.querySelectorAll('.sh-pay-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
 }
 
-/* ══ Confirm order ═══════════════════════════════════════ */
-async function confirmOrder() {
+async function doConfirm() {
   const email = document.getElementById('emailInput').value.trim();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    document.getElementById('emailInput').style.borderColor = '#ef4444';
-    document.getElementById('emailInput').focus();
-    setTimeout(() => document.getElementById('emailInput').style.borderColor = '', 2000);
+  if (!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const el = document.getElementById('emailInput');
+    el.style.borderColor = '#ef4444';
+    el.focus();
+    setTimeout(()=>el.style.borderColor='', 2000);
     return;
   }
-  if (!selectedPlan) return;
+  if (!selPlan) return;
 
   const btn = document.getElementById('confirmBtn');
-  btn.disabled = true;
-  btn.textContent = 'Processing…';
+  btn.disabled = true; btn.textContent = '处理中…';
 
-  const pid = selectedPlan.id;
-
+  const pid = selPlan.id;
   try {
-    if (selectedPay === 'card' || selectedPay === 'usdt-trc') {
-      const method = selectedPay === 'card' ? 'card' : 'usdt';
-      window.location = `/checkout.html?productId=${pid}&email=${encodeURIComponent(email)}&method=${method}`;
+    if (selPay==='card'||selPay==='usdt-trc') {
+      const m = selPay==='card'?'card':'usdt';
+      window.location = `/checkout.html?productId=${pid}&email=${encodeURIComponent(email)}&method=${m}`;
       return;
     }
-
-    // USDT via CryptoPay (Telegram native)
-    const r = await fetch('/api/ton/create', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ productId: pid, email }),
-    });
-    const data = await r.json();
-    if (data.data?.payUrl) {
-      window.open(data.data.payUrl, '_blank');
-      btn.disabled = false;
-      btn.textContent = `Pay ${fmtUSD(selectedPlan.price)} →`;
-    } else throw new Error('No payUrl');
+    const r = await fetch('/api/ton/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({productId:pid,email})});
+    const d = await r.json();
+    if (d.data?.payUrl) {
+      window.open(d.data.payUrl,'_blank');
+      btn.disabled=false; btn.textContent=`支付 ${fmtUSD(selPlan.price)}`;
+    } else throw new Error();
   } catch(e) {
-    btn.disabled = false;
-    btn.textContent = `Pay ${fmtUSD(selectedPlan.price)} →`;
-    alert('Payment setup failed. Please try card payment.');
+    btn.disabled=false; btn.textContent=`支付 ${fmtUSD(selPlan.price)}`;
+    alert('支付初始化失败，请选择信用卡支付或联系客服。');
   }
 }
 
-/* ══ Sheet open / close ══════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   Sheet open/close
+═══════════════════════════════════════════════════════ */
 function openSheet() {
   document.getElementById('sheet').classList.add('on');
   document.getElementById('overlay').classList.add('on');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 function closeSheet() {
   document.getElementById('sheet').classList.remove('on');
   document.getElementById('overlay').classList.remove('on');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
 
-/* ══ Preload popular destinations ═══════════════════════ */
-async function preloadPopular() {
-  const popular = TABS.popular.list;
-  // Fetch 3 products per country in parallel (just enough for min price + total count)
-  const fetches = popular.map(code =>
+/* ═══════════════════════════════════════════════════════
+   Preload popular prices
+═══════════════════════════════════════════════════════ */
+function preloadPopular() {
+  TABS_DATA.popular.list.forEach(code => {
+    if (priceCache[code]) return;
     fetch(`/api/products?country=${code}&pageSize=3`)
-      .then(r => r.json())
-      .then(j => {
-        const list  = j.data?.list || [];
-        const total = j.data?.total || 0;
-        if (list.length && !priceCache[code]) {
-          priceCache[code] = Math.min(...list.map(p => parseFloat(p.price)));
+      .then(r=>r.json())
+      .then(j=>{
+        const list = j.data?.list||[];
+        if (list.length) {
+          priceCache[code] = Math.min(...list.map(p=>parseFloat(p.price)));
+          countCache[code] = j.data?.total||list.length;
+          updateCard(code);
         }
-        if (total && !countCache[code]) {
-          countCache[code] = total;
-        }
-        // Update the card in DOM if already rendered
-        const card = document.getElementById(`card-${code}`);
-        if (card) {
-          const priceEl = card.querySelector('.c-price');
-          const countEl = card.querySelector('.c-count');
-          if (priceEl && priceCache[code]) {
-            priceEl.textContent = 'From ' + fmtUSD(priceCache[code]);
-            priceEl.classList.remove('tbd');
-          }
-          if (!countEl && countCache[code]) {
-            const nameEl = card.querySelector('.c-name');
-            if (nameEl) {
-              const c = document.createElement('div');
-              c.className = 'c-count';
-              c.textContent = countCache[code] + ' plans';
-              nameEl.after(c);
-            }
-          } else if (countEl && countCache[code]) {
-            countEl.textContent = countCache[code] + ' plans';
-          }
-        }
-      })
-      .catch(() => {})
-  );
-  await Promise.all(fetches);
+      }).catch(()=>{});
+  });
 }
 
-/* ══ URL params ══════════════════════════════════════════ */
-(function() {
+/* ═══════════════════════════════════════════════════════
+   URL param & init
+═══════════════════════════════════════════════════════ */
+(function(){
   const p = new URLSearchParams(location.search);
-  if (p.get('country')) {
-    const c = p.get('country').toUpperCase();
-    if (DEST_INFO[c]) setTimeout(() => openCountry(c), 200);
-  }
+  const c = (p.get('country')||'').toUpperCase();
+  if (c && DEST[c]) setTimeout(()=>openCountry(c), 200);
 })();
 
-/* ══ Events ══════════════════════════════════════════════ */
-document.getElementById('searchInput').addEventListener('input', function() {
+document.getElementById('searchInput').addEventListener('input', function(){
   clearTimeout(this._t);
-  this._t = setTimeout(() => onSearch(this.value), 280);
+  this._t = setTimeout(()=>onSearch(this.value), 280);
 });
 
-/* ══ Init ════════════════════════════════════════════════ */
 renderGrid();
-preloadPopular(); // 后台并发拉取热门国家价格和套餐数（不阻塞首屏）
+preloadPopular();
 </script>
 <script src="/js/i18n.js"></script>
-<script>if('serviceWorker' in navigator) navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
 </body>
 </html>
