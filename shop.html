@@ -284,12 +284,10 @@ body { background: #f5f6fa; }
 /* Specs row */
 .pc-specs {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  background: #f7f7fb; border-radius: 12px;
-  overflow: hidden; margin-bottom: 12px; border: 1px solid #ececf5;
+  margin-bottom: 0; padding-bottom: 14px;
 }
-.unlimited-card .pc-specs { background: rgba(108,99,255,.06); border-color: rgba(108,99,255,.15); }
-.pc-spec { padding: 14px 6px; text-align: center; border-right: 1px solid #ececf5; }
-.unlimited-card .pc-spec { border-right-color: rgba(108,99,255,.12); }
+.pc-spec { padding: 10px 8px 6px; text-align: center; border-right: 1.5px solid #f0f0f7; }
+.unlimited-card .pc-spec { border-right-color: rgba(108,99,255,.15); }
 .pc-spec:last-child { border-right: none; }
 
 .pc-sv {
@@ -299,11 +297,15 @@ body { background: #f5f6fa; }
 }
 .pc-sv .u { font-size: 12px; font-weight: 700; color: #888; margin-left: 1px; }
 .pc-sv.inf-val { font-size: 28px; color: #6C63FF; }
-.pc-sv.price-val { color: #111; }
-.pc-sl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #bbb; }
+.pc-sv.price-val { color: #6C63FF; }
+.pc-sl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #ccc; }
 
 /* Footer */
-.pc-ft { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pc-ft {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  border-top: 1.5px solid #f0f0f7; padding-top: 10px;
+}
+.unlimited-card .pc-ft { border-top-color: rgba(108,99,255,.12); }
 .pc-meta { font-size: 11.5px; color: #ccc; flex: 1; }
 .pc-meta .per-gb  { color: #10b981; font-weight: 700; }
 .pc-meta .per-day { color: #bbb; }
@@ -342,26 +344,39 @@ body { background: #f5f6fa; }
   outline: none; width: 100%; transition: border-color .15s;
 }
 .sh-email:focus { border-color: #6C63FF; }
-.sh-pay-row { display: flex; gap: 8px; }
-.sh-pay-btn {
-  flex: 1; border: 1.5px solid #e5e5ec; border-radius: 12px;
-  background: #fff; cursor: pointer; font-family: inherit;
-  padding: 10px 4px; font-size: 11.5px; font-weight: 600;
-  color: #777; text-align: center; line-height: 1.5;
-  transition: all .15s;
+/* Segmented payment control */
+.sh-pay-seg {
+  display: flex; border: 1.5px solid #e5e5ec; border-radius: 12px;
+  overflow: hidden; background: #fff;
 }
-.sh-pay-btn.on { border-color: #6C63FF; background: #f5f4ff; color: #6C63FF; }
+.sh-seg {
+  flex: 1; padding: 9px 4px; border: none; border-right: 1.5px solid #e5e5ec;
+  background: transparent; font-family: inherit;
+  font-size: 12px; font-weight: 700; color: #999;
+  cursor: pointer; line-height: 1.4; transition: all .15s;
+}
+.sh-seg:last-child { border-right: none; }
+.sh-seg.on { background: #6C63FF; color: #fff; border-color: #6C63FF; }
+.sh-seg.on + .sh-seg { border-left-color: #6C63FF; }
+
 .sh-confirm {
-  width: 100%; padding: 16px;
+  width: 100%; padding: 15px;
   background: linear-gradient(135deg,#6C63FF 0%,#9333EA 100%);
   color: #fff; border: none; border-radius: 14px;
-  font-size: 16px; font-weight: 800; font-family: inherit;
+  font-size: 16px; font-weight: 800; font-family: inherit; letter-spacing: -.2px;
   cursor: pointer; transition: opacity .15s, transform .15s;
+  box-shadow: 0 4px 16px rgba(108,99,255,.35);
 }
 .sh-confirm:not(:disabled):hover { opacity: .92; transform: translateY(-1px); }
-.sh-confirm:disabled { opacity: .6; cursor: not-allowed; }
-.sh-fine { text-align: center; font-size: 11px; color: #ccc; }
-.sh-guarantee { text-align: center; font-size: 11.5px; color: #aaa; margin-top: 6px; }
+.sh-confirm:disabled { opacity: .5; cursor: not-allowed; box-shadow: none; }
+
+/* Trust row */
+.sh-trust {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; font-size: 11px; color: #ccc; flex-wrap: wrap;
+}
+.sh-trust-sep { color: #e5e5ec; }
+.sh-trust a { color: #25d366; font-weight: 700; text-decoration: none; }
 .load-more-btn {
   width: 100%; margin: 4px 0 16px; padding: 14px;
   background: #fff; border: 2px dashed #d4d0ff;
@@ -579,14 +594,21 @@ body { background: #f5f6fa; }
       <div class="sh-co-price" id="coPrice"></div>
     </div>
     <input class="sh-email" id="emailInput" type="email" placeholder="你的邮箱 — eSIM 将发送到这里"/>
-    <div class="sh-pay-row">
-      <button class="sh-pay-btn on" onclick="setPay('usdt-ton',this)">💎 USDT<br><small style="font-weight:500;color:inherit">Telegram</small></button>
-      <button class="sh-pay-btn"   onclick="setPay('usdt-trc',this)">💵 USDT<br><small style="font-weight:500;color:inherit">TRC-20</small></button>
-      <button class="sh-pay-btn"   onclick="setPay('card',this)">💳 信用卡<br><small style="font-weight:500;color:inherit">Visa/MC</small></button>
+    <div class="sh-pay-seg" id="paySeg">
+      <button class="sh-seg on" onclick="setPay('usdt-ton',this)">💎 USDT<br><small style="font-weight:500;opacity:.85">Telegram</small></button>
+      <button class="sh-seg"   onclick="setPay('usdt-trc',this)">💵 USDT<br><small style="font-weight:500;opacity:.85">TRC-20</small></button>
+      <button class="sh-seg"   onclick="setPay('card',this)">💳 Card<br><small style="font-weight:500;opacity:.85">Visa/MC</small></button>
     </div>
     <button class="sh-confirm" id="confirmBtn" onclick="doConfirm()">继续支付</button>
-    <div class="sh-fine">⚡ 即时发货 · 安全结账 · 无需合约</div>
-    <div class="sh-guarantee">🛡️ 未激活7天内全额退款 &nbsp;|&nbsp; 💬 <a href="https://wa.me/19402382990" target="_blank" style="color:#25d366;text-decoration:none;font-weight:600;">WhatsApp 30分钟人工客服</a></div>
+    <div class="sh-trust">
+      <span>⚡ 即时发货</span>
+      <span class="sh-trust-sep">·</span>
+      <span>🔒 安全结账</span>
+      <span class="sh-trust-sep">·</span>
+      <span>🛡️ 7天退款</span>
+      <span class="sh-trust-sep">·</span>
+      <a href="https://wa.me/19402382990" target="_blank" class="sh-trust">💬 客服</a>
+    </div>
   </div>
 </div>
 
@@ -1023,7 +1045,7 @@ function showCheckout() {
 
 function setPay(method, btn) {
   selPay = method;
-  document.querySelectorAll('.sh-pay-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.sh-seg').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
 }
 
