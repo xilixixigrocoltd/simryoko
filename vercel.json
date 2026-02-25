@@ -1,5 +1,19 @@
 {
   "version": 2,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "simkaze.com" }],
+      "destination": "https://simryoko.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "www.simkaze.com" }],
+      "destination": "https://simryoko.com/:path*",
+      "permanent": true
+    }
+  ],
   "env": {
     "API_BASE": "https://ciuh32wky.xigrocoltd.com/api",
     "AGENT_USERNAME": "lx001",
