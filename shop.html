@@ -105,35 +105,40 @@ body { background: #f5f6fa; }
 /* Country card */
 .cc {
   background: #fff;
-  border-radius: 18px;
-  padding: 18px 10px 14px;
+  border-radius: 20px;
+  padding: 20px 12px 16px;
   text-align: center;
   cursor: pointer;
-  border: 1.5px solid transparent;
-  transition: border-color .18s, box-shadow .18s, transform .18s;
+  border: 2px solid #f0f0f7;
+  transition: border-color .18s, box-shadow .18s, transform .15s;
   position: relative;
   -webkit-tap-highlight-color: transparent;
 }
-.cc:hover { border-color: #d4d0ff; box-shadow: 0 6px 24px rgba(108,99,255,.12); transform: translateY(-3px); }
+.cc:hover { border-color: #c4bdff; box-shadow: 0 8px 28px rgba(108,99,255,.14); transform: translateY(-4px); }
 .cc:active { transform: translateY(-1px); }
-.cc .flag { font-size: 38px; line-height: 1.1; margin-bottom: 8px; display: block; }
-.cc .cname { font-size: 12.5px; font-weight: 700; color: #111; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.cc .ccount { font-size: 11px; color: #bbb; margin-bottom: 4px; }
-.cc .cprice { font-size: 12.5px; font-weight: 700; color: #6C63FF; }
-.cc .cprice.nd { color: #ddd; font-weight: 500; }
+.cc .flag { font-size: 44px; line-height: 1; margin-bottom: 10px; display: block; }
+.cc .cname { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cc .ccount { font-size: 10.5px; color: #c0bcd8; margin-bottom: 6px; }
+.cc .cprice {
+  display: inline-block;
+  font-size: 12px; font-weight: 800;
+  background: linear-gradient(135deg,#6C63FF,#9333EA);
+  color: #fff; padding: 3px 10px; border-radius: 99px;
+}
+.cc .cprice.nd { background: #f0f0f7; color: #ccc; font-weight: 500; }
 .cc .cbadge {
   position: absolute; top: 8px; right: 8px;
   font-size: 8px; font-weight: 800; letter-spacing: .5px;
   text-transform: uppercase; color: #fff;
   background: linear-gradient(135deg,#f59e0b,#ef4444);
-  padding: 2px 5px; border-radius: 4px;
+  padding: 2px 6px; border-radius: 4px;
 }
 /* Skeleton */
 .cc.sk {
   background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%);
   background-size: 200% 100%;
   animation: sh 1.4s linear infinite;
-  height: 120px; border: none; cursor: default;
+  height: 130px; border: none; cursor: default;
 }
 @keyframes sh { 0%{background-position:200% 0}100%{background-position:-200% 0} }
 
@@ -245,79 +250,92 @@ body { background: #f5f6fa; }
 /* Plan list */
 .sh-plan-list { flex: 1; overflow-y: auto; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px; }
 
-/* ── Plan Card (Airalo style) ────────────────────────── */
+/* ── Plan Card — 全新设计 ─────────────────────────────── */
 .pc {
   background: #fff;
-  border-radius: 18px;
-  padding: 16px 18px 14px;
-  border: 1.5px solid transparent;
+  border-radius: 20px;
+  padding: 0;
+  border: 2px solid #f0f0f7;
   cursor: pointer;
-  transition: border-color .15s, box-shadow .15s;
+  transition: border-color .15s, box-shadow .15s, transform .12s;
   position: relative;
   overflow: hidden;
 }
-.pc:hover { border-color: #d4d0ff; box-shadow: 0 4px 20px rgba(108,99,255,.1); }
-.pc.sel { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.08); }
+.pc:hover { border-color: #c4bdff; box-shadow: 0 8px 28px rgba(108,99,255,.13); transform: translateY(-2px); }
+.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.1); }
+.pc.unlimited-card { border-color: #c4bdff; background: linear-gradient(135deg,#faf9ff 0%,#f3f0ff 100%); }
+.pc.unlimited-card:hover { border-color: #9333EA; box-shadow: 0 8px 28px rgba(147,51,234,.18); }
+.pc.unlimited-card.sel    { border-color: #9333EA; box-shadow: 0 0 0 4px rgba(147,51,234,.12); }
 
-/* Type stripe at left edge */
-.pc::before {
-  content: '';
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 4px;
-  background: #6C63FF;
+/* Ribbon badges */
+.pc-ribbon {
+  position: absolute; top: 14px; right: 14px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .4px;
+  padding: 4px 10px; border-radius: 99px;
+  display: flex; align-items: center; gap: 4px;
 }
-.pc.type-local::before   { background: #10b981; }
-.pc.type-regional::before{ background: #3b82f6; }
-.pc.type-global::before  { background: #8b5cf6; }
+.pc-ribbon.hot  { background: linear-gradient(135deg,#f59e0b,#ef4444); color: #fff; }
+.pc-ribbon.best { background: linear-gradient(135deg,#10b981,#059669); color: #fff; }
+.pc-ribbon.inf  { background: linear-gradient(135deg,#6C63FF,#9333EA); color: #fff; }
 
-/* Card header */
-.pc-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.pc-provider { font-size: 11.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px; color: #aaa; }
-.pc-type-badge {
-  font-size: 10px; font-weight: 800; letter-spacing: .6px;
-  text-transform: uppercase; padding: 3px 8px; border-radius: 99px;
+/* Card inner padding */
+.pc-body { padding: 16px 18px 14px; }
+
+/* Header */
+.pc-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+.pc-provider {
+  font-size: 11px; font-weight: 800; text-transform: uppercase;
+  letter-spacing: .8px; color: #aaa; flex: 1;
 }
-.type-local    .pc-type-badge { background: #d1fae5; color: #059669; }
-.type-regional .pc-type-badge { background: #dbeafe; color: #2563eb; }
-.type-global   .pc-type-badge { background: #ede9fe; color: #7c3aed; }
+.pc-type-tag {
+  font-size: 10px; font-weight: 800; letter-spacing: .4px;
+  text-transform: uppercase; padding: 3px 8px; border-radius: 99px; flex-shrink: 0;
+}
+.pc-type-tag.local    { background: #d1fae5; color: #059669; }
+.pc-type-tag.regional { background: #dbeafe; color: #2563eb; }
+.pc-type-tag.global   { background: #ede9fe; color: #7c3aed; }
 
 /* Specs row */
 .pc-specs {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  background: #f8f8fc; border-radius: 12px;
-  overflow: hidden; margin-bottom: 14px;
+  background: #f7f7fb; border-radius: 14px;
+  overflow: hidden; margin-bottom: 14px; border: 1px solid #ececf5;
 }
-.pc-spec {
-  padding: 12px 8px; text-align: center;
-  border-right: 1px solid #ececf2;
-}
+.unlimited-card .pc-specs { background: rgba(108,99,255,.06); border-color: rgba(108,99,255,.15); }
+.pc-spec { padding: 13px 6px; text-align: center; border-right: 1px solid #ececf5; }
+.unlimited-card .pc-spec { border-right-color: rgba(108,99,255,.12); }
 .pc-spec:last-child { border-right: none; }
-.pc-spec-val {
-  font-size: 20px; font-weight: 900; color: #111;
-  line-height: 1; margin-bottom: 4px;
-  display: flex; align-items: baseline;
-  justify-content: center; gap: 1px;
+
+.pc-sv {
+  font-size: 22px; font-weight: 900; color: #111;
+  line-height: 1; margin-bottom: 3px;
+  display: flex; align-items: baseline; justify-content: center; gap: 1px;
 }
-.pc-spec-val .unit { font-size: 13px; font-weight: 700; color: #555; }
-.pc-spec-val.inf { font-size: 24px; color: #6C63FF; }
-.pc-spec-val.pv  { color: #6C63FF; }
-.pc-spec-lbl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px; color: #bbb; }
+.pc-sv .u { font-size: 12px; font-weight: 700; color: #666; margin-left: 1px; }
+.pc-sv.inf-val { font-size: 28px; color: #6C63FF; font-weight: 900; }
+.pc-sv.price-val { color: #111; }
+.pc-sl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #bbb; }
 
 /* Footer */
-.pc-ft { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.pc-ft-name { font-size: 12px; color: #bbb; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pc-ft { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pc-meta { font-size: 11.5px; color: #bbb; flex: 1; }
+.pc-meta .per-gb { color: #10b981; font-weight: 700; }
+.pc-meta .per-day { color: #aaa; font-size: 10.5px; }
+.unlimited-card .pc-meta { color: #9333EA; font-weight: 600; font-size: 12px; }
+
 .pc-buy {
   background: linear-gradient(135deg,#6C63FF,#9333EA);
-  color: #fff; border: none; border-radius: 10px;
-  padding: 10px 18px; font-size: 13.5px; font-weight: 700;
+  color: #fff; border: none; border-radius: 12px;
+  padding: 10px 20px; font-size: 14px; font-weight: 800;
   cursor: pointer; font-family: inherit; white-space: nowrap;
-  transition: opacity .15s, transform .15s;
-  flex-shrink: 0;
+  transition: opacity .15s, transform .12s; flex-shrink: 0;
+  letter-spacing: -.2px;
 }
 .pc-buy:hover { opacity: .9; transform: translateY(-1px); }
+.unlimited-card .pc-buy { background: linear-gradient(135deg,#9333EA,#6C63FF); }
 
 /* Loading skeleton in plan list */
-.pc.sk { height: 136px; background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%); background-size:200% 100%; animation:sh 1.4s linear infinite; border:none; cursor:default; }
+.pc.sk { height: 148px; background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%); background-size:200% 100%; animation:sh 1.4s linear infinite; border:none; cursor:default; }
 .pc.sk::before { display: none; }
 
 /* ── Checkout bar ────────────────────────────────────── */
@@ -359,6 +377,14 @@ body { background: #f5f6fa; }
 .sh-confirm:disabled { opacity: .6; cursor: not-allowed; }
 .sh-fine { text-align: center; font-size: 11px; color: #ccc; }
 .sh-guarantee { text-align: center; font-size: 11.5px; color: #aaa; margin-top: 6px; }
+.load-more-btn {
+  width: 100%; margin: 4px 0 16px; padding: 14px;
+  background: #fff; border: 2px dashed #d4d0ff;
+  border-radius: 14px; color: #6C63FF; font-size: 13.5px;
+  font-weight: 700; font-family: inherit; cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.load-more-btn:hover { background: #f5f4ff; border-color: #6C63FF; }
 
 /* Loading state in sheet */
 .sh-spin { text-align: center; padding: 48px; font-size: 32px; color: #ddd; flex: 1; }
@@ -742,7 +768,7 @@ function renderGrid(list) {
       <span class="flag">${d.f}</span>
       <div class="cname">${d.n}</div>
       ${count?`<div class="ccount">${count} 个套餐</div>`:''}
-      <div class="cprice ${price?'':'nd'}">${price?'起 '+fmtUSD(price):'›'}</div>
+      <div class="cprice ${price?'':'nd'}">${price?'从 $'+parseFloat(price).toFixed(price%1===0?0:2):'›'}</div>
     </div>`;
   }).join('');
 }
@@ -796,7 +822,8 @@ function updateCard(code) {
   if (!card) return;
   const priceEl = card.querySelector('.cprice');
   if (priceEl && priceCache[code]) {
-    priceEl.textContent = '起 ' + fmtUSD(priceCache[code]);
+    const v = parseFloat(priceCache[code]);
+    priceEl.textContent = '从 $' + (v%1===0 ? v : v.toFixed(2));
     priceEl.classList.remove('nd');
   }
   const cname = card.querySelector('.cname');
@@ -827,49 +854,98 @@ function renderPlans() {
     return;
   }
 
+  // 计算最优性价比（$/GB，忽略无限套餐）
+  const dataPlans = plans.filter(p => (p.dataAmount||p.dataSize) > 0);
+  let bestGBIdx = -1;
+  if (dataPlans.length > 1) {
+    let bestRatio = Infinity;
+    plans.forEach((p,i) => {
+      const mb = p.dataAmount||p.dataSize;
+      if (!mb) return;
+      const ratio = parseFloat(p.price) / (mb/1024);
+      if (ratio < bestRatio) { bestRatio = ratio; bestGBIdx = i; }
+    });
+  }
+
   document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i) => {
     const pn    = p.nameEn||p.name||'';
-    const data  = fmtData(p.dataAmount||p.dataSize, pn);
+    const dataMB = p.dataAmount||p.dataSize;
+    const data  = fmtData(dataMB, pn);
     const days  = fmtDays(p);
-    const price = fmtUSD(p.price);
+    const price = parseFloat(p.price);
     const type  = planType(p);
     const isInf = data==='∞';
 
-    // Parse data value and unit separately
+    // 解析数值和单位
     const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/,'');
     const dataUnit = isInf ? '' : data.replace(/[\d.]+/,'');
-    const priceVal = price.replace('$','');
 
+    // 运营商名称（取第一段）
     const provider = pn.split('-')[0].trim() || 'SimRyoko';
 
+    // 性价比计算
+    const perGB  = (!isInf && dataMB) ? (price/(dataMB/1024)).toFixed(2) : null;
+    const perDay = (price/parseFloat(days)).toFixed(2);
+
+    // Badge 决策：第一个=推荐，最优性价比=最优，无限=无限流量
+    let ribbon = '';
+    if (isInf) {
+      ribbon = `<div class="pc-ribbon inf">✦ 无限流量</div>`;
+    } else if (i === bestGBIdx) {
+      ribbon = `<div class="pc-ribbon best">💡 最优性价比</div>`;
+    } else if (i === 0 && !isInf) {
+      ribbon = `<div class="pc-ribbon hot">⭐ 推荐</div>`;
+    }
+
+    // 底部元信息
+    let metaHtml = '';
+    if (isInf) {
+      metaHtml = `<span class="unlimited-card" style="color:#9333EA;font-size:11.5px;font-weight:700;">≈ $${perDay}/天</span>`;
+    } else if (perGB) {
+      metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span><br><span class="per-day">$${perDay}/天</span></span>`;
+    }
+
     return `
-    <div class="pc type-${type}${i===0?' sel':''}" onclick="selectPlan(${i},this)">
-      <div class="pc-hd">
-        <span class="pc-provider">${provider}</span>
-        <span class="pc-type-badge">${typeLabel(type)}</span>
-      </div>
-      <div class="pc-specs">
-        <div class="pc-spec">
-          <div class="pc-spec-val${isInf?' inf':''}">
-            ${dataVal}${dataUnit?`<span class="unit">${dataUnit}</span>`:''}
+    <div class="pc${isInf?' unlimited-card':''}${i===0?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
+      ${ribbon}
+      <div class="pc-body">
+        <div class="pc-hd">
+          <span class="pc-provider">${provider}</span>
+          <span class="pc-type-tag ${type}">${typeLabel(type)}</span>
+        </div>
+        <div class="pc-specs">
+          <div class="pc-spec">
+            <div class="pc-sv${isInf?' inf-val':''}">
+              ${dataVal}${dataUnit?`<span class="u">${dataUnit}</span>`:''}
+            </div>
+            <div class="pc-sl">${isInf?'无限流量':'流量'}</div>
           </div>
-          <div class="pc-spec-lbl">流量</div>
+          <div class="pc-spec">
+            <div class="pc-sv">${days}<span class="u">天</span></div>
+            <div class="pc-sl">有效期</div>
+          </div>
+          <div class="pc-spec">
+            <div class="pc-sv price-val">$${price%1===0?price:price.toFixed(2)}</div>
+            <div class="pc-sl">总价</div>
+          </div>
         </div>
-        <div class="pc-spec">
-          <div class="pc-spec-val">${days}<span class="unit">天</span></div>
-          <div class="pc-spec-lbl">有效期</div>
+        <div class="pc-ft">
+          ${metaHtml}
+          <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">购买 →</button>
         </div>
-        <div class="pc-spec">
-          <div class="pc-spec-val pv">$${priceVal}</div>
-          <div class="pc-spec-lbl">价格</div>
-        </div>
-      </div>
-      <div class="pc-ft">
-        <span class="pc-ft-name">${pn}</span>
-        <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">立即购买</button>
       </div>
     </div>`;
   }).join('');
+
+  // 加载更多按钮
+  const showing = Math.min(plans.length, 12);
+  const total   = countCache[curCode] || allCurPlans.length;
+  if (total > showing) {
+    document.getElementById('planList').insertAdjacentHTML('beforeend', `
+      <button class="load-more-btn" onclick="loadMorePlans(this)">
+        加载更多套餐 (还有 ${total - showing} 个)
+      </button>`);
+  }
 
   // Auto select first
   selPlan = plans[0];
@@ -881,6 +957,24 @@ function filterType(type, btn) {
   document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
   renderPlans();
+}
+
+async function loadMorePlans(btn) {
+  btn.textContent = '加载中…';
+  btn.disabled = true;
+  try {
+    const apiCode = ['GLOBAL','ASIA_REG','EU_REG'].includes(curCode) ? '' : curCode;
+    const r = await fetch(`/api/products?country=${apiCode}&pageSize=50`);
+    const j = await r.json();
+    const all = (j.data?.list||[]).sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
+    planCache[curCode] = all;
+    allCurPlans = all;
+    countCache[curCode] = j.data?.total || all.length;
+    renderPlans();
+  } catch(e) {
+    btn.textContent = '加载失败，点击重试';
+    btn.disabled = false;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
