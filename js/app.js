@@ -33,6 +33,13 @@ function formatPrice(price) {
 // Parse data amount from product name e.g. "5GB", "500MB", "Unlimited"
 function parseData(p) {
   if (!p) return '';
+  // 优先使用 API 返回的结构化字段
+  if (p.dataAmount) {
+    const mb = parseFloat(p.dataAmount);
+    if (mb >= 1024) return (mb / 1024).toFixed(mb % 1024 === 0 ? 0 : 1) + 'GB';
+    return mb + 'MB';
+  }
+  // 回退：从产品名称解析
   const name = (p.nameEn || p.name || '');
   const m = name.match(/(\d+(?:\.\d+)?)\s*(GB|MB|TB)/i);
   if (m) return m[1] + m[2].toUpperCase();
@@ -43,8 +50,11 @@ function parseData(p) {
 // Parse validity days from product
 function parseDays(p) {
   if (!p) return '';
+  // 优先使用结构化字段
+  if (p.validityDays) return p.validityDays + 'd';
+  // 回退：从产品名称解析
   const name = (p.nameEn || p.name || '');
-  const m = name.match(/(\d+)\s*[Dd]ay/);
+  const m = name.match(/(\d+)\s*[Dd]ay/i);
   if (m) return m[1] + 'd';
   return '';
 }

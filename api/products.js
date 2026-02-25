@@ -46,7 +46,10 @@ module.exports = async (req, res) => {
       type: p.type,
       price: parseFloat(p.price),         // 零售价（客户付的钱）
       countries: p.countries || [],
-      description: p.description || p.descriptionEn || ''
+      description: p.description || p.descriptionEn || '',
+      // 流量（MB）和有效期（天）— 兼容多种字段名
+      dataAmount: p.dataSize || p.dataAmount || p.data_size || null,
+      validityDays: p.validDays || p.validityDays || p.validity_days || null,
     }));
 
     return res.json({
