@@ -190,6 +190,44 @@ body { background: #f5f6fa; }
 .sh-dest-name { font-size: 20px; font-weight: 900; color: #111; flex: 1; }
 .sh-dest-sub { font-size: 13px; color: #aaa; padding-left: 48px; }
 
+/* ── Featured cards ──────────────────────────────── */
+.sh-feat { max-width:1160px; margin:0 auto; padding:28px 16px 0; }
+.sh-feat-title { font-size:17px; font-weight:800; color:#111; margin-bottom:14px; }
+.sh-feat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+@media(max-width:700px){ .sh-feat-grid { grid-template-columns:repeat(2,1fr); } }
+.sh-fc {
+  border-radius:20px; padding:22px 16px 18px;
+  cursor:pointer; position:relative; overflow:hidden;
+  min-height:130px; display:flex; flex-direction:column; justify-content:flex-end;
+  transition:transform .2s, box-shadow .2s;
+}
+.sh-fc:hover { transform:translateY(-4px); box-shadow:0 12px 32px rgba(0,0,0,.18); }
+.sh-fc::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.6) 100%); }
+.sh-fc-flag { position:absolute; top:14px; right:14px; font-size:42px; opacity:.8; z-index:1; }
+.sh-fc-info { position:relative; z-index:1; }
+.sh-fc-name { font-size:15px; font-weight:800; color:#fff; text-shadow:0 1px 6px rgba(0,0,0,.5); }
+.sh-fc-sub  { font-size:12px; color:rgba(255,255,255,.75); margin-top:3px; }
+
+/* ── Quick filters ────────────────────────────────── */
+.sh-filters { max-width:1160px; margin:16px auto 0; padding:0 16px; display:flex; gap:8px; overflow-x:auto; scrollbar-width:none; }
+.sh-filters::-webkit-scrollbar { display:none; }
+.sh-chip {
+  flex-shrink:0; padding:7px 14px; border-radius:99px;
+  border:1.5px solid #e5e5ec; background:#fff; color:#555;
+  font-size:13px; font-weight:600; cursor:pointer; font-family:inherit;
+  transition:all .15s; white-space:nowrap;
+}
+.sh-chip:hover,.sh-chip.on { background:#6C63FF; border-color:#6C63FF; color:#fff; box-shadow:0 3px 12px rgba(108,99,255,.3); }
+
+/* ── Hero crypto badge ────────────────────────────── */
+.sh-pills { display:flex; gap:8px; justify-content:center; margin-bottom:20px; flex-wrap:wrap; }
+.sh-pill {
+  display:inline-flex; align-items:center; gap:5px;
+  background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.25);
+  border-radius:99px; padding:5px 12px;
+  font-size:12px; font-weight:600; color:#fff;
+}
+
 /* Plan type filter */
 .sh-type-bar {
   background: #fff; padding: 0 20px 12px;
@@ -364,7 +402,12 @@ body { background: #f5f6fa; }
 <!-- ── HERO ──────────────────────────────────────────── -->
 <div class="sh-hero">
   <h1>购买 eSIM，畅游全球</h1>
-  <p class="sub">200+ 个国家 · 2,600+ 套餐 · 付款后即时发货</p>
+  <p class="sub">200+ 个国家 · 2,600+ 套餐 · 即时发货</p>
+  <div class="sh-pills">
+    <span class="sh-pill">💎 支持 USDT 加密支付</span>
+    <span class="sh-pill">⚡ 付款后 5 分钟到邮箱</span>
+    <span class="sh-pill">🔒 无需 KYC · 匿名购买</span>
+  </div>
   <div class="sh-search-box">
     <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
       <circle cx="11" cy="11" r="7" stroke="#ccc" stroke-width="2"/>
@@ -373,6 +416,50 @@ body { background: #f5f6fa; }
     <input id="searchInput" type="text" placeholder="搜索目的地，如：日本、欧洲、美国…" autocomplete="off"/>
     <button class="sh-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
+</div>
+
+<!-- ── FEATURED ──────────────────────────────────────── -->
+<div class="sh-feat">
+  <div class="sh-feat-title">✈️ 热门出行目的地</div>
+  <div class="sh-feat-grid">
+    <div class="sh-fc" style="background:linear-gradient(135deg,#ff6b9d,#c44dff)" onclick="openCountry('JP')">
+      <span class="sh-fc-flag">🇯🇵</span>
+      <div class="sh-fc-info">
+        <div class="sh-fc-name">日本</div>
+        <div class="sh-fc-sub" id="ff-JP">从 $4.00 起</div>
+      </div>
+    </div>
+    <div class="sh-fc" style="background:linear-gradient(135deg,#4facfe,#00f2fe)" onclick="openCountry('KR')">
+      <span class="sh-fc-flag">🇰🇷</span>
+      <div class="sh-fc-info">
+        <div class="sh-fc-name">韩国</div>
+        <div class="sh-fc-sub" id="ff-KR">从 $3.00 起</div>
+      </div>
+    </div>
+    <div class="sh-fc" style="background:linear-gradient(135deg,#f7971e,#ffd200)" onclick="openCountry('TH')">
+      <span class="sh-fc-flag">🇹🇭</span>
+      <div class="sh-fc-info">
+        <div class="sh-fc-name">泰国</div>
+        <div class="sh-fc-sub" id="ff-TH">从 $2.50 起</div>
+      </div>
+    </div>
+    <div class="sh-fc" style="background:linear-gradient(135deg,#667eea,#764ba2)" onclick="openCountry('DE')">
+      <span class="sh-fc-flag">🇪🇺</span>
+      <div class="sh-fc-info">
+        <div class="sh-fc-name">欧洲</div>
+        <div class="sh-fc-sub" id="ff-DE">28 国通用</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── QUICK FILTERS ─────────────────────────────────── -->
+<div class="sh-filters">
+  <button class="sh-chip on"  id="chip-all"       onclick="applyChip('all',this)">全部套餐</button>
+  <button class="sh-chip"     id="chip-unlimited" onclick="applyChip('unlimited',this)">📶 无限流量</button>
+  <button class="sh-chip"     id="chip-short"     onclick="applyChip('short',this)">⚡ 7天内</button>
+  <button class="sh-chip"     id="chip-cheap"     onclick="applyChip('cheap',this)">💰 $5以下</button>
+  <button class="sh-chip"     id="chip-global"    onclick="applyChip('global',this)">🌐 全球套餐</button>
 </div>
 
 <!-- ── TABS ──────────────────────────────────────────── -->
@@ -723,8 +810,8 @@ function updateCard(code) {
    Render plan list
 ═══════════════════════════════════════════════════════ */
 function renderPlans() {
-  const plans = curType==='all' ? allCurPlans
-    : allCurPlans.filter(p => planType(p)===curType);
+  const base  = curType==='all' ? allCurPlans : allCurPlans.filter(p=>planType(p)===curType);
+  const plans = filterByChip(base);
 
   const total = countCache[curCode] || allCurPlans.length;
   document.getElementById('shSub').textContent = `共 ${total} 个套餐`;
@@ -797,17 +884,20 @@ function filterType(type, btn) {
 /* ═══════════════════════════════════════════════════════
    Plan selection & checkout
 ═══════════════════════════════════════════════════════ */
+function getVisiblePlans() {
+  const base = curType==='all'?allCurPlans:allCurPlans.filter(p=>planType(p)===curType);
+  return filterByChip(base);
+}
+
 function selectPlan(idx, el) {
   document.querySelectorAll('.pc').forEach(c=>c.classList.remove('sel'));
   el.classList.add('sel');
-  const plans = curType==='all'?allCurPlans:allCurPlans.filter(p=>planType(p)===curType);
-  selPlan = plans[idx];
+  selPlan = getVisiblePlans()[idx];
   showCheckout();
 }
 
 function quickBuy(idx) {
-  const plans = curType==='all'?allCurPlans:allCurPlans.filter(p=>planType(p)===curType);
-  selPlan = plans[idx];
+  selPlan = getVisiblePlans()[idx];
   showCheckout();
   setTimeout(()=>{
     document.getElementById('checkoutBar').scrollIntoView({behavior:'smooth',block:'nearest'});
@@ -881,6 +971,70 @@ function closeSheet() {
 }
 
 /* ═══════════════════════════════════════════════════════
+   Quick chip filter
+═══════════════════════════════════════════════════════ */
+let curChip = 'all';
+function applyChip(chip, btn) {
+  curChip = chip;
+  document.querySelectorAll('.sh-chip').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  if (chip === 'global') {
+    const tab = document.querySelector('.sh-tab[data-tab="global"]');
+    if (tab) setTab(tab);
+    return;
+  }
+  // Apply to current grid: show all countries but sort/filter
+  renderGrid();
+  // If we're already in a country sheet, refilter plans
+  if (document.getElementById('sheet').classList.contains('on') && allCurPlans.length) {
+    const filtered = filterByChip(allCurPlans);
+    curType = 'all';
+    document.querySelectorAll('.sh-type-btn').forEach(b=>b.classList.toggle('on', b.dataset.type==='all'));
+    renderFilteredPlans(filtered);
+  }
+}
+function filterByChip(plans) {
+  if (curChip === 'all') return plans;
+  if (curChip === 'unlimited') return plans.filter(p => {
+    const n = (p.nameEn||p.name||'').toLowerCase();
+    return !p.dataAmount && (n.includes('unlimited')||n.includes('无限'));
+  });
+  if (curChip === 'short') return plans.filter(p => (p.validityDays||p.validDays||99) <= 7);
+  if (curChip === 'cheap')  return plans.filter(p => parseFloat(p.price) < 5);
+  return plans;
+}
+function renderFilteredPlans(plans) {
+  if (!plans.length) {
+    document.getElementById('planList').innerHTML = `<div class="sh-empty"><div class="ico">🔍</div><p>该筛选条件下暂无套餐</p></div>`;
+    return;
+  }
+  // Re-render plan list with same card structure
+  document.getElementById('planList').innerHTML = plans.slice(0,12).map((p,i)=>{
+    const pn=p.nameEn||p.name||'';
+    const data=fmtData(p.dataAmount||p.dataSize,pn);
+    const days=fmtDays(p); const price=fmtUSD(p.price);
+    const type=planType(p); const isInf=data==='∞';
+    const dataVal=isInf?'∞':data.replace(/[A-Za-z]+/,'');
+    const dataUnit=isInf?'':data.replace(/[\d.]+/,'');
+    const priceVal=price.replace('$','');
+    const provider=pn.split('-')[0].trim()||'SimRyoko';
+    return `<div class="pc type-${type}${i===0?' sel':''}" onclick="selectPlan(${i},this)">
+      <div class="pc-hd"><span class="pc-provider">${provider}</span><span class="pc-type-badge">${typeLabel(type)}</span></div>
+      <div class="pc-specs">
+        <div class="pc-spec"><div class="pc-spec-val${isInf?' inf':''}">${dataVal}${dataUnit?`<span class="unit">${dataUnit}</span>`:''}</div><div class="pc-spec-lbl">流量</div></div>
+        <div class="pc-spec"><div class="pc-spec-val">${days}<span class="unit">天</span></div><div class="pc-spec-lbl">有效期</div></div>
+        <div class="pc-spec"><div class="pc-spec-val pv">$${priceVal}</div><div class="pc-spec-lbl">价格</div></div>
+      </div>
+      <div class="pc-ft"><span class="pc-ft-name">${pn}</span><button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">立即购买</button></div>
+    </div>`;
+  }).join('');
+  // Re-bind allCurPlans view for selectPlan
+  allCurPlans = plans;
+  selPlan = plans[0];
+  showCheckout();
+}
+
+/* ═══════════════════════════════════════════════════════
    Preload popular prices
 ═══════════════════════════════════════════════════════ */
 function preloadPopular() {
@@ -894,6 +1048,12 @@ function preloadPopular() {
           priceCache[code] = Math.min(...list.map(p=>parseFloat(p.price)));
           countCache[code] = j.data?.total||list.length;
           updateCard(code);
+          // Also update featured card prices
+          const ffEl = document.getElementById(`ff-${code}`);
+          if (ffEl && !ffEl.dataset.loaded) {
+            ffEl.textContent = `从 ${fmtUSD(priceCache[code])} 起`;
+            ffEl.dataset.loaded = '1';
+          }
         }
       }).catch(()=>{});
   });
