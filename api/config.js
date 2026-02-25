@@ -4,6 +4,8 @@ module.exports = (req, res) => {
   res.setHeader('Cache-Control', 'public, max-age=3600');
   return res.json({
     stripePk: process.env.STRIPE_PUBLISHABLE_KEY || '',
+    paddleToken: process.env.PADDLE_CLIENT_TOKEN || '',
+    paddleEnv: process.env.PADDLE_ENV || 'sandbox',
     usdtWallet: process.env.USDT_WALLET || ''
   });
 };
