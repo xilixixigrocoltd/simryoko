@@ -262,47 +262,33 @@ body { background: #f5f6fa; }
   overflow: hidden;
 }
 .pc:hover { border-color: #c4bdff; box-shadow: 0 8px 28px rgba(108,99,255,.13); transform: translateY(-2px); }
-.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.1); }
+.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.1); background: #faf9ff; }
 .pc.unlimited-card { border-color: #c4bdff; background: linear-gradient(135deg,#faf9ff 0%,#f3f0ff 100%); }
 .pc.unlimited-card:hover { border-color: #9333EA; box-shadow: 0 8px 28px rgba(147,51,234,.18); }
 .pc.unlimited-card.sel    { border-color: #9333EA; box-shadow: 0 0 0 4px rgba(147,51,234,.12); }
 
-/* Ribbon badges */
-.pc-ribbon {
-  position: absolute; top: 14px; right: 14px;
-  font-size: 10.5px; font-weight: 800; letter-spacing: .4px;
-  padding: 4px 10px; border-radius: 99px;
-  display: flex; align-items: center; gap: 4px;
+/* ── Plan card banner (replaces floating ribbon) ─── */
+.pc-banner {
+  font-size: 11px; font-weight: 800; letter-spacing: .3px;
+  color: #fff; padding: 6px 16px;
+  display: flex; align-items: center; gap: 5px;
 }
-.pc-ribbon.hot  { background: linear-gradient(135deg,#f59e0b,#ef4444); color: #fff; }
-.pc-ribbon.best { background: linear-gradient(135deg,#10b981,#059669); color: #fff; }
-.pc-ribbon.inf  { background: linear-gradient(135deg,#6C63FF,#9333EA); color: #fff; }
+.pc-banner.hot  { background: linear-gradient(90deg,#f59e0b,#ef4444); }
+.pc-banner.best { background: linear-gradient(90deg,#059669,#10b981); }
+.pc-banner.inf  { background: linear-gradient(90deg,#6C63FF,#9333EA); }
 
-/* Card inner padding */
-.pc-body { padding: 16px 18px 14px; }
-
-/* Header */
-.pc-hd { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-.pc-provider {
-  font-size: 12px; font-weight: 600; color: #666;
-  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.pc-type-tag {
-  font-size: 10px; font-weight: 800; letter-spacing: .4px;
-  text-transform: uppercase; padding: 3px 8px; border-radius: 99px; flex-shrink: 0;
-}
-.pc-type-tag.local    { background: #d1fae5; color: #059669; }
-.pc-type-tag.regional { background: #dbeafe; color: #2563eb; }
-.pc-type-tag.global   { background: #ede9fe; color: #7c3aed; }
+/* Card inner padding — tighter when banner is present */
+.pc-body { padding: 14px 16px 12px; }
+.pc-banner + .pc-body { padding-top: 12px; }
 
 /* Specs row */
 .pc-specs {
   display: grid; grid-template-columns: 1fr 1fr 1fr;
-  background: #f7f7fb; border-radius: 14px;
-  overflow: hidden; margin-bottom: 14px; border: 1px solid #ececf5;
+  background: #f7f7fb; border-radius: 12px;
+  overflow: hidden; margin-bottom: 12px; border: 1px solid #ececf5;
 }
 .unlimited-card .pc-specs { background: rgba(108,99,255,.06); border-color: rgba(108,99,255,.15); }
-.pc-spec { padding: 13px 6px; text-align: center; border-right: 1px solid #ececf5; }
+.pc-spec { padding: 14px 6px; text-align: center; border-right: 1px solid #ececf5; }
 .unlimited-card .pc-spec { border-right-color: rgba(108,99,255,.12); }
 .pc-spec:last-child { border-right: none; }
 
@@ -311,27 +297,26 @@ body { background: #f5f6fa; }
   line-height: 1; margin-bottom: 3px;
   display: flex; align-items: baseline; justify-content: center; gap: 1px;
 }
-.pc-sv .u { font-size: 12px; font-weight: 700; color: #666; margin-left: 1px; }
-.pc-sv.inf-val { font-size: 28px; color: #6C63FF; font-weight: 900; }
+.pc-sv .u { font-size: 12px; font-weight: 700; color: #888; margin-left: 1px; }
+.pc-sv.inf-val { font-size: 28px; color: #6C63FF; }
 .pc-sv.price-val { color: #111; }
 .pc-sl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #bbb; }
 
 /* Footer */
-.pc-ft { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
-.pc-meta { font-size: 11.5px; color: #bbb; flex: 1; }
-.pc-meta .per-gb { color: #10b981; font-weight: 700; }
-.pc-meta .per-day { color: #aaa; font-size: 10.5px; }
-.unlimited-card .pc-meta { color: #9333EA; font-weight: 600; font-size: 12px; }
+.pc-ft { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.pc-meta { font-size: 11.5px; color: #ccc; flex: 1; }
+.pc-meta .per-gb  { color: #10b981; font-weight: 700; }
+.pc-meta .per-day { color: #bbb; }
+.unlimited-card .pc-meta { color: #9333EA; font-weight: 600; }
 
 .pc-buy {
   background: linear-gradient(135deg,#6C63FF,#9333EA);
-  color: #fff; border: none; border-radius: 12px;
-  padding: 10px 20px; font-size: 14px; font-weight: 800;
+  color: #fff; border: none; border-radius: 10px;
+  padding: 9px 18px; font-size: 13.5px; font-weight: 800;
   cursor: pointer; font-family: inherit; white-space: nowrap;
   transition: opacity .15s, transform .12s; flex-shrink: 0;
-  letter-spacing: -.2px;
 }
-.pc-buy:hover { opacity: .9; transform: translateY(-1px); }
+.pc-buy:hover { opacity: .88; transform: translateY(-1px); }
 .unlimited-card .pc-buy { background: linear-gradient(135deg,#9333EA,#6C63FF); }
 
 /* Loading skeleton in plan list */
@@ -1139,31 +1124,28 @@ function buildPlanCard(p, i, bestGBIdx) {
   const perGB  = (!isInf && dataMB) ? (price/(dataMB/1024)).toFixed(2) : null;
   const perDay = days && days!=='?' ? (price/parseFloat(days)).toFixed(2) : null;
 
-  // Ribbon: 只在价格排序时标注推荐/最优
-  let ribbon = '';
-  if (isInf)              ribbon = `<div class="pc-ribbon inf">✦ 无限流量</div>`;
-  else if (i===bestGBIdx) ribbon = `<div class="pc-ribbon best">💡 最优性价比</div>`;
-  else if (i===0 && curSort==='price') ribbon = `<div class="pc-ribbon hot">⭐ 推荐</div>`;
+  // 顶部彩色横幅（只在有意义时出现）
+  let banner = '';
+  if (isInf)              banner = `<div class="pc-banner inf">✦ 无限流量</div>`;
+  else if (i===bestGBIdx) banner = `<div class="pc-banner best">💡 最优性价比</div>`;
+  else if (i===0 && curSort==='price') banner = `<div class="pc-banner hot">⭐ 推荐</div>`;
 
+  // 底部元信息
   let metaHtml = '';
   if (isInf && perDay) {
-    metaHtml = `<span style="color:#9333EA;font-size:11.5px;font-weight:700;">≈ $${perDay}/天</span>`;
+    metaHtml = `<span class="pc-meta" style="color:#9333EA;font-weight:700;">≈ $${perDay}/天</span>`;
   } else if (perGB) {
-    const dayStr = perDay ? ` <span class="per-day">· $${perDay}/天</span>` : '';
-    metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span>${dayStr}</span>`;
+    const dayPart = perDay ? ` <span class="per-day">· $${perDay}/天</span>` : '';
+    metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span>${dayPart}</span>`;
+  } else {
+    metaHtml = `<span class="pc-meta"></span>`;
   }
 
   const isFirst = i===0;
-  // 有 ribbon 时不显示 type-tag，避免右上角重叠
-  const typeTag = ribbon ? '' : `<span class="pc-type-tag ${type}">${typeLabel(type)}</span>`;
   return `
   <div class="pc${isInf?' unlimited-card':''}${isFirst?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
-    ${ribbon}
+    ${banner}
     <div class="pc-body">
-      <div class="pc-hd">
-        <span class="pc-provider" title="${pn}">${pn}</span>
-        ${typeTag}
-      </div>
       <div class="pc-specs">
         <div class="pc-spec">
           <div class="pc-sv${isInf?' inf-val':''}">
