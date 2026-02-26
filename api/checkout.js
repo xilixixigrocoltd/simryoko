@@ -112,10 +112,11 @@ async function fulfillOrder(orderId, order) {
     // 解析 eSIM 数据（placeOrderWithEsim 已合并订单详情）
     const d = orderResult.data || {};
     const sim = d.esimData?.sims?.[0] || {};
-    // API 返回 snake_case 字段名（qrcode_url / qrcode / matching_id）
-    const rawActivation = sim.matching_id    || d.esimActivationCode || '';
-    const rawQrUrl      = sim.qrcode_url     || d.esimQrCode         || '';
-    const iccid         = sim.iccid          || d.esimIccid          || '';
+    // API 返回 snake_case 字段名（qrcode / matching_id）
+    // 注意：sim.qrcode_url 是供应商 CDN 图片，不稳定，改用 LPA 字符串 + qrserver.com
+    const rawActivation = sim.matching_id || d.esimActivationCode || '';
+    const rawQrUrl      = sim.qrcode      || d.esimQrCode         || ''; // LPA 字符串
+    const iccid         = sim.iccid       || d.esimIccid          || '';
 
     // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
     const qrSource = rawQrUrl || rawActivation;

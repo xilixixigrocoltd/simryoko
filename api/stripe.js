@@ -86,7 +86,7 @@ async function handleConfirm(req, res) {
       }
       const esimData = extractEsim(orderResult);
       // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
-      const qrImageUrl = buildQrImageUrl(esimData.qrCode || esimData.qrCodeUrl || esimData.activationCode);
+      const qrImageUrl = buildQrImageUrl(esimData.qrCode || esimData.activationCode);
       if (!recovered) store.updateOrder(orderId, { status: 'fulfilled', esimData });
       await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrImageUrl, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
@@ -113,11 +113,11 @@ function buildQrImageUrl(lpaOrCode) {
 function extractEsim(r) {
   const d = r.data || r;
   // B2B 订单详情：esimData.sims[0] 包含完整数据
-  // 注意：API 返回的是 snake_case（qrcode_url / qrcode / matching_id）
+  // 注意：API 返回 snake_case（qrcode / matching_id）
+  // sim.qrcode_url 是供应商 CDN 图片，不稳定，不使用；统一从 LPA 字符串生成 QR
   const sim = d.esimData?.sims?.[0] || {};
   return {
-    qrCodeUrl:      sim.qrcode_url     || d.esimQrCode        || '',
-    qrCode:         sim.qrcode         || d.esimQrCode         || '',
+    qrCode:         sim.qrcode         || d.esimQrCode         || '', // LPA 字符串
     iccid:          sim.iccid          || d.esimIccid          || '',
     activationCode: sim.matching_id    || d.esimActivationCode || '',
     directAppleUrl: sim.direct_apple_installation_url || '',

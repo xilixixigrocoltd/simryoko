@@ -107,9 +107,9 @@ async function handleWebhook(req, res) {
       const esimResult = await placeOrderWithEsim(order.productId, 1);
       if (!esimResult?.success) throw new Error(esimResult?.message || 'Agent order failed');
       const d = esimResult.data || {};
-      // API 返回 snake_case 字段名（qrcode_url / qrcode / matching_id）
+      // API 返回 snake_case（qrcode / matching_id）；qrcode_url 是供应商 CDN，不稳定不用
       const sim = d.esimData?.sims?.[0] || {};
-      const rawQrUrl      = sim.qrcode_url  || d.esimQrCode         || '';
+      const rawQrUrl      = sim.qrcode      || d.esimQrCode         || ''; // LPA 字符串
       const rawActivation = sim.matching_id || d.esimActivationCode || '';
       const iccid         = sim.iccid       || d.esimIccid          || '';
       const qrImageUrl    = buildQrImageUrl(rawQrUrl || rawActivation);
