@@ -1431,8 +1431,7 @@ document.getElementById('searchInput').addEventListener('input', function(){
 
 renderGrid();
 preloadPopular();
-// 页面加载后自动预选日本，让用户直接看到套餐
-setTimeout(() => openCountry('JP'), 300);
+// 用户自行选择目的地，不自动弹出
 </script>
 <script src="/js/i18n.js"></script>
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
