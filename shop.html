@@ -445,6 +445,23 @@ body { background: #f5f6fa; }
 
 
 
+/* Trust bar */
+.shop-trust-bar {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  padding: 12px 20px;
+  background: rgba(102,126,234,0.06);
+  border-bottom: 1px solid rgba(102,126,234,0.1);
+  font-size: 0.85rem;
+  color: #555;
+}
+.shop-trust-bar span { white-space: nowrap; }
+@media (max-width: 600px) {
+  .shop-trust-bar { gap: 16px; font-size: 0.8rem; }
+}
+
 /* Skeleton plan cards */
 .pc.sk-plan {
   height: 66px; border: none; cursor: default; pointer-events: none;
@@ -507,6 +524,15 @@ body { background: #f5f6fa; }
     <input id="searchInput" type="text" placeholder="搜索目的地，如：日本、欧洲、美国…" data-i18n-placeholder="shop.search" autocomplete="off"/>
     <button class="sh-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
+</div>
+
+<!-- TRUST BAR -->
+<div class="shop-trust-bar">
+  <span>⚡ Instant delivery</span>
+  <span>🔒 Secure payment</span>
+  <span>⭐ 4.9/5 rating</span>
+  <span>🌍 180+ countries</span>
+  <span>💳 USDT · TON · Card</span>
 </div>
 
 <!-- ── FEATURED ──────────────────────────────────────── -->

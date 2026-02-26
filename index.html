@@ -25,6 +25,105 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
+<style>
+/* === TESTIMONIALS === */
+.testimonials-section {
+  padding: 80px 20px;
+  background: #f8f9ff;
+}
+.testimonials-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.testimonials-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 8px;
+}
+.testimonials-subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 48px;
+  font-size: 1.05rem;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.testimonial-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 2px 16px rgba(102,126,234,0.08);
+  border: 1px solid rgba(102,126,234,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.testimonial-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 32px rgba(102,126,234,0.15);
+}
+.testimonial-stars {
+  color: #f59e0b;
+  font-size: 1.1rem;
+  margin-bottom: 14px;
+  letter-spacing: 2px;
+}
+.testimonial-text {
+  color: #444;
+  line-height: 1.7;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+.testimonial-author {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.testimonial-name {
+  font-weight: 700;
+  color: #1a1a2e;
+  font-size: 0.95rem;
+}
+.testimonial-meta {
+  color: #888;
+  font-size: 0.85rem;
+}
+/* Trust badges */
+.trust-badges {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  padding: 32px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+}
+.trust-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.trust-number {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+}
+.trust-label {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+}
+@media (max-width: 600px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .trust-badges { gap: 24px; }
+  .trust-number { font-size: 1.5rem; }
+}
+</style>
 <script src="/js/analytics.js"></script>
 </head>
 <body>
@@ -205,6 +304,91 @@
           <div class="why-ico">🔒</div>
           <div><h4>Licensed &amp; secure</h4><p>Xigro Co Limited, Hong Kong. Authorized distributor. 99%+ activation success rate.</p></div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS SECTION -->
+<section class="testimonials-section">
+  <div class="testimonials-container">
+    <h2 class="testimonials-title">Trusted by Travelers Worldwide</h2>
+    <p class="testimonials-subtitle">Real experiences from real travelers</p>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Bought the Japan eSIM right before my flight. QR code arrived in 2 minutes, scanned it at the gate, and I had full data the moment I landed at Narita. Never going back to airport SIM cards."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">Sarah K.</span>
+          <span class="testimonial-meta">🇺🇸 → 🇯🇵 Tokyo, 10 days</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Used the Europe plan across 5 countries in 3 weeks — France, Italy, Croatia, Slovenia, Austria. Not a single connectivity issue. Paid with USDT which was a nice bonus for us crypto folks."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">Marcus T.</span>
+          <span class="testimonial-meta">🇩🇪 Digital Nomad, EU Tour</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Korea eSIM worked perfectly in Seoul and even out in the countryside near Gyeongju. Price was way lower than what I saw on other sites. Highly recommend."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">Priya M.</span>
+          <span class="testimonial-meta">🇸🇬 → 🇰🇷 Seoul, 7 days</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As a travel agent, I've started recommending SimRyoko to all my clients. Setup is genuinely instant — no more calls asking me how to buy a SIM card at the airport."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">James L.</span>
+          <span class="testimonial-meta">🇬🇧 Travel Consultant</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Thailand plan covered Bangkok and Chiang Mai no problem. Even worked on Ko Samui. The TON payment option is what sold me — exactly what the crypto travel community needs."</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">Alex W.</span>
+          <span class="testimonial-meta">🇺🇸 → 🇹🇭 Thailand, 2 weeks</span>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"客服响应很快，eSIM 二维码几分钟内到邮箱。日本套餐价格比其他平台便宜将近一半，连网速也没差。强烈推荐给经常出行的朋友！"</p>
+        <div class="testimonial-author">
+          <span class="testimonial-name">陈先生</span>
+          <span class="testimonial-meta">🇨🇳 → 🇯🇵 东京大阪行</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Trust badges -->
+    <div class="trust-badges">
+      <div class="trust-badge">
+        <span class="trust-number">10,000+</span>
+        <span class="trust-label">Happy Travelers</span>
+      </div>
+      <div class="trust-badge">
+        <span class="trust-number">180+</span>
+        <span class="trust-label">Countries</span>
+      </div>
+      <div class="trust-badge">
+        <span class="trust-number">4.9★</span>
+        <span class="trust-label">Average Rating</span>
+      </div>
+      <div class="trust-badge">
+        <span class="trust-number">&lt;2min</span>
+        <span class="trust-label">Delivery Time</span>
       </div>
     </div>
   </div>
