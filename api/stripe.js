@@ -23,7 +23,7 @@ async function handleIntent(req, res) {
     const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
-    const order = store.createOrder({
+    const order = await store.createOrder({
       productId: product.id, productName: product.nameEn || product.name,
       productPrice: parseFloat(product.price), email,
       country: product.countries?.[0]?.code || 'INT', paymentMethod: 'card'
@@ -58,8 +58,8 @@ async function handleConfirm(req, res) {
     if (intent.status !== 'succeeded') return res.status(400).json({ error: `Payment not succeeded: ${intent.status}` });
     if (intent.metadata.orderId !== orderId) return res.status(400).json({ error: 'Order ID mismatch' });
 
-    // 从 store 获取订单；若 /tmp 因冷启动丢失，从 Stripe metadata 重建
-    let order = store.getOrder(orderId);
+    // 从 store 获取订单；若 KV 未找到，从 Stripe metadata 重建
+    let order = await store.getOrder(orderId);
     let recovered = false;
     if (!order) {
       const { productId: metaPid, email: metaEmail } = intent.metadata;
@@ -75,23 +75,22 @@ async function handleConfirm(req, res) {
     }
     if (order.status === 'fulfilled') return res.json({ success: true, status: 'fulfilled', message: 'eSIM already sent to your email' });
 
-    if (!recovered) store.updateOrder(orderId, { status: 'paid', paymentIntentId });
+    if (!recovered) await store.updateOrder(orderId, { status: 'paid', paymentIntentId });
     try {
-      if (!recovered) store.updateOrder(orderId, { status: 'processing' });
+      if (!recovered) await store.updateOrder(orderId, { status: 'processing' });
       const orderResult = await placeOrderWithEsim(order.productId, 1);
       if (!orderResult.success) {
-        if (!recovered) store.updateOrder(orderId, { status: 'failed', note: orderResult.message });
+        if (!recovered) await store.updateOrder(orderId, { status: 'failed', note: orderResult.message });
         await notifyError('stripe/confirm-b2b', `Order ${orderId}: ${orderResult.message}`).catch(() => {});
         return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
       }
       const esimData = extractEsim(orderResult);
-      // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
-      if (!recovered) store.updateOrder(orderId, { status: 'fulfilled', esimData });
+      if (!recovered) await store.updateOrder(orderId, { status: 'fulfilled', esimData });
       await sendEsimEmail({ to: order.email, productName: order.productName, lpaString: esimData.qrCode || esimData.activationCode, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
     } catch (e) {
-      if (!recovered) store.updateOrder(orderId, { status: 'pending_fulfillment', note: e.message });
+      if (!recovered) await store.updateOrder(orderId, { status: 'pending_fulfillment', note: e.message });
       await notifyError('stripe/confirm', e.message).catch(() => {});
       return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
     }

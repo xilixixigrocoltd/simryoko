@@ -33,7 +33,7 @@ async function handleCheckout(req, res) {
     const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
-    const order = store.createOrder({
+    const order = await store.createOrder({
       productId: product.id, productName: product.nameEn || product.name,
       productPrice: parseFloat(product.price), email,
       country: product.countries?.[0]?.code || 'INT'
@@ -62,7 +62,7 @@ async function handleVerify(req, res) {
     if (!orderId) return res.status(400).json({ error: 'Missing orderId' });
     if (!/^[A-Za-z0-9-]{6,40}$/.test(orderId)) return res.status(400).json({ error: 'Invalid orderId format' });
 
-    const order = store.getOrder(orderId);
+    const order = await store.getOrder(orderId);
     if (!order) return res.status(404).json({ error: 'Order not found' });
     if (order.status === 'fulfilled') return res.json({ success: true, status: 'fulfilled', message: 'eSIM has been sent to your email' });
     if (order.status === 'failed')    return res.json({ success: false, status: 'failed', message: 'Order failed. Please contact support.' });
@@ -70,11 +70,11 @@ async function handleVerify(req, res) {
     const paid = await checkTronPayment(order.paymentAmount, order.createdAt);
     if (!paid) return res.json({ success: true, status: 'pending_payment', message: 'Payment not detected yet. Please ensure you sent the correct amount via TRC-20.' });
 
-    store.updateOrder(orderId, { status: 'paid', txHash: paid.txHash });
+    await store.updateOrder(orderId, { status: 'paid', txHash: paid.txHash });
 
     const balance = await getBalance();
     if (balance < order.productPrice) {
-      store.updateOrder(orderId, { status: 'pending_fulfillment', note: 'Insufficient agent balance' });
+      await store.updateOrder(orderId, { status: 'pending_fulfillment', note: 'Insufficient agent balance' });
       notifyLowBalance && notifyLowBalance(balance).catch(() => {});
       return res.json({ success: true, status: 'paid', message: 'Payment confirmed! Your eSIM will be delivered within 30 minutes.' });
     }
@@ -105,9 +105,9 @@ async function checkTronPayment(expectedAmount, afterTimestamp) {
 
 async function fulfillOrder(orderId, order) {
   try {
-    store.updateOrder(orderId, { status: 'processing' });
+    await store.updateOrder(orderId, { status: 'processing' });
     const orderResult = await placeOrderWithEsim(order.productId, 1);
-    if (!orderResult.success) { store.updateOrder(orderId, { status: 'failed', note: orderResult.message }); return; }
+    if (!orderResult.success) { await store.updateOrder(orderId, { status: 'failed', note: orderResult.message }); return; }
 
     // 解析 eSIM 数据（placeOrderWithEsim 已合并订单详情）
     const d = orderResult.data || {};
@@ -121,7 +121,7 @@ async function fulfillOrder(orderId, order) {
     const lpaString = rawQrUrl || rawActivation;
     const esimData = { lpaString, iccid, activationCode: rawActivation };
 
-    store.updateOrder(orderId, { status: 'fulfilled', esimData });
+    await store.updateOrder(orderId, { status: 'fulfilled', esimData });
     await sendEsimEmail({
       to: order.email,
       productName: order.productName,
@@ -131,7 +131,7 @@ async function fulfillOrder(orderId, order) {
       country: order.country
     });
     await notifyOrderFulfilled(order, esimData).catch(() => {});
-  } catch (err) { store.updateOrder(orderId, { status: 'failed', note: err.message }); throw err; }
+  } catch (err) { await store.updateOrder(orderId, { status: 'failed', note: err.message }); throw err; }
 }
 
 // ── router ────────────────────────────────────────────────────────────────────

@@ -124,7 +124,7 @@ async function handleStatus(req, res) {
   }
 
   // 近期订单统计
-  const orders = store.getAllOrders ? store.getAllOrders() : [];
+  const orders = await store.listOrders() // [];
   const now = Date.now();
   const last24h = orders.filter(o => now - new Date(o.createdAt).getTime() < 86400000);
   results.orders24h = {
@@ -150,7 +150,7 @@ async function handleStatus(req, res) {
 async function handleOrders(req, res) {
   const limit = parseInt(req.query.limit || '20');
   const status = req.query.status || '';
-  let orders = store.getAllOrders ? store.getAllOrders() : [];
+  let orders = await store.listOrders() // [];
   if (status) orders = orders.filter(o => o.status === status);
   orders = orders.slice(-limit).reverse();
   return res.json({ success: true, data: orders });
@@ -161,7 +161,7 @@ async function handleResend(req, res) {
   const { orderId, email: overrideEmail } = req.method === 'GET' ? req.query : req.body;
   if (!orderId) return res.status(400).json({ error: 'Missing orderId' });
 
-  const order = store.getOrder(orderId);
+  const order = await store.getOrder(orderId);
   if (!order) return res.status(404).json({ error: 'Order not found' });
 
   const targetEmail = overrideEmail || order.email;
@@ -184,7 +184,7 @@ async function handleResend(req, res) {
             const QRCode = require('qrcode');
             newEsimData.qrCodeUrl = await QRCode.toDataURL(newEsimData.activationCode, { width: 300 });
           }
-          store.updateOrder(orderId, { esimData: newEsimData, status: 'fulfilled' });
+          await store.updateOrder(orderId, { esimData: newEsimData, status: 'fulfilled' });
           await sendEsimEmail({ to: targetEmail, productName: order.productName, ...newEsimData, country: order.country });
           await tgNotify(`✅ 订单 \`${orderId}\` 重新下单并补发成功 → ${targetEmail}`);
           return res.json({ success: true, message: 'Replaced and resent', esimData: newEsimData });

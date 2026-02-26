@@ -42,7 +42,7 @@ async function handleCreate(req, res) {
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
     const usdPrice = parseFloat(product.price);
-    const order = store.createOrder({
+    const order = await store.createOrder({
       productId: product.id, productName: product.nameEn || product.name,
       productPrice: usdPrice, email, country: product.countries?.[0]?.code || 'INT',
     });
@@ -90,18 +90,18 @@ async function handleWebhook(req, res) {
     try { orderId = JSON.parse(invoice.payload || '{}').orderId; } catch (e) {}
     if (!orderId) return res.json({ ok: true, error: 'No orderId' });
 
-    const order = store.getOrder(orderId);
+    const order = await store.getOrder(orderId);
     if (!order) return res.json({ ok: true, error: 'Order not found' });
     if (order.status === 'fulfilled') return res.json({ ok: true, skipped: 'already_fulfilled' });
 
     const expectedAmount = parseFloat(order.paymentAmount);
     const paidAmount = parseFloat(invoice.amount);
     if (paidAmount < expectedAmount * 0.99) {
-      store.updateOrder(orderId, { status: 'underpaid', paidAmount, paidAsset: invoice.asset });
+      await store.updateOrder(orderId, { status: 'underpaid', paidAmount, paidAsset: invoice.asset });
       return res.json({ ok: true, error: 'Amount mismatch' });
     }
 
-    store.updateOrder(orderId, { status: 'paid', paidAt: new Date().toISOString(), paidAmount, paidAsset: invoice.asset, cryptoPayInvoiceId: invoice.invoice_id });
+    await store.updateOrder(orderId, { status: 'paid', paidAt: new Date().toISOString(), paidAmount, paidAsset: invoice.asset, cryptoPayInvoiceId: invoice.invoice_id });
 
     try {
       const esimResult = await placeOrderWithEsim(order.productId, 1);
@@ -115,10 +115,10 @@ async function handleWebhook(req, res) {
       const lpaString = rawQrUrl || rawActivation;
       const esimInfo = { lpaString, activationCode: rawActivation, iccid };
       await sendEsimEmail({ to: order.email, productName: order.productName, lpaString, iccid, activationCode: rawActivation, country: order.country });
-      store.updateOrder(orderId, { status: 'fulfilled', fulfilledAt: new Date().toISOString(), esimInfo });
+      await store.updateOrder(orderId, { status: 'fulfilled', fulfilledAt: new Date().toISOString(), esimInfo });
       notifyOrderFulfilled({ ...order, esimInfo, paymentMethod: `TON/${invoice.asset}` }).catch(() => {});
     } catch (e) {
-      store.updateOrder(orderId, { status: 'paid_pending_fulfillment' });
+      await store.updateOrder(orderId, { status: 'paid_pending_fulfillment' });
       notifyError(`TON订单履约失败 ${orderId}: ${e.message}`).catch(() => {});
     }
 
