@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://simryoko.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://simryoko.com/shop.html</loc><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://simryoko.com/japan-esim.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://simryoko.com/korea-esim.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://simryoko.com/europe-esim.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://simryoko.com/blog.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://simryoko.com/japan-esim.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://simryoko.com/korea-esim.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://simryoko.com/europe-esim.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://simryoko.com/china-esim.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://simryoko.com/thailand-esim.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://simryoko.com/usa-esim.html</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://simryoko.com/southeast-asia-esim.html</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://simryoko.com/esim-vs-sim.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://simryoko.com/how-to-install-esim-iphone.html</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://simryoko.com/b2b.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://simryoko.com/terms.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
   <url><loc>https://simryoko.com/privacy.html</loc><changefreq>monthly</changefreq><priority>0.3</priority></url>
