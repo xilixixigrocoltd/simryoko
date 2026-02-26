@@ -266,6 +266,34 @@ async function handleRegisterStripeWebhook(req, res) {
   }
 }
 
+// ── Stripe 争议证据正式提交 ────────────────────────────────────────────────────
+async function handleSubmitDispute(req, res) {
+  const StripeLib = require('stripe');
+  const stripe = new StripeLib(process.env.STRIPE_SECRET_KEY);
+  const disputeId = req.query.id || req.body?.disputeId;
+  if (!disputeId) return res.status(400).json({ error: 'Missing dispute ID (use ?id=disp_xxx)' });
+
+  try {
+    const dispute = await stripe.disputes.retrieve(disputeId);
+    if (['won', 'lost', 'charge_refunded'].includes(dispute.status)) {
+      return res.json({ success: false, message: `Dispute already closed: ${dispute.status}` });
+    }
+
+    // 正式提交（submit: true）
+    const updated = await stripe.disputes.update(disputeId, { submit: true });
+    await tgNotify(
+      `📤 <b>争议证据已正式提交</b>\n\n` +
+      `争议 ID: <code>${disputeId}</code>\n` +
+      `金额: $${(dispute.amount / 100).toFixed(2)}\n` +
+      `状态: ${updated.status}\n\n` +
+      `Stripe 将在 5-7 个工作日内裁决。`
+    );
+    return res.json({ success: true, message: 'Evidence submitted to Stripe', status: updated.status });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -280,6 +308,7 @@ module.exports = async (req, res) => {
   if (path.includes('/orders'))                  return handleOrders(req, res);
   if (path.includes('/resend'))                  return handleResend(req, res);
   if (path.includes('/register-stripe-webhook')) return handleRegisterStripeWebhook(req, res);
+  if (path.includes('/submit-dispute'))          return handleSubmitDispute(req, res);
 
   return res.status(404).json({ error: 'Unknown admin action' });
 };
