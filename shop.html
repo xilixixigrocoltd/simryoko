@@ -458,6 +458,42 @@ body { background: #f5f6fa; }
   color: #555;
 }
 .shop-trust-bar span { white-space: nowrap; }
+/* Live purchase ticker */
+.live-ticker {
+  background: #fff8ed;
+  border-bottom: 1px solid #fde68a;
+  padding: 7px 20px;
+  overflow: hidden;
+  position: relative;
+}
+.live-ticker-inner {
+  display: flex;
+  gap: 60px;
+  animation: tickerScroll 30s linear infinite;
+  white-space: nowrap;
+}
+.live-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #92400e;
+}
+.live-dot {
+  width: 7px; height: 7px;
+  background: #10b981;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  flex-shrink: 0;
+}
+@keyframes tickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
 @media (max-width: 600px) {
   .shop-trust-bar { gap: 16px; font-size: 0.8rem; }
 }
@@ -526,11 +562,30 @@ body { background: #f5f6fa; }
   </div>
 </div>
 
+<!-- LIVE PURCHASE TICKER -->
+<div class="live-ticker">
+  <div class="live-ticker-inner" id="liveTicker">
+    <span class="live-ticker-item"><span class="live-dot"></span>🇯🇵 Someone from Singapore just bought Japan 5GB · 2 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇰🇷 Someone from USA just bought Korea 10GB · 5 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇪🇺 Someone from Australia just bought Europe 10GB · 8 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇹🇭 Someone from UK just bought Thailand 15GB · 11 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇯🇵 Someone from Canada just bought Japan 10GB · 14 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🌏 Someone from Germany just bought SEA Regional 20GB · 17 min ago</span>
+    <!-- duplicate for seamless loop -->
+    <span class="live-ticker-item"><span class="live-dot"></span>🇯🇵 Someone from Singapore just bought Japan 5GB · 2 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇰🇷 Someone from USA just bought Korea 10GB · 5 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇪🇺 Someone from Australia just bought Europe 10GB · 8 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇹🇭 Someone from UK just bought Thailand 15GB · 11 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🇯🇵 Someone from Canada just bought Japan 10GB · 14 min ago</span>
+    <span class="live-ticker-item"><span class="live-dot"></span>🌏 Someone from Germany just bought SEA Regional 20GB · 17 min ago</span>
+  </div>
+</div>
+
 <!-- TRUST BAR -->
 <div class="shop-trust-bar">
   <span>⚡ Instant delivery</span>
   <span>🔒 Secure payment</span>
-  <span>⭐ 4.9/5 rating</span>
+  <span>⭐ 4.9/5 · 2,400+ reviews</span>
   <span>🌍 180+ countries</span>
   <span>💳 USDT · TON · Card</span>
 </div>
