@@ -904,16 +904,36 @@ async function openCountry(code) {
   // 显示内联套餐面板，高亮选中的国家卡片
   showPlansPanel(code);
 
-  // Fetch (cached)
+  // 加载套餐：优先静态 CDN JSON（~30ms），失败则降级到 API（~1-2s）
   if (!planCache[code]) {
     try {
-      const apiCode = ['GLOBAL','ASIA_REG','EU_REG'].includes(code)?'':code;
-      const r = await fetch(`/api/products?country=${apiCode}&pageSize=20`);
-      const j = await r.json();
-      planCache[code] = (j.data?.list||[]).sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
-      if (planCache[code].length) {
-        priceCache[code] = planCache[code][0].price;
-        countCache[code] = j.data?.total || planCache[code].length;
+      const apiCode = ['GLOBAL','ASIA_REG','EU_REG'].includes(code) ? '' : code;
+      const cacheKey = apiCode || '_global';
+
+      let plans = [], total = 0;
+
+      // ① 先尝试静态预生成 JSON（Vercel CDN 直出，最快）
+      try {
+        const cr = await fetch(`/cache/${cacheKey}.json`, { cache: 'default' });
+        if (cr.ok) {
+          const cj = await cr.json();
+          plans = cj.list || [];
+          total = cj.total || plans.length;
+        }
+      } catch(_) { /* 缓存文件不存在时降级 */ }
+
+      // ② 静态缓存为空则调用 API（兜底）
+      if (!plans.length) {
+        const ar = await fetch(`/api/products?country=${apiCode}&pageSize=20`);
+        const aj = await ar.json();
+        plans = (aj.data?.list || []).sort((a,b) => parseFloat(a.price) - parseFloat(b.price));
+        total = aj.data?.total || plans.length;
+      }
+
+      planCache[code] = plans;
+      if (plans.length) {
+        priceCache[code] = plans[0].price;
+        countCache[code] = total;
         updateCard(code);
       }
     } catch(e) {
@@ -1054,9 +1074,19 @@ async function loadMorePlans(btn) {
   btn.disabled = true;
   try {
     const apiCode = ['GLOBAL','ASIA_REG','EU_REG'].includes(curCode) ? '' : curCode;
-    const r = await fetch(`/api/products?country=${apiCode}&pageSize=50`);
-    const j = await r.json();
-    const all = (j.data?.list||[]).sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
+    const cacheKey = apiCode || '_global';
+
+    // 优先用静态缓存（已有全量数据）
+    let all = [];
+    try {
+      const cr = await fetch(`/cache/${cacheKey}.json`, { cache: 'default' });
+      if (cr.ok) { const cj = await cr.json(); all = cj.list || []; }
+    } catch(_) {}
+    if (!all.length) {
+      const r = await fetch(`/api/products?country=${apiCode}&pageSize=50`);
+      const j = await r.json();
+      all = (j.data?.list||[]).sort((a,b)=>parseFloat(a.price)-parseFloat(b.price));
+    }
     planCache[curCode] = all;
     allCurPlans = all;
     countCache[curCode] = j.data?.total || all.length;

@@ -2,6 +2,23 @@
 // B2B 后台每页最多10条，本层并发拉取多页合并返回
 const { getProducts: b2bGetProducts, getProductById } = require('./_agent');
 const { applyRateLimit, setCors } = require('./_ratelimit');
+const fs   = require('fs');
+const path = require('path');
+
+// 静态缓存目录（预生成 JSON，Vercel 部署时随代码发布）
+const CACHE_DIR = path.join(__dirname, '..', 'cache');
+
+function readStaticCache(country) {
+  try {
+    const key  = country || '_global';
+    const file = path.join(CACHE_DIR, `${key}.json`);
+    if (!fs.existsSync(file)) return null;
+    const stat = fs.statSync(file);
+    // 超过 8 小时的缓存降级到 API（避免数据太旧）
+    if (Date.now() - stat.mtimeMs > 8 * 60 * 60 * 1000) return null;
+    return JSON.parse(fs.readFileSync(file, 'utf8'));
+  } catch { return null; }
+}
 
 const B2B_MAX      = 10;   // B2B 单页上限
 const CLIENT_MAX   = 100;  // 对外最大 pageSize（超过按100算）
@@ -103,11 +120,27 @@ module.exports = async (req, res) => {
     const page     = Math.max(1, parseInt(req.query.page)     || 1);
     const pageSize = Math.min(CLIENT_MAX, parseInt(req.query.pageSize) || 50);
 
+    // ① 优先从静态预生成缓存读取（无 B2B API 延迟）
+    if (!search) {
+      const cached = readStaticCache(country);
+      if (cached && cached.list && cached.list.length) {
+        const start    = (page - 1) * pageSize;
+        const slice    = cached.list.slice(start, start + pageSize);
+        const products = slice.map(p => p); // 已 format
+        // 静态文件缓存1小时，stale-while-revalidate 8小时
+        res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=28800');
+        return res.json({
+          success: true,
+          data: { list: products, total: cached.total || cached.list.length, page, pageSize, _source: 'cache' }
+        });
+      }
+    }
+
+    // ② 降级：实时调用 B2B API（兜底）
     const { list, total } = await fetchMergedPage({ country, page, pageSize, search });
     const products = list.map(formatProduct);
 
-    // CDN 缓存5分钟（按 country/page/search 分key）
-    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=60');
+    res.setHeader('Cache-Control', 'public, s-maxage=300, stale-while-revalidate=3600');
     return res.json({
       success: true,
       data: { list: products, total, page, pageSize }
