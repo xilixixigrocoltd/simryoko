@@ -3,7 +3,7 @@
 // GET/POST /api/payment/verify → 检查 USDT 链上付款并自动发货
 const store = require('./_store');
 const { sendPaymentPendingEmail, sendEsimEmail } = require('./_email');
-const { getProductById, placeOrder, getBalance } = require('./_agent');
+const { getProductById, placeOrderWithEsim, getBalance } = require('./_agent');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyNewOrder, notifyOrderFulfilled, notifyLowBalance } = require('./_notify');
 const axios = require('axios');
@@ -99,18 +99,15 @@ async function checkTronPayment(expectedAmount, afterTimestamp) {
 async function fulfillOrder(orderId, order) {
   try {
     store.updateOrder(orderId, { status: 'processing' });
-    const orderResult = await placeOrder(order.productId, 1);
+    const orderResult = await placeOrderWithEsim(order.productId, 1);
     if (!orderResult.success) { store.updateOrder(orderId, { status: 'failed', note: orderResult.message }); return; }
 
-    // 解析 API 响应中的 eSIM 数据（兼容多种字段路径）
-    const d = orderResult.data || orderResult;
-    // 尝试从 items 数组、直接字段等多路径提取
-    const item = (d.items && d.items[0]) || (d.esims && d.esims[0]) || d;
-    const rawActivation = item.activationCode || item.lpa || item.smdpAddress
-                       || d.activationCode || d.lpa || '';
-    const rawQrUrl = item.qrCodeUrl || item.qrUrl || item.qrCode
-                  || d.qrCodeUrl || d.qrUrl || '';
-    const iccid = item.iccid || item.simIccid || d.iccid || d.simIccid || '';
+    // 解析 eSIM 数据（placeOrderWithEsim 已合并订单详情）
+    const d = orderResult.data || {};
+    const sim = d.esimData?.sims?.[0] || {};
+    const rawActivation = sim.activationCode || d.esimActivationCode || '';
+    const rawQrUrl      = sim.qrCodeUrl      || d.esimQrCode         || '';
+    const iccid         = sim.iccid          || d.esimIccid          || '';
 
     // 生成 QR 码 base64（优先用 URL，否则从 activationCode 生成）
     let qrBase64 = '';

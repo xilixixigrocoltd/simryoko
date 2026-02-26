@@ -3,7 +3,7 @@
 // /api/stripe/confirm → confirm
 const StripeLib = require('stripe');
 const store = require('./_store');
-const { getProductById, placeOrder } = require('./_agent');
+const { getProductById, placeOrderWithEsim } = require('./_agent');
 const { sendEsimEmail } = require('./_email');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyOrderFulfilled, notifyError } = require('./_notify');
@@ -78,7 +78,7 @@ async function handleConfirm(req, res) {
     if (!recovered) store.updateOrder(orderId, { status: 'paid', paymentIntentId });
     try {
       if (!recovered) store.updateOrder(orderId, { status: 'processing' });
-      const orderResult = await placeOrder(order.productId, 1);
+      const orderResult = await placeOrderWithEsim(order.productId, 1);
       if (!orderResult.success) {
         if (!recovered) store.updateOrder(orderId, { status: 'failed', note: orderResult.message });
         await notifyError('stripe/confirm-b2b', `Order ${orderId}: ${orderResult.message}`).catch(() => {});
@@ -102,7 +102,15 @@ async function handleConfirm(req, res) {
 
 function extractEsim(r) {
   const d = r.data || r;
-  return { qrCodeUrl: d.qrCodeUrl || d.qrCode || d.lpa || '', qrCode: d.qrCode || '', iccid: d.iccid || d.simIccid || '', activationCode: d.activationCode || d.lpa || '' };
+  // B2B 订单详情：esimData.sims[0] 包含完整数据
+  const sim = d.esimData?.sims?.[0] || {};
+  return {
+    qrCodeUrl:      sim.qrCodeUrl      || d.esimQrCode       || '',
+    qrCode:         sim.qrCode         || d.esimQrCode        || '',
+    iccid:          sim.iccid          || d.esimIccid         || '',
+    activationCode: sim.activationCode || d.esimActivationCode || '',
+    directAppleUrl: sim.directAppleUrl || '',
+  };
 }
 
 // ── router ───────────────────────────────────────────────────────────────────

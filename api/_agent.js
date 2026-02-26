@@ -178,4 +178,28 @@ async function placeOrder(productId, quantity = 1) {
   });
 }
 
-module.exports = { getProducts, getProductById, getBalance, placeOrder, apiCall, getToken };
+// ── 查询订单详情（含 eSIM 数据）──────────────────────────────────────────────
+async function getOrderById(orderId) {
+  return apiCall('get', `/agent/orders/${orderId}`);
+}
+
+// ── 下单并返回完整 eSIM 数据 ────────────────────────────────────────────────
+// B2B POST /orders 只返回订单基础信息，eSIM 数据需要再查详情
+async function placeOrderWithEsim(productId, quantity = 1) {
+  const res = await placeOrder(productId, quantity);
+  if (!res.success) return res;
+  const b2bOrderId = res.data?.id;
+  if (!b2bOrderId) return res;
+  // 查订单详情拿 eSIM
+  const detail = await getOrderById(b2bOrderId);
+  if (!detail.success) return res; // 详情查失败时返回原始响应，不报错
+  // 将 eSIM 数据合并到顶层
+  const d = detail.data;
+  res.data.esimIccid         = d.esimIccid;
+  res.data.esimQrCode        = d.esimQrCode;
+  res.data.esimActivationCode = d.esimActivationCode;
+  res.data.esimData          = d.esimData; // { sims: [{ qrCodeUrl, directAppleUrl, ... }] }
+  return res;
+}
+
+module.exports = { getProducts, getProductById, getBalance, placeOrder, placeOrderWithEsim, getOrderById, apiCall, getToken };
