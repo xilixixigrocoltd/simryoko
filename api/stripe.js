@@ -86,9 +86,8 @@ async function handleConfirm(req, res) {
       }
       const esimData = extractEsim(orderResult);
       // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
-      const qrImageUrl = buildQrImageUrl(esimData.qrCode || esimData.activationCode);
       if (!recovered) store.updateOrder(orderId, { status: 'fulfilled', esimData });
-      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrImageUrl, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
+      await sendEsimEmail({ to: order.email, productName: order.productName, lpaString: esimData.qrCode || esimData.activationCode, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
     } catch (e) {

@@ -112,9 +112,9 @@ async function handleWebhook(req, res) {
       const rawQrUrl      = sim.qrcode      || d.esimQrCode         || ''; // LPA 字符串
       const rawActivation = sim.matching_id || d.esimActivationCode || '';
       const iccid         = sim.iccid       || d.esimIccid          || '';
-      const qrImageUrl    = buildQrImageUrl(rawQrUrl || rawActivation);
-      const esimInfo = { qrCodeUrl: qrImageUrl, activationCode: rawActivation, iccid };
-      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrImageUrl, iccid, activationCode: rawActivation, country: order.country });
+      const lpaString = rawQrUrl || rawActivation;
+      const esimInfo = { lpaString, activationCode: rawActivation, iccid };
+      await sendEsimEmail({ to: order.email, productName: order.productName, lpaString, iccid, activationCode: rawActivation, country: order.country });
       store.updateOrder(orderId, { status: 'fulfilled', fulfilledAt: new Date().toISOString(), esimInfo });
       notifyOrderFulfilled({ ...order, esimInfo, paymentMethod: `TON/${invoice.asset}` }).catch(() => {});
     } catch (e) {

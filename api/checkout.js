@@ -118,21 +118,14 @@ async function fulfillOrder(orderId, order) {
     const rawQrUrl      = sim.qrcode      || d.esimQrCode         || ''; // LPA 字符串
     const iccid         = sim.iccid       || d.esimIccid          || '';
 
-    // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
-    const qrSource = rawQrUrl || rawActivation;
-    const qrImageUrl = buildQrImageUrl(qrSource);
-
-    const esimData = {
-      qrCodeUrl: qrImageUrl,
-      iccid,
-      activationCode: rawActivation,
-    };
+    const lpaString = rawQrUrl || rawActivation;
+    const esimData = { lpaString, iccid, activationCode: rawActivation };
 
     store.updateOrder(orderId, { status: 'fulfilled', esimData });
     await sendEsimEmail({
       to: order.email,
       productName: order.productName,
-      qrCodeUrl: qrImageUrl,
+      lpaString,
       iccid,
       activationCode: rawActivation,
       country: order.country

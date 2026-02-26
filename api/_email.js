@@ -4,12 +4,14 @@ const axios = require('axios');
 const nodemailer = require('nodemailer');
 
 // ── Resend API 发信（主通道）────────────────────────────────────────────────
-async function sendViaResend({ from, to, subject, html }) {
+async function sendViaResend({ from, to, subject, html, attachments }) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) throw new Error('RESEND_API_KEY not set');
+  const payload = { from, to: Array.isArray(to) ? to : [to], subject, html };
+  // Resend inline 附件格式：{ filename, content(base64), content_id, disposition:'inline' }
+  if (attachments?.length) payload.attachments = attachments;
   const resp = await axios.post(
-    'https://api.resend.com/emails',
-    { from, to: Array.isArray(to) ? to : [to], subject, html },
+    'https://api.resend.com/emails', payload,
     { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' } }
   );
   if (resp.data?.id) return resp.data;
@@ -28,18 +30,23 @@ const smtpTransporter = nodemailer.createTransport({
 });
 
 // ── 统一发信入口（Resend 优先，失败通知管理员）──────────────────────────────
-async function sendEmail({ from, to, subject, html }) {
+async function sendEmail({ from, to, subject, html, attachments }) {
   if (process.env.RESEND_API_KEY) {
     try {
-      return await sendViaResend({ from, to, subject, html });
+      return await sendViaResend({ from, to, subject, html, attachments });
     } catch (e) {
       console.error('[email] Resend failed:', e.message);
-      // Resend 失败时通知管理员，避免订单静默丢失
       _notifyEmailFail(to, subject, e.message).catch(() => {});
-      // SMTP 备用（xigrocoltd.com，非 Gmail 收件箱可能正常，Gmail 会退信）
       try {
         const smtpFrom = `"SimRyoko eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
-        return await smtpTransporter.sendMail({ from: smtpFrom, to, subject, html });
+        // nodemailer CID 附件格式与 Resend 不同，需转换
+        const smtpAttachments = (attachments || []).map(a => ({
+          filename: a.filename,
+          content: Buffer.from(a.content, 'base64'),
+          contentType: 'image/png',
+          cid: a.content_id
+        }));
+        return await smtpTransporter.sendMail({ from: smtpFrom, to, subject, html, attachments: smtpAttachments });
       } catch (smtpErr) {
         console.error('[email] SMTP also failed:', smtpErr.message);
         throw smtpErr;
@@ -76,7 +83,27 @@ function getFlagEmoji(countryCode) {
 // ──────────────────────────────────────────────────────────────────────────────
 // 1. eSIM 交付邮件（大幅升级）
 // ──────────────────────────────────────────────────────────────────────────────
-async function sendEsimEmail({ to, productName, qrCodeUrl, iccid, activationCode, country, carrier }) {
+// 生成 QR 码 PNG buffer（优先本地 qrcode 库，失败则降级为外部 URL）
+async function buildQrAttachment(lpaString) {
+  if (!lpaString) return { imgSrc: '', attachments: [] };
+  try {
+    const QRCode = require('qrcode');
+    const buf = await QRCode.toBuffer(lpaString, { width: 240, margin: 2, color: { dark: '#1a1a2e', light: '#ffffff' } });
+    return {
+      imgSrc: 'cid:esim-qr',
+      attachments: [{ filename: 'qrcode.png', content: buf.toString('base64'), content_id: 'esim-qr', disposition: 'inline' }]
+    };
+  } catch (e) {
+    // qrcode 库不可用时降级用外部 URL
+    const url = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&margin=2&data=${encodeURIComponent(lpaString)}`;
+    return { imgSrc: url, attachments: [] };
+  }
+}
+
+async function sendEsimEmail({ to, productName, lpaString, qrCodeUrl, iccid, activationCode, country, carrier }) {
+  // 优先用 lpaString 生成内联附件；向后兼容旧的 qrCodeUrl 参数
+  const lpa = lpaString || qrCodeUrl || '';
+  const { imgSrc, attachments } = await buildQrAttachment(lpa);
   const flag = getFlagEmoji(country);
   // 从 productName 提取运营商（"Moshi Moshi - 1 GB - 7 days" → "Moshi Moshi"）
   const carrierName = carrier || (productName ? productName.split(' - ')[0] : 'Local Network');
@@ -186,10 +213,10 @@ async function sendEsimEmail({ to, productName, qrCodeUrl, iccid, activationCode
     </div>
 
     <!-- QR Code -->
-    ${qrCodeUrl ? `
+    ${imgSrc ? `
     <div class="qr-section">
-      <img src="${qrCodeUrl}" alt="eSIM QR Code"/>
-      <div class="qr-label">📷 Scan to install your eSIM</div>
+      <img src="${imgSrc}" alt="eSIM QR Code"/>
+      <div class="qr-label">📷 Scan to install your eSIM (use another device)</div>
     </div>` : ''}
 
     <!-- eSIM Details -->
@@ -278,7 +305,8 @@ async function sendEsimEmail({ to, productName, qrCodeUrl, iccid, activationCode
     from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `${flag} Your eSIM is Ready — ${productName}`,
-    html
+    html,
+    attachments
   });
 }
 
