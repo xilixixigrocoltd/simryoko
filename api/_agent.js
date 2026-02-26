@@ -195,10 +195,11 @@ async function placeOrderWithEsim(productId, quantity = 1) {
   if (!detail.success) return res; // 详情查失败时返回原始响应，不报错
   // 将 eSIM 数据合并到顶层
   const d = detail.data;
-  res.data.esimIccid         = d.esimIccid;
-  res.data.esimQrCode        = d.esimQrCode;
+  res.data.esimIccid          = d.esimIccid;
+  res.data.esimQrCode         = d.esimQrCode;         // LPA 字符串，如 LPA:1$...
   res.data.esimActivationCode = d.esimActivationCode;
-  res.data.esimData          = d.esimData; // { sims: [{ qrCodeUrl, directAppleUrl, ... }] }
+  // B2B API 把 sims 放在 thirdPartyData.sims，而非 esimData
+  res.data.esimData = { sims: d.thirdPartyData?.sims || [] };
   return res;
 }
 

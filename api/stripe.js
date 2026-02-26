@@ -85,8 +85,17 @@ async function handleConfirm(req, res) {
         return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
       }
       const esimData = extractEsim(orderResult);
+      // 生成 QR 码 base64（LPA 字符串不是 URL，需要转换）
+      let qrBase64 = '';
+      const QRCode = require('qrcode');
+      const qrSource = esimData.qrCode || esimData.qrCodeUrl || esimData.activationCode;
+      if (qrSource && !qrSource.startsWith('http')) {
+        try { qrBase64 = await QRCode.toDataURL(qrSource, { width: 300, margin: 2 }); } catch(e) {}
+      } else if (qrSource) {
+        qrBase64 = qrSource; // 已是图片 URL
+      }
       if (!recovered) store.updateOrder(orderId, { status: 'fulfilled', esimData });
-      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: esimData.qrCodeUrl, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
+      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrBase64, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
     } catch (e) {

@@ -27,18 +27,37 @@ const smtpTransporter = nodemailer.createTransport({
   }
 });
 
-// ── 统一发信入口（Resend 优先，失败自动切 SMTP）────────────────────────────
+// ── 统一发信入口（Resend 优先，失败通知管理员）──────────────────────────────
 async function sendEmail({ from, to, subject, html }) {
   if (process.env.RESEND_API_KEY) {
     try {
       return await sendViaResend({ from, to, subject, html });
     } catch (e) {
-      console.error('[email] Resend failed, falling back to SMTP:', e.message);
+      console.error('[email] Resend failed:', e.message);
+      // Resend 失败时通知管理员，避免订单静默丢失
+      _notifyEmailFail(to, subject, e.message).catch(() => {});
+      // SMTP 备用（xigrocoltd.com，非 Gmail 收件箱可能正常，Gmail 会退信）
+      try {
+        const smtpFrom = `"SimRyoko eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
+        return await smtpTransporter.sendMail({ from: smtpFrom, to, subject, html });
+      } catch (smtpErr) {
+        console.error('[email] SMTP also failed:', smtpErr.message);
+        throw smtpErr;
+      }
     }
   }
-  // SMTP 备用（发件人改回企业邮箱避免 DMARC 拒绝）
   const smtpFrom = `"SimRyoko eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
   return smtpTransporter.sendMail({ from: smtpFrom, to, subject, html });
+}
+
+// 邮件发送失败时 Telegram 告警
+async function _notifyEmailFail(to, subject, errMsg) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const adminId = process.env.TELEGRAM_ADMIN_ID;
+  if (!token || !adminId) return;
+  const axios = require('axios');
+  const text = `⚠️ *邮件发送失败*\n收件人: ${to}\n主题: ${subject}\n错误: ${errMsg}\n\n请手动处理此订单！`;
+  await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, { chat_id: adminId, text, parse_mode: 'Markdown' });
 }
 
 function getFlagEmoji(countryCode) {

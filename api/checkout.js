@@ -109,14 +109,16 @@ async function fulfillOrder(orderId, order) {
     const rawQrUrl      = sim.qrCodeUrl      || d.esimQrCode         || '';
     const iccid         = sim.iccid          || d.esimIccid          || '';
 
-    // 生成 QR 码 base64（优先用 URL，否则从 activationCode 生成）
+    // 生成 QR 码 base64（若是 HTTP URL 直接用，LPA 字符串/激活码则生成图片）
     let qrBase64 = '';
     const QRCode = require('qrcode');
-    if (rawQrUrl) {
-      qrBase64 = rawQrUrl; // 直接用图片 URL
-    } else if (rawActivation) {
+    // LPA 字符串（LPA:1$...）或激活码都需要生成 QR 图片；HTTP URL 直接用
+    const qrSource = rawQrUrl?.startsWith('http') ? null : (rawQrUrl || rawActivation);
+    if (rawQrUrl?.startsWith('http')) {
+      qrBase64 = rawQrUrl;
+    } else if (qrSource) {
       try {
-        qrBase64 = await QRCode.toDataURL(rawActivation, {
+        qrBase64 = await QRCode.toDataURL(qrSource, {
           width: 300, margin: 2,
           color: { dark: '#1a1a2e', light: '#ffffff' }
         });
