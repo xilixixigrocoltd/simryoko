@@ -177,9 +177,9 @@ body { background: #f5f6fa; }
   overflow: hidden;
 }
 .sh-plan-list {
-  padding: 10px 14px 8px;
-  display: flex; flex-direction: column; gap: 7px;
-  max-height: 520px; overflow-y: auto;
+  padding: 12px 16px 12px;
+  display: flex; flex-direction: column; gap: 10px;
+  max-height: 620px; overflow-y: auto;
 }
 @media(max-width:600px) {
   .sh-plan-list { max-height: none; }
@@ -244,83 +244,103 @@ body { background: #f5f6fa; }
   display: flex; flex-direction: column; gap: 7px;
 }
 
-/* ── Plan Card — 紧凑横向行 ──────────────────────────── */
+/* ── Plan Card — Airalo 风格竖向卡片 ─────────────────── */
 .pc {
   background: #fff;
-  border-radius: 14px;
-  border: 2px solid #f0f0f7;
+  border-radius: 16px;
+  border: 1.5px solid #efefef;
   cursor: pointer;
-  transition: border-color .15s, box-shadow .12s;
+  transition: box-shadow .18s, border-color .18s, transform .12s;
   position: relative;
   overflow: hidden;
 }
-.pc:hover { border-color: #c4bdff; box-shadow: 0 4px 18px rgba(108,99,255,.12); }
-.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 3px rgba(108,99,255,.12); background: #faf9ff; }
-.pc.unlimited-card { border-color: #d8d2ff; background: linear-gradient(135deg,#faf9ff,#f3f0ff); }
-.pc.unlimited-card:hover { border-color: #9333EA; box-shadow: 0 4px 18px rgba(147,51,234,.15); }
-.pc.unlimited-card.sel    { border-color: #9333EA; box-shadow: 0 0 0 3px rgba(147,51,234,.12); }
+.pc:hover { box-shadow: 0 6px 24px rgba(0,0,0,.09); transform: translateY(-1px); border-color: #d8d2ff; }
+.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 3px rgba(108,99,255,.13); }
+.pc.unlimited-card { border-color: #e8d5ff; }
+.pc.unlimited-card:hover { border-color: #c084fc; box-shadow: 0 6px 24px rgba(147,51,234,.12); }
+.pc.unlimited-card.sel    { border-color: #9333EA; box-shadow: 0 0 0 3px rgba(147,51,234,.13); }
 
-/* Banner strip */
-.pc-banner {
-  font-size: 10.5px; font-weight: 800; letter-spacing: .3px;
-  color: #fff; padding: 4px 14px;
-  display: flex; align-items: center; gap: 4px;
+/* Corner badge ribbon */
+.pc-badge {
+  position: absolute; top: 0; right: 0;
+  font-size: 10px; font-weight: 800; letter-spacing: .2px;
+  color: #fff; padding: 5px 12px 5px 16px;
+  border-bottom-left-radius: 12px;
 }
-.pc-banner.hot  { background: linear-gradient(90deg,#f59e0b,#ef4444); }
-.pc-banner.best { background: linear-gradient(90deg,#059669,#10b981); }
-.pc-banner.inf  { background: linear-gradient(90deg,#6C63FF,#9333EA); }
+.pc-badge.hot  { background: linear-gradient(135deg,#f59e0b,#ef4444); }
+.pc-badge.best { background: linear-gradient(135deg,#059669,#10b981); }
+.pc-badge.inf  { background: linear-gradient(135deg,#6C63FF,#9333EA); }
 
-/* Horizontal row layout */
-.pc-row {
-  display: flex; align-items: center;
-  padding: 11px 14px; gap: 0;
-}
+/* Card body */
+.pc-body { padding: 18px 18px 14px; }
 
-/* Data / Days / Price cells */
-.pc-cell {
-  flex: 1; text-align: center;
-  border-right: 1.5px solid #f0f0f7;
-  padding: 0 6px;
+/* Header: plan name + type tag */
+.pc-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; min-height: 22px; }
+.pc-name {
+  font-size: 12.5px; font-weight: 500; color: #888;
+  flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.pc-cell:first-child { padding-left: 0; }
-.pc-cell:last-of-type { border-right: none; }
-.unlimited-card .pc-cell { border-right-color: rgba(108,99,255,.15); }
+.pc-type-tag {
+  font-size: 10px; font-weight: 700; letter-spacing: .3px;
+  padding: 2px 9px; border-radius: 20px;
+  text-transform: uppercase; flex-shrink: 0;
+}
+.pc-type-tag.local    { background: #eef2ff; color: #6C63FF; }
+.pc-type-tag.regional { background: #f0fdf4; color: #16a34a; }
+.pc-type-tag.global   { background: #fef3c7; color: #d97706; }
 
-.pc-v {
-  font-size: 18px; font-weight: 900; color: #111;
-  line-height: 1; margin-bottom: 3px;
-  display: flex; align-items: baseline; justify-content: center; gap: 1px;
+/* Main data display */
+.pc-main {
+  display: flex; align-items: baseline; gap: 5px;
+  margin-bottom: 12px;
 }
-.pc-v .u { font-size: 11px; font-weight: 700; color: #aaa; margin-left: 1px; }
-.pc-v.inf-v { font-size: 22px; color: #6C63FF; }
-.pc-v.price-v { color: #6C63FF; }
-.pc-l {
-  font-size: 9.5px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .3px; color: #ccc;
+.pc-data-val {
+  font-size: 44px; font-weight: 900; color: #111; line-height: 1;
+  letter-spacing: -1px;
 }
-.pc-l.meta { color: #10b981; font-weight: 700; font-size: 9px; letter-spacing: 0; text-transform: none; }
-.unlimited-card .pc-l.meta { color: #9333EA; }
+.pc-data-unit { font-size: 20px; font-weight: 700; color: #888; }
+.pc-data-val.inf-val { color: #6C63FF; font-size: 48px; }
+
+/* Details row: validity + speed */
+.pc-details { display: flex; gap: 18px; flex-wrap: wrap; }
+.pc-detail {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 13px; font-weight: 500; color: #555;
+}
+.pc-detail .pd-icon { font-size: 14px; line-height: 1; }
+
+/* Divider */
+.pc-divider { height: 1px; background: #f2f2f5; }
+
+/* Footer: price + buy button */
+.pc-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 13px 18px 15px; gap: 12px;
+}
+.pc-price-wrap { display: flex; flex-direction: column; }
+.pc-price-val { font-size: 24px; font-weight: 900; color: #111; line-height: 1; }
+.pc-price-meta { font-size: 11px; color: #10b981; font-weight: 600; margin-top: 3px; }
+.unlimited-card .pc-price-meta { color: #9333EA; }
 
 /* Buy button */
 .pc-buy {
-  margin-left: 10px; flex-shrink: 0;
   background: linear-gradient(135deg,#6C63FF,#9333EA);
-  color: #fff; border: none; border-radius: 10px;
-  padding: 8px 14px; font-size: 12.5px; font-weight: 800;
-  cursor: pointer; font-family: inherit; white-space: nowrap;
-  transition: opacity .15s;
+  color: #fff; border: none; border-radius: 12px;
+  padding: 12px 22px; font-size: 14px; font-weight: 800;
+  cursor: pointer; font-family: inherit;
+  transition: opacity .15s, transform .1s;
+  white-space: nowrap; flex-shrink: 0;
+  letter-spacing: .2px;
 }
-.pc-buy:hover { opacity: .88; }
+.pc-buy:hover { opacity: .9; transform: scale(1.02); }
 .unlimited-card .pc-buy { background: linear-gradient(135deg,#9333EA,#6C63FF); }
 
 /* 国家覆盖条带 */
 .pc-countries {
-  padding: 6px 14px 10px;
-  border-top: 1px dashed #f0f0f7;
+  padding: 8px 18px 14px;
   font-size: 12px; color: #888; line-height: 1.6;
   cursor: default;
 }
-.unlimited-card .pc-countries { border-top-color: rgba(108,99,255,.12); }
 .pc-countries .pc-cc-flags { display: inline; letter-spacing: 1px; }
 .pc-countries .pc-cc-more {
   display: inline-block; margin-left: 4px;
@@ -330,9 +350,8 @@ body { background: #f5f6fa; }
 .pc-countries .pc-cc-all { display: none; margin-top: 4px; color: #666; line-height: 1.8; }
 .pc-countries .pc-cc-all.open { display: block; }
 .pc-countries-global {
-  padding: 6px 14px 10px;
-  border-top: 1px dashed #f0f0f7;
-  font-size: 11.5px; color: #6C63FF; font-weight: 600;
+  padding: 8px 18px 14px;
+  font-size: 11.5px; color: #d97706; font-weight: 600;
 }
 
 /* Loading skeleton */
@@ -424,7 +443,7 @@ body { background: #f5f6fa; }
 
 /* Skeleton plan cards */
 .pc.sk-plan {
-  height: 62px; border: none; cursor: default; pointer-events: none;
+  height: 188px; border: none; cursor: default; pointer-events: none;
   background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%);
   background-size: 200% 100%; animation: sh 1.4s linear infinite;
 }
@@ -1245,51 +1264,64 @@ function filterByChip(plans) {
 }
 // ── 套餐卡片构建（紧凑横向行，可并排对比多条）─────────────────
 function buildPlanCard(p, i, bestGBIdx) {
-  const pn    = p.nameEn || p.name || '';
+  const pn     = p.nameEn || p.name || '';
   const dataMB = p.dataAmount || p.dataSize;
-  const data  = fmtData(dataMB, pn);
-  const days  = fmtDays(p);
-  const price = parseFloat(p.price);
-  const isInf = data === '∞';
+  const data   = fmtData(dataMB, pn);
+  const days   = fmtDays(p);
+  const price  = parseFloat(p.price);
+  const isInf  = data === '∞';
+  const type   = planType(p);
 
-  const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/, '');
-  const dataUnit = isInf ? '' : data.replace(/[\d.]+/, '');
+  const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/g, '');
+  const dataUnit = isInf ? '' : data.replace(/[\d.]+/g, '').trim();
   const perGB  = (!isInf && dataMB) ? (price / (dataMB / 1024)).toFixed(2) : null;
   const perDay = (days && days !== '?') ? (price / parseFloat(days)).toFixed(2) : null;
 
-  // 顶部彩色横幅
-  let banner = '';
-  if (isInf)              banner = `<div class="pc-banner inf">✦ 无限流量</div>`;
-  else if (i === bestGBIdx) banner = `<div class="pc-banner best">💡 性价比最优</div>`;
-  else if (i === 0 && curSort === 'price') banner = `<div class="pc-banner hot">⭐ 推荐首选</div>`;
+  // 角落角标
+  let badge = '';
+  if (isInf)                badge = `<div class="pc-badge inf">无限流量</div>`;
+  else if (i === bestGBIdx) badge = `<div class="pc-badge best">💡 最优性价比</div>`;
+  else if (i === 0 && curSort === 'price') badge = `<div class="pc-badge hot">⭐ 推荐</div>`;
 
-  // 价值元信息
+  // 类型标签
+  const typeLabel = {local:'本地',regional:'区域',global:'全球'}[type] || type;
+  const typeTag = `<span class="pc-type-tag ${type}">${typeLabel}</span>`;
+
+  // 价格元信息
   let metaLabel = '';
-  if (isInf && perDay)      metaLabel = `≈$${perDay}/天`;
-  else if (perGB)           metaLabel = `≈$${perGB}/GB`;
+  if (isInf && perDay)  metaLabel = `≈$${perDay}/天`;
+  else if (perGB)       metaLabel = `≈$${perGB}/GB`;
+
+  // 套餐简称（去掉国家前缀，保留规格部分）
+  const planShortName = pn.replace(/^[^-]+-\s*/, '').trim() || pn;
 
   const isFirst = i === 0;
   return `
   <div class="pc${isInf ? ' unlimited-card' : ''}${isFirst ? ' sel' : ''}" onclick="selectPlan(${i},this)" data-idx="${i}">
-    ${banner}
-    <div class="pc-row">
-      <div class="pc-cell">
-        <div class="pc-v${isInf ? ' inf-v' : ''}">
-          ${dataVal}${dataUnit ? `<span class="u">${dataUnit}</span>` : ''}
-        </div>
-        <div class="pc-l">${isInf ? '无限' : '流量'}</div>
+    ${badge}
+    <div class="pc-body">
+      <div class="pc-head">
+        <span class="pc-name">${planShortName}</span>
+        ${typeTag}
       </div>
-      <div class="pc-cell">
-        <div class="pc-v">${days}<span class="u">天</span></div>
-        <div class="pc-l">有效期</div>
+      <div class="pc-main">
+        <span class="pc-data-val${isInf ? ' inf-val' : ''}">${dataVal}</span>
+        ${dataUnit ? `<span class="pc-data-unit">${dataUnit}</span>` : ''}
       </div>
-      <div class="pc-cell">
-        <div class="pc-v price-v">$${price % 1 === 0 ? price : price.toFixed(2)}</div>
-        <div class="pc-l${metaLabel ? ' meta' : ''}">${metaLabel || '总价'}</div>
+      <div class="pc-details">
+        <div class="pc-detail"><span class="pd-icon">📅</span><span class="pd-val">${days} 天有效期</span></div>
+        <div class="pc-detail"><span class="pd-icon">⚡</span><span class="pd-val">4G / LTE</span></div>
       </div>
-      <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">购买 →</button>
     </div>
     ${buildCountryStrip(p.countries, p.type, i)}
+    <div class="pc-divider"></div>
+    <div class="pc-footer">
+      <div class="pc-price-wrap">
+        <span class="pc-price-val">$${price % 1 === 0 ? price : price.toFixed(2)}</span>
+        ${metaLabel ? `<span class="pc-price-meta">${metaLabel}</span>` : ''}
+      </div>
+      <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">立即购买</button>
+    </div>
   </div>`;
 }
 
