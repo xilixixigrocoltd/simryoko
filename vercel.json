@@ -114,6 +114,10 @@
     {
       "source": "/api/renewal/:action",
       "destination": "/api/esim"
+    },
+    {
+      "source": "/api/admin/:action",
+      "destination": "/api/admin"
     }
   ],
   "env": {

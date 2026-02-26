@@ -81,20 +81,56 @@ async function apiCall(method, path, data = null, retry = true) {
 }
 
 // ── 获取产品列表（带缓存）────────────────────────────────────────────────────
+// 持久化产品缓存（实例内，即使 TTL 过期也保留作为降级备份）
+const fallbackCache = new Map();
+
 async function getProducts({ country, page = 1, pageSize = 50, search = '' } = {}) {
   const params = new URLSearchParams({ page, pageSize });
   if (country) params.append('country', country);
   if (search)  params.append('search', search);
   const cacheKey = params.toString();
 
+  // 1. 优先返回有效缓存
   const cached = productCache.get(cacheKey);
   if (cached && Date.now() < cached.expiry) return cached.data;
 
-  const result = await apiCall('get', `/agent/products?${params}`);
-  if (result.success) {
-    productCache.set(cacheKey, { data: result, expiry: Date.now() + PRODUCT_TTL });
+  try {
+    // 2. 调用 B2B API
+    const result = await apiCall('get', `/agent/products?${params}`);
+    if (result.success) {
+      productCache.set(cacheKey, { data: result, expiry: Date.now() + PRODUCT_TTL });
+      fallbackCache.set(cacheKey, result); // 同步写入降级缓存（不过期）
+    }
+    return result;
+  } catch (err) {
+    // 3. API 失败 → 返回降级缓存（过期但有数据总比空白好）
+    const fallback = fallbackCache.get(cacheKey) || productCache.get(cacheKey)?.data;
+    if (fallback) {
+      console.warn('[agent] API error, serving fallback cache for:', cacheKey);
+      return { ...fallback, _fromCache: true };
+    }
+    // 4. 无缓存 → 向 Telegram 告警并返回空
+    notifyApiError(err.message).catch(() => {});
+    throw err;
   }
-  return result;
+}
+
+// 仅当 B2B API 完全失联时才告警（避免 401 自动续签期间误告警）
+let lastApiErrorNotify = 0;
+async function notifyApiError(msg) {
+  const now = Date.now();
+  if (now - lastApiErrorNotify < 30 * 60 * 1000) return; // 30分钟最多告警1次
+  lastApiErrorNotify = now;
+  const TG_TOKEN  = process.env.TELEGRAM_BOT_TOKEN || '8764732212:AAH7bqyX3Vi6bdP5esZhspLvUDrkURaBaNc';
+  const ADMIN_ID  = process.env.ADMIN_CHAT_ID || '7867683484';
+  const axios = require('axios');
+  await axios.post(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
+    chat_id: ADMIN_ID,
+    text: `🔴 *B2B API 异常*
+错误信息：\`${msg}\`
+如超过30分钟未恢复，请检查 B2B 控制台账号状态`,
+    parse_mode: 'Markdown'
+  }).catch(() => {});
 }
 
 // ── 按 ID 查找产品────────────────────────────────────────────────────────────
