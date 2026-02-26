@@ -80,14 +80,14 @@
         <div class="search-bar" id="searchBar">
           <svg class="search-ico" width="20" height="20" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#999" stroke-width="2"/><path d="m16.5 16.5 4 4" stroke="#999" stroke-width="2" stroke-linecap="round"/></svg>
           <input id="destInput" type="text" placeholder="Search destination… e.g. Japan, Europe" data-i18n-placeholder="hero.search.placeholder" autocomplete="off" spellcheck="false"/>
-          <button class="search-btn" onclick="goSearch()">Search</button>
+          <button class="search-btn" onclick="goSearch()" data-i18n="hero.search.btn">Search</button>
         </div>
         <div id="destDropdown" class="dest-dropdown"></div>
       </div>
 
       <!-- Popular chips -->
       <div class="popular-chips">
-        <span class="chips-label">Popular:</span>
+        <span class="chips-label" data-i18n="hero.popular">Popular:</span>
         <a href="/shop.html?country=JP" class="chip">🇯🇵 Japan</a>
         <a href="/shop.html?country=KR" class="chip">🇰🇷 Korea</a>
         <a href="/shop.html?country=DE" class="chip">🇪🇺 Europe</a>
@@ -299,9 +299,9 @@
       <div class="footer-nav">
         <div class="footer-col">
           <h5>Shop</h5>
-          <a href="/shop.html?country=JP">Japan eSIM</a>
-          <a href="/shop.html?country=KR">Korea eSIM</a>
-          <a href="/shop.html?country=DE">Europe eSIM</a>
+          <a href="/shop.html?country=JP" data-i18n="footer.japan">Japan eSIM</a>
+          <a href="/shop.html?country=KR" data-i18n="footer.korea">Korea eSIM</a>
+          <a href="/shop.html?country=DE" data-i18n="footer.europe">Europe eSIM</a>
           <a href="/shop.html?country=TH">Thailand eSIM</a>
           <a href="/shop.html">All Destinations</a>
         </div>
@@ -314,8 +314,8 @@
         <div class="footer-col">
           <h5>Help</h5>
           <a href="#how">How It Works</a>
-          <a href="#faq">FAQ</a>
-          <a href="mailto:xilixi@xigrocoltd.com">Contact Us</a>
+          <a href="#faq" data-i18n="footer.faq">FAQ</a>
+          <a href="mailto:xilixi@xigrocoltd.com" data-i18n="footer.contact">Contact Us</a>
           <a href="https://wa.me/19402382990">WhatsApp</a>
         </div>
       </div>

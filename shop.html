@@ -470,30 +470,30 @@ body { background: #f5f6fa; }
       SimRyoko
     </a>
     <div class="nav-links">
-      <a href="/shop.html" style="color:var(--brand)">eSIM 商店</a>
-      <a href="/b2b.html">批发合作</a>
-      <a href="/#how">使用教程</a>
+      <a href="/shop.html" style="color:var(--brand)" data-i18n="nav.shop">eSIM 商店</a>
+      <a href="/b2b.html" data-i18n="nav.business">批发合作</a>
+      <a href="/#how" data-i18n="nav.how">使用教程</a>
     </div>
     <div class="nav-actions">
-      <a href="/b2b.html" class="btn btn-ghost">代理商入口 →</a>
-      <a href="/shop.html" class="btn btn-nav">购买 eSIM</a>
+      <a href="/b2b.html" class="btn btn-ghost" data-i18n="nav.wholesale">代理商入口 →</a>
+      <a href="/shop.html" class="btn btn-nav" data-i18n="nav.getesim">购买 eSIM</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Menu">
       <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
     </button>
   </div>
   <div class="mobile-nav" id="mobileNav">
-    <a href="/shop.html">🛒 eSIM 商店</a>
-    <a href="/b2b.html">🤝 批发合作</a>
-    <a href="/#how">📖 使用教程</a>
-    <a href="/shop.html" class="btn btn-primary btn-block" style="margin-top:8px">购买 eSIM →</a>
+    <a href="/shop.html" data-i18n="nav.shop.m">🛒 eSIM 商店</a>
+    <a href="/b2b.html" data-i18n="nav.business.m">🤝 批发合作</a>
+    <a href="/#how" data-i18n="nav.how.m">📖 使用教程</a>
+    <a href="/shop.html" class="btn btn-primary btn-block" style="margin-top:8px" data-i18n="nav.getesim.m">购买 eSIM →</a>
   </div>
 </nav>
 
 <!-- ── HERO ──────────────────────────────────────────── -->
 <div class="sh-hero">
-  <h1>购买 eSIM，畅游全球</h1>
-  <p class="sub">200+ 个国家 · 2,600+ 套餐 · 即时发货</p>
+  <h1 data-i18n="shop.title">购买 eSIM，畅游全球</h1>
+  <p class="sub" data-i18n="shop.subtitle">200+ 个国家 · 2,600+ 套餐 · 即时发货</p>
   <div class="sh-pills">
     <span class="sh-pill">💎 支持 USDT 加密支付</span>
     <span class="sh-pill">⚡ 付款后 5 分钟到邮箱</span>
@@ -504,7 +504,7 @@ body { background: #f5f6fa; }
       <circle cx="11" cy="11" r="7" stroke="#ccc" stroke-width="2"/>
       <path d="m16.5 16.5 4 4" stroke="#ccc" stroke-width="2" stroke-linecap="round"/>
     </svg>
-    <input id="searchInput" type="text" placeholder="搜索目的地，如：日本、欧洲、美国…" autocomplete="off"/>
+    <input id="searchInput" type="text" placeholder="搜索目的地，如：日本、欧洲、美国…" data-i18n-placeholder="shop.search" autocomplete="off"/>
     <button class="sh-search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
 </div>
@@ -656,7 +656,7 @@ body { background: #f5f6fa; }
   <div class="container">
     <div class="footer-bottom">
       <span>© 2026 Xigro Co Limited. All rights reserved.</span>
-      <div><a href="/terms.html">服务条款</a><a href="/privacy.html">隐私政策</a></div>
+      <div><a href="/terms.html" data-i18n="footer.terms">服务条款</a><a href="/privacy.html" data-i18n="footer.privacy">隐私政策</a></div>
     </div>
   </div>
 </footer>
