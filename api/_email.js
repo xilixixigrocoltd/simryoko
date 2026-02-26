@@ -27,12 +27,18 @@ const smtpTransporter = nodemailer.createTransport({
   }
 });
 
-// ── 统一发信入口 ─────────────────────────────────────────────────────────────
+// ── 统一发信入口（Resend 优先，失败自动切 SMTP）────────────────────────────
 async function sendEmail({ from, to, subject, html }) {
   if (process.env.RESEND_API_KEY) {
-    return sendViaResend({ from, to, subject, html });
+    try {
+      return await sendViaResend({ from, to, subject, html });
+    } catch (e) {
+      console.error('[email] Resend failed, falling back to SMTP:', e.message);
+    }
   }
-  return smtpTransporter.sendMail({ from, to, subject, html });
+  // SMTP 备用（发件人改回企业邮箱避免 DMARC 拒绝）
+  const smtpFrom = `"SimRyoko eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
+  return smtpTransporter.sendMail({ from: smtpFrom, to, subject, html });
 }
 
 function getFlagEmoji(countryCode) {
