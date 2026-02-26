@@ -406,14 +406,110 @@ p{color:#555;line-height:1.7}
   }
 }
 
+// ── B2B 自助注册（b2b-register.html 表单提交）────────────────────────────────
+async function handleB2BRegister(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
+  const { applyRateLimit } = require('./_ratelimit');
+  if (!applyRateLimit(req, res, 3, 60000)) return;
+  const { sendRawEmail } = require('./_email');
+
+  try {
+    const { name, email, company, bizType, volume, telegram, notes } = req.body;
+    if (!name || !email || !company || !bizType)
+      return res.status(400).json({ success: false, error: 'Missing required fields' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
+      return res.status(400).json({ success: false, error: 'Invalid email' });
+
+    const typeLabel = {
+      travel_agency:'Travel Agency', ota:'OTA/Booking Platform',
+      esim_reseller:'eSIM/SIM Reseller', telecom:'Telecom/MVNO',
+      tour_operator:'Tour Operator', digital_nomad_community:'Nomad Community', other:'Other'
+    }[bizType] || bizType;
+
+    // 1. 通知 gg（管理邮件）
+    await sendRawEmail({
+      to: 'xilixi@xigrocoltd.com',
+      subject: `🤝 New B2B Partner Registration — ${company}`,
+      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px;background:#f8f9ff">
+        <div style="background:#fff;border-radius:16px;padding:28px;border:1px solid #e5e7eb">
+          <h2 style="color:#667eea;margin-bottom:20px">New Partner Registration</h2>
+          <table style="width:100%;border-collapse:collapse;font-size:14px">
+            <tr><td style="padding:8px 0;color:#888;width:130px">Name</td><td style="font-weight:600">${name}</td></tr>
+            <tr><td style="padding:8px 0;color:#888">Email</td><td>${email}</td></tr>
+            <tr><td style="padding:8px 0;color:#888">Company</td><td style="font-weight:600">${company}</td></tr>
+            <tr><td style="padding:8px 0;color:#888">Type</td><td>${typeLabel}</td></tr>
+            <tr><td style="padding:8px 0;color:#888">Volume</td><td>${volume || 'Not specified'}</td></tr>
+            <tr><td style="padding:8px 0;color:#888">Telegram/WA</td><td>${telegram || 'Not provided'}</td></tr>
+            <tr><td style="padding:8px 0;color:#888">Notes</td><td>${notes || '—'}</td></tr>
+          </table>
+          <div style="margin-top:20px;padding:14px;background:#f0f4ff;border-radius:10px;font-size:13px;color:#555">
+            <b>Next step:</b> Review and reply with account credentials + pricing deck within 24h.
+          </div>
+        </div>
+      </div>`
+    });
+
+    // 2. 欢迎邮件发给申请人
+    await sendRawEmail({
+      to: email,
+      subject: `Welcome to SimRyoko Partner Program 🌏 — ${company}`,
+      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px;background:#f8f9ff">
+        <div style="background:#fff;border-radius:16px;padding:32px;border:1px solid #e5e7eb">
+          <div style="text-align:center;margin-bottom:28px">
+            <div style="font-size:2.5rem;margin-bottom:8px">🌏</div>
+            <h1 style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Application Received!</h1>
+          </div>
+          <p style="color:#444;line-height:1.7;margin-bottom:16px">Hi <b>${name}</b>,</p>
+          <p style="color:#444;line-height:1.7;margin-bottom:16px">Thanks for applying to the SimRyoko Partner Program. We've received your application for <b>${company}</b>.</p>
+          <p style="color:#444;line-height:1.7;margin-bottom:24px">Our team will review your application and send you:</p>
+          <div style="background:#f8f9ff;border-radius:12px;padding:18px;margin-bottom:24px">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px">✅ &nbsp;Custom wholesale pricing sheet</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px">✅ &nbsp;Partner portal login credentials</div>
+            <div style="display:flex;align-items:center;gap:10px;font-size:14px">✅ &nbsp;API documentation access</div>
+          </div>
+          <p style="color:#444;line-height:1.7;margin-bottom:24px">Expect a reply <b>within 24 hours</b>. Check your spam folder just in case.</p>
+          <div style="border-top:1px solid #e5e7eb;padding-top:20px;font-size:13px;color:#888">
+            Questions? Reach us at <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea">xilixi@xigrocoltd.com</a> or 
+            <a href="https://wa.me/19402382990" style="color:#667eea">WhatsApp</a><br><br>
+            SimRyoko Partner Team · <a href="https://simryoko.com/b2b.html" style="color:#667eea">simryoko.com/b2b.html</a>
+          </div>
+        </div>
+      </div>`
+    });
+
+    // 3. Telegram 通知 gg
+    try {
+      const BOT_TOKEN = process.env.BOT_TOKEN || '8764732212:AAH7bqyX3Vi6bdP5esZhspLvUDrkURaBaNc';
+      const ADMIN_ID  = process.env.ADMIN_CHAT_ID || '7867683484';
+      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: ADMIN_ID,
+          text: `🤝 新代理注册\n👤 ${name} | ${company}\n📧 ${email}\n🏢 ${typeLabel}\n📊 ${volume||'未填写'}\n💬 ${telegram||'无'}`,
+          parse_mode: 'HTML'
+        })
+      });
+    } catch(_) {}
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    console.error('[b2b-register]', err.message);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  // B2B 申请不需要鉴权
+  // 无需鉴权的公开接口
   const path = (req.url || '').split('?')[0];
-  if (path.includes('/b2b-apply')) return handleB2BApply(req, res);
+  if (path.includes('/b2b-apply'))    return handleB2BApply(req, res);
+  if (path.includes('/b2b-register')) return handleB2BRegister(req, res);
 
   if (!auth(req, res)) return;
 
