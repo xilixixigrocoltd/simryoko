@@ -10,9 +10,15 @@
   <meta property="og:description" content="2,600+ eSIM plans for 200+ countries. Instant delivery. No physical SIM. From $2."/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://simryoko.com"/>
+  <meta property="og:image" content="https://simryoko.com/img/og/home-og.jpg"/>
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="SimRyoko — eSIM for Global Travel"/>
   <meta name="twitter:description" content="2,600+ eSIM plans. Instant delivery. From $2."/>
+  <meta name="twitter:image" content="https://simryoko.com/img/og/home-og.jpg"/>
+  <!-- AOS 滚动动效 -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json"/>
   <meta name="theme-color" content="#667eea"/>
@@ -338,7 +344,7 @@
 <section class="how" id="how">
   <div class="container">
     <div class="section-label">Simple as 1-2-3</div>
-    <h2 class="section-h">Get connected in minutes</h2>
+    <h2 class="section-h" data-aos="fade-up">Get connected in minutes</h2>
     <div class="how-grid">
       <div class="how-card">
         <div class="how-num">01</div>
@@ -411,13 +417,13 @@
 </section>
 
 <!-- TESTIMONIALS SECTION -->
-<section class="testimonials-section">
+<section class="testimonials-section" data-aos="fade-up">
   <div class="testimonials-container">
     <h2 class="testimonials-title">Trusted by Travelers Worldwide</h2>
     <p class="testimonials-subtitle">Real experiences from real travelers</p>
 
     <!-- Aggregate Rating -->
-    <div class="rating-summary">
+    <div class="rating-summary" data-aos="zoom-in">
       <div class="rating-big">4.9</div>
       <div class="rating-details">
         <div class="rating-stars-row">★★★★★</div>
@@ -432,7 +438,7 @@
 
     <div class="testimonials-grid">
 
-      <div class="testimonial-card">
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="0">
         <div class="testimonial-top">
           <div class="testimonial-stars">★★★★★</div>
           <span class="verified-badge">✓ Verified Purchase</span>
@@ -447,7 +453,7 @@
         </div>
       </div>
 
-      <div class="testimonial-card">
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
         <div class="testimonial-top">
           <div class="testimonial-stars">★★★★★</div>
           <span class="verified-badge">✓ Verified Purchase</span>
@@ -462,7 +468,7 @@
         </div>
       </div>
 
-      <div class="testimonial-card">
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
         <div class="testimonial-top">
           <div class="testimonial-stars">★★★★★</div>
           <span class="verified-badge">✓ Verified Purchase</span>
@@ -477,7 +483,7 @@
         </div>
       </div>
 
-      <div class="testimonial-card">
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
         <div class="testimonial-top">
           <div class="testimonial-stars">★★★★★</div>
           <span class="verified-badge">✓ Verified Purchase</span>
@@ -492,7 +498,7 @@
         </div>
       </div>
 
-      <div class="testimonial-card">
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="400">
         <div class="testimonial-top">
           <div class="testimonial-stars">★★★★★</div>
           <span class="verified-badge">✓ Verified Purchase</span>
@@ -507,7 +513,7 @@
         </div>
       </div>
 
-      <div class="testimonial-card">
+      <div class="testimonial-card" data-aos="fade-up" data-aos-delay="500">
         <div class="testimonial-top">
           <div class="testimonial-stars">★★★★★</div>
           <span class="verified-badge">✓ 已验证购买</span>
@@ -525,7 +531,7 @@
     </div>
 
     <!-- Trust badges -->
-    <div class="trust-badges">
+    <div class="trust-badges" data-aos="fade-up" data-aos-delay="100">
       <div class="trust-badge">
         <span class="trust-number">10,000+</span>
         <span class="trust-label">Happy Travelers</span>
@@ -546,8 +552,57 @@
   </div>
 </section>
 
+<!-- HOW IT WORKS VIDEO SECTION -->
+<section class="hiw-section">
+  <div class="hiw-container">
+    <div class="hiw-text" data-aos="fade-right">
+      <div class="hiw-tag">✨ Super Simple</div>
+      <h2 class="hiw-title">Get connected in<br>under 3 minutes</h2>
+      <div class="hiw-steps">
+        <div class="hiw-step">
+          <div class="hiw-step-num">1</div>
+          <div>
+            <div class="hiw-step-title">Choose your destination</div>
+            <div class="hiw-step-desc">Browse 2,600+ plans for 180+ countries. Filter by data, days, or price.</div>
+          </div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-step-num">2</div>
+          <div>
+            <div class="hiw-step-title">Pay instantly</div>
+            <div class="hiw-step-desc">Card, USDT, or TON. Secure checkout in under 60 seconds.</div>
+          </div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-step-num">3</div>
+          <div>
+            <div class="hiw-step-title">Scan & travel</div>
+            <div class="hiw-step-desc">QR code arrives in your email within 2 minutes. Scan to install before you board.</div>
+          </div>
+        </div>
+      </div>
+      <a href="/shop.html" class="hiw-cta">Browse Plans →</a>
+    </div>
+    <div class="hiw-video-wrap" data-aos="fade-left">
+      <div class="hiw-video-frame">
+        <!-- YouTube embed: eSIM tutorial / travel connectivity -->
+        <iframe
+          src="https://www.youtube.com/embed/8vQl9rHHPBk?rel=0&modestbranding=1&color=white&autoplay=0"
+          title="How to use eSIM — SimRyoko"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:16px"
+        ></iframe>
+      </div>
+      <div class="hiw-video-caption">📱 Works on iPhone XS+, Samsung S20+, Pixel 3+</div>
+    </div>
+  </div>
+</section>
+
 <!-- B2B BANNER -->
-<section class="b2b-strip">
+<section class="b2b-strip" data-aos="fade-up">
   <div class="container">
     <div class="b2b-inner">
       <div>
@@ -716,7 +771,33 @@ async function installPWA() {
 @keyframes wa-pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45);}50%{box-shadow:0 4px 32px rgba(37,211,102,.75);}}
 .wa-float-label{background:#fff;color:#1a1a2e;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(8px);transition:opacity .3s,transform .3s;}
 .wa-float:hover .wa-float-label{opacity:1;transform:translateX(0);}
+
+/* === HOW IT WORKS === */
+.hiw-section{padding:80px 20px;background:#fff;}
+.hiw-container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+@media(max-width:768px){.hiw-container{grid-template-columns:1fr;gap:40px;}}
+.hiw-tag{display:inline-block;background:linear-gradient(135deg,#667eea22,#764ba222);color:#667eea;border:1px solid #667eea44;border-radius:20px;padding:4px 16px;font-size:0.82rem;font-weight:600;margin-bottom:16px;}
+.hiw-title{font-size:2rem;font-weight:800;color:#1a1a2e;line-height:1.25;margin-bottom:32px;}
+.hiw-steps{display:flex;flex-direction:column;gap:24px;margin-bottom:32px;}
+.hiw-step{display:flex;gap:16px;align-items:flex-start;}
+.hiw-step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-weight:800;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(102,126,234,.35);}
+.hiw-step-title{font-weight:700;color:#1a1a2e;margin-bottom:4px;}
+.hiw-step-desc{font-size:0.88rem;color:#666;line-height:1.5;}
+.hiw-cta{display:inline-block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:13px 28px;border-radius:12px;font-weight:700;text-decoration:none;font-size:0.95rem;transition:opacity .2s,transform .2s;}
+.hiw-cta:hover{opacity:.9;transform:translateY(-2px);}
+.hiw-video-wrap{display:flex;flex-direction:column;gap:12px;}
+.hiw-video-frame{position:relative;padding-bottom:56.25%;height:0;border-radius:16px;overflow:hidden;box-shadow:0 16px 48px rgba(102,126,234,.2);border:1px solid rgba(102,126,234,.15);}
+.hiw-video-caption{text-align:center;font-size:0.82rem;color:#888;}
+
+/* === AOS 补充动效 === */
+[data-aos]{transition-duration:0.7s!important;}
 </style>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({ once: true, offset: 60, easing: 'ease-out-cubic' });
+  });
+</script>
 <div class="wa-float">
   <div class="wa-float-label">💬 30-min support</div>
   <a class="wa-float-btn" href="https://wa.me/19402382990?text=Hi%2C%20I%20need%20help%20with%20a%20SimRyoko%20eSIM." target="_blank" rel="noopener" title="WhatsApp Support">💬</a>
