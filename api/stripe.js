@@ -85,17 +85,10 @@ async function handleConfirm(req, res) {
         return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
       }
       const esimData = extractEsim(orderResult);
-      // 生成 QR 码 base64（LPA 字符串不是 URL，需要转换）
-      let qrBase64 = '';
-      const QRCode = require('qrcode');
-      const qrSource = esimData.qrCode || esimData.qrCodeUrl || esimData.activationCode;
-      if (qrSource && !qrSource.startsWith('http')) {
-        try { qrBase64 = await QRCode.toDataURL(qrSource, { width: 300, margin: 2 }); } catch(e) {}
-      } else if (qrSource) {
-        qrBase64 = qrSource; // 已是图片 URL
-      }
+      // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
+      const qrImageUrl = buildQrImageUrl(esimData.qrCode || esimData.qrCodeUrl || esimData.activationCode);
       if (!recovered) store.updateOrder(orderId, { status: 'fulfilled', esimData });
-      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrBase64, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
+      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrImageUrl, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
     } catch (e) {
@@ -107,6 +100,14 @@ async function handleConfirm(req, res) {
     console.error('[stripe/confirm]', err.message);
     return res.status(500).json({ error: err.message || 'Internal server error' });
   }
+}
+
+// 将 LPA 字符串 / 激活码转换为外部 QR 图片 URL（邮件客户端可正常加载）
+function buildQrImageUrl(lpaOrCode) {
+  if (!lpaOrCode) return '';
+  // 若已是 HTTP 图片 URL，直接返回
+  if (lpaOrCode.startsWith('http')) return lpaOrCode;
+  return `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=1&data=${encodeURIComponent(lpaOrCode)}`;
 }
 
 function extractEsim(r) {

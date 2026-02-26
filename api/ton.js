@@ -3,7 +3,14 @@
 // /api/ton/webhook  → 支付回调自动发货
 const store = require('./_store');
 const { createInvoice, verifyWebhookSignature } = require('./_cryptopay');
-const { getProductById, placeOrder } = require('./_agent');
+const { getProductById, placeOrderWithEsim } = require('./_agent');
+
+// LPA / 激活码 → 外部 QR 图片 URL（邮件客户端可正常加载）
+function buildQrImageUrl(lpaOrCode) {
+  if (!lpaOrCode) return '';
+  if (lpaOrCode.startsWith('http')) return lpaOrCode;
+  return `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=1&data=${encodeURIComponent(lpaOrCode)}`;
+}
 const { sendEsimEmail, sendPaymentPendingEmail } = require('./_email');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyNewOrder, notifyOrderFulfilled, notifyError } = require('./_notify');
@@ -97,11 +104,16 @@ async function handleWebhook(req, res) {
     store.updateOrder(orderId, { status: 'paid', paidAt: new Date().toISOString(), paidAmount, paidAsset: invoice.asset, cryptoPayInvoiceId: invoice.invoice_id });
 
     try {
-      const esimResult = await placeOrder(order.productId, 1);
-      if (!esimResult?.success && !esimResult?.data) throw new Error(esimResult?.error || 'Agent order failed');
-      const d = esimResult.data;
-      const esimInfo = { qrCode: d?.esim?.qrCode || d?.qrCode, activationCode: d?.esim?.activationCode || d?.activationCode, iccid: d?.esim?.iccid || d?.iccid };
-      await sendEsimEmail({ to: order.email, productName: order.productName, esimInfo, orderId: order.orderId });
+      const esimResult = await placeOrderWithEsim(order.productId, 1);
+      if (!esimResult?.success) throw new Error(esimResult?.message || 'Agent order failed');
+      const d = esimResult.data || {};
+      const sim = d.esimData?.sims?.[0] || {};
+      const rawQrUrl      = sim.qrCodeUrl      || d.esimQrCode         || '';
+      const rawActivation = sim.activationCode || d.esimActivationCode || '';
+      const iccid         = sim.iccid          || d.esimIccid          || '';
+      const qrImageUrl    = buildQrImageUrl(rawQrUrl || rawActivation);
+      const esimInfo = { qrCodeUrl: qrImageUrl, activationCode: rawActivation, iccid };
+      await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrImageUrl, iccid, activationCode: rawActivation, country: order.country });
       store.updateOrder(orderId, { status: 'fulfilled', fulfilledAt: new Date().toISOString(), esimInfo });
       notifyOrderFulfilled({ ...order, esimInfo, paymentMethod: `TON/${invoice.asset}` }).catch(() => {});
     } catch (e) {

@@ -9,6 +9,13 @@ const { notifyNewOrder, notifyOrderFulfilled, notifyLowBalance } = require('./_n
 const axios = require('axios');
 
 const USDT_WALLET   = process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
+
+// LPA / 激活码 → 外部 QR 图片 URL（邮件客户端可正常加载）
+function buildQrImageUrl(lpaOrCode) {
+  if (!lpaOrCode) return '';
+  if (lpaOrCode.startsWith('http')) return lpaOrCode;
+  return `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=1&data=${encodeURIComponent(lpaOrCode)}`;
+}
 const USDT_CONTRACT = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t';
 const TRON_API      = 'https://api.trongrid.io';
 
@@ -109,24 +116,12 @@ async function fulfillOrder(orderId, order) {
     const rawQrUrl      = sim.qrCodeUrl      || d.esimQrCode         || '';
     const iccid         = sim.iccid          || d.esimIccid          || '';
 
-    // 生成 QR 码 base64（若是 HTTP URL 直接用，LPA 字符串/激活码则生成图片）
-    let qrBase64 = '';
-    const QRCode = require('qrcode');
-    // LPA 字符串（LPA:1$...）或激活码都需要生成 QR 图片；HTTP URL 直接用
-    const qrSource = rawQrUrl?.startsWith('http') ? null : (rawQrUrl || rawActivation);
-    if (rawQrUrl?.startsWith('http')) {
-      qrBase64 = rawQrUrl;
-    } else if (qrSource) {
-      try {
-        qrBase64 = await QRCode.toDataURL(qrSource, {
-          width: 300, margin: 2,
-          color: { dark: '#1a1a2e', light: '#ffffff' }
-        });
-      } catch (e) { console.error('[qr-gen]', e.message); }
-    }
+    // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
+    const qrSource = rawQrUrl || rawActivation;
+    const qrImageUrl = buildQrImageUrl(qrSource);
 
     const esimData = {
-      qrCodeUrl: qrBase64,
+      qrCodeUrl: qrImageUrl,
       iccid,
       activationCode: rawActivation,
     };
@@ -135,7 +130,7 @@ async function fulfillOrder(orderId, order) {
     await sendEsimEmail({
       to: order.email,
       productName: order.productName,
-      qrCodeUrl: qrBase64,
+      qrCodeUrl: qrImageUrl,
       iccid,
       activationCode: rawActivation,
       country: order.country
