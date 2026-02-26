@@ -4,123 +4,343 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Checkout — SimRyoko</title>
-  <meta name="description" content="Secure eSIM checkout. Pay with USDT, TON, or card. Instant delivery to email."/>
+  <meta name="description" content="Secure eSIM checkout. Instant delivery."/>
   <meta name="robots" content="noindex"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
   <script src="https://js.stripe.com/v3/"></script>
-<script src="/js/analytics.js"></script>
+  <script src="/js/analytics.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body { background: #f5f6fa; font-family: 'Inter', sans-serif; color: #1a1a2e; }
+
+    /* ── Nav ── */
+    .co-nav {
+      background: #fff; border-bottom: 1px solid #ececf0;
+      padding: 0 20px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .co-nav-logo { font-weight: 900; font-size: 18px; text-decoration: none; color: #111; }
+    .co-nav-back {
+      font-size: 13px; color: #6C63FF; font-weight: 600;
+      text-decoration: none; display: flex; align-items: center; gap: 4px;
+    }
+
+    /* ── Page wrapper ── */
+    .co-wrap {
+      max-width: 480px; margin: 0 auto;
+      padding: 24px 16px 80px;
+    }
+
+    /* ── Progress bar ── */
+    .co-progress {
+      display: flex; align-items: center; gap: 0;
+      margin-bottom: 24px;
+    }
+    .co-step {
+      flex: 1; text-align: center; font-size: 11px; font-weight: 700;
+      color: #ccc; text-transform: uppercase; letter-spacing: .3px;
+      position: relative;
+    }
+    .co-step.done { color: #6C63FF; }
+    .co-step.active { color: #111; }
+    .co-step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #eee; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px; font-size: 12px; font-weight: 800;
+      transition: all .2s;
+    }
+    .co-step.done .co-step-dot { background: #6C63FF; color: #fff; }
+    .co-step.active .co-step-dot { background: #111; color: #fff; }
+    .co-step-line {
+      flex: 0 0 40px; height: 2px; background: #eee; margin-bottom: 22px;
+    }
+    .co-step-line.done { background: #6C63FF; }
+
+    /* ── Product summary card ── */
+    .co-product {
+      background: #fff; border-radius: 16px;
+      padding: 20px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .co-product-flag { font-size: 44px; line-height: 1; flex-shrink: 0; }
+    .co-product-info { flex: 1; min-width: 0; }
+    .co-product-dest { font-size: 17px; font-weight: 800; color: #111; margin-bottom: 2px; }
+    .co-product-plan { font-size: 13px; color: #888; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .co-product-price {
+      font-size: 24px; font-weight: 900; color: #6C63FF;
+      flex-shrink: 0; white-space: nowrap;
+    }
+
+    /* ── Section card ── */
+    .co-card {
+      background: #fff; border-radius: 16px;
+      padding: 20px; margin-bottom: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .co-section-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .5px; color: #aaa; margin-bottom: 12px;
+    }
+
+    /* ── Email input ── */
+    .co-email-wrap {
+      display: flex; align-items: center; gap: 10px;
+      border: 2px solid #e5e5ec; border-radius: 12px;
+      padding: 4px 16px 4px 14px;
+      transition: border-color .15s;
+    }
+    .co-email-wrap:focus-within { border-color: #6C63FF; }
+    .co-email-wrap svg { color: #bbb; flex-shrink: 0; }
+    .co-email-input {
+      flex: 1; border: none; outline: none; background: transparent;
+      font-size: 15px; font-family: inherit; color: #111;
+      padding: 13px 0;
+    }
+    .co-email-hint { font-size: 12px; color: #aaa; margin-top: 8px; }
+
+    /* ── Payment method tabs ── */
+    .co-pay-tabs {
+      display: flex; gap: 8px;
+    }
+    .co-pay-tab {
+      flex: 1; border: 2px solid #e5e5ec; border-radius: 12px;
+      padding: 12px 8px; text-align: center; cursor: pointer;
+      transition: all .15s; background: #fff;
+    }
+    .co-pay-tab:hover { border-color: #c4bdff; }
+    .co-pay-tab.active { border-color: #6C63FF; background: #f5f3ff; }
+    .co-pay-tab-icon { font-size: 20px; margin-bottom: 5px; line-height: 1; }
+    .co-pay-tab-name { font-size: 12px; font-weight: 700; color: #333; }
+    .co-pay-tab-sub { font-size: 10px; color: #aaa; margin-top: 2px; }
+    .co-pay-tab.active .co-pay-tab-name { color: #6C63FF; }
+
+    /* ── Payment details area ── */
+    .co-pay-detail { margin-top: 14px; }
+
+    /* USDT detail */
+    .co-usdt-box {
+      background: #f0fdf4; border: 1.5px solid #86efac;
+      border-radius: 12px; padding: 14px 16px; font-size: 13px;
+    }
+    .co-usdt-box strong { color: #16a34a; }
+    .co-usdt-addr {
+      font-family: monospace; font-size: 11px; color: #555;
+      background: #fff; padding: 8px 10px; border-radius: 8px;
+      margin-top: 8px; word-break: break-all; border: 1px solid #d1fae5;
+    }
+
+    /* TON detail */
+    .co-ton-box {
+      background: #eff6ff; border: 1.5px solid #93c5fd;
+      border-radius: 12px; padding: 14px 16px; font-size: 13px;
+    }
+    .co-ton-box strong { color: #2563eb; }
+
+    /* Card detail */
+    .co-card-field {
+      border: 2px solid #e5e5ec; border-radius: 12px;
+      padding: 14px 16px; transition: border-color .15s;
+      background: #fafaff;
+    }
+    .co-card-field:focus-within { border-color: #6C63FF; background: #fff; }
+    #stripe-card-element { min-height: 22px; }
+    #stripe-card-error {
+      color: #ef4444; font-size: 12.5px; margin-top: 8px;
+      display: none; padding: 8px 12px; background: #fef2f2;
+      border-radius: 8px;
+    }
+    .co-card-secure {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 10px; font-size: 11.5px; color: #bbb;
+    }
+
+    /* ── Pay button ── */
+    .co-pay-btn {
+      width: 100%; padding: 16px;
+      background: linear-gradient(135deg, #6C63FF, #9333EA);
+      color: #fff; border: none; border-radius: 14px;
+      font-size: 16px; font-weight: 900; font-family: inherit;
+      cursor: pointer; transition: opacity .15s, transform .1s;
+      margin-top: 6px; letter-spacing: .2px;
+    }
+    .co-pay-btn:hover { opacity: .93; transform: translateY(-1px); }
+    .co-pay-btn:active { transform: translateY(0); }
+    .co-pay-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    /* ── Trust signals ── */
+    .co-trust {
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; margin-top: 14px; flex-wrap: wrap;
+    }
+    .co-trust-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11.5px; color: #aaa; font-weight: 500;
+    }
+
+    /* ── Guarantee box ── */
+    .co-guarantee {
+      background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+      border-radius: 14px; padding: 16px;
+      margin-bottom: 14px;
+    }
+    .co-guarantee-title { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 8px; }
+    .co-guarantee-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 12.5px; color: #555; margin-bottom: 6px;
+    }
+    .co-guarantee-item:last-child { margin-bottom: 0; }
+    .co-g-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+  </style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="logo"><span class="logo-icon">📡</span><span class="logo-text">SimRyoko</span></a>
-    <a href="/shop.html" style="color:#667eea;font-size:15px;margin-left:auto">← Back to plans</a>
-  </div>
+<!-- Nav -->
+<nav class="co-nav">
+  <a href="/" class="co-nav-logo">📡 SimRyoko</a>
+  <a href="/shop.html" class="co-nav-back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    Change plan
+  </a>
 </nav>
 
-<div class="container">
-  <div class="checkout-layout">
+<div class="co-wrap">
 
-    <!-- FORM -->
-    <div>
-      <div class="checkout-form">
-        <h2>Complete Your Order</h2>
+  <!-- Progress -->
+  <div class="co-progress">
+    <div class="co-step done">
+      <div class="co-step-dot">✓</div>
+      Plan
+    </div>
+    <div class="co-step-line done"></div>
+    <div class="co-step active">
+      <div class="co-step-dot">2</div>
+      Payment
+    </div>
+    <div class="co-step-line"></div>
+    <div class="co-step">
+      <div class="co-step-dot">3</div>
+      Delivery
+    </div>
+  </div>
 
-        <div class="form-group">
-          <label>Your Email Address *</label>
-          <input type="email" id="emailInput" placeholder="you@email.com" />
-          <small style="color:#999;font-size:12px;margin-top:6px;display:block">eSIM QR code will be sent here instantly after payment</small>
-        </div>
+  <!-- Product summary -->
+  <div class="co-product" id="productCard">
+    <div class="co-product-flag" id="coFlag">🌍</div>
+    <div class="co-product-info">
+      <div class="co-product-dest" id="coDest">Loading…</div>
+      <div class="co-product-plan" id="coPlan"></div>
+    </div>
+    <div class="co-product-price" id="coPrice"></div>
+  </div>
 
-        <!-- Payment Method -->
-        <div class="form-group">
-          <label>Payment Method</label>
-          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:8px">
-            <div class="payment-method active" id="pm-usdt" onclick="selectPayment('usdt')">
-              <div style="font-size:22px;margin-bottom:4px">₮</div>
-              <div style="font-weight:700;font-size:13px">USDT TRC-20</div>
-              <div style="font-size:11px;color:#888">No fees</div>
-            </div>
-            <div class="payment-method" id="pm-ton" onclick="selectPayment('ton')">
-              <div style="font-size:22px;margin-bottom:4px">💎</div>
-              <div style="font-weight:700;font-size:13px">TON / USDT</div>
-              <div style="font-size:11px;color:#888">Telegram Pay</div>
-            </div>
-            <div class="payment-method" id="pm-card" onclick="selectPayment('card')">
-              <div style="font-size:22px;margin-bottom:4px">💳</div>
-              <div style="font-weight:700;font-size:13px">Credit Card</div>
-              <div style="font-size:11px;color:#888">Visa / MC</div>
-            </div>
-          </div>
-        </div>
+  <!-- Email -->
+  <div class="co-card">
+    <div class="co-section-label">📧 Delivery Email</div>
+    <div class="co-email-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      <input class="co-email-input" type="email" id="emailInput"
+             placeholder="your@email.com" autocomplete="email" inputmode="email"/>
+    </div>
+    <div class="co-email-hint">⚡ eSIM QR code sent instantly after payment</div>
+  </div>
 
-        <!-- TON 支付说明 -->
-        <div id="ton-section" style="display:none">
-          <div style="background:#f0fff8;border-radius:10px;padding:14px 16px;font-size:13px;color:#555;border:1.5px solid #c3f0d8;">
-            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-              <span style="font-size:20px">💎</span>
-              <strong>Pay with Telegram Wallet</strong>
-            </div>
-            Pay using TON or USDT via <strong>@CryptoBot</strong> — Telegram's built-in crypto wallet.<br>
-            After clicking Pay, you'll be redirected to Telegram to complete the payment securely.
-            <div style="margin-top:8px;color:#999;font-size:11px;">Powered by CryptoPay · Instant settlement · Zero fees</div>
-          </div>
-        </div>
-
-        <!-- 信用卡 — Stripe Elements -->
-        <div id="card-section" style="display:none">
-          <div style="background:#fff;border:2px solid #e8ecf4;border-radius:14px;padding:18px;margin-bottom:4px;">
-            <div style="font-size:12px;font-weight:700;color:#888;letter-spacing:.5px;text-transform:uppercase;margin-bottom:12px;">Card Details</div>
-            <div id="stripe-card-element" style="padding:13px 14px;border:1.5px solid #e0e0ea;border-radius:10px;background:#fafafa;min-height:44px;font-size:15px;"></div>
-            <div id="stripe-card-error" style="color:#e53e3e;font-size:12.5px;margin-top:8px;display:none;"></div>
-          </div>
-          <div style="font-size:11.5px;color:#bbb;text-align:center;margin-top:6px;">
-            🔒 Secured by Stripe · Visa / Mastercard / Amex · 3D Secure
-          </div>
-        </div>
-
-        <button class="btn btn-primary btn-block btn-lg" id="payBtn" onclick="submitOrder()">
-          Pay with USDT →
-        </button>
-
-        <div style="text-align:center;margin-top:16px;font-size:13px;color:#aaa">
-          🔒 Secure checkout &nbsp;·&nbsp; eSIM delivered to your email &nbsp;·&nbsp; No hidden fees
-        </div>
+  <!-- Payment methods -->
+  <div class="co-card">
+    <div class="co-section-label">💳 Payment Method</div>
+    <div class="co-pay-tabs">
+      <div class="co-pay-tab" id="pm-card" onclick="selectPayment('card')">
+        <div class="co-pay-tab-icon">💳</div>
+        <div class="co-pay-tab-name">Card</div>
+        <div class="co-pay-tab-sub">Visa / MC</div>
+      </div>
+      <div class="co-pay-tab" id="pm-ton" onclick="selectPayment('ton')">
+        <div class="co-pay-tab-icon">💎</div>
+        <div class="co-pay-tab-name">Crypto</div>
+        <div class="co-pay-tab-sub">Telegram</div>
+      </div>
+      <div class="co-pay-tab" id="pm-usdt" onclick="selectPayment('usdt')">
+        <div class="co-pay-tab-icon">₮</div>
+        <div class="co-pay-tab-name">USDT</div>
+        <div class="co-pay-tab-sub">TRC-20</div>
       </div>
     </div>
 
-    <!-- SUMMARY -->
-    <div>
-      <div class="order-summary">
-        <div class="summary-title">Order Summary</div>
-        <div id="summaryContent" style="color:#999;font-size:14px;text-align:center;padding:20px 0">
-          Loading product…
-        </div>
+    <!-- Card section -->
+    <div class="co-pay-detail" id="card-section" style="display:none">
+      <div class="co-card-field">
+        <div id="stripe-card-element"></div>
       </div>
+      <div id="stripe-card-error"></div>
+      <div class="co-card-secure">
+        🔒 Secured by Stripe &nbsp;·&nbsp; 3D Secure &nbsp;·&nbsp; Amex accepted
+      </div>
+    </div>
 
-      <div style="margin-top:20px;background:#f0f9ff;border-radius:12px;padding:20px;font-size:13px;color:#555;line-height:1.8">
-        <strong>✅ What you get:</strong><br>
-        • eSIM QR code by email<br>
-        • Instant activation<br>
-        • 24/7 support via WhatsApp<br>
-        • Works on all eSIM-compatible phones
+    <!-- TON section -->
+    <div class="co-pay-detail" id="ton-section" style="display:none">
+      <div class="co-ton-box">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">💎</span>
+          <strong>Pay with Telegram Wallet</strong>
+        </div>
+        Pay using TON or USDT via <strong>@CryptoBot</strong>.<br>
+        You'll be redirected to Telegram to complete payment securely.
+        <div style="margin-top:6px;color:#888;font-size:11px">Powered by CryptoPay · Instant · No fees</div>
+      </div>
+    </div>
+
+    <!-- USDT manual section -->
+    <div class="co-pay-detail" id="usdt-section" style="display:none">
+      <div class="co-usdt-box">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">₮</span>
+          <strong>Manual USDT Transfer (TRC-20)</strong>
+        </div>
+        After clicking Pay, you'll get the USDT amount and our wallet address.<br>
+        eSIM is delivered within 15 min after transfer is confirmed.
+        <div style="margin-top:6px;color:#888;font-size:11px">⚠️ Send on TRON network only (TRC-20)</div>
       </div>
     </div>
   </div>
-</div>
 
-<style>
-.payment-method { border: 2px solid #e8ecf4; border-radius: 12px; padding: 16px; text-align: center; cursor: pointer; transition: all 0.2s; }
-.payment-method.active { border-color: #667eea; background: #f0f4ff; }
-.payment-method:hover { border-color: #667eea; }
-</style>
+  <!-- Guarantee -->
+  <div class="co-guarantee">
+    <div class="co-guarantee-title">🛡️ SimRyoko Guarantee</div>
+    <div class="co-guarantee-item">
+      <span class="co-g-icon">⚡</span>
+      <span>Instant eSIM delivery to your email</span>
+    </div>
+    <div class="co-guarantee-item">
+      <span class="co-g-icon">🔄</span>
+      <span>7-day refund if eSIM doesn't work on your device</span>
+    </div>
+    <div class="co-guarantee-item">
+      <span class="co-g-icon">💬</span>
+      <span>24/7 WhatsApp support — reply within 30 min</span>
+    </div>
+  </div>
+
+  <!-- Pay button -->
+  <button class="co-pay-btn" id="payBtn" onclick="submitOrder()">
+    Pay Now →
+  </button>
+
+  <!-- Trust -->
+  <div class="co-trust">
+    <div class="co-trust-item">🔒 <span>256-bit SSL</span></div>
+    <div class="co-trust-item">🚫 <span>No hidden fees</span></div>
+    <div class="co-trust-item">🌍 <span>200+ countries</span></div>
+  </div>
+
+</div>
 
 <script src="/js/app.js"></script>
 <script>
 let product = null;
-let selectedPayment = 'usdt';
+let selectedPayment = 'card';  // 默认选中信用卡
 let stripe = null;
 let cardElement = null;
 let stripeElements = null;
@@ -139,12 +359,11 @@ async function initStripe() {
 
 function mountStripeCard(retries) {
   retries = retries || 0;
-  // stripe 未就绪时自动重试（最多20次，每200ms）
   if (!stripe) {
     if (retries < 20) setTimeout(() => mountStripeCard(retries + 1), 200);
     return;
   }
-  if (cardElement) return; // 已挂载
+  if (cardElement) return;
   stripeElements = stripe.elements();
   cardElement = stripeElements.create('card', {
     style: {
@@ -152,10 +371,10 @@ function mountStripeCard(retries) {
         fontFamily: 'Inter, -apple-system, sans-serif',
         fontSize: '15px',
         color: '#1a1a2e',
-        '::placeholder': { color: '#bbb' },
+        '::placeholder': { color: '#ccc' },
         iconColor: '#6C63FF',
       },
-      invalid: { color: '#e53e3e', iconColor: '#e53e3e' }
+      invalid: { color: '#ef4444', iconColor: '#ef4444' }
     },
     hidePostalCode: true
   });
@@ -176,87 +395,87 @@ async function loadProduct() {
   const id = params.get('id') || params.get('productId');
   if (!id) { window.location = '/shop.html'; return; }
 
-  // 预填 email 和支付方式（来自 Mini App 跳转）
-  const emailParam = params.get('email');
+  const emailParam  = params.get('email');
   const methodParam = params.get('method');
   if (emailParam) {
-    const emailEl = document.getElementById('emailInput');
-    if (emailEl) emailEl.value = decodeURIComponent(emailParam);
-  }
-  if (methodParam && ['usdt','ton','card'].includes(methodParam)) {
-    selectPayment(methodParam);
+    const el = document.getElementById('emailInput');
+    if (el) el.value = decodeURIComponent(emailParam);
   }
 
+  // 默认激活 card（除非 URL 指定了别的）
+  const method = (methodParam && ['usdt','ton','card'].includes(methodParam)) ? methodParam : 'card';
+  selectPayment(method);
+
   try {
-    // 直接按 ID 查询单个产品，毫秒级响应
     const res = await apiFetch(`/products?id=${encodeURIComponent(id)}`);
     if (!res.success || !res.data) {
-      document.getElementById('summaryContent').textContent = 'Product not found. Please go back and try again.';
+      document.getElementById('coDest').textContent = 'Product not found.';
       return;
     }
     product = res.data;
     renderSummary();
   } catch(e) {
-    document.getElementById('summaryContent').textContent = 'Error loading product. Please refresh.';
+    document.getElementById('coDest').textContent = 'Error loading. Please refresh.';
   }
 }
 
 function renderSummary() {
   if (!product) return;
   const country = product.countries?.[0];
-  const flag = country ? flagEmoji(country.code) : '🌍';
-  const dest = country ? (country.en || country.cn) : (product.nameEn || product.name);
+  const flag    = country ? flagEmoji(country.code) : '🌍';
+  const dest    = country ? (country.en || country.cn) : 'Global';
+  const dataMB  = product.dataAmount || product.dataSize;
+  const isInf   = !dataMB;
+  const gb      = dataMB ? dataMB / 1024 : 0;
+  const dataStr = isInf ? '∞ Unlimited' : (gb >= 1 ? (gb % 1 === 0 ? gb + ' GB' : gb.toFixed(1) + ' GB') : dataMB + ' MB');
+  const days    = product.validityDays || '?';
 
-  document.getElementById('summaryContent').innerHTML = `
-    <div style="text-align:center;margin-bottom:20px">
-      <div style="font-size:48px">${flag}</div>
-      <div style="font-weight:800;font-size:18px;margin:8px 0">${dest}</div>
-      <div style="color:#666;font-size:14px">${product.nameEn || product.name}</div>
-    </div>
-    <div class="summary-row"><span>Plan</span><span>${product.nameEn || product.name}</span></div>
-    <div class="summary-row"><span>Delivery</span><span>Instant ✉️</span></div>
-    <div class="summary-row"><span>Total</span><span style="font-weight:800;color:#667eea">${formatPrice(product.price)}</span></div>
-  `;
+  document.getElementById('coFlag').textContent  = flag;
+  document.getElementById('coDest').textContent  = dest + ' eSIM';
+  document.getElementById('coPlan').textContent  = `${dataStr} · ${days} days`;
+  document.getElementById('coPrice').textContent = formatPrice(product.price);
+  document.title = `Checkout — ${dest} eSIM — SimRyoko`;
 }
 
 function selectPayment(method) {
   selectedPayment = method;
-  document.querySelectorAll('.payment-method').forEach(el => el.classList.remove('active'));
-  document.getElementById(`pm-${method}`).classList.add('active');
-
-  const cardSection = document.getElementById('card-section');
-  const tonSection = document.getElementById('ton-section');
-  const payBtn = document.getElementById('payBtn');
-
-  cardSection.style.display = method === 'card' ? 'block' : 'none';
-  tonSection.style.display = method === 'ton' ? 'block' : 'none';
-
-  // 选中信用卡时挂载 Stripe Elements
-  if (method === 'card') {
-    setTimeout(mountStripeCard, 100);
-  }
-
+  // Update tabs
+  ['card','ton','usdt'].forEach(m => {
+    const tab = document.getElementById(`pm-${m}`);
+    if (tab) tab.classList.toggle('active', m === method);
+  });
+  // Show/hide sections
+  const sections = { card: 'card-section', ton: 'ton-section', usdt: 'usdt-section' };
+  Object.entries(sections).forEach(([m, id]) => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = m === method ? 'block' : 'none';
+  });
+  // Mount Stripe if card selected
+  if (method === 'card') setTimeout(mountStripeCard, 50);
+  // Update button
   const labels = {
-    usdt: 'Pay with USDT →',
-    ton: '💎 Pay via Telegram →',
-    card: '💳 Pay with Card →',
+    card: '💳 Pay with Card',
+    ton:  '💎 Pay via Telegram',
+    usdt: '₮ Pay with USDT TRC-20',
   };
-  payBtn.textContent = labels[method] || 'Pay Now →';
+  const btn = document.getElementById('payBtn');
+  if (btn) btn.textContent = (labels[method] || 'Pay Now') + ' →';
 }
 
 async function submitOrder() {
   const email = document.getElementById('emailInput').value.trim();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    alert('Please enter a valid email address.');
+    document.getElementById('emailInput').focus();
+    document.getElementById('emailInput').style.outline = '2px solid #ef4444';
+    setTimeout(() => document.getElementById('emailInput').style.outline = '', 2000);
     return;
   }
-  if (!product) { alert('Product not loaded. Please try again.'); return; }
+  if (!product) { return; }
 
   const btn = document.getElementById('payBtn');
   btn.disabled = true;
 
   if (selectedPayment === 'usdt') {
-    // USDT TRC-20 支付流程
     btn.textContent = 'Creating order…';
     try {
       const res = await apiFetch('/checkout', {
@@ -267,74 +486,57 @@ async function submitOrder() {
       window.location = `/payment.html?order=${res.data.orderId}&amount=${res.data.paymentAmount}&product=${encodeURIComponent(product.nameEn || product.name)}`;
     } catch(e) {
       alert('Error: ' + e.message);
-      btn.textContent = 'Pay with USDT →';
+      btn.textContent = '₮ Pay with USDT TRC-20 →';
       btn.disabled = false;
     }
 
   } else if (selectedPayment === 'ton') {
-    // TON / CryptoPay 支付流程
-    btn.textContent = '💎 Creating TON invoice…';
+    btn.textContent = '💎 Creating invoice…';
     try {
       const res = await apiFetch('/ton/create', {
         method: 'POST',
         body: JSON.stringify({ productId: product.id, email })
       });
       if (!res.success) throw new Error(res.error || 'TON invoice failed');
-
-      const { payUrl, invoiceId, amount, asset, orderId } = res.data;
-
+      const { payUrl, orderId, amount, asset } = res.data;
       if (payUrl) {
-        // 跳转到 @CryptoBot 完成支付（Telegram 内 / 浏览器均可）
         window.location = payUrl;
       } else {
-        // CryptoPay 未配置时，显示手动支付指引
-        alert(`TON payment not yet available.\nOrder ID: ${orderId}\nAmount: ${amount} ${asset}\nContact support via WhatsApp: +19402382990`);
+        alert(`TON payment not available.\nOrder: ${orderId}\nAmount: ${amount} ${asset}\nContact: +19402382990`);
         btn.textContent = '💎 Pay via Telegram →';
         btn.disabled = false;
       }
     } catch(e) {
-      alert('TON payment error: ' + e.message);
+      alert('TON error: ' + e.message);
       btn.textContent = '💎 Pay via Telegram →';
       btn.disabled = false;
     }
 
   } else {
-    // Stripe 信用卡支付流程
+    // Stripe card
     if (!stripe || !cardElement) {
-      // Stripe 还未加载完成，等待后重试
       const errEl = document.getElementById('stripe-card-error');
-      errEl.textContent = 'Card payment is loading, please wait 2 seconds and try again.';
+      errEl.textContent = 'Card payment loading, please wait and try again.';
       errEl.style.display = 'block';
       btn.textContent = '💳 Pay with Card →';
       btn.disabled = false;
-      // 触发自动挂载重试
       mountStripeCard();
       return;
     }
-
     btn.textContent = 'Processing…';
     const errEl = document.getElementById('stripe-card-error');
     errEl.style.display = 'none';
-
     try {
-      // 1. 创建 PaymentIntent
       const intentRes = await apiFetch('/stripe/intent', {
         method: 'POST',
         body: JSON.stringify({ productId: product.id, email })
       });
-      if (!intentRes.success) throw new Error(intentRes.error || 'Failed to create payment');
-
+      if (!intentRes.success) throw new Error(intentRes.error || 'Payment failed');
       const { clientSecret, orderId, amount } = intentRes;
       btn.textContent = `Confirming $${parseFloat(amount).toFixed(2)}…`;
-
-      // 2. Stripe 确认卡支付（含 3D Secure）
       const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: { email }
-        }
+        payment_method: { card: cardElement, billing_details: { email } }
       });
-
       if (error) {
         errEl.textContent = error.message;
         errEl.style.display = 'block';
@@ -342,52 +544,29 @@ async function submitOrder() {
         btn.disabled = false;
         return;
       }
-
       if (paymentIntent.status === 'succeeded') {
-        btn.textContent = '✅ Payment confirmed! Delivering eSIM…';
-
-        // 3. 通知后端触发履单
+        btn.textContent = '✅ Delivering eSIM…';
         try {
           await apiFetch('/stripe/confirm', {
             method: 'POST',
             body: JSON.stringify({ paymentIntentId: paymentIntent.id, orderId })
           });
-        } catch(e) { /* 履单失败会有人工介入 */ }
-
-        // 4. 跳转成功页
+        } catch(e) {}
         window.location = `/success.html?order=${orderId}&method=card&product=${encodeURIComponent(product.nameEn || product.name)}`;
       } else {
-        throw new Error(`Payment status: ${paymentIntent.status}`);
+        throw new Error('Payment status: ' + paymentIntent.status);
       }
-
     } catch(e) {
-      if (!errEl.style.display || errEl.style.display === 'none') {
-        errEl.textContent = e.message || 'Payment failed. Please try again.';
-        errEl.style.display = 'block';
-      }
+      errEl.textContent = e.message || 'Payment failed. Please try again.';
+      errEl.style.display = 'block';
       btn.textContent = '💳 Pay with Card →';
       btn.disabled = false;
     }
   }
 }
 
-// 先初始化 Stripe，再加载产品（避免 selectPayment('card') 在 stripe 就绪前触发）
+// Stripe 就绪后再加载产品（避免竞态条件）
 initStripe().then(() => loadProduct());
 </script>
-<script src="/js/i18n.js"></script>
-
-<!-- WhatsApp 悬浮客服按钮 -->
-<style>
-.wa-float{position:fixed;bottom:24px;right:20px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
-.wa-float-btn{width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.45);text-decoration:none;font-size:28px;animation:wa-pulse 2.5s ease-in-out infinite;transition:transform .2s;}
-.wa-float-btn:hover{transform:scale(1.1);}
-@keyframes wa-pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.45);}50%{box-shadow:0 4px 32px rgba(37,211,102,.75);}}
-.wa-float-label{background:#fff;color:#1a1a2e;font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;box-shadow:0 2px 12px rgba(0,0,0,.12);white-space:nowrap;pointer-events:none;opacity:0;transform:translateX(8px);transition:opacity .3s,transform .3s;}
-.wa-float:hover .wa-float-label{opacity:1;transform:translateX(0);}
-</style>
-<div class="wa-float">
-  <div class="wa-float-label">💬 30-min support</div>
-  <a class="wa-float-btn" href="https://wa.me/19402382990?text=Hi%2C%20I%20need%20help%20with%20my%20SimRyoko%20checkout." target="_blank" rel="noopener" title="WhatsApp Support">💬</a>
-</div>
 </body>
 </html>
