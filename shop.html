@@ -1299,24 +1299,27 @@ function buildPlanCard(p, i, bestGBIdx) {
    Preload popular prices + 自动预加载
 ═══════════════════════════════════════════════════════ */
 function preloadPopular() {
+  // 从静态 CDN 缓存批量预加载价格，完全不走 serverless API
   TABS_DATA.popular.list.forEach(code => {
     if (priceCache[code]) return;
-    fetch(`/api/products?country=${code}&pageSize=3`)
-      .then(r=>r.json())
-      .then(j=>{
-        const list = j.data?.list||[];
+    fetch(`/cache/${code}.json`, { cache: 'default' })
+      .then(r => r.ok ? r.json() : null)
+      .then(j => {
+        if (!j) return;
+        const list = j.list || [];
         if (list.length) {
-          priceCache[code] = Math.min(...list.map(p=>parseFloat(p.price)));
-          countCache[code] = j.data?.total||list.length;
+          priceCache[code] = Math.min(...list.map(p => parseFloat(p.price)));
+          countCache[code] = j.total || list.length;
+          // 顺便存入 planCache，点击时无需再请求
+          planCache[code] = list;
           updateCard(code);
-          // Also update featured card prices
           const ffEl = document.getElementById(`ff-${code}`);
           if (ffEl && !ffEl.dataset.loaded) {
             ffEl.textContent = `从 ${fmtUSD(priceCache[code])} 起`;
             ffEl.dataset.loaded = '1';
           }
         }
-      }).catch(()=>{});
+      }).catch(() => {});
   });
 }
 

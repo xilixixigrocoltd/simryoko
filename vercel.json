@@ -122,5 +122,10 @@
   ],
   "env": {
     "PADDLE_ENV": "production"
+  },
+  "functions": {
+    "api/products.js": {
+      "includeFiles": "cache/**"
+    }
   }
 }

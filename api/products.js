@@ -13,10 +13,13 @@ function readStaticCache(country) {
     const key  = country || '_global';
     const file = path.join(CACHE_DIR, `${key}.json`);
     if (!fs.existsSync(file)) return null;
-    const stat = fs.statSync(file);
-    // 超过 8 小时的缓存降级到 API（避免数据太旧）
-    if (Date.now() - stat.mtimeMs > 8 * 60 * 60 * 1000) return null;
-    return JSON.parse(fs.readFileSync(file, 'utf8'));
+    const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+    // 用 generatedAt 字段检查新鲜度（24小时内有效）
+    if (data.generatedAt) {
+      const age = Date.now() - new Date(data.generatedAt).getTime();
+      if (age > 24 * 60 * 60 * 1000) return null; // 超过24小时降级到 API
+    }
+    return data;
   } catch { return null; }
 }
 
