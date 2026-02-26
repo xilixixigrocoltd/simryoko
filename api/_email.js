@@ -11,6 +11,19 @@ const transporter = nodemailer.createTransport({
   }
 });
 
+// DKIM 签名配置（需 DKIM_PRIVATE_KEY 环境变量）
+function getDkimOptions() {
+  const pk = process.env.DKIM_PRIVATE_KEY;
+  if (!pk) return {};
+  return {
+    dkim: {
+      domainName: 'xigrocoltd.com',
+      keySelector: 'simryoko',
+      privateKey: pk.replace(/\\n/g, '\n')
+    }
+  };
+}
+
 function getFlagEmoji(countryCode) {
   if (!countryCode) return '🌍';
   const map = {
@@ -229,7 +242,8 @@ async function sendEsimEmail({ to, productName, qrCodeUrl, iccid, activationCode
     from: `"SimRyoko eSIM" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
     to,
     subject: `${flag} Your eSIM is Ready — ${productName}`,
-    html
+    html,
+    ...getDkimOptions()
   });
 }
 
@@ -346,7 +360,8 @@ async function sendPaymentPendingEmail({ to, productName, amount, walletAddress,
     from: `"SimRyoko eSIM" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
     to,
     subject: `⏳ Action Required: Send ${amount} USDT to get your eSIM`,
-    html
+    html,
+    ...getDkimOptions()
   });
 }
 
@@ -402,7 +417,8 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
     from: `"SimRyoko eSIM" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
     to,
     subject: `${urgencyText} — ${productName}`,
-    html
+    html,
+    ...getDkimOptions()
   });
 }
 
@@ -410,7 +426,8 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
 async function sendRawEmail({ to, subject, html }) {
   await transporter.sendMail({
     from: `"${process.env.FROM_NAME || 'SimRyoko'}" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
-    to, subject, html
+    to, subject, html,
+    ...getDkimOptions()
   });
 }
 
