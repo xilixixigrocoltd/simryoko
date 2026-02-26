@@ -1,15 +1,424 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>eSIM Travel Tips & Guides — SimRyoko Blog</title>
-  <meta name="description" content="eSIM guides, travel tips, and connectivity advice for Japan, Korea, Europe and beyond.">
-  <link rel="canonical" href="https://simryoko.com/blog.html">
-  <script>window.location = '/blog/';</script>
-<script src="/js/analytics.js"></script>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eSIM Travel Guides 2026 — Japan, Korea, Europe | SimRyoko Blog</title>
+  <meta name="description" content="Expert eSIM guides for travelers: Japan eSIM setup, Korea data plans, Europe multi-country eSIM, and more. Stay connected anywhere from $2/day."/>
+  <meta property="og:title" content="eSIM Travel Guides — SimRyoko"/>
+  <meta property="og:description" content="Expert guides on eSIM for Japan, Korea, Europe and 200+ countries. Stay connected instantly."/>
+  <meta property="og:image" content="https://simryoko.com/img/tma-banner.png"/>
+  <link rel="canonical" href="https://simryoko.com/blog.html"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236C63FF'/><text y='.9em' font-size='65' x='15'>📡</text></svg>"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+  <script src="/js/analytics.js"></script>
+  <style>
+    body { background: #f5f6fa; font-family: 'Inter', sans-serif; color: #1a1a2e; }
+    .blog-hero {
+      background: linear-gradient(150deg, #5A4FE8 0%, #7C3AED 60%, #9333EA 100%);
+      padding: 52px 20px 44px; text-align: center;
+    }
+    .blog-hero h1 { font-size: clamp(22px,5vw,36px); font-weight: 900; color: #fff; margin-bottom: 10px; }
+    .blog-hero p { color: rgba(255,255,255,.78); font-size: 15px; max-width: 480px; margin: 0 auto 28px; }
+    .blog-cta {
+      display: inline-block; background: #fff; color: #6C63FF;
+      font-weight: 800; padding: 12px 28px; border-radius: 99px;
+      text-decoration: none; font-size: 14px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.18);
+      transition: transform .2s;
+    }
+    .blog-cta:hover { transform: translateY(-2px); }
+
+    .blog-container { max-width: 860px; margin: 0 auto; padding: 40px 20px 80px; }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; margin-bottom: 48px; }
+
+    /* Card */
+    .blog-card {
+      background: #fff; border-radius: 18px;
+      overflow: hidden; text-decoration: none; color: inherit;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      transition: transform .2s, box-shadow .2s;
+      display: flex; flex-direction: column;
+    }
+    .blog-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
+    .blog-card-thumb {
+      height: 140px; display: flex; align-items: center; justify-content: center;
+      font-size: 56px;
+    }
+    .blog-card-body { padding: 16px 18px 20px; flex: 1; display: flex; flex-direction: column; }
+    .blog-card-tag { font-size: 11px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: #6C63FF; margin-bottom: 8px; }
+    .blog-card-title { font-size: 16px; font-weight: 800; color: #111; line-height: 1.35; margin-bottom: 8px; }
+    .blog-card-desc { font-size: 13px; color: #666; line-height: 1.6; flex: 1; margin-bottom: 14px; }
+    .blog-card-meta { font-size: 11.5px; color: #aaa; font-weight: 500; }
+    .blog-card-read { font-size: 12px; font-weight: 700; color: #6C63FF; margin-top: 10px; }
+
+    /* Article */
+    .blog-article { background: #fff; border-radius: 20px; padding: 32px 36px; margin-bottom: 32px; box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+    @media(max-width:600px) { .blog-article { padding: 22px 18px; } }
+    .article-tag { font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: #6C63FF; margin-bottom: 10px; }
+    .article-title { font-size: clamp(20px,4vw,28px); font-weight: 900; color: #111; line-height: 1.25; margin-bottom: 12px; }
+    .article-meta { font-size: 12px; color: #aaa; margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid #f0f0f7; }
+    .article-body { font-size: 15px; color: #333; line-height: 1.8; }
+    .article-body h2 { font-size: 19px; font-weight: 800; color: #111; margin: 28px 0 10px; }
+    .article-body h3 { font-size: 16px; font-weight: 700; color: #333; margin: 20px 0 8px; }
+    .article-body p { margin-bottom: 16px; }
+    .article-body ul, .article-body ol { margin: 0 0 16px 20px; }
+    .article-body li { margin-bottom: 8px; }
+    .article-body strong { color: #111; font-weight: 700; }
+    .article-body a { color: #6C63FF; text-decoration: none; font-weight: 600; }
+    .article-body a:hover { text-decoration: underline; }
+    .article-cta {
+      display: inline-block; background: linear-gradient(135deg,#6C63FF,#9333EA);
+      color: #fff; padding: 13px 28px; border-radius: 12px;
+      font-weight: 800; font-size: 14px; text-decoration: none;
+      margin-top: 24px; transition: opacity .15s;
+    }
+    .article-cta:hover { opacity: .9; text-decoration: none; }
+
+    .info-box {
+      background: #f0f0ff; border-left: 4px solid #6C63FF;
+      border-radius: 0 10px 10px 0; padding: 14px 18px;
+      margin: 20px 0; font-size: 14px; color: #444;
+    }
+    .info-box strong { color: #6C63FF; }
+
+    .price-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+    .price-table th { background: #6C63FF; color: #fff; padding: 10px 14px; text-align: left; }
+    .price-table td { padding: 9px 14px; border-bottom: 1px solid #f0f0f7; }
+    .price-table tr:last-child td { border-bottom: none; }
+    .price-table tr:nth-child(even) td { background: #fafaff; }
+
+    .section-title { font-size: 22px; font-weight: 900; color: #111; margin: 48px 0 20px; }
+
+    nav.nav { background: #fff; box-shadow: 0 1px 0 #f0f0f7; }
+  </style>
 </head>
 <body>
-  <p>Redirecting to <a href="/blog/">SimRyoko Blog</a>…</p>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">📡 SimRyoko</a>
+    <div class="nav-links">
+      <a href="/shop.html">Shop</a>
+      <a href="/b2b.html">B2B</a>
+      <a href="/blog.html" style="color:#6C63FF;font-weight:700;">Blog</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="blog-hero">
+  <h1>eSIM Travel Guides 2026</h1>
+  <p>Everything you need to stay connected in Japan, Korea, Europe and 200+ countries. Expert tips. Honest advice.</p>
+  <a href="/shop.html" class="blog-cta">🌏 Browse eSIM Plans →</a>
+</div>
+
+<div class="blog-container">
+
+  <!-- Article Index Cards -->
+  <div class="section-title">📚 Latest Guides</div>
+  <div class="blog-grid">
+    <a class="blog-card" href="#japan-esim-guide">
+      <div class="blog-card-thumb" style="background:linear-gradient(135deg,#fff1f1,#ffe0cc)">🇯🇵</div>
+      <div class="blog-card-body">
+        <div class="blog-card-tag">Japan</div>
+        <div class="blog-card-title">Japan eSIM 2026: Complete Traveler's Guide</div>
+        <div class="blog-card-desc">Best plans, coverage, pricing and how to activate before you land at Narita or Haneda.</div>
+        <div class="blog-card-meta">Feb 2026 · 5 min read</div>
+        <div class="blog-card-read">Read guide →</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#korea-esim-guide">
+      <div class="blog-card-thumb" style="background:linear-gradient(135deg,#f0f8ff,#dbeafe)">🇰🇷</div>
+      <div class="blog-card-body">
+        <div class="blog-card-tag">Korea</div>
+        <div class="blog-card-title">Korea eSIM Guide: Seoul to Busan, Stay Connected</div>
+        <div class="blog-card-desc">5G coverage, unlimited data options, K-pop apps — everything you need for Korea.</div>
+        <div class="blog-card-meta">Feb 2026 · 4 min read</div>
+        <div class="blog-card-read">Read guide →</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#europe-esim-guide">
+      <div class="blog-card-thumb" style="background:linear-gradient(135deg,#f0fff4,#d1fae5)">🇪🇺</div>
+      <div class="blog-card-body">
+        <div class="blog-card-tag">Europe</div>
+        <div class="blog-card-title">Europe Multi-Country eSIM: One SIM for 30+ Countries</div>
+        <div class="blog-card-desc">Stop buying a new SIM in every country. One European eSIM covers the whole continent.</div>
+        <div class="blog-card-meta">Feb 2026 · 5 min read</div>
+        <div class="blog-card-read">Read guide →</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#esim-vs-sim">
+      <div class="blog-card-thumb" style="background:linear-gradient(135deg,#fefce8,#fef9c3)">📱</div>
+      <div class="blog-card-body">
+        <div class="blog-card-tag">eSIM Basics</div>
+        <div class="blog-card-title">eSIM vs Physical SIM: Which is Better for Travel?</div>
+        <div class="blog-card-desc">No more hunting for SIM cards at the airport. Here's why eSIM is the smarter choice.</div>
+        <div class="blog-card-meta">Feb 2026 · 3 min read</div>
+        <div class="blog-card-read">Read guide →</div>
+      </div>
+    </a>
+    <a class="blog-card" href="#how-to-install-esim">
+      <div class="blog-card-thumb" style="background:linear-gradient(135deg,#fdf2f8,#fce7f3)">⚙️</div>
+      <div class="blog-card-body">
+        <div class="blog-card-tag">How-To</div>
+        <div class="blog-card-title">How to Install an eSIM on iPhone & Android (2026)</div>
+        <div class="blog-card-desc">Step-by-step: scan the QR code, activate, and connect in under 5 minutes.</div>
+        <div class="blog-card-meta">Feb 2026 · 3 min read</div>
+        <div class="blog-card-read">Read guide →</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════ Article 1 ═══════════════════════════ -->
+  <div class="blog-article" id="japan-esim-guide">
+    <div class="article-tag">🇯🇵 Japan</div>
+    <h1 class="article-title">Japan eSIM 2026: The Complete Traveler's Guide</h1>
+    <div class="article-meta">Published February 2026 · 5 min read · Updated for 2026 pricing</div>
+    <div class="article-body">
+
+      <p>Japan is one of the most eSIM-friendly destinations in the world. With ultra-fast 5G in Tokyo, Osaka and Kyoto, and solid 4G LTE even in rural areas, getting connected is now easier than ever — no airport SIM hunt required.</p>
+
+      <h2>Why Use an eSIM for Japan?</h2>
+      <p>The old way: land at Narita, join the SIM card queue (45+ minutes), pay ¥2,000-¥5,000 for a physical SIM. The new way: <strong>buy an eSIM before you board</strong>, activate it when you land, and have internet within 60 seconds of stepping off the plane.</p>
+      <ul>
+        <li>✅ No physical card to lose or swap</li>
+        <li>✅ Keep your home SIM active for calls and 2FA texts</li>
+        <li>✅ Works in all major cities and most bullet train routes</li>
+        <li>✅ Cheaper than airport SIM counters</li>
+      </ul>
+
+      <div class="info-box">
+        <strong>📡 Coverage:</strong> Japan eSIMs typically run on Softbank, Docomo or KDDI networks. All three provide excellent coverage across Honshu, Kyushu, Hokkaido and Okinawa.
+      </div>
+
+      <h2>Japan eSIM Plans — 2026 Pricing</h2>
+      <table class="price-table">
+        <tr><th>Plan</th><th>Data</th><th>Validity</th><th>Best For</th><th>Price</th></tr>
+        <tr><td>Starter</td><td>1 GB</td><td>7 days</td><td>Short trips, maps + messaging</td><td>from $4</td></tr>
+        <tr><td>Explorer</td><td>3 GB</td><td>30 days</td><td>2-3 week visits</td><td>from $8</td></tr>
+        <tr><td>Heavy User</td><td>10 GB</td><td>30 days</td><td>Work travelers, streamers</td><td>from $18</td></tr>
+        <tr><td>Unlimited</td><td>Unlimited</td><td>7–30 days</td><td>Remote workers, long stays</td><td>from $27</td></tr>
+      </table>
+
+      <h2>How Much Data Do You Actually Need?</h2>
+      <ul>
+        <li><strong>1 GB:</strong> Google Maps, WhatsApp, browsing. Good for 3-5 days of light use.</li>
+        <li><strong>3 GB:</strong> Add Instagram, light video. Perfect for a week-long trip.</li>
+        <li><strong>10 GB:</strong> Video calls, YouTube, heavy navigation. 2-3 weeks comfortable.</li>
+        <li><strong>Unlimited:</strong> Tethering your laptop, streaming 4K, remote work. Zero stress.</li>
+      </ul>
+
+      <h2>How to Activate Your Japan eSIM</h2>
+      <ol>
+        <li>Purchase your eSIM plan — you'll get a QR code by email within minutes</li>
+        <li>Go to <strong>Settings → Cellular (iPhone) or Connections → SIM Manager (Android)</strong></li>
+        <li>Select "Add eSIM" and scan the QR code</li>
+        <li>Label it "Japan" and leave it <strong>disabled</strong> until you arrive</li>
+        <li>When you land: enable the eSIM and set it as your data line</li>
+        <li>Pro tip: toggle Airplane Mode on/off to force network registration</li>
+      </ol>
+
+      <div class="info-box">
+        <strong>✈️ Pro tip:</strong> Activate your eSIM at home before departure — the QR scan requires a Wi-Fi connection. Once activated, it works offline until you need data.
+      </div>
+
+      <h2>Does eSIM Work on Japan's Bullet Trains?</h2>
+      <p>Yes. The Shinkansen (bullet train) has decent 4G coverage across most of the Tokaido line (Tokyo→Osaka). You may experience brief drops in tunnels, but connectivity resumes within seconds.</p>
+
+      <a href="/shop.html?country=JP" class="article-cta">🇯🇵 See Japan eSIM Plans →</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ Article 2 ═══════════════════════════ -->
+  <div class="blog-article" id="korea-esim-guide">
+    <div class="article-tag">🇰🇷 Korea</div>
+    <h1 class="article-title">Korea eSIM Guide 2026: Seoul, Busan & Beyond</h1>
+    <div class="article-meta">Published February 2026 · 4 min read</div>
+    <div class="article-body">
+
+      <p>South Korea has some of the fastest mobile internet on the planet. 5G coverage blankets Seoul, Incheon, Busan and most major cities. With an eSIM, you'll be connected the moment you clear immigration at ICN.</p>
+
+      <h2>Korea eSIM vs Airport SIM</h2>
+      <p>Incheon International Airport (ICN) sells physical SIM cards at multiple counters — but expect queues, limited plan options, and prices around ₩30,000–₩60,000 for short-term plans. An eSIM bought in advance is <strong>typically 30–50% cheaper</strong> and available instantly.</p>
+
+      <h2>Best Korea eSIM Plans 2026</h2>
+      <table class="price-table">
+        <tr><th>Plan</th><th>Data</th><th>Days</th><th>Best For</th><th>Price</th></tr>
+        <tr><td>Mini</td><td>1 GB</td><td>7</td><td>Short layover / weekend</td><td>from $4</td></tr>
+        <tr><td>Standard</td><td>3 GB</td><td>30</td><td>1-2 week trip</td><td>from $8</td></tr>
+        <tr><td>Power</td><td>10 GB</td><td>30</td><td>Work + K-content streaming</td><td>from $18</td></tr>
+        <tr><td>Unlimited</td><td>∞</td><td>7–30</td><td>Heavy usage / digital nomads</td><td>from $27</td></tr>
+      </table>
+
+      <h2>What Can You Do With Korean Mobile Data?</h2>
+      <ul>
+        <li>🗺 Navigate Seoul's subway with Naver Maps or Kakao Map</li>
+        <li>🎵 Stream K-pop and K-dramas on YouTube or Weverse</li>
+        <li>🍜 Find the best restaurants with Naver Place reviews (in real time)</li>
+        <li>📸 Upload to Instagram from Gyeongbok Palace in seconds</li>
+        <li>💼 Join Zoom calls from a café in Hongdae</li>
+      </ul>
+
+      <h2>Coverage Outside Seoul</h2>
+      <p>Korea's network coverage is outstanding even in rural areas. You'll have 4G on KTX high-speed trains, in the mountains of Seoraksan National Park, and on Jeju Island. The country is small enough that coverage gaps are extremely rare.</p>
+
+      <div class="info-box">
+        <strong>💡 Note:</strong> Korean eSIMs are <strong>data-only</strong> — voice calls aren't included. Use KakaoTalk, WhatsApp or Facetime for calls over data. This is standard across all travel eSIM providers.
+      </div>
+
+      <a href="/shop.html?country=KR" class="article-cta">🇰🇷 See Korea eSIM Plans →</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ Article 3 ═══════════════════════════ -->
+  <div class="blog-article" id="europe-esim-guide">
+    <div class="article-tag">🇪🇺 Europe</div>
+    <h1 class="article-title">Europe Multi-Country eSIM 2026: One SIM, 30+ Countries</h1>
+    <div class="article-meta">Published February 2026 · 5 min read</div>
+    <div class="article-body">
+
+      <p>Traveling through France, Germany, Italy and Spain in one trip? The old approach — buying a new SIM in each country — is expensive, inconvenient, and time-consuming. A European regional eSIM gives you a single data plan that works across 30+ countries simultaneously.</p>
+
+      <h2>Countries Covered by European eSIM</h2>
+      <p>A typical European eSIM covers: 🇬🇧 UK · 🇩🇪 Germany · 🇫🇷 France · 🇮🇹 Italy · 🇪🇸 Spain · 🇳🇱 Netherlands · 🇧🇪 Belgium · 🇨🇭 Switzerland · 🇦🇹 Austria · 🇸🇪 Sweden · 🇳🇴 Norway · 🇩🇰 Denmark · 🇵🇹 Portugal · 🇬🇷 Greece · 🇵🇱 Poland · 🇨🇿 Czech Republic · and 15+ more.</p>
+
+      <div class="info-box">
+        <strong>🌍 Coverage tip:</strong> Always check the specific countries list for your plan. Some plans don't include Switzerland or Norway (non-EU). Our plans show exact coverage for every destination.
+      </div>
+
+      <h2>Europe eSIM Plans — 2026</h2>
+      <table class="price-table">
+        <tr><th>Plan</th><th>Data</th><th>Days</th><th>Best For</th><th>Price</th></tr>
+        <tr><td>Backpacker</td><td>3 GB</td><td>30</td><td>Budget travelers, hostel wifi backup</td><td>from $12</td></tr>
+        <tr><td>Explorer</td><td>10 GB</td><td>30</td><td>2-4 week Euro trip</td><td>from $22</td></tr>
+        <tr><td>Digital Nomad</td><td>20 GB</td><td>30</td><td>Remote workers, long stays</td><td>from $35</td></tr>
+        <tr><td>Unlimited EU</td><td>∞</td><td>30</td><td>Heavy streamers, video callers</td><td>from $45</td></tr>
+      </table>
+
+      <h2>Country-Specific vs Regional eSIM: Which to Choose?</h2>
+      <ul>
+        <li><strong>Visiting only one country</strong> → Get a local eSIM (cheaper, better speeds)</li>
+        <li><strong>Visiting 2+ countries</strong> → Get a European regional plan (one price, one setup)</li>
+        <li><strong>Short layover only</strong> → Airport Wi-Fi may be sufficient</li>
+      </ul>
+
+      <h2>Will It Work on Eurail Trains?</h2>
+      <p>Yes — European eSIMs automatically switch to the strongest local network as you cross borders. Your phone handles the handover transparently. On trains through the Alps or Channel Tunnel, you may notice brief drops, but connectivity resumes automatically.</p>
+
+      <a href="/shop.html" class="article-cta">🌍 See Europe eSIM Plans →</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ Article 4 ═══════════════════════════ -->
+  <div class="blog-article" id="esim-vs-sim">
+    <div class="article-tag">📱 eSIM Basics</div>
+    <h1 class="article-title">eSIM vs Physical SIM: Which is Better for Travel in 2026?</h1>
+    <div class="article-meta">Published February 2026 · 3 min read</div>
+    <div class="article-body">
+
+      <p>If you've traveled in the last decade, you know the drill: land in a new country, find the SIM card shop, wait in line, try to communicate your plan choice in a language you don't speak, potentially lose your home SIM or its tray. There's a better way.</p>
+
+      <h2>The Key Differences</h2>
+      <table class="price-table">
+        <tr><th></th><th>Physical SIM</th><th>eSIM</th></tr>
+        <tr><td>Buy before travel</td><td>Rarely available</td><td>✅ Yes</td></tr>
+        <tr><td>Instant delivery</td><td>❌ Airport queue</td><td>✅ Email in minutes</td></tr>
+        <tr><td>Keep home number active</td><td>❌ Slot taken</td><td>✅ Dual SIM</td></tr>
+        <tr><td>Risk of losing card</td><td>High</td><td>None</td></tr>
+        <tr><td>Multiple countries</td><td>New SIM each time</td><td>✅ Regional plans</td></tr>
+        <tr><td>Price</td><td>Often overpriced</td><td>✅ Competitive</td></tr>
+      </table>
+
+      <h2>Who Should Still Use a Physical SIM?</h2>
+      <p>Physical SIMs still make sense if your phone doesn't support eSIM (most phones made before 2019), or if you need a local phone number for calls and SMS (eSIMs are typically data-only for travel plans).</p>
+
+      <h2>Which Phones Support eSIM?</h2>
+      <ul>
+        <li><strong>iPhone:</strong> XS and newer (2018+)</li>
+        <li><strong>Samsung:</strong> Galaxy S20 and newer</li>
+        <li><strong>Google Pixel:</strong> Pixel 3 and newer</li>
+        <li><strong>Other Android:</strong> Most flagship phones from 2020+</li>
+      </ul>
+      <p>Not sure? Check Settings → About → look for "EID" — if you see a long number, your phone supports eSIM.</p>
+
+      <a href="/shop.html" class="article-cta">📡 Browse eSIM Plans →</a>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════ Article 5 ═══════════════════════════ -->
+  <div class="blog-article" id="how-to-install-esim">
+    <div class="article-tag">⚙️ How-To</div>
+    <h1 class="article-title">How to Install an eSIM on iPhone & Android (2026)</h1>
+    <div class="article-meta">Published February 2026 · 3 min read</div>
+    <div class="article-body">
+
+      <p>Installing an eSIM takes under 5 minutes. Here's the exact process for iPhone and Android — no tech knowledge required.</p>
+
+      <h2>Before You Start</h2>
+      <ul>
+        <li>✅ Your phone must support eSIM (see list above)</li>
+        <li>✅ You need a Wi-Fi connection to scan and download the eSIM</li>
+        <li>✅ Have your QR code ready (check your email after purchase)</li>
+        <li>⚠️ The QR code can only be scanned once — don't share it</li>
+      </ul>
+
+      <h2>🍎 iPhone Installation</h2>
+      <ol>
+        <li>Open <strong>Settings → Cellular → Add Cellular Plan</strong></li>
+        <li>Tap <strong>"Use QR Code"</strong></li>
+        <li>Point your camera at the QR code in your email</li>
+        <li>Follow the prompts to confirm and download</li>
+        <li>Label it (e.g., "Japan eSIM") and choose "Secondary" when asked about defaults</li>
+        <li><strong>Do not enable yet</strong> — wait until you land</li>
+        <li>On arrival: Settings → Cellular → your new plan → turn on Data Roaming</li>
+      </ol>
+
+      <h2>🤖 Android Installation (Samsung / Pixel)</h2>
+      <ol>
+        <li><strong>Samsung:</strong> Settings → Connections → SIM Card Manager → Add Mobile Plan</li>
+        <li><strong>Google Pixel:</strong> Settings → Network → Mobile Network → Add eSIM</li>
+        <li>Choose "Scan QR code" and point at your emailed code</li>
+        <li>Confirm download and follow prompts</li>
+        <li>Keep disabled until you land</li>
+        <li>On arrival: enable the eSIM and set it as your data SIM</li>
+      </ol>
+
+      <div class="info-box">
+        <strong>🛫 Landing tip:</strong> Toggle Airplane Mode ON for 10 seconds, then OFF. This forces your phone to register on the local network immediately — no waiting.
+      </div>
+
+      <h2>Troubleshooting</h2>
+      <ul>
+        <li><strong>QR won't scan:</strong> Try in better lighting, or ask for a manual activation code</li>
+        <li><strong>"SIM not supported":</strong> Your carrier may have locked the phone — contact them to unlock</li>
+        <li><strong>No signal on arrival:</strong> Toggle Airplane Mode or restart your phone</li>
+        <li><strong>Still stuck?</strong> WhatsApp us — we respond in under 30 minutes</li>
+      </ul>
+
+      <a href="https://wa.me/19402382990" class="article-cta" target="_blank">💬 Get Installation Help →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <span>© 2026 Xigro Co Limited. All rights reserved.</span>
+      <div><a href="/terms.html">Terms</a><a href="/privacy.html">Privacy</a><a href="/shop.html">Shop</a></div>
+    </div>
+  </div>
+</footer>
+
+<div class="float-support">
+  <a href="https://wa.me/19402382990" target="_blank" aria-label="WhatsApp Support">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+    </svg>
+  </a>
+</div>
+
 </body>
 </html>
