@@ -210,6 +210,62 @@ async function handleResend(req, res) {
   return res.json({ success: true, message: `eSIM resent to ${targetEmail}` });
 }
 
+// ── Stripe Webhook 注册（一次性操作）────────────────────────────────────────
+async function handleRegisterStripeWebhook(req, res) {
+  const StripeLib = require('stripe');
+  const stripe = new StripeLib(process.env.STRIPE_SECRET_KEY);
+  const webhookUrl = 'https://simryoko.com/api/stripe-webhook';
+
+  try {
+    // 先检查是否已存在
+    const existing = await stripe.webhookEndpoints.list({ limit: 20 });
+    const found = existing.data.find(w => w.url === webhookUrl);
+    if (found) {
+      return res.json({
+        success: true,
+        message: 'Webhook already registered',
+        id: found.id,
+        status: found.status,
+        note: 'Secret cannot be retrieved after creation. If lost, delete and re-create.'
+      });
+    }
+
+    // 创建新 Webhook
+    const webhook = await stripe.webhookEndpoints.create({
+      url: webhookUrl,
+      enabled_events: [
+        'charge.dispute.created',
+        'charge.dispute.updated',
+        'charge.dispute.closed',
+        'charge.refunded',
+        'payment_intent.payment_failed',
+      ],
+      description: 'SimRyoko risk monitoring — disputes & refunds',
+    });
+
+    // 自动存入 Vercel 环境变量
+    const secret = webhook.secret;
+    if (secret && VERCEL_TOKEN) {
+      const envRes = await axios.post(
+        `https://api.vercel.com/v10/projects/${PROJECT_ID}/env`,
+        { key: 'STRIPE_WEBHOOK_SECRET', value: secret, type: 'encrypted', target: ['production', 'preview'] },
+        { headers: { Authorization: `Bearer ${VERCEL_TOKEN}` } }
+      ).catch(e => ({ data: { error: e.message } }));
+      console.log('[admin/register-stripe-webhook] Vercel env set:', envRes.data);
+    }
+
+    return res.json({
+      success: true,
+      message: 'Stripe webhook registered successfully',
+      id: webhook.id,
+      secret: secret, // 仅此一次可见，已自动存入 Vercel
+      events: webhook.enabled_events,
+    });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -219,10 +275,11 @@ module.exports = async (req, res) => {
 
   const path = (req.url || '').split('?')[0];
 
-  if (path.includes('/token-refresh')) return handleTokenRefresh(req, res);
-  if (path.includes('/status'))        return handleStatus(req, res);
-  if (path.includes('/orders'))        return handleOrders(req, res);
-  if (path.includes('/resend'))        return handleResend(req, res);
+  if (path.includes('/token-refresh'))           return handleTokenRefresh(req, res);
+  if (path.includes('/status'))                  return handleStatus(req, res);
+  if (path.includes('/orders'))                  return handleOrders(req, res);
+  if (path.includes('/resend'))                  return handleResend(req, res);
+  if (path.includes('/register-stripe-webhook')) return handleRegisterStripeWebhook(req, res);
 
   return res.status(404).json({ error: 'Unknown admin action' });
 };
