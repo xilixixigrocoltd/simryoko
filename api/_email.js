@@ -1,7 +1,23 @@
 // 邮件发送模块 — SimRyoko
+// 主通道: Resend API (simryoko.com) | 备用: nodemailer SMTP
+const axios = require('axios');
 const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
+// ── Resend API 发信（主通道）────────────────────────────────────────────────
+async function sendViaResend({ from, to, subject, html }) {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) throw new Error('RESEND_API_KEY not set');
+  const resp = await axios.post(
+    'https://api.resend.com/emails',
+    { from, to: Array.isArray(to) ? to : [to], subject, html },
+    { headers: { 'Authorization': `Bearer ${apiKey}`, 'Content-Type': 'application/json' } }
+  );
+  if (resp.data?.id) return resp.data;
+  throw new Error('Resend error: ' + JSON.stringify(resp.data));
+}
+
+// ── SMTP 备用通道 ────────────────────────────────────────────────────────────
+const smtpTransporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST || 'smtp.exmail.qq.com',
   port: parseInt(process.env.SMTP_PORT || '465'),
   secure: true,
@@ -10,6 +26,14 @@ const transporter = nodemailer.createTransport({
     pass: process.env.SMTP_PASS || 'x8F7Jr4gn8i9Y95m'
   }
 });
+
+// ── 统一发信入口 ─────────────────────────────────────────────────────────────
+async function sendEmail({ from, to, subject, html }) {
+  if (process.env.RESEND_API_KEY) {
+    return sendViaResend({ from, to, subject, html });
+  }
+  return smtpTransporter.sendMail({ from, to, subject, html });
+}
 
 function getFlagEmoji(countryCode) {
   if (!countryCode) return '🌍';
@@ -225,8 +249,8 @@ async function sendEsimEmail({ to, productName, qrCodeUrl, iccid, activationCode
 </body>
 </html>`;
 
-  await transporter.sendMail({
-    from: `"SimRyoko eSIM" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
+  await sendEmail({
+    from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `${flag} Your eSIM is Ready — ${productName}`,
     html
@@ -342,8 +366,8 @@ async function sendPaymentPendingEmail({ to, productName, amount, walletAddress,
 </body>
 </html>`;
 
-  await transporter.sendMail({
-    from: `"SimRyoko eSIM" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
+  await sendEmail({
+    from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `⏳ Action Required: Send ${amount} USDT to get your eSIM`,
     html
@@ -398,8 +422,8 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
 </body>
 </html>`;
 
-  await transporter.sendMail({
-    from: `"SimRyoko eSIM" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
+  await sendEmail({
+    from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `${urgencyText} — ${productName}`,
     html
@@ -408,10 +432,7 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
 
 // Generic raw email sender
 async function sendRawEmail({ to, subject, html }) {
-  await transporter.sendMail({
-    from: `"${process.env.FROM_NAME || 'SimRyoko'}" <${process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com'}>`,
-    to, subject, html
-  });
+  await sendEmail({ from: 'SimRyoko <noreply@simryoko.com>', to, subject, html });
 }
 
 module.exports = { sendEsimEmail, sendPaymentPendingEmail, sendRenewalReminderEmail, sendRawEmail };
