@@ -11,7 +11,7 @@
  */
 
 // GA4 Measurement ID（在 Vercel 环境变量 GA4_ID 中设置，或直接修改这里）
-const GA4_ID = window._GA4_ID || 'G-XXXXXXXXXX';  // 替换为你的真实 ID
+const GA4_ID = window._GA4_ID || 'G-5F6FMKR7J4';
 
 if (GA4_ID && GA4_ID !== 'G-XXXXXXXXXX') {
   // 注入 gtag.js
