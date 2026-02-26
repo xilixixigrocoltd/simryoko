@@ -294,14 +294,46 @@ async function handleSubmitDispute(req, res) {
   }
 }
 
+// ── B2B 申请（合并自 b2b-apply.js，释放函数槽位）────────────────────────────
+async function handleB2BApply(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ success: false, error: 'Method not allowed' });
+  const { applyRateLimit } = require('./_ratelimit');
+  if (!applyRateLimit(req, res, 3, 60000)) return;
+  const { sendRawEmail } = require('./_email');
+  const { notifyB2BApply } = require('./_notify');
+  try {
+    const { name, company, email, whatsapp, btype, volume, notes } = req.body;
+    if (!name || !company || !email || !btype)
+      return res.status(400).json({ success: false, error: 'Missing required fields' });
+    notifyB2BApply({ name, company, email, whatsapp, btype, volume }).catch(() => {});
+    await sendRawEmail({
+      to: process.env.FROM_EMAIL || 'xilixi@xigrocoltd.com',
+      subject: `🤝 New B2B Partner Application — ${company}`,
+      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px"><h2 style="color:#6C63FF">New Partner Application</h2><p><b>Name:</b> ${name}<br><b>Company:</b> ${company}<br><b>Email:</b> ${email}<br><b>WhatsApp:</b> ${whatsapp||'N/A'}<br><b>Type:</b> ${btype}<br><b>Volume:</b> ${volume||'N/A'}<br><b>Notes:</b> ${notes||'None'}</p></div>`
+    });
+    await sendRawEmail({
+      to: email,
+      subject: `Your SimRyoko Partner Application — ${company}`,
+      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px"><h2>Application Received! 🎉</h2><p>Hi ${name}, we received your application for <b>${company}</b> and will reply within 24 hours.</p><p>Contact: <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://wa.me/19402382990">WhatsApp</a></p></div>`
+    });
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   if (req.method === 'OPTIONS') return res.status(200).end();
 
-  if (!auth(req, res)) return;
-
+  // B2B 申请不需要鉴权
   const path = (req.url || '').split('?')[0];
+  if (path.includes('/b2b-apply')) return handleB2BApply(req, res);
+
+  if (!auth(req, res)) return;
 
   if (path.includes('/token-refresh'))           return handleTokenRefresh(req, res);
   if (path.includes('/status'))                  return handleStatus(req, res);

@@ -114,11 +114,16 @@
     {
       "source": "/api/admin/:action",
       "destination": "/api/admin"
+    },
+    {
+      "source": "/api/config",
+      "destination": "/api/products"
+    },
+    {
+      "source": "/api/b2b-apply",
+      "destination": "/api/admin"
     }
   ],
-  "env": {
-    "PADDLE_ENV": "production"
-  },
   "functions": {
     "api/products.js": {
       "includeFiles": "cache/**"

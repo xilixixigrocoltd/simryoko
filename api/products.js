@@ -154,3 +154,22 @@ module.exports = async (req, res) => {
     return res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+// ── /api/config（合并自 config.js，释放函数槽位）─────────────────────────────
+function handleConfig(req, res) {
+  setCors(req, res, 'GET, OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(200).end();
+  res.setHeader('Cache-Control', 'private, no-store');
+  return res.json({
+    stripePk:   process.env.STRIPE_PUBLISHABLE_KEY || '',
+    usdtWallet: process.env.USDT_WALLET || 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL'
+  });
+}
+
+// ── 路由入口 ────────────────────────────────────────────────────────────────
+const _originalHandler = module.exports;
+module.exports = (req, res) => {
+  const path = (req.url || '').split('?')[0];
+  if (path === '/api/config' || path.endsWith('/config')) return handleConfig(req, res);
+  return _originalHandler(req, res);
+};
