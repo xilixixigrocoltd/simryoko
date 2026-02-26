@@ -250,11 +250,21 @@
   <!-- Payment methods -->
   <div class="co-card">
     <div class="co-section-label">💳 Payment Method</div>
-    <div class="co-pay-tabs">
+    <div class="co-pay-tabs" style="flex-wrap:wrap;">
       <div class="co-pay-tab" id="pm-card" onclick="selectPayment('card')">
         <div class="co-pay-tab-icon">💳</div>
         <div class="co-pay-tab-name">Card</div>
         <div class="co-pay-tab-sub">Visa / MC</div>
+      </div>
+      <div class="co-pay-tab" id="pm-alipay" onclick="selectPayment('alipay')">
+        <div class="co-pay-tab-icon">🔵</div>
+        <div class="co-pay-tab-name">支付宝</div>
+        <div class="co-pay-tab-sub">Alipay</div>
+      </div>
+      <div class="co-pay-tab" id="pm-wechat" onclick="selectPayment('wechat')">
+        <div class="co-pay-tab-icon">🟢</div>
+        <div class="co-pay-tab-name">微信支付</div>
+        <div class="co-pay-tab-sub">WeChat Pay</div>
       </div>
       <div class="co-pay-tab" id="pm-ton" onclick="selectPayment('ton')">
         <div class="co-pay-tab-icon">💎</div>
@@ -276,6 +286,32 @@
       <div id="stripe-card-error"></div>
       <div class="co-card-secure">
         🔒 Secured by Stripe &nbsp;·&nbsp; 3D Secure &nbsp;·&nbsp; Amex accepted
+      </div>
+    </div>
+
+    <!-- Alipay section -->
+    <div class="co-pay-detail" id="alipay-section" style="display:none">
+      <div style="background:#e8f4ff;border:1.5px solid #1677ff;border-radius:12px;padding:14px 16px;font-size:13px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:20px">🔵</span>
+          <strong style="color:#1677ff">支付宝 Alipay</strong>
+        </div>
+        点击「立即支付」后将跳转到支付宝完成付款，支付成功后自动返回并发送 eSIM。<br>
+        <span style="color:#555">Click Pay to be redirected to Alipay. eSIM delivered instantly after payment.</span>
+        <div style="margin-top:6px;color:#888;font-size:11px">Powered by Stripe · Supports Alipay app & web</div>
+      </div>
+    </div>
+
+    <!-- WeChat Pay section -->
+    <div class="co-pay-detail" id="wechat-section" style="display:none">
+      <div style="background:#e8f8ee;border:1.5px solid #07c160;border-radius:12px;padding:14px 16px;font-size:13px;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:20px">🟢</span>
+          <strong style="color:#07c160">微信支付 WeChat Pay</strong>
+        </div>
+        点击「立即支付」后会显示微信支付二维码，用微信 App 扫码完成付款，eSIM 立即发送。<br>
+        <span style="color:#555">A WeChat QR code will appear. Scan with WeChat app to pay.</span>
+        <div style="margin-top:6px;color:#888;font-size:11px">Powered by Stripe · Desktop QR · Mobile redirect</div>
       </div>
     </div>
 
@@ -303,6 +339,19 @@
         eSIM is delivered within 15 min after transfer is confirmed.
         <div style="margin-top:6px;color:#888;font-size:11px">⚠️ Send on TRON network only (TRC-20)</div>
       </div>
+    </div>
+  </div>
+
+  <!-- WeChat Pay QR Modal -->
+  <div id="wechat-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:999;display:none;align-items:center;justify-content:center">
+    <div style="background:#fff;border-radius:20px;padding:32px;max-width:320px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)">
+      <div style="font-size:28px;margin-bottom:8px">🟢</div>
+      <h3 style="font-size:18px;font-weight:800;margin-bottom:4px">微信扫码支付</h3>
+      <p style="font-size:13px;color:#666;margin-bottom:16px">打开微信，扫描下方二维码完成支付</p>
+      <img id="wechat-qr-img" src="" alt="WeChat QR" style="width:200px;height:200px;border:3px solid #07c160;border-radius:12px;margin-bottom:16px"/>
+      <p style="font-size:12px;color:#888;margin-bottom:8px">扫码后请勿关闭此页面，支付完成自动跳转</p>
+      <p id="wechat-status" style="font-size:13px;font-weight:600;color:#07c160">等待扫码中…</p>
+      <button onclick="document.getElementById('wechat-modal').style.display='none'" style="margin-top:12px;border:none;background:#f0f0f0;padding:10px 24px;border-radius:10px;font-size:13px;cursor:pointer;font-family:inherit">取消</button>
     </div>
   </div>
 
@@ -341,6 +390,7 @@
 <script>
 let product = null;
 let selectedPayment = 'card';  // 默认选中信用卡
+let wechatPollTimer = null;
 let stripe = null;
 let cardElement = null;
 let stripeElements = null;
@@ -403,7 +453,7 @@ async function loadProduct() {
   }
 
   // 默认激活 card（除非 URL 指定了别的）
-  const method = (methodParam && ['usdt','ton','card'].includes(methodParam)) ? methodParam : 'card';
+  const method = (methodParam && ['usdt','ton','card','alipay','wechat'].includes(methodParam)) ? methodParam : 'card';
   selectPayment(method);
 
   try {
@@ -440,12 +490,12 @@ function renderSummary() {
 function selectPayment(method) {
   selectedPayment = method;
   // Update tabs
-  ['card','ton','usdt'].forEach(m => {
+  ['card','alipay','wechat','ton','usdt'].forEach(m => {
     const tab = document.getElementById(`pm-${m}`);
     if (tab) tab.classList.toggle('active', m === method);
   });
   // Show/hide sections
-  const sections = { card: 'card-section', ton: 'ton-section', usdt: 'usdt-section' };
+  const sections = { card:'card-section', alipay:'alipay-section', wechat:'wechat-section', ton:'ton-section', usdt:'usdt-section' };
   Object.entries(sections).forEach(([m, id]) => {
     const el = document.getElementById(id);
     if (el) el.style.display = m === method ? 'block' : 'none';
@@ -454,9 +504,11 @@ function selectPayment(method) {
   if (method === 'card') setTimeout(mountStripeCard, 50);
   // Update button
   const labels = {
-    card: '💳 Pay with Card',
-    ton:  '💎 Pay via Telegram',
-    usdt: '₮ Pay with USDT TRC-20',
+    card:   '💳 立即支付 / Pay with Card',
+    alipay: '🔵 支付宝支付 / Alipay',
+    wechat: '🟢 微信扫码支付 / WeChat Pay',
+    ton:    '💎 Pay via Telegram',
+    usdt:   '₮ Pay with USDT TRC-20',
   };
   const btn = document.getElementById('payBtn');
   if (btn) btn.textContent = (labels[method] || 'Pay Now') + ' →';
@@ -509,6 +561,86 @@ async function submitOrder() {
     } catch(e) {
       alert('TON error: ' + e.message);
       btn.textContent = '💎 Pay via Telegram →';
+      btn.disabled = false;
+    }
+
+  } else if (selectedPayment === 'alipay') {
+    // 支付宝支付
+    btn.textContent = '🔵 跳转支付宝中…';
+    const errEl = document.getElementById('stripe-card-error');
+    errEl.style.display = 'none';
+    try {
+      const intentRes = await apiFetch('/stripe/intent', {
+        method: 'POST',
+        body: JSON.stringify({ productId: product.id, email, paymentMethodType: 'alipay' })
+      });
+      if (!intentRes.success) throw new Error(intentRes.error || 'Payment failed');
+      const { clientSecret, orderId } = intentRes;
+      const returnUrl = `${location.origin}/success.html?order=${orderId}&method=alipay&product=${encodeURIComponent(product.nameEn || product.name)}`;
+      const { error } = await stripe.confirmAlipayPayment(clientSecret, { return_url: returnUrl });
+      if (error) {
+        errEl.textContent = error.message;
+        errEl.style.display = 'block';
+        btn.textContent = '🔵 支付宝支付 / Alipay →';
+        btn.disabled = false;
+      }
+      // 成功时 Stripe 会自动 redirect，无需额外处理
+    } catch(e) {
+      errEl.textContent = e.message || 'Alipay failed. Please try again.';
+      errEl.style.display = 'block';
+      btn.textContent = '🔵 支付宝支付 / Alipay →';
+      btn.disabled = false;
+    }
+
+  } else if (selectedPayment === 'wechat') {
+    // 微信支付 — 显示 QR 码
+    btn.textContent = '🟢 生成微信二维码中…';
+    const errEl = document.getElementById('stripe-card-error');
+    errEl.style.display = 'none';
+    try {
+      const intentRes = await apiFetch('/stripe/intent', {
+        method: 'POST',
+        body: JSON.stringify({ productId: product.id, email, paymentMethodType: 'wechat_pay' })
+      });
+      if (!intentRes.success) throw new Error(intentRes.error || 'Payment failed');
+      const { clientSecret, orderId } = intentRes;
+      const { paymentIntent, error } = await stripe.confirmWechatPayPayment(clientSecret, {
+        payment_method_options: { wechat_pay: { client: 'web' } }
+      });
+      if (error) throw new Error(error.message);
+      // 显示 QR 码
+      const qrUrl = paymentIntent.next_action?.wechat_pay_display_qr_code?.image_data_url;
+      if (qrUrl) {
+        document.getElementById('wechat-qr-img').src = qrUrl;
+        document.getElementById('wechat-modal').style.display = 'flex';
+        btn.textContent = '🟢 微信扫码支付 / WeChat Pay →';
+        btn.disabled = false;
+        // 轮询支付状态（每 3 秒检查一次，最多 5 分钟）
+        let polls = 0;
+        wechatPollTimer = setInterval(async () => {
+          polls++;
+          if (polls > 100) { clearInterval(wechatPollTimer); return; }
+          try {
+            const pi = await stripe.retrievePaymentIntent(clientSecret);
+            if (pi.paymentIntent?.status === 'succeeded') {
+              clearInterval(wechatPollTimer);
+              document.getElementById('wechat-status').textContent = '✅ 支付成功！正在发送 eSIM…';
+              try {
+                await apiFetch('/stripe/confirm', { method: 'POST', body: JSON.stringify({ paymentIntentId: pi.paymentIntent.id, orderId }) });
+              } catch(e) {}
+              setTimeout(() => {
+                window.location = `/success.html?order=${orderId}&method=wechat&product=${encodeURIComponent(product.nameEn || product.name)}`;
+              }, 1500);
+            }
+          } catch(e) {}
+        }, 3000);
+      } else {
+        throw new Error('WeChat QR code not returned. Please try another payment method.');
+      }
+    } catch(e) {
+      errEl.textContent = e.message || 'WeChat Pay failed. Please try another method.';
+      errEl.style.display = 'block';
+      btn.textContent = '🟢 微信扫码支付 / WeChat Pay →';
       btn.disabled = false;
     }
 

@@ -77,12 +77,28 @@
   const order = p.get('order');
   const product = p.get('product');
   const method = p.get('method');
+  // Stripe redirect 参数（Alipay / WeChat Pay 回调时附带）
+  const piId    = p.get('payment_intent');
+  const redirect = p.get('redirect_status');
 
   if (order || product || method) {
     document.getElementById('orderInfo').style.display = 'block';
     if (product) document.getElementById('productName').textContent = decodeURIComponent(product);
     if (order)   document.getElementById('orderId').textContent = order;
-    if (method)  document.getElementById('payMethod').textContent = method === 'card' ? '💳 Card (Paddle)' : method === 'ton' ? '💎 TON/USDT' : '🪙 USDT TRC-20';
+    const methodLabels = {
+      card:'💳 Card', alipay:'🔵 支付宝 Alipay',
+      wechat:'🟢 微信支付 WeChat Pay', ton:'💎 TON/USDT', usdt:'🪙 USDT TRC-20'
+    };
+    if (method) document.getElementById('payMethod').textContent = methodLabels[method] || method;
+  }
+
+  // 支付宝/微信支付 Stripe redirect 回调 → 自动触发 confirm 完成履约
+  if (piId && redirect === 'succeeded' && order) {
+    fetch('/api/stripe/confirm', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ paymentIntentId: piId, orderId: order })
+    }).catch(() => {});
   }
 
   // GA4 Purchase event

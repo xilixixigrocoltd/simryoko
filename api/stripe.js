@@ -16,9 +16,12 @@ async function handleIntent(req, res) {
   if (!applyRateLimit(req, res, 5, 60000)) return;
   try {
     const stripe = new StripeLib(process.env.STRIPE_SECRET_KEY);
-    const { productId, email } = req.body;
+    const { productId, email, paymentMethodType = 'card' } = req.body;
     if (!productId || !email) return res.status(400).json({ error: 'Missing productId or email' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
+
+    const ALLOWED_PM = ['card', 'alipay', 'wechat_pay'];
+    const pmType = ALLOWED_PM.includes(paymentMethodType) ? paymentMethodType : 'card';
 
     const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
@@ -26,12 +29,13 @@ async function handleIntent(req, res) {
     const order = await store.createOrder({
       productId: product.id, productName: product.nameEn || product.name,
       productPrice: parseFloat(product.price), email,
-      country: product.countries?.[0]?.code || 'INT', paymentMethod: 'card'
+      country: product.countries?.[0]?.code || 'INT', paymentMethod: pmType
     });
 
     const amountCents = Math.max(50, Math.round(parseFloat(product.price) * 100));
     const intent = await stripe.paymentIntents.create({
       amount: amountCents, currency: 'usd', receipt_email: email,
+      payment_method_types: [pmType],
       metadata: { orderId: order.orderId, productId: String(product.id), email },
       description: `SimRyoko eSIM — ${order.productName}`
     });
