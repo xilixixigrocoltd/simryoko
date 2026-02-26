@@ -115,6 +115,8 @@ body { background: #f5f6fa; }
   -webkit-tap-highlight-color: transparent;
 }
 .cc:hover { border-color: #c4bdff; box-shadow: 0 8px 28px rgba(108,99,255,.14); transform: translateY(-4px); }
+.cc.cc-sel { border-color: #6C63FF; box-shadow: 0 0 0 3px rgba(108,99,255,.18); background: #f5f4ff; transform: translateY(-2px); }
+.cc.cc-sel .cprice { background: linear-gradient(135deg,#5A4FE8,#7C3AED); }
 .cc:active { transform: translateY(-1px); }
 .cc .flag { font-size: 44px; line-height: 1; margin-bottom: 10px; display: block; }
 .cc .cname { font-size: 13px; font-weight: 800; color: #111; margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -147,53 +149,41 @@ body { background: #f5f6fa; }
 .sh-empty .ico { font-size: 40px; margin-bottom: 10px; }
 
 /* ═══════════════════════════════════════════════════════
-   Plan Sheet (full-screen on mobile, like a page)
+   套餐面板（内联，在国家格子下方直接展示）
 ═══════════════════════════════════════════════════════ */
-.sh-overlay {
-  position: fixed; inset: 0;
-  background: rgba(15,14,23,.55);
-  backdrop-filter: blur(3px);
-  z-index: 200;
-  opacity: 0; pointer-events: none;
-  transition: opacity .25s;
+.sh-plans-wrap {
+  max-width: 1160px; margin: 28px auto 0; padding: 0 16px 100px;
+  display: block;
 }
-.sh-overlay.on { opacity: 1; pointer-events: auto; }
 
-.sh-sheet {
-  position: fixed;
-  inset: 0; top: auto;
-  height: 94vh;
-  background: #f5f6fa;
-  border-radius: 24px 24px 0 0;
-  z-index: 201;
-  transform: translateY(100%);
-  transition: transform .32s cubic-bezier(.17,.67,.3,1.1);
-  display: flex; flex-direction: column;
-  max-width: 680px; margin: 0 auto;
-  left: 0; right: 0;
+/* 面板头部 */
+.sh-panel-hd {
+  background: #fff; border-radius: 20px 20px 0 0;
+  border: 2px solid #ececf0; border-bottom: none;
+  padding: 18px 20px 0;
 }
-.sh-sheet.on { transform: translateY(0); }
-
-/* Sheet handle */
-.sh-handle { width: 36px; height: 4px; background: #ddd; border-radius: 99px; margin: 10px auto 0; flex-shrink: 0; }
-
-/* Sheet header */
-.sh-hd {
-  background: #fff; padding: 14px 20px 16px;
-  border-bottom: 1px solid #ececf0; flex-shrink: 0;
+.sh-hd-top {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
 }
-.sh-hd-top { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
-.sh-back {
-  width: 36px; height: 36px; border-radius: 50%;
-  background: #f2f2f7; border: none; cursor: pointer;
-  font-size: 20px; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; transition: background .15s; color: #333;
-}
-.sh-back:hover { background: #e5e5ec; }
 .sh-dest-flag { font-size: 32px; }
 .sh-dest-name { font-size: 20px; font-weight: 900; color: #111; flex: 1; }
-.sh-dest-sub { font-size: 13px; color: #aaa; padding-left: 48px; }
+.sh-dest-sub { font-size: 13px; color: #aaa; padding-left: 4px; margin-bottom: 2px; }
+
+/* 计划列表容器 */
+.sh-plan-inner {
+  background: #fff;
+  border: 2px solid #ececf0; border-top: none;
+  border-radius: 0 0 20px 20px;
+  overflow: hidden;
+}
+.sh-plan-list {
+  padding: 10px 14px 8px;
+  display: flex; flex-direction: column; gap: 7px;
+  max-height: 520px; overflow-y: auto;
+}
+@media(max-width:600px) {
+  .sh-plan-list { max-height: none; }
+}
 
 /* ── Featured cards ──────────────────────────────── */
 .sh-feat { max-width:1160px; margin:0 auto; padding:28px 16px 0; }
@@ -545,71 +535,65 @@ body { background: #f5f6fa; }
   </div>
 </div>
 
-<!-- ── OVERLAY ────────────────────────────────────────── -->
-<div class="sh-overlay" id="overlay" onclick="closeSheet()"></div>
-
-<!-- ── PLAN SHEET ─────────────────────────────────────── -->
-<div class="sh-sheet" id="sheet">
-  <div class="sh-handle"></div>
-
-  <!-- Header -->
-  <div class="sh-hd">
+<!-- ── 内联套餐面板 ───────────────────────────────────── -->
+<div class="sh-plans-wrap" id="plansWrap">
+  <!-- 面板头部：国家信息 + 筛选 -->
+  <div class="sh-panel-hd">
     <div class="sh-hd-top">
-      <button class="sh-back" onclick="closeSheet()">←</button>
-      <span class="sh-dest-flag" id="shFlag"></span>
-      <span class="sh-dest-name" id="shName"></span>
-    </div>
-    <div class="sh-dest-sub" id="shSub">加载中…</div>
-  </div>
-
-  <!-- Plan type filter -->
-  <div class="sh-type-bar" id="typeBar" style="display:none">
-    <button class="sh-type-btn on" data-type="all"      onclick="filterType('all',this)">全部</button>
-    <button class="sh-type-btn"    data-type="local"    onclick="filterType('local',this)">本地</button>
-    <button class="sh-type-btn"    data-type="regional" onclick="filterType('regional',this)">区域</button>
-    <button class="sh-type-btn"    data-type="global"   onclick="filterType('global',this)">全球</button>
-  </div>
-
-  <!-- Sort bar -->
-  <div class="sh-sort-bar" id="sortBar" style="display:none">
-    <span class="sh-sort-lbl">排序：</span>
-    <button class="sh-sort-btn on" data-sort="price" onclick="setSort('price',this)">💰 价格</button>
-    <button class="sh-sort-btn"   data-sort="data"  onclick="setSort('data',this)">📶 流量</button>
-    <button class="sh-sort-btn"   data-sort="days"  onclick="setSort('days',this)">📅 时长</button>
-    <button class="sh-sort-btn"   data-sort="value" onclick="setSort('value',this)">💡 性价比</button>
-  </div>
-
-  <!-- Plans -->
-  <div class="sh-plan-list" id="planList">
-    <div class="pc sk-plan"></div>
-    <div class="pc sk-plan"></div>
-    <div class="pc sk-plan"></div>
-  </div>
-
-  <!-- Checkout bar -->
-  <div class="sh-checkout" id="checkoutBar">
-    <div class="sh-co-row">
+      <span class="sh-dest-flag" id="shFlag">🌐</span>
       <div>
-        <div class="sh-co-plan" id="coName"></div>
-        <div class="sh-co-sub" id="coSpec"></div>
+        <div class="sh-dest-name" id="shName">选择目的地查看套餐</div>
+        <div class="sh-dest-sub" id="shSub">点击上方国家/地区卡片</div>
       </div>
-      <div class="sh-co-price" id="coPrice"></div>
     </div>
-    <input class="sh-email" id="emailInput" type="email" placeholder="你的邮箱 — eSIM 将发送到这里"/>
-    <div class="sh-pay-seg" id="paySeg">
-      <button class="sh-seg on" onclick="setPay('usdt-ton',this)">💎 USDT<br><small style="font-weight:500;opacity:.85">Telegram</small></button>
-      <button class="sh-seg"   onclick="setPay('usdt-trc',this)">💵 USDT<br><small style="font-weight:500;opacity:.85">TRC-20</small></button>
-      <button class="sh-seg"   onclick="setPay('card',this)">💳 Card<br><small style="font-weight:500;opacity:.85">Visa/MC</small></button>
+    <!-- Type + Sort bar 合并在头部内 -->
+    <div style="display:flex;gap:6px;flex-wrap:wrap;padding-bottom:12px;margin-top:8px;">
+      <div class="sh-type-bar" id="typeBar" style="display:none;border:none;padding:0;background:none;gap:6px;">
+        <button class="sh-type-btn on" data-type="all"      onclick="filterType('all',this)">全部</button>
+        <button class="sh-type-btn"    data-type="local"    onclick="filterType('local',this)">本地</button>
+        <button class="sh-type-btn"    data-type="regional" onclick="filterType('regional',this)">区域</button>
+        <button class="sh-type-btn"    data-type="global"   onclick="filterType('global',this)">全球</button>
+      </div>
+      <div class="sh-sort-bar" id="sortBar" style="display:none;background:none;border:none;padding:0;flex-shrink:0;">
+        <span class="sh-sort-lbl">排序：</span>
+        <button class="sh-sort-btn on" data-sort="price" onclick="setSort('price',this)">💰 价格</button>
+        <button class="sh-sort-btn"   data-sort="data"  onclick="setSort('data',this)">📶 流量</button>
+        <button class="sh-sort-btn"   data-sort="days"  onclick="setSort('days',this)">📅 时长</button>
+        <button class="sh-sort-btn"   data-sort="value" onclick="setSort('value',this)">💡 性价比</button>
+      </div>
     </div>
-    <button class="sh-confirm" id="confirmBtn" onclick="doConfirm()">继续支付</button>
-    <div class="sh-trust">
-      <span>⚡ 即时发货</span>
-      <span class="sh-trust-sep">·</span>
-      <span>🔒 安全结账</span>
-      <span class="sh-trust-sep">·</span>
-      <span>🛡️ 7天退款</span>
-      <span class="sh-trust-sep">·</span>
-      <a href="https://wa.me/19402382990" target="_blank" class="sh-trust">💬 客服</a>
+  </div>
+
+  <!-- 套餐列表 + 结账 -->
+  <div class="sh-plan-inner">
+    <div class="sh-plan-list" id="planList">
+      <div class="pc sk-plan"></div>
+      <div class="pc sk-plan"></div>
+      <div class="pc sk-plan"></div>
+    </div>
+
+    <!-- 结账区 -->
+    <div class="sh-checkout" id="checkoutBar">
+      <div class="sh-co-row">
+        <div>
+          <div class="sh-co-plan" id="coName"></div>
+          <div class="sh-co-sub" id="coSpec"></div>
+        </div>
+        <div class="sh-co-price" id="coPrice"></div>
+      </div>
+      <input class="sh-email" id="emailInput" type="email" placeholder="你的邮箱 — eSIM 将发送到这里"/>
+      <div class="sh-pay-seg" id="paySeg">
+        <button class="sh-seg on" onclick="setPay('usdt-ton',this)">💎 USDT<br><small style="font-weight:500;opacity:.85">Telegram</small></button>
+        <button class="sh-seg"   onclick="setPay('usdt-trc',this)">💵 USDT<br><small style="font-weight:500;opacity:.85">TRC-20</small></button>
+        <button class="sh-seg"   onclick="setPay('card',this)">💳 Card<br><small style="font-weight:500;opacity:.85">Visa/MC</small></button>
+      </div>
+      <button class="sh-confirm" id="confirmBtn" onclick="doConfirm()">继续支付</button>
+      <div class="sh-trust">
+        <span>⚡ 即时发货</span><span class="sh-trust-sep">·</span>
+        <span>🔒 安全结账</span><span class="sh-trust-sep">·</span>
+        <span>🛡️ 7天退款</span><span class="sh-trust-sep">·</span>
+        <a href="https://wa.me/19402382990" target="_blank" class="sh-trust">💬 客服</a>
+      </div>
     </div>
   </div>
 </div>
@@ -846,7 +830,8 @@ async function openCountry(code) {
   document.getElementById('planList').innerHTML  = '<div class="pc sk-plan"></div><div class="pc sk-plan"></div><div class="pc sk-plan"></div>';
   document.getElementById('checkoutBar').classList.remove('on');
 
-  openSheet();
+  // 显示内联套餐面板，高亮选中的国家卡片
+  showPlansPanel(code);
 
   // Fetch (cached)
   if (!planCache[code]) {
@@ -1093,17 +1078,23 @@ async function doConfirm() {
 }
 
 /* ═══════════════════════════════════════════════════════
-   Sheet open/close
+   内联套餐面板
 ═══════════════════════════════════════════════════════ */
-function openSheet() {
-  document.getElementById('sheet').classList.add('on');
-  document.getElementById('overlay').classList.add('on');
-  document.body.style.overflow='hidden';
+function showPlansPanel(code) {
+  const wrap = document.getElementById('plansWrap');
+  // 面板始终可见，无需 toggle
+  // 高亮选中的国家卡片
+  document.querySelectorAll('.cc').forEach(c => c.classList.remove('cc-sel'));
+  const selCard = document.getElementById('cc-' + code);
+  if (selCard) selCard.classList.add('cc-sel');
+  // 平滑滚动到套餐面板
+  setTimeout(() => wrap.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80);
 }
 function closeSheet() {
-  document.getElementById('sheet').classList.remove('on');
-  document.getElementById('overlay').classList.remove('on');
-  document.body.style.overflow='';
+  // 兼容旧调用，内联模式无需关闭
+}
+function openSheet() {
+  // 兼容旧调用
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1190,7 +1181,7 @@ function buildPlanCard(p, i, bestGBIdx) {
 // renderFilteredPlans 已合并至 renderPlans()
 
 /* ═══════════════════════════════════════════════════════
-   Preload popular prices
+   Preload popular prices + 自动预加载
 ═══════════════════════════════════════════════════════ */
 function preloadPopular() {
   TABS_DATA.popular.list.forEach(code => {
@@ -1230,42 +1221,12 @@ document.getElementById('searchInput').addEventListener('input', function(){
 
 renderGrid();
 preloadPopular();
+// 页面加载后自动预选日本，让用户直接看到套餐
+setTimeout(() => openCountry('JP'), 300);
 </script>
 <script src="/js/i18n.js"></script>
 <script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
 
-<!-- WhatsApp 悬浮客服按钮 -->
-<style>
-.wa-float {
-  position: fixed; bottom: 24px; right: 20px; z-index: 9999;
-  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
-}
-.wa-float-btn {
-  width: 56px; height: 56px; background: #25d366; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,.45);
-  text-decoration: none; font-size: 28px;
-  animation: wa-pulse 2.5s ease-in-out infinite;
-  transition: transform .2s;
-}
-.wa-float-btn:hover { transform: scale(1.1); }
-@keyframes wa-pulse {
-  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.45); }
-  50%      { box-shadow: 0 4px 32px rgba(37,211,102,.75); }
-}
-.wa-float-label {
-  background: #fff; color: #1a1a2e; font-size: 12px; font-weight: 600;
-  padding: 6px 12px; border-radius: 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,.12);
-  white-space: nowrap; pointer-events: none;
-  opacity: 0; transform: translateX(8px);
-  transition: opacity .3s, transform .3s;
-}
-.wa-float:hover .wa-float-label { opacity: 1; transform: translateX(0); }
-</style>
-<div class="wa-float">
-  <div class="wa-float-label">💬 30-min support</div>
-  <a class="wa-float-btn" href="https://wa.me/19402382990?text=Hi%2C%20I%20need%20help%20with%20a%20SimRyoko%20eSIM." target="_blank" rel="noopener" title="WhatsApp Support">💬</a>
-</div>
+
 </body>
 </html>
