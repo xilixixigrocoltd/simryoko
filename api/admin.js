@@ -324,6 +324,88 @@ async function handleB2BApply(req, res) {
   }
 }
 
+// ── 购后跟进邮件（3天后自动发送，要好评+推荐码）────────────────────────────
+async function handleFollowup(req, res) {
+  try {
+    const { sendRawEmail } = require('./_email');
+    const orders = await store.listOrders();
+    const now = Date.now();
+    const THREE_DAYS = 3 * 24 * 60 * 60 * 1000;
+    const FOUR_DAYS  = 4 * 24 * 60 * 60 * 1000;
+    let sent = 0, skipped = 0;
+
+    for (const order of orders) {
+      if (!order || !order.email) { skipped++; continue; }
+      if (order.status !== 'paid' && order.status !== 'delivered') { skipped++; continue; }
+      if (order.followupSent) { skipped++; continue; }
+
+      const age = now - (order.paidAt || order.createdAt || 0);
+      if (age < THREE_DAYS || age > FOUR_DAYS) { skipped++; continue; }
+
+      // 生成推荐码（邮箱 hash 前6位，与 referral.js 一致）
+      const crypto = require('crypto');
+      const refCode = crypto.createHash('sha256').update(order.email.toLowerCase()).digest('hex').substring(0, 6).toUpperCase();
+      const refLink = `https://simryoko.com?ref=${refCode}`;
+
+      const html = `
+<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+body{font-family:Inter,Helvetica,sans-serif;background:#f8f9ff;margin:0;padding:0}
+.wrap{max-width:560px;margin:40px auto;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(102,126,234,.1)}
+.header{background:linear-gradient(135deg,#667eea,#764ba2);padding:32px;text-align:center}
+.header h1{color:#fff;font-size:1.5rem;margin:0}
+.body{padding:32px}
+.stars{font-size:2rem;text-align:center;margin:16px 0;color:#f59e0b}
+h2{color:#1a1a2e;font-size:1.1rem}
+p{color:#555;line-height:1.7}
+.cta{display:block;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;text-decoration:none;padding:14px 28px;border-radius:10px;text-align:center;font-weight:700;margin:24px 0}
+.ref-box{background:#f8f9ff;border:1px solid rgba(102,126,234,.2);border-radius:10px;padding:20px;margin:24px 0}
+.ref-code{font-size:1.5rem;font-weight:800;color:#667eea;letter-spacing:3px;text-align:center;margin:8px 0}
+.footer{background:#f8f9ff;padding:20px 32px;text-align:center;color:#999;font-size:0.8rem}
+</style></head><body>
+<div class="wrap">
+  <div class="header"><h1>How was your trip? ✈️</h1></div>
+  <div class="body">
+    <div class="stars">★★★★★</div>
+    <p>Hi there!</p>
+    <p>It's been a few days since you used your <b>${order.productName || 'SimRyoko eSIM'}</b>. We hope your trip was amazing and the eSIM kept you connected throughout! 🌍</p>
+
+    <h2>📝 Share your experience</h2>
+    <p>Your feedback helps other travelers make better choices. Would you mind leaving a quick review?</p>
+    <a href="https://t.me/Simryokoesimbot?start=review_${order.id}" class="cta">Leave a Review (takes 30 seconds)</a>
+
+    <h2>💰 Earn with your referral link</h2>
+    <div class="ref-box">
+      <p style="margin:0;font-size:.9rem;color:#666;text-align:center">Your personal referral code</p>
+      <div class="ref-code">${refCode}</div>
+      <p style="margin:0;font-size:.85rem;color:#888;text-align:center">Share this link → earn <b>10% commission</b> on every order</p>
+      <p style="margin:8px 0 0;font-size:.85rem;color:#667eea;text-align:center;word-break:break-all">${refLink}</p>
+    </div>
+
+    <p>Minimum payout: $10 USDT · Paid on request · No expiry</p>
+    <p>Questions? Reply to this email or <a href="https://wa.me/19402382990" style="color:#667eea">WhatsApp us</a>.</p>
+    <p>See you on your next trip! 🦞<br><b>SimRyoko Team</b></p>
+  </div>
+  <div class="footer">SimRyoko · <a href="https://simryoko.com" style="color:#667eea">simryoko.com</a> · <a href="mailto:noreply@simryoko.com" style="color:#667eea">Unsubscribe</a></div>
+</div></body></html>`;
+
+      try {
+        await sendRawEmail({ to: order.email, subject: `How was your trip? ✈️ + Your referral code`, html });
+        await store.updateOrder(order.id, { followupSent: true, followupSentAt: now });
+        sent++;
+        console.log(`[followup] Sent to ${order.email} (order ${order.id})`);
+      } catch (e) {
+        console.error(`[followup] Failed for ${order.email}:`, e.message);
+      }
+    }
+
+    await tgNotify(`📧 *购后跟进邮件*\n发送: ${sent} 封 | 跳过: ${skipped} 封`);
+    return res.json({ success: true, sent, skipped });
+  } catch (err) {
+    console.error('[followup] Error:', err.message);
+    return res.status(500).json({ error: err.message });
+  }
+}
+
 // ── Router ────────────────────────────────────────────────────────────────────
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -341,6 +423,7 @@ module.exports = async (req, res) => {
   if (path.includes('/resend'))                  return handleResend(req, res);
   if (path.includes('/register-stripe-webhook')) return handleRegisterStripeWebhook(req, res);
   if (path.includes('/submit-dispute'))          return handleSubmitDispute(req, res);
+  if (path.includes('/followup'))                return handleFollowup(req, res);
 
   return res.status(404).json({ error: 'Unknown admin action' });
 };
