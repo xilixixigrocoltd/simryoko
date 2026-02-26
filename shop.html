@@ -1166,6 +1166,22 @@ function renderPlans() {
       </button>`);
   }
 
+  // view_item_list — 套餐列表展示（GA4 漏斗第2步）
+  if (window.gtag && plans.length) {
+    gtag('event', 'view_item_list', {
+      item_list_id: curCode,
+      item_list_name: (DEST[curCode]?.n || curCode) + ' eSIM Plans',
+      items: plans.slice(0, 5).map((p, i) => ({
+        item_id: p.id,
+        item_name: p.nameEn || p.name,
+        price: parseFloat(p.price),
+        index: i,
+        item_category: 'eSIM',
+        item_category2: curCode
+      }))
+    });
+  }
+
   // Auto select first
   selPlan = plans[0];
   showCheckout();
@@ -1268,7 +1284,22 @@ function selectPlan(idx, el) {
   el.classList.add('sel');
   selPlan = getVisiblePlans()[idx];
   showCheckout();
-  if (selPlan && window.trackSelectPlan) trackSelectPlan(selPlan);
+  if (selPlan) {
+    // select_item — 用户主动点击选择套餐
+    if (window.trackSelectPlan) trackSelectPlan(selPlan);
+    // view_item — 查看套餐详情（GA4 标准事件，用于漏斗完整性）
+    if (window.gtag) gtag('event', 'view_item', {
+      currency: 'USD',
+      value: parseFloat(selPlan.price),
+      items: [{
+        item_id: selPlan.id,
+        item_name: selPlan.nameEn || selPlan.name,
+        price: parseFloat(selPlan.price),
+        item_category: 'eSIM',
+        item_category2: curCode
+      }]
+    });
+  }
 }
 
 function quickBuy(idx) {

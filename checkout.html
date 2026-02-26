@@ -488,6 +488,7 @@ function renderSummary() {
 }
 
 function selectPayment(method) {
+  const prev = selectedPayment;
   selectedPayment = method;
   // Update tabs
   ['card','alipay','wechat','ton','usdt'].forEach(m => {
@@ -512,6 +513,19 @@ function selectPayment(method) {
   };
   const btn = document.getElementById('payBtn');
   if (btn) btn.textContent = (labels[method] || 'Pay Now') + ' →';
+
+  // GA4：支付方式选择追踪
+  if (window.gtag && product) {
+    gtag('event', 'payment_method_select', {
+      event_category: 'Checkout',
+      payment_method: method,
+      previous_method: prev || 'none',
+      product_id: product.id,
+      product_name: product.nameEn || product.name,
+      value: parseFloat(product.price),
+      currency: 'USD'
+    });
+  }
 }
 
 async function submitOrder() {
@@ -523,6 +537,22 @@ async function submitOrder() {
     return;
   }
   if (!product) { return; }
+
+  // GA4：begin_checkout — 用户点击支付（漏斗关键节点）
+  if (window.gtag) {
+    gtag('event', 'begin_checkout', {
+      currency: 'USD',
+      value: parseFloat(product.price),
+      payment_type: selectedPayment,
+      items: [{
+        item_id: product.id,
+        item_name: product.nameEn || product.name,
+        price: parseFloat(product.price),
+        quantity: 1,
+        item_category: 'eSIM'
+      }]
+    });
+  }
 
   const btn = document.getElementById('payBtn');
   btn.disabled = true;
