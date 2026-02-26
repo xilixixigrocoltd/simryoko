@@ -113,13 +113,14 @@ function buildQrImageUrl(lpaOrCode) {
 function extractEsim(r) {
   const d = r.data || r;
   // B2B 订单详情：esimData.sims[0] 包含完整数据
+  // 注意：API 返回的是 snake_case（qrcode_url / qrcode / matching_id）
   const sim = d.esimData?.sims?.[0] || {};
   return {
-    qrCodeUrl:      sim.qrCodeUrl      || d.esimQrCode       || '',
-    qrCode:         sim.qrCode         || d.esimQrCode        || '',
-    iccid:          sim.iccid          || d.esimIccid         || '',
-    activationCode: sim.activationCode || d.esimActivationCode || '',
-    directAppleUrl: sim.directAppleUrl || '',
+    qrCodeUrl:      sim.qrcode_url     || d.esimQrCode        || '',
+    qrCode:         sim.qrcode         || d.esimQrCode         || '',
+    iccid:          sim.iccid          || d.esimIccid          || '',
+    activationCode: sim.matching_id    || d.esimActivationCode || '',
+    directAppleUrl: sim.direct_apple_installation_url || '',
   };
 }
 

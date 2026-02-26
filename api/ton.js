@@ -107,10 +107,11 @@ async function handleWebhook(req, res) {
       const esimResult = await placeOrderWithEsim(order.productId, 1);
       if (!esimResult?.success) throw new Error(esimResult?.message || 'Agent order failed');
       const d = esimResult.data || {};
+      // API 返回 snake_case 字段名（qrcode_url / qrcode / matching_id）
       const sim = d.esimData?.sims?.[0] || {};
-      const rawQrUrl      = sim.qrCodeUrl      || d.esimQrCode         || '';
-      const rawActivation = sim.activationCode || d.esimActivationCode || '';
-      const iccid         = sim.iccid          || d.esimIccid          || '';
+      const rawQrUrl      = sim.qrcode_url  || d.esimQrCode         || '';
+      const rawActivation = sim.matching_id || d.esimActivationCode || '';
+      const iccid         = sim.iccid       || d.esimIccid          || '';
       const qrImageUrl    = buildQrImageUrl(rawQrUrl || rawActivation);
       const esimInfo = { qrCodeUrl: qrImageUrl, activationCode: rawActivation, iccid };
       await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: qrImageUrl, iccid, activationCode: rawActivation, country: order.country });

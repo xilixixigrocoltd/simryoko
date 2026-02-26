@@ -112,8 +112,9 @@ async function fulfillOrder(orderId, order) {
     // 解析 eSIM 数据（placeOrderWithEsim 已合并订单详情）
     const d = orderResult.data || {};
     const sim = d.esimData?.sims?.[0] || {};
-    const rawActivation = sim.activationCode || d.esimActivationCode || '';
-    const rawQrUrl      = sim.qrCodeUrl      || d.esimQrCode         || '';
+    // API 返回 snake_case 字段名（qrcode_url / qrcode / matching_id）
+    const rawActivation = sim.matching_id    || d.esimActivationCode || '';
+    const rawQrUrl      = sim.qrcode_url     || d.esimQrCode         || '';
     const iccid         = sim.iccid          || d.esimIccid          || '';
 
     // 生成 QR 码图片 URL（用外部服务，避免 data: URI 被邮件客户端屏蔽）
