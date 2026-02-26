@@ -137,8 +137,14 @@ async function initStripe() {
   }
 }
 
-function mountStripeCard() {
-  if (!stripe || cardElement) return;
+function mountStripeCard(retries) {
+  retries = retries || 0;
+  // stripe 未就绪时自动重试（最多20次，每200ms）
+  if (!stripe) {
+    if (retries < 20) setTimeout(() => mountStripeCard(retries + 1), 200);
+    return;
+  }
+  if (cardElement) return; // 已挂载
   stripeElements = stripe.elements();
   cardElement = stripeElements.create('card', {
     style: {
@@ -151,7 +157,7 @@ function mountStripeCard() {
       },
       invalid: { color: '#e53e3e', iconColor: '#e53e3e' }
     },
-    hidePostalCode: false
+    hidePostalCode: true
   });
   cardElement.mount('#stripe-card-element');
   cardElement.on('change', function(event) {
@@ -295,9 +301,14 @@ async function submitOrder() {
   } else {
     // Stripe 信用卡支付流程
     if (!stripe || !cardElement) {
-      alert('Card payment is loading, please wait a moment and try again.');
+      // Stripe 还未加载完成，等待后重试
+      const errEl = document.getElementById('stripe-card-error');
+      errEl.textContent = 'Card payment is loading, please wait 2 seconds and try again.';
+      errEl.style.display = 'block';
       btn.textContent = '💳 Pay with Card →';
       btn.disabled = false;
+      // 触发自动挂载重试
+      mountStripeCard();
       return;
     }
 
@@ -360,8 +371,8 @@ async function submitOrder() {
   }
 }
 
-loadProduct();
-initStripe();
+// 先初始化 Stripe，再加载产品（避免 selectPayment('card') 在 stripe 就绪前触发）
+initStripe().then(() => loadProduct());
 </script>
 <script src="/js/i18n.js"></script>
 
