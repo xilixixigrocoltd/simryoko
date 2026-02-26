@@ -88,10 +88,6 @@
       "destination": "/api/stripe"
     },
     {
-      "source": "/api/paddle/:action",
-      "destination": "/api/paddle"
-    },
-    {
       "source": "/api/ton/:action",
       "destination": "/api/ton"
     },

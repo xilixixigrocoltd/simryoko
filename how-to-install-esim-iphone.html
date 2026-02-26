@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Install eSIM on iPhone (iOS 17 &amp; 18) — Complete 2026 Guide | SimRyoko</title>
+<meta name="description" content="Step-by-step guide to install eSIM on any iPhone model (iPhone XS and later). Learn how to scan QR code, use activation code, or direct install on iOS 17 and 18.">
+<meta name="keywords" content="install esim iphone, esim setup iphone, iphone esim qr code, how to add esim iphone, ios 17 esim, ios 18 esim">
+<meta property="og:title" content="How to Install eSIM on iPhone — Complete 2026 Guide | SimRyoko">
+<meta property="og:description" content="Step-by-step guide to install eSIM on any iPhone model (iPhone XS and later). QR code, activation code, and direct install methods covered.">
+<meta property="og:url" content="https://simryoko.com/how-to-install-esim-iphone">
+<link rel="canonical" href="https://simryoko.com/how-to-install-esim-iphone">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which iPhone models support eSIM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "iPhone XS, XS Max, and XR (2018) and all newer models support eSIM. This includes the iPhone 11 series, iPhone 12 series, iPhone 13 series, iPhone 14 series, iPhone 15 series, and iPhone 16 series. iPhone 14 and later models sold in the USA are eSIM-only with no physical SIM tray."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the eSIM option not showing in my iPhone settings?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The most common reasons are: (1) Your iPhone is carrier-locked — contact your carrier to unlock it. (2) You already have 2 eSIMs installed (iPhone supports up to 8 stored but only 2 active at once). (3) Your iOS version is outdated — update to iOS 17 or iOS 18. (4) The device is not eSIM-compatible (iPhone X or earlier)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I install an eSIM on iPhone using a QR code?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Go to Settings → Mobile Service (or Cellular) → Add eSIM → Use QR Code. Point your camera at the QR code provided by your eSIM provider. Tap 'Add Mobile Plan' and follow the on-screen prompts. The eSIM will be installed in under 2 minutes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between eSIM installation on iOS 17 vs iOS 18?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "iOS 18 reorganized some menus. On iOS 17, you access eSIM via Settings → Cellular → Add Cellular Plan. On iOS 18, the path is Settings → Mobile Service → Add eSIM. The core steps are the same; only the menu labels differ. Both support QR code scan, manual activation code entry, and direct install (carrier link)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "My eSIM is installed but there's no internet connection. What do I do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First, make sure the eSIM plan is set as your data line: Settings → Mobile Service → select your eSIM → enable 'Turn On This Line' and 'Use for Mobile Data'. If still no connection, check the APN settings provided by your eSIM carrier and enter them manually under Mobile Data Network. Toggling Airplane Mode on and off often helps re-register to the network."
+      }
+    }
+  ]
+}
+</script>
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a2e; }
+
+  /* Nav */
+  .nav { background: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-weight: 800; font-size: 1.3rem; color: #667eea; text-decoration: none; }
+  .nav-cta { background: #667eea; color: white; padding: 10px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 20px; text-align: center; }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 16px; }
+  .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 620px; margin: 0 auto 32px; }
+  .badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 50px; padding: 6px 18px; font-size: 0.9rem; margin-bottom: 20px; }
+  .btn-primary { display: inline-block; background: white; color: #667eea; font-weight: 700; font-size: 1.1rem; padding: 16px 40px; border-radius: 50px; text-decoration: none; transition: transform 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); }
+
+  .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+  /* Compatible Models */
+  .section { padding: 60px 20px; }
+  .section-alt { padding: 60px 20px; background: #f8f9ff; }
+  .section h2, .section-alt h2 { font-size: 2rem; margin-bottom: 12px; text-align: center; }
+  .section-subtitle { text-align: center; color: #666; margin-bottom: 40px; font-size: 1rem; }
+
+  .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; max-width: 800px; margin: 0 auto; }
+  .model-tag { background: white; border: 1.5px solid #e0e4ff; border-radius: 12px; padding: 12px 16px; text-align: center; font-size: 0.9rem; font-weight: 600; color: #667eea; }
+  .model-tag.esim-only { border-color: #667eea; background: #f0f2ff; }
+  .model-tag.esim-only::after { content: ' ✦'; font-size: 0.75rem; }
+  .model-note { text-align: center; margin-top: 16px; font-size: 0.85rem; color: #888; }
+
+  /* Method Cards */
+  .method-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .method-card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border-top: 4px solid #667eea; }
+  .method-num { background: #667eea; color: white; display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-weight: 800; font-size: 1rem; margin-bottom: 14px; }
+  .method-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+  .method-card p { color: #555; font-size: 0.93rem; line-height: 1.65; }
+  .method-card ol { color: #555; font-size: 0.93rem; line-height: 1.65; padding-left: 18px; margin-top: 8px; }
+  .method-card ol li { margin-bottom: 6px; }
+  .method-badge { display: inline-block; font-size: 0.75rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
+  .badge-green { background: #e6f9f0; color: #1a8a4a; }
+  .badge-blue { background: #e8f0fe; color: #1a56db; }
+  .badge-purple { background: #f0e8fe; color: #6b21a8; }
+
+  /* iOS diff table */
+  .ios-table { width: 100%; border-collapse: collapse; max-width: 700px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .ios-table th { background: #667eea; color: white; padding: 14px 20px; text-align: left; font-size: 1rem; }
+  .ios-table td { padding: 13px 20px; border-bottom: 1px solid #f0f0f0; font-size: 0.93rem; color: #444; }
+  .ios-table tr:last-child td { border-bottom: none; }
+  .ios-table tr:nth-child(even) td { background: #fafbff; }
+
+  /* Troubleshoot */
+  .trouble-list { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .trouble-item { background: white; border-radius: 14px; padding: 22px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.07); display: flex; gap: 16px; align-items: flex-start; }
+  .trouble-icon { font-size: 1.8rem; flex-shrink: 0; }
+  .trouble-item h3 { font-size: 1rem; margin-bottom: 6px; color: #1a1a2e; }
+  .trouble-item p { color: #555; font-size: 0.9rem; line-height: 1.6; }
+  .trouble-item code { background: #f0f2ff; color: #667eea; padding: 2px 6px; border-radius: 5px; font-size: 0.85rem; }
+
+  /* FAQ */
+  .faq-list { max-width: 700px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid #eee; padding: 20px 0; }
+  .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; color: #1a1a2e; }
+  .faq-item p { color: #555; line-height: 1.7; font-size: 0.95rem; }
+
+  /* CTA */
+  .cta-bottom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; }
+  .cta-bottom h2 { font-size: 2rem; margin-bottom: 16px; }
+  .cta-bottom p { opacity: 0.9; margin-bottom: 32px; font-size: 1.05rem; }
+  .btn-white { display: inline-block; background: white; color: #667eea; font-weight: 700; padding: 16px 40px; border-radius: 50px; text-decoration: none; font-size: 1.05rem; }
+  .btn-white:hover { transform: translateY(-2px); }
+
+  /* Footer */
+  footer { background: #1a1a2e; color: #999; padding: 30px 20px; text-align: center; font-size: 0.9rem; }
+  footer a { color: #999; text-decoration: none; margin: 0 12px; }
+  footer a:hover { color: #ccc; }
+</style>
+<script src="/js/analytics.js"></script>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="nav-logo">🌐 SimRyoko</a>
+  <a href="/shop.html" class="nav-cta">Buy an eSIM →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">📱 iOS 17 &amp; iOS 18 · All Methods Covered</div>
+  <h1>How to Install eSIM on iPhone</h1>
+  <p>The complete 2026 guide — scan a QR code, enter an activation code, or tap a direct install link. Works on iPhone XS and later.</p>
+  <a href="/shop.html" class="btn-primary">Get an eSIM to Test →</a>
+</section>
+
+<!-- COMPATIBLE MODELS -->
+<section class="section">
+  <div class="container">
+    <h2>Supported iPhone Models</h2>
+    <p class="section-subtitle">All iPhones from 2018 onwards support eSIM. Models marked ✦ are eSIM-only (no physical SIM tray).</p>
+    <div class="model-grid">
+      <div class="model-tag">iPhone XS</div>
+      <div class="model-tag">iPhone XS Max</div>
+      <div class="model-tag">iPhone XR</div>
+      <div class="model-tag">iPhone 11</div>
+      <div class="model-tag">iPhone 11 Pro</div>
+      <div class="model-tag">iPhone 11 Pro Max</div>
+      <div class="model-tag">iPhone SE (2nd gen)</div>
+      <div class="model-tag">iPhone 12 series</div>
+      <div class="model-tag">iPhone 13 series</div>
+      <div class="model-tag">iPhone SE (3rd gen)</div>
+      <div class="model-tag esim-only">iPhone 14 (US)</div>
+      <div class="model-tag esim-only">iPhone 14 Plus (US)</div>
+      <div class="model-tag esim-only">iPhone 14 Pro (US)</div>
+      <div class="model-tag esim-only">iPhone 14 Pro Max (US)</div>
+      <div class="model-tag esim-only">iPhone 15 series</div>
+      <div class="model-tag esim-only">iPhone 16 series</div>
+    </div>
+    <p class="model-note">✦ US iPhone 14 and all iPhone 15/16 models are eSIM-only and have no physical SIM tray. Non-US iPhone 14 models have a physical SIM + eSIM.</p>
+  </div>
+</section>
+
+<!-- 3 INSTALL METHODS -->
+<section class="section-alt">
+  <div class="container">
+    <h2>3 Ways to Install an eSIM on iPhone</h2>
+    <p class="section-subtitle">Your eSIM provider will tell you which method to use. QR code is most common.</p>
+    <div class="method-cards">
+
+      <div class="method-card">
+        <div class="method-badge badge-green">📷 Most Common</div>
+        <h3>Method 1 — Scan QR Code</h3>
+        <p>Best when you receive a QR code image via email or PDF from your eSIM provider.</p>
+        <ol>
+          <li>Open <strong>Settings</strong></li>
+          <li>Tap <strong>Mobile Service</strong> (iOS 18) or <strong>Cellular</strong> (iOS 17)</li>
+          <li>Tap <strong>Add eSIM</strong> → <strong>Use QR Code</strong></li>
+          <li>Point your camera at the QR code</li>
+          <li>Tap <strong>Add Mobile Plan</strong> and confirm</li>
+          <li>Label the plan (e.g. "Thailand Data") and tap Done</li>
+        </ol>
+      </div>
+
+      <div class="method-card">
+        <div class="method-badge badge-blue">⌨️ Manual Entry</div>
+        <h3>Method 2 — Activation Code</h3>
+        <p>Use this if you cannot scan the QR code (e.g. the QR is on the same device).</p>
+        <ol>
+          <li>Open <strong>Settings</strong> → <strong>Mobile Service</strong></li>
+          <li>Tap <strong>Add eSIM</strong> → <strong>Enter Details Manually</strong></li>
+          <li>Type in the <strong>SM-DP+ Address</strong> (server URL) and <strong>Activation Code</strong> provided by your carrier</li>
+          <li>Tap <strong>Next</strong> and follow prompts</li>
+          <li>Your eSIM will be installed within seconds</li>
+        </ol>
+      </div>
+
+      <div class="method-card">
+        <div class="method-badge badge-purple">🔗 iOS 16+ Only</div>
+        <h3>Method 3 — Direct Install Link</h3>
+        <p>Some carriers send a tap-to-install link via email or SMS (supported on iOS 16 and later).</p>
+        <ol>
+          <li>Open the email or SMS from your eSIM provider</li>
+          <li>Tap the <strong>install link</strong> (often a button labeled "Install eSIM")</li>
+          <li>Safari opens and prompts: <em>"Allow this website to set up a cellular plan?"</em></li>
+          <li>Tap <strong>Allow</strong></li>
+          <li>Follow the on-screen steps — no QR code needed</li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- iOS 17 vs iOS 18 -->
+<section class="section">
+  <div class="container">
+    <h2>iOS 17 vs iOS 18 — Menu Differences</h2>
+    <p class="section-subtitle">Apple renamed a few menus in iOS 18. Here's exactly where to find the eSIM settings on each version.</p>
+    <table class="ios-table">
+      <thead>
+        <tr>
+          <th>Action</th>
+          <th>iOS 17 Path</th>
+          <th>iOS 18 Path</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Add a new eSIM</td>
+          <td>Settings → Cellular → Add Cellular Plan</td>
+          <td>Settings → Mobile Service → Add eSIM</td>
+        </tr>
+        <tr>
+          <td>Switch active eSIM</td>
+          <td>Settings → Cellular → [select plan] → Turn On</td>
+          <td>Settings → Mobile Service → [select plan] → Turn On This Line</td>
+        </tr>
+        <tr>
+          <td>Set data line</td>
+          <td>Settings → Cellular → Cellular Data</td>
+          <td>Settings → Mobile Service → Mobile Data</td>
+        </tr>
+        <tr>
+          <td>Edit APN settings</td>
+          <td>Settings → Cellular → Cellular Data Options → Cellular Data Network</td>
+          <td>Settings → Mobile Service → [plan] → Mobile Data Network</td>
+        </tr>
+        <tr>
+          <td>Delete an eSIM</td>
+          <td>Settings → Cellular → [plan] → Remove Cellular Plan</td>
+          <td>Settings → Mobile Service → [plan] → Delete eSIM</td>
+        </tr>
+        <tr>
+          <td>Transfer eSIM to new iPhone</td>
+          <td>Not available for travel eSIMs</td>
+          <td>Not available for travel eSIMs</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="text-align:center;margin-top:16px;font-size:0.85rem;color:#888;">💡 To check your iOS version: Settings → General → About → iOS Version</p>
+  </div>
+</section>
+
+<!-- TROUBLESHOOTING -->
+<section class="section-alt">
+  <div class="container">
+    <h2>Troubleshooting Common eSIM Issues</h2>
+    <p class="section-subtitle">Still stuck? Here are the most common problems and how to fix them.</p>
+    <div class="trouble-list">
+
+      <div class="trouble-item">
+        <div class="trouble-icon">🚫</div>
+        <div>
+          <h3>eSIM option not showing in Settings</h3>
+          <p>Your phone may be <strong>carrier-locked</strong>. Contact your current carrier to unlock it. Also check: <code>Settings → General → About</code> — if there's no "EID" field, your device doesn't support eSIM. Make sure iOS is up to date.</p>
+        </div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-icon">📡</div>
+        <div>
+          <h3>eSIM installed but no internet connection</h3>
+          <p>Go to <code>Settings → Mobile Service → [your eSIM]</code> and make sure "Use for Mobile Data" is enabled. Then check the APN: tap <code>Mobile Data Network</code> and enter the APN string provided by your eSIM carrier. Finally, toggle Airplane Mode on/off to re-register to the network.</p>
+        </div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-icon">⚙️</div>
+        <div>
+          <h3>How to set APN manually</h3>
+          <p>Go to <code>Settings → Mobile Service → [eSIM plan] → Mobile Data Network</code>. Under "Mobile Data", enter the APN value your provider gave you (e.g. <code>internet</code> or <code>data.carrier.net</code>). Leave username and password blank unless specified. Restart your phone after saving.</p>
+        </div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-icon">❌</div>
+        <div>
+          <h3>QR code scan keeps failing</h3>
+          <p>Make sure you're scanning from <strong>a different device or printed copy</strong> — your iPhone can't scan a QR code displayed on its own screen. Clean your camera lens. If the QR still fails, switch to Method 2 (manual activation code) using the SM-DP+ address and activation code in your email.</p>
+        </div>
+      </div>
+
+      <div class="trouble-item">
+        <div class="trouble-icon">🔄</div>
+        <div>
+          <h3>eSIM shows "No Service" after arriving in destination</h3>
+          <p>Make sure <strong>Data Roaming</strong> is enabled: <code>Settings → Mobile Service → [eSIM] → Data Roaming → ON</code>. Some travel eSIMs require roaming to be on because they technically roam on local partner networks. Toggle your eSIM off and on again to force re-registration.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <h2>eSIM iPhone FAQ</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>Which iPhone models support eSIM?</h3>
+        <p>iPhone XS, XS Max, and XR (2018) and all newer models support eSIM. iPhone 14 and later models sold in the USA are eSIM-only with no physical SIM tray. If you see an "EID" number under Settings → General → About, your iPhone supports eSIM.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Why is the eSIM option not showing in my iPhone settings?</h3>
+        <p>The most common reasons are: (1) Your iPhone is carrier-locked — contact your carrier to unlock it. (2) You already have 2 eSIMs active (iPhone supports up to 8 stored but only 2 active at once). (3) Your iOS is outdated — update to iOS 17 or iOS 18. (4) The device is iPhone X or earlier, which don't support eSIM.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How do I install an eSIM on iPhone using a QR code?</h3>
+        <p>Go to Settings → Mobile Service → Add eSIM → Use QR Code. Point your camera at the QR code from your eSIM provider. Tap 'Add Mobile Plan' and follow the on-screen prompts. The eSIM installs in under 2 minutes.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What is the difference between eSIM installation on iOS 17 vs iOS 18?</h3>
+        <p>iOS 18 renamed some menus. On iOS 17, navigate to Settings → Cellular → Add Cellular Plan. On iOS 18, it's Settings → Mobile Service → Add eSIM. The actual installation steps are identical on both versions.</p>
+      </div>
+      <div class="faq-item">
+        <h3>My eSIM is installed but there's no internet. What do I do?</h3>
+        <p>Check that the eSIM is set as your data line: Settings → Mobile Service → select your eSIM → enable "Use for Mobile Data". Then verify the APN setting under Mobile Data Network. Toggle Airplane Mode on/off to force reconnection. If still stuck, contact your eSIM provider for the correct APN string.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-bottom">
+  <div class="container">
+    <h2>Ready to Try an eSIM?</h2>
+    <p>Browse SimRyoko's travel eSIM plans — instant delivery, works on iOS 17 &amp; 18. Plans from $3.</p>
+    <a href="/shop.html" class="btn-white">Browse eSIM Plans →</a>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 SimRyoko · Powered by Xigro Co Limited, Hong Kong</div>
+  <div style="margin-top:10px;">
+    <a href="/terms.html">Terms</a>
+    <a href="/privacy.html">Privacy</a>
+    <a href="/b2b.html">B2B Partners</a>
+    <a href="https://t.me/Simryokoesimbot">Support</a>
+  </div>
+</footer>
+
+<script src="/js/i18n.js"></script>
+</body>
+</html>
