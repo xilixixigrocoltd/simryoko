@@ -125,6 +125,60 @@ const store = {
       console.error('[kv] listOrders error:', e.message);
       return [];
     }
+  },
+
+  // ── 推荐返利系统 ────────────────────────────────────────────────────────────
+
+  // 根据邮箱生成确定性6位推荐码
+  _genCode(email) {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let hash = 0;
+    for (let i = 0; i < email.length; i++) hash = (hash * 31 + email.charCodeAt(i)) >>> 0;
+    let code = '';
+    for (let i = 0; i < 6; i++) { code += chars[hash % chars.length]; hash = Math.floor(hash / chars.length) || (hash * 7 + 13); }
+    return code;
+  },
+
+  async getOrCreateReferral(email) {
+    const code = store._genCode(email.toLowerCase());
+    const existing = await kvGet(`ref:${code}`);
+    if (existing) return existing;
+    const data = {
+      code, email: email.toLowerCase(),
+      totalEarnings: 0, pendingPayout: 0, paidOut: 0,
+      count: 0, createdAt: new Date().toISOString(),
+      referrals: []
+    };
+    await kvSet(`ref:${code}`, data, 365 * 24 * 3600); // 1年TTL
+    return data;
+  },
+
+  async getReferral(code) {
+    return kvGet(`ref:${code.toUpperCase()}`);
+  },
+
+  // 返利积分（履单后调用）
+  async creditReferral(code, orderId, purchaseAmount) {
+    const COMMISSION_RATE = 0.10; // 10%
+    const PAYOUT_THRESHOLD = 10;  // $10 起付
+    const ref = await kvGet(`ref:${code.toUpperCase()}`);
+    if (!ref) return null;
+    const commission = parseFloat((purchaseAmount * COMMISSION_RATE).toFixed(2));
+    ref.totalEarnings  = parseFloat((ref.totalEarnings + commission).toFixed(2));
+    ref.pendingPayout  = parseFloat((ref.pendingPayout + commission).toFixed(2));
+    ref.count         += 1;
+    ref.referrals.push({ orderId, purchaseAmount, commission, date: new Date().toISOString() });
+    await kvSet(`ref:${ref.code}`, ref, 365 * 24 * 3600);
+    return { ref, commission, reachedThreshold: ref.pendingPayout >= PAYOUT_THRESHOLD };
+  },
+
+  async markReferralPaid(code, amount) {
+    const ref = await kvGet(`ref:${code.toUpperCase()}`);
+    if (!ref) return null;
+    ref.paidOut       = parseFloat((ref.paidOut + amount).toFixed(2));
+    ref.pendingPayout = parseFloat(Math.max(0, ref.pendingPayout - amount).toFixed(2));
+    await kvSet(`ref:${ref.code}`, ref, 365 * 24 * 3600);
+    return ref;
   }
 };
 

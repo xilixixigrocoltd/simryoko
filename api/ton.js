@@ -34,7 +34,7 @@ async function handleCreate(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   if (!applyRateLimit(req, res, 10, 60000)) return;
   try {
-    const { productId, email } = req.body;
+    const { productId, email, ref } = req.body;
     if (!productId || !email) return res.status(400).json({ error: 'Missing productId or email' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email address' });
 
@@ -42,9 +42,11 @@ async function handleCreate(req, res) {
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
     const usdPrice = parseFloat(product.price);
+    const refCode = ref && /^[A-Z0-9]{6}$/i.test(ref) ? ref.toUpperCase() : null;
     const order = await store.createOrder({
       productId: product.id, productName: product.nameEn || product.name,
       productPrice: usdPrice, email, country: product.countries?.[0]?.code || 'INT',
+      refCode,
     });
 
     const tonPrice = await getTonPrice();
@@ -117,6 +119,14 @@ async function handleWebhook(req, res) {
       await sendEsimEmail({ to: order.email, productName: order.productName, lpaString, iccid, activationCode: rawActivation, country: order.country });
       await store.updateOrder(orderId, { status: 'fulfilled', fulfilledAt: new Date().toISOString(), esimInfo });
       notifyOrderFulfilled({ ...order, esimInfo, paymentMethod: `TON/${invoice.asset}` }).catch(() => {});
+      // 推荐返利积分
+      if (order.refCode) {
+        const credit = await store.creditReferral(order.refCode, orderId, order.productPrice).catch(() => null);
+        if (credit?.reachedThreshold) {
+          const { notifyAdmin } = require('./_notify');
+          notifyAdmin(`🎁 <b>推荐返利待打款</b>\n推荐码: <code>${order.refCode}</code>\n待付金额: $${credit.ref.pendingPayout}\n邮箱: ${credit.ref.email}`).catch(() => {});
+        }
+      }
     } catch (e) {
       await store.updateOrder(orderId, { status: 'paid_pending_fulfillment' });
       notifyError(`TON订单履约失败 ${orderId}: ${e.message}`).catch(() => {});

@@ -16,7 +16,7 @@ async function handleIntent(req, res) {
   if (!applyRateLimit(req, res, 5, 60000)) return;
   try {
     const stripe = new StripeLib(process.env.STRIPE_SECRET_KEY);
-    const { productId, email, paymentMethodType = 'card' } = req.body;
+    const { productId, email, paymentMethodType = 'card', ref } = req.body;
     if (!productId || !email) return res.status(400).json({ error: 'Missing productId or email' });
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Invalid email' });
 
@@ -26,17 +26,21 @@ async function handleIntent(req, res) {
     const product = await getProductById(productId);
     if (!product) return res.status(404).json({ error: 'Product not found' });
 
+    // 验证推荐码（6位字母数字）
+    const refCode = ref && /^[A-Z0-9]{6}$/i.test(ref) ? ref.toUpperCase() : null;
+
     const order = await store.createOrder({
       productId: product.id, productName: product.nameEn || product.name,
       productPrice: parseFloat(product.price), email,
-      country: product.countries?.[0]?.code || 'INT', paymentMethod: pmType
+      country: product.countries?.[0]?.code || 'INT', paymentMethod: pmType,
+      refCode
     });
 
     const amountCents = Math.max(50, Math.round(parseFloat(product.price) * 100));
     const intent = await stripe.paymentIntents.create({
       amount: amountCents, currency: 'usd', receipt_email: email,
       payment_method_types: [pmType],
-      metadata: { orderId: order.orderId, productId: String(product.id), email },
+      metadata: { orderId: order.orderId, productId: String(product.id), email, refCode: refCode || '' },
       description: `SimRyoko eSIM — ${order.productName}`
     });
 
@@ -92,6 +96,14 @@ async function handleConfirm(req, res) {
       if (!recovered) await store.updateOrder(orderId, { status: 'fulfilled', esimData });
       await sendEsimEmail({ to: order.email, productName: order.productName, lpaString: esimData.qrCode || esimData.activationCode, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
+      // 推荐返利积分
+      const refCode = order.refCode || intent.metadata?.refCode;
+      if (refCode) {
+        const credit = await store.creditReferral(refCode, orderId, order.productPrice).catch(() => null);
+        if (credit?.reachedThreshold) {
+          await notifyAdmin(`🎁 <b>推荐返利待打款</b>\n推荐码: <code>${refCode}</code>\n待付金额: $${credit.ref.pendingPayout}\n邮箱: ${credit.ref.email}`).catch(() => {});
+        }
+      }
       return res.json({ success: true, status: 'fulfilled', message: 'eSIM sent to your email!' });
     } catch (e) {
       if (!recovered) await store.updateOrder(orderId, { status: 'pending_fulfillment', note: e.message });

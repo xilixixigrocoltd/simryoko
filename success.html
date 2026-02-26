@@ -71,7 +71,61 @@
 
     <p class="spam-note">📧 No email? Check spam or <a href="https://wa.me/19402382990" style="color:#667eea">WhatsApp us</a> — we'll resend.<br/>Email: <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea">xilixi@xigrocoltd.com</a></p>
   </div>
+
+  <!-- 推荐返利模块 -->
+  <div class="success-card" style="margin-top:16px;background:linear-gradient(135deg,#667eea08,#764ba208);border:1.5px solid #667eea30;">
+    <div style="font-size:1.5rem;margin-bottom:8px;">🎁</div>
+    <div style="font-weight:800;font-size:1.1rem;color:#667eea;margin-bottom:6px;">Earn 10% on Every Referral</div>
+    <p style="color:#555;font-size:.92rem;margin-bottom:16px;line-height:1.5;">Share your unique link. When friends buy, you earn 10% commission — paid in USDT once you hit $10.</p>
+    <div id="refForm">
+      <input id="refEmail" type="email" placeholder="Enter your purchase email" style="width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:10px;font-size:.95rem;margin-bottom:10px;box-sizing:border-box;">
+      <button onclick="getRefLink()" style="width:100%;background:#667eea;color:white;border:none;padding:12px;border-radius:10px;font-weight:700;font-size:.95rem;cursor:pointer;">Get My Referral Link →</button>
+    </div>
+    <div id="refResult" style="display:none;">
+      <div style="background:#f0f4ff;border-radius:10px;padding:12px 14px;margin-bottom:10px;">
+        <div style="font-size:.8rem;color:#888;margin-bottom:4px;">Your referral link</div>
+        <div id="refLink" style="font-size:.85rem;color:#667eea;font-weight:600;word-break:break-all;"></div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button onclick="copyRef()" style="flex:1;background:#667eea;color:white;border:none;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;" id="copyBtn">📋 Copy Link</button>
+        <button onclick="shareRef()" style="flex:1;background:#25d366;color:white;border:none;padding:10px;border-radius:8px;font-weight:600;cursor:pointer;">📤 Share</button>
+      </div>
+      <div id="refStats" style="margin-top:10px;font-size:.82rem;color:#777;text-align:center;"></div>
+    </div>
+  </div>
 </div>
+
+<script>
+async function getRefLink() {
+  const email = document.getElementById('refEmail').value.trim();
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Please enter a valid email'); return; }
+  try {
+    const r = await fetch(`/api/referral?email=${encodeURIComponent(email)}`);
+    const d = await r.json();
+    if (!d.success) { alert('Error: ' + d.error); return; }
+    document.getElementById('refLink').textContent = d.data.referralLink;
+    document.getElementById('refStats').textContent =
+      `Earned: $${d.data.totalEarnings} · Pending payout: $${d.data.pendingPayout} · Referrals: ${d.data.count}`;
+    document.getElementById('refForm').style.display = 'none';
+    document.getElementById('refResult').style.display = 'block';
+    window._refLink = d.data.referralLink;
+  } catch(e) { alert('Network error. Please try again.'); }
+}
+function copyRef() {
+  navigator.clipboard.writeText(window._refLink || '').then(() => {
+    document.getElementById('copyBtn').textContent = '✅ Copied!';
+    setTimeout(() => document.getElementById('copyBtn').textContent = '📋 Copy Link', 2000);
+  });
+}
+function shareRef() {
+  const text = `I just bought an eSIM from SimRyoko — instant activation, great prices! Use my link for your next trip: ${window._refLink}`;
+  if (navigator.share) { navigator.share({ title: 'SimRyoko eSIM', text, url: window._refLink }); }
+  else { window.open(`https://wa.me/?text=${encodeURIComponent(text)}`); }
+}
+// 预填邮箱（如果 URL 有 email 参数）
+const _em = new URLSearchParams(location.search).get('email');
+if (_em) document.getElementById('refEmail').value = _em;
+</script>
 <script>
   const p = new URLSearchParams(window.location.search);
   const order = p.get('order');
