@@ -29,6 +29,7 @@
     .btn-more { background: #f0f0f0; color: #333; border: none; padding: 12px 24px; border-radius: 12px; font-size: .9rem; font-weight: 600; cursor: pointer; text-decoration: none; }
     .spam-note { font-size: .8rem; color: #aaa; }
   </style>
+<script src="/js/analytics.js"></script>
 </head>
 <body style="background:#f0f4ff">
 <nav class="nav">
@@ -82,6 +83,12 @@
     if (product) document.getElementById('productName').textContent = decodeURIComponent(product);
     if (order)   document.getElementById('orderId').textContent = order;
     if (method)  document.getElementById('payMethod').textContent = method === 'card' ? '💳 Card (Paddle)' : method === 'ton' ? '💎 TON/USDT' : '🪙 USDT TRC-20';
+  }
+
+  // GA4 Purchase event
+  const price = parseFloat(p.get('price') || '0');
+  if (window.trackPurchase && order) {
+    trackPurchase(order, product ? decodeURIComponent(product) : 'eSIM', price, method || 'usdt');
   }
 </script>
 <script src="/js/i18n.js"></script>

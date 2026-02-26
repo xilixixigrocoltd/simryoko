@@ -101,10 +101,46 @@ async function fulfillOrder(orderId, order) {
     store.updateOrder(orderId, { status: 'processing' });
     const orderResult = await placeOrder(order.productId, 1);
     if (!orderResult.success) { store.updateOrder(orderId, { status: 'failed', note: orderResult.message }); return; }
+
+    // 解析 API 响应中的 eSIM 数据（兼容多种字段路径）
     const d = orderResult.data || orderResult;
-    const esimData = { qrCodeUrl: d.qrCodeUrl || d.qrCode || d.lpa || '', qrCode: d.qrCode || '', iccid: d.iccid || d.simIccid || '', activationCode: d.activationCode || d.lpa || '' };
+    // 尝试从 items 数组、直接字段等多路径提取
+    const item = (d.items && d.items[0]) || (d.esims && d.esims[0]) || d;
+    const rawActivation = item.activationCode || item.lpa || item.smdpAddress
+                       || d.activationCode || d.lpa || '';
+    const rawQrUrl = item.qrCodeUrl || item.qrUrl || item.qrCode
+                  || d.qrCodeUrl || d.qrUrl || '';
+    const iccid = item.iccid || item.simIccid || d.iccid || d.simIccid || '';
+
+    // 生成 QR 码 base64（优先用 URL，否则从 activationCode 生成）
+    let qrBase64 = '';
+    const QRCode = require('qrcode');
+    if (rawQrUrl) {
+      qrBase64 = rawQrUrl; // 直接用图片 URL
+    } else if (rawActivation) {
+      try {
+        qrBase64 = await QRCode.toDataURL(rawActivation, {
+          width: 300, margin: 2,
+          color: { dark: '#1a1a2e', light: '#ffffff' }
+        });
+      } catch (e) { console.error('[qr-gen]', e.message); }
+    }
+
+    const esimData = {
+      qrCodeUrl: qrBase64,
+      iccid,
+      activationCode: rawActivation,
+    };
+
     store.updateOrder(orderId, { status: 'fulfilled', esimData });
-    await sendEsimEmail({ to: order.email, productName: order.productName, qrCodeUrl: esimData.qrCodeUrl, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
+    await sendEsimEmail({
+      to: order.email,
+      productName: order.productName,
+      qrCodeUrl: qrBase64,
+      iccid,
+      activationCode: rawActivation,
+      country: order.country
+    });
     await notifyOrderFulfilled(order, esimData).catch(() => {});
   } catch (err) { store.updateOrder(orderId, { status: 'failed', note: err.message }); throw err; }
 }

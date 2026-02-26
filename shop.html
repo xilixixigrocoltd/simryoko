@@ -248,82 +248,83 @@ body { background: #f5f6fa; }
 .sh-type-btn.on { background: #6C63FF; border-color: #6C63FF; color: #fff; }
 
 /* Plan list */
-.sh-plan-list { flex: 1; overflow-y: auto; padding: 16px 16px 0; display: flex; flex-direction: column; gap: 12px; }
+.sh-plan-list {
+  flex: 1; overflow-y: auto;
+  padding: 10px 14px 8px;
+  display: flex; flex-direction: column; gap: 7px;
+}
 
-/* ── Plan Card — 全新设计 ─────────────────────────────── */
+/* ── Plan Card — 紧凑横向行 ──────────────────────────── */
 .pc {
   background: #fff;
-  border-radius: 20px;
-  padding: 0;
+  border-radius: 14px;
   border: 2px solid #f0f0f7;
   cursor: pointer;
-  transition: border-color .15s, box-shadow .15s, transform .12s;
+  transition: border-color .15s, box-shadow .12s;
   position: relative;
   overflow: hidden;
 }
-.pc:hover { border-color: #c4bdff; box-shadow: 0 8px 28px rgba(108,99,255,.13); transform: translateY(-2px); }
-.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 4px rgba(108,99,255,.1); background: #faf9ff; }
-.pc.unlimited-card { border-color: #c4bdff; background: linear-gradient(135deg,#faf9ff 0%,#f3f0ff 100%); }
-.pc.unlimited-card:hover { border-color: #9333EA; box-shadow: 0 8px 28px rgba(147,51,234,.18); }
-.pc.unlimited-card.sel    { border-color: #9333EA; box-shadow: 0 0 0 4px rgba(147,51,234,.12); }
+.pc:hover { border-color: #c4bdff; box-shadow: 0 4px 18px rgba(108,99,255,.12); }
+.pc.sel   { border-color: #6C63FF; box-shadow: 0 0 0 3px rgba(108,99,255,.12); background: #faf9ff; }
+.pc.unlimited-card { border-color: #d8d2ff; background: linear-gradient(135deg,#faf9ff,#f3f0ff); }
+.pc.unlimited-card:hover { border-color: #9333EA; box-shadow: 0 4px 18px rgba(147,51,234,.15); }
+.pc.unlimited-card.sel    { border-color: #9333EA; box-shadow: 0 0 0 3px rgba(147,51,234,.12); }
 
-/* ── Plan card banner (replaces floating ribbon) ─── */
+/* Banner strip */
 .pc-banner {
-  font-size: 11px; font-weight: 800; letter-spacing: .3px;
-  color: #fff; padding: 6px 16px;
-  display: flex; align-items: center; gap: 5px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .3px;
+  color: #fff; padding: 4px 14px;
+  display: flex; align-items: center; gap: 4px;
 }
 .pc-banner.hot  { background: linear-gradient(90deg,#f59e0b,#ef4444); }
 .pc-banner.best { background: linear-gradient(90deg,#059669,#10b981); }
 .pc-banner.inf  { background: linear-gradient(90deg,#6C63FF,#9333EA); }
 
-/* Card inner padding — tighter when banner is present */
-.pc-body { padding: 14px 16px 12px; }
-.pc-banner + .pc-body { padding-top: 12px; }
-
-/* Specs row */
-.pc-specs {
-  display: grid; grid-template-columns: 1fr 1fr 1fr;
-  margin-bottom: 0; padding-bottom: 14px;
+/* Horizontal row layout */
+.pc-row {
+  display: flex; align-items: center;
+  padding: 11px 14px; gap: 0;
 }
-.pc-spec { padding: 10px 8px 6px; text-align: center; border-right: 1.5px solid #f0f0f7; }
-.unlimited-card .pc-spec { border-right-color: rgba(108,99,255,.15); }
-.pc-spec:last-child { border-right: none; }
 
-.pc-sv {
-  font-size: 22px; font-weight: 900; color: #111;
+/* Data / Days / Price cells */
+.pc-cell {
+  flex: 1; text-align: center;
+  border-right: 1.5px solid #f0f0f7;
+  padding: 0 6px;
+}
+.pc-cell:first-child { padding-left: 0; }
+.pc-cell:last-of-type { border-right: none; }
+.unlimited-card .pc-cell { border-right-color: rgba(108,99,255,.15); }
+
+.pc-v {
+  font-size: 18px; font-weight: 900; color: #111;
   line-height: 1; margin-bottom: 3px;
   display: flex; align-items: baseline; justify-content: center; gap: 1px;
 }
-.pc-sv .u { font-size: 12px; font-weight: 700; color: #888; margin-left: 1px; }
-.pc-sv.inf-val { font-size: 28px; color: #6C63FF; }
-.pc-sv.price-val { color: #6C63FF; }
-.pc-sl { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .4px; color: #ccc; }
-
-/* Footer */
-.pc-ft {
-  display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  border-top: 1.5px solid #f0f0f7; padding-top: 10px;
+.pc-v .u { font-size: 11px; font-weight: 700; color: #aaa; margin-left: 1px; }
+.pc-v.inf-v { font-size: 22px; color: #6C63FF; }
+.pc-v.price-v { color: #6C63FF; }
+.pc-l {
+  font-size: 9.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .3px; color: #ccc;
 }
-.unlimited-card .pc-ft { border-top-color: rgba(108,99,255,.12); }
-.pc-meta { font-size: 11.5px; color: #ccc; flex: 1; }
-.pc-meta .per-gb  { color: #10b981; font-weight: 700; }
-.pc-meta .per-day { color: #bbb; }
-.unlimited-card .pc-meta { color: #9333EA; font-weight: 600; }
+.pc-l.meta { color: #10b981; font-weight: 700; font-size: 9px; letter-spacing: 0; text-transform: none; }
+.unlimited-card .pc-l.meta { color: #9333EA; }
 
+/* Buy button */
 .pc-buy {
+  margin-left: 10px; flex-shrink: 0;
   background: linear-gradient(135deg,#6C63FF,#9333EA);
   color: #fff; border: none; border-radius: 10px;
-  padding: 9px 18px; font-size: 13.5px; font-weight: 800;
+  padding: 8px 14px; font-size: 12.5px; font-weight: 800;
   cursor: pointer; font-family: inherit; white-space: nowrap;
-  transition: opacity .15s, transform .12s; flex-shrink: 0;
+  transition: opacity .15s;
 }
-.pc-buy:hover { opacity: .88; transform: translateY(-1px); }
+.pc-buy:hover { opacity: .88; }
 .unlimited-card .pc-buy { background: linear-gradient(135deg,#9333EA,#6C63FF); }
 
-/* Loading skeleton in plan list */
-.pc.sk { height: 148px; background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%); background-size:200% 100%; animation:sh 1.4s linear infinite; border:none; cursor:default; }
-.pc.sk::before { display: none; }
+/* Loading skeleton */
+.pc.sk { height: 62px; background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%); background-size:200% 100%; animation:sh 1.4s linear infinite; border:none; cursor:default; }
 
 /* ── Checkout bar ────────────────────────────────────── */
 .sh-checkout {
@@ -411,11 +412,12 @@ body { background: #f5f6fa; }
 
 /* Skeleton plan cards */
 .pc.sk-plan {
-  height: 140px; border: none; cursor: default; pointer-events: none;
+  height: 62px; border: none; cursor: default; pointer-events: none;
   background: linear-gradient(90deg,#f2f2f7 25%,#e8e8ef 50%,#f2f2f7 75%);
   background-size: 200% 100%; animation: sh 1.4s linear infinite;
 }
 </style>
+<script src="/js/analytics.js"></script>
 </head>
 <body>
 
@@ -825,6 +827,7 @@ function renderGrid(list) {
 async function openCountry(code) {
   const d = DEST[code]; if(!d) return;
   curCode  = code;
+  if (window.trackViewCountry) trackViewCountry(code, d.n);
   curType  = 'all';
   curSort  = 'price';
   selPlan  = null;
@@ -1020,6 +1023,7 @@ function selectPlan(idx, el) {
   el.classList.add('sel');
   selPlan = getVisiblePlans()[idx];
   showCheckout();
+  if (selPlan && window.trackSelectPlan) trackSelectPlan(selPlan);
 }
 
 function quickBuy(idx) {
@@ -1063,6 +1067,7 @@ async function doConfirm() {
   const btn = document.getElementById('confirmBtn');
   btn.disabled = true; btn.textContent = '处理中…';
 
+  if (window.trackBeginCheckout) trackBeginCheckout(selPlan, selPay);
   const pid = selPlan.id;
   try {
     if (selPay==='card'||selPay==='usdt-trc') {
@@ -1132,62 +1137,51 @@ function filterByChip(plans) {
   if (curChip === 'cheap')  return plans.filter(p => parseFloat(p.price) < 5);
   return plans;
 }
-// ── 统一套餐卡片构建函数 ─────────────────────────────
+// ── 套餐卡片构建（紧凑横向行，可并排对比多条）─────────────────
 function buildPlanCard(p, i, bestGBIdx) {
-  const pn    = p.nameEn||p.name||'';
-  const dataMB = p.dataAmount||p.dataSize;
+  const pn    = p.nameEn || p.name || '';
+  const dataMB = p.dataAmount || p.dataSize;
   const data  = fmtData(dataMB, pn);
   const days  = fmtDays(p);
   const price = parseFloat(p.price);
-  const type  = planType(p);
-  const isInf = data==='∞';
-  const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/,'');
-  const dataUnit = isInf ? '' : data.replace(/[\d.]+/,'');
-  const perGB  = (!isInf && dataMB) ? (price/(dataMB/1024)).toFixed(2) : null;
-  const perDay = days && days!=='?' ? (price/parseFloat(days)).toFixed(2) : null;
+  const isInf = data === '∞';
 
-  // 顶部彩色横幅（只在有意义时出现）
+  const dataVal  = isInf ? '∞' : data.replace(/[A-Za-z]+/, '');
+  const dataUnit = isInf ? '' : data.replace(/[\d.]+/, '');
+  const perGB  = (!isInf && dataMB) ? (price / (dataMB / 1024)).toFixed(2) : null;
+  const perDay = (days && days !== '?') ? (price / parseFloat(days)).toFixed(2) : null;
+
+  // 顶部彩色横幅
   let banner = '';
   if (isInf)              banner = `<div class="pc-banner inf">✦ 无限流量</div>`;
-  else if (i===bestGBIdx) banner = `<div class="pc-banner best">💡 最优性价比</div>`;
-  else if (i===0 && curSort==='price') banner = `<div class="pc-banner hot">⭐ 推荐</div>`;
+  else if (i === bestGBIdx) banner = `<div class="pc-banner best">💡 性价比最优</div>`;
+  else if (i === 0 && curSort === 'price') banner = `<div class="pc-banner hot">⭐ 推荐首选</div>`;
 
-  // 底部元信息
-  let metaHtml = '';
-  if (isInf && perDay) {
-    metaHtml = `<span class="pc-meta" style="color:#9333EA;font-weight:700;">≈ $${perDay}/天</span>`;
-  } else if (perGB) {
-    const dayPart = perDay ? ` <span class="per-day">· $${perDay}/天</span>` : '';
-    metaHtml = `<span class="pc-meta"><span class="per-gb">≈ $${perGB}/GB</span>${dayPart}</span>`;
-  } else {
-    metaHtml = `<span class="pc-meta"></span>`;
-  }
+  // 价值元信息
+  let metaLabel = '';
+  if (isInf && perDay)      metaLabel = `≈$${perDay}/天`;
+  else if (perGB)           metaLabel = `≈$${perGB}/GB`;
 
-  const isFirst = i===0;
+  const isFirst = i === 0;
   return `
-  <div class="pc${isInf?' unlimited-card':''}${isFirst?' sel':''}" onclick="selectPlan(${i},this)" data-idx="${i}">
+  <div class="pc${isInf ? ' unlimited-card' : ''}${isFirst ? ' sel' : ''}" onclick="selectPlan(${i},this)" data-idx="${i}">
     ${banner}
-    <div class="pc-body">
-      <div class="pc-specs">
-        <div class="pc-spec">
-          <div class="pc-sv${isInf?' inf-val':''}">
-            ${dataVal}${dataUnit?`<span class="u">${dataUnit}</span>`:''}
-          </div>
-          <div class="pc-sl">${isInf?'无限流量':'流量'}</div>
+    <div class="pc-row">
+      <div class="pc-cell">
+        <div class="pc-v${isInf ? ' inf-v' : ''}">
+          ${dataVal}${dataUnit ? `<span class="u">${dataUnit}</span>` : ''}
         </div>
-        <div class="pc-spec">
-          <div class="pc-sv">${days}<span class="u">天</span></div>
-          <div class="pc-sl">有效期</div>
-        </div>
-        <div class="pc-spec">
-          <div class="pc-sv price-val">$${price%1===0?price:price.toFixed(2)}</div>
-          <div class="pc-sl">总价</div>
-        </div>
+        <div class="pc-l">${isInf ? '无限' : '流量'}</div>
       </div>
-      <div class="pc-ft">
-        ${metaHtml}
-        <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">购买 →</button>
+      <div class="pc-cell">
+        <div class="pc-v">${days}<span class="u">天</span></div>
+        <div class="pc-l">有效期</div>
       </div>
+      <div class="pc-cell">
+        <div class="pc-v price-v">$${price % 1 === 0 ? price : price.toFixed(2)}</div>
+        <div class="pc-l${metaLabel ? ' meta' : ''}">${metaLabel || '总价'}</div>
+      </div>
+      <button class="pc-buy" onclick="event.stopPropagation();quickBuy(${i})">购买 →</button>
     </div>
   </div>`;
 }
