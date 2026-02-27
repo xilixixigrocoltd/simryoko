@@ -93,7 +93,22 @@ async function handleConfirm(req, res) {
         return res.json({ success: true, status: 'pending_fulfillment', message: 'Payment confirmed! eSIM will be delivered within 30 minutes.' });
       }
       const esimData = extractEsim(orderResult);
-      if (!recovered) await store.updateOrder(orderId, { status: 'fulfilled', esimData });
+      if (!recovered) {
+        await store.updateOrder(orderId, { status: 'fulfilled', esimData });
+      } else {
+        // recovered 路径：KV 无记录，补写完整 fulfilled 订单
+        const fullOrder = {
+          ...order,
+          status: 'fulfilled',
+          esimData,
+          paymentIntentId,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+        await store.createOrderDirect(orderId, fullOrder).catch(e =>
+          console.error('[stripe/confirm] KV补写失败:', e.message)
+        );
+      }
       await sendEsimEmail({ to: order.email, productName: order.productName, lpaString: esimData.qrCode || esimData.activationCode, iccid: esimData.iccid, activationCode: esimData.activationCode, country: order.country });
       await notifyOrderFulfilled(order, esimData).catch(() => {});
       // 推荐返利积分

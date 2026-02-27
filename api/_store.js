@@ -48,15 +48,25 @@ async function kvGet(key) {
 
 async function kvSet(key, value, ttl = ORDER_TTL) {
   memCache.set(key, { data: value, expiry: Date.now() + MEM_TTL });
-  try {
-    await axios.put(
-      `${valueUrl(key)}?expiration_ttl=${ttl}`,
-      JSON.stringify(value),
-      { headers: { ...headers(), 'Content-Type': 'text/plain' }, timeout: 5000 }
-    );
-  } catch (e) {
-    console.error('[kv] SET error:', key, e.message);
-    throw e;
+  // 重试3次，超时延长至12s，写失败不中断主流程
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await axios.put(
+        `${valueUrl(key)}?expiration_ttl=${ttl}`,
+        JSON.stringify(value),
+        { headers: { ...headers(), 'Content-Type': 'text/plain' }, timeout: 12000 }
+      );
+      return; // 写入成功
+    } catch (e) {
+      console.error(`[kv] SET error (attempt ${attempt}/${maxRetries}):`, key, e.message);
+      if (attempt === maxRetries) {
+        // 最终失败：记录但不抛出，避免中断订单主流程
+        console.error('[kv] SET permanently failed, continuing without KV persistence:', key);
+        return;
+      }
+      await new Promise(r => setTimeout(r, 800 * attempt)); // 退避重试
+    }
   }
 }
 
@@ -87,6 +97,12 @@ const store = {
     // 金额索引（用于 USDT 支付匹配）
     await kvSet(`amt:${paymentAmount.toFixed(2)}`, orderId, ORDER_TTL);
     return order;
+  },
+
+  // 直接写入完整订单对象（用于 recovered 路径补写 KV）
+  async createOrderDirect(orderId, orderData) {
+    await kvSet(`order:${orderId}`, { ...orderData, orderId });
+    return orderData;
   },
 
   async getOrder(orderId) {
