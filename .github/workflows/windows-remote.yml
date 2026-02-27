@@ -1,0 +1,72 @@
+name: Windows Remote via Tailscale
+
+on:
+  workflow_dispatch:
+    inputs:
+      command:
+        description: 'Command to run (PowerShell)'
+        required: false
+        default: 'whoami; hostname; ipconfig /all | Select-String "IPv4"'
+
+jobs:
+  connect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Install Tailscale
+        run: |
+          curl -fsSL https://tailscale.com/install.sh | sh
+
+      - name: Connect to Tailscale
+        env:
+          TS_AUTHKEY: ${{ secrets.TS_AUTHKEY }}
+        run: |
+          sudo tailscale up --authkey="$TS_AUTHKEY" --hostname="github-runner" --accept-routes
+          sleep 5
+          sudo tailscale status
+
+      - name: Wait for Windows machine
+        run: |
+          echo "Pinging Windows machine at 100.77.140.53..."
+          for i in {1..10}; do
+            if ping -c 1 -W 2 100.77.140.53 > /dev/null 2>&1; then
+              echo "✅ Windows machine reachable!"
+              break
+            fi
+            echo "Attempt $i: not reachable yet, waiting..."
+            sleep 3
+          done
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          echo "UserKnownHostsFile /dev/null" >> ~/.ssh/config
+
+      - name: Run command on Windows
+        env:
+          WIN_PASS: ${{ secrets.WIN_PASS }}
+          WIN_USER: ${{ secrets.WIN_USER }}
+          BOT_TOKEN: "8719139746:AAGIambUViT-y948GjqlEbI8hh4A8g5aNv4"
+          CHAT_ID: "7867683484"
+          CMD: ${{ github.event.inputs.command }}
+        run: |
+          # Install sshpass
+          sudo apt-get install -y sshpass
+
+          # Try connecting
+          OUTPUT=$(sshpass -p "$WIN_PASS" ssh -o StrictHostKeyChecking=no \
+            "$WIN_USER@100.77.140.53" \
+            "powershell -Command \"$CMD\"" 2>&1) || OUTPUT="SSH failed: $?"
+
+          echo "Output: $OUTPUT"
+
+          # Send result to Telegram
+          MSG="🖥️ GitHub Actions 执行结果:
+
+命令: $CMD
+输出:
+$OUTPUT"
+          curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -d "chat_id=$CHAT_ID" \
+            --data-urlencode "text=$MSG"
