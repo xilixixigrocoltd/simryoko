@@ -316,7 +316,7 @@ async function handleB2BApply(req, res) {
     await sendRawEmail({
       to: email,
       subject: `Your SimRyoko Partner Application — ${company}`,
-      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px"><h2>Application Received! 🎉</h2><p>Hi ${name}, we received your application for <b>${company}</b> and will reply within 24 hours.</p><p>Contact: <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://wa.me/19402382990">WhatsApp</a></p></div>`
+      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px"><h2>Application Received! 🎉</h2><p>Hi ${name}, we received your application for <b>${company}</b> and will reply within 24 hours.</p><p>Contact: <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://simryoko.com">Live Chat</a></p></div>`
     });
     return res.status(200).json({ success: true });
   } catch (err) {
@@ -382,7 +382,7 @@ p{color:#555;line-height:1.7}
     </div>
 
     <p>Minimum payout: $10 USDT · Paid on request · No expiry</p>
-    <p>Questions? Reply to this email or <a href="https://wa.me/19402382990" style="color:#667eea">WhatsApp us</a>.</p>
+    <p>Questions? Reply to this email or <a href="https://simryoko.com" style="color:#667eea">Live Chat</a>.</p>
     <p>See you on your next trip! 🦞<br><b>SimRyoko Team</b></p>
   </div>
   <div class="footer">SimRyoko · <a href="https://simryoko.com" style="color:#667eea">simryoko.com</a> · <a href="mailto:noreply@simryoko.com" style="color:#667eea">Unsubscribe</a></div>
@@ -472,7 +472,7 @@ async function handleB2BRegister(req, res) {
           <p style="color:#444;line-height:1.7;margin-bottom:24px">Expect a reply <b>within 24 hours</b>. Check your spam folder just in case.</p>
           <div style="border-top:1px solid #e5e7eb;padding-top:20px;font-size:13px;color:#888">
             Questions? Reach us at <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea">xilixi@xigrocoltd.com</a> or 
-            <a href="https://wa.me/19402382990" style="color:#667eea">WhatsApp</a><br><br>
+            <a href="https://simryoko.com" style="color:#667eea">Live Chat</a><br><br>
             SimRyoko Partner Team · <a href="https://simryoko.com/b2b.html" style="color:#667eea">simryoko.com/b2b.html</a>
           </div>
         </div>

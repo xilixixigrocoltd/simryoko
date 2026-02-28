@@ -177,7 +177,7 @@ async function sendEsimEmail({ to, productName, lpaString, qrCodeUrl, iccid, act
     /* Warning */
     .warning { background:#fff1f0; border-left:4px solid #ff4d4f; border-radius:0 12px 12px 0; padding:12px 16px; margin:20px 0; font-size:13px; color:#cf1322; }
 
-    /* WhatsApp CTA */
+    /* Support CTA */
     .wa-box { background:#f0fdf4; border-radius:16px; padding:20px; text-align:center; margin:24px 0; }
     .wa-box p { color:#166534; font-size:14px; margin:0 0 14px; font-weight:500; }
     .wa-btn { display:inline-block; background:#25d366; color:#fff; text-decoration:none; padding:12px 28px; border-radius:12px; font-size:14px; font-weight:700; }
@@ -285,15 +285,15 @@ async function sendEsimEmail({ to, productName, lpaString, qrCodeUrl, iccid, act
       ⚠️ <strong>Important:</strong> This eSIM can only be installed <strong>once</strong>. Save this email. Do not share your QR code — it cannot be re-issued.
     </div>
 
-    <!-- WhatsApp support -->
+    <!-- Support CTA -->
     <div class="wa-box">
       <p>🙋 Need help with installation? We reply in under 30 minutes.</p>
-      <a href="https://wa.me/19402382990?text=Hi%2C%20I%20need%20help%20installing%20my%20SimRyoko%20eSIM%20(${encodeURIComponent(productName)})" class="wa-btn">💬 WhatsApp Us Now</a>
+      <a href="https://simryoko.com" class="wa-btn" style="background:#6C63FF">💬 AI Live Chat</a>
     </div>
   </div>
 
   <div class="footer">
-    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://wa.me/19402382990">WhatsApp +1 940 238 2990</a></p>
+    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://simryoko.com">Live Chat</a></p>
     <p>🤖 Track data usage: <a href="https://t.me/Simryokoesimbot">@Simryokoesimbot</a></p>
     <p style="margin-top:10px;color:#ccc;">SimRyoko — Powered by Xigro Co Limited, Hong Kong</p>
   </div>
@@ -404,15 +404,15 @@ async function sendPaymentPendingEmail({ to, productName, amount, walletAddress,
       </ul>
     </div>
 
-    <!-- WhatsApp support -->
+    <!-- Support CTA -->
     <div class="wa-box">
       <p>🙋 Paid but haven't received your eSIM? We'll resolve it in under 30 minutes.</p>
-      <a href="https://wa.me/19402382990?text=Hi%2C%20I%20sent%20payment%20for%20order%20${encodeURIComponent(orderId)}%20but%20haven't%20received%20my%20eSIM%20yet." class="wa-btn">💬 WhatsApp Support</a>
+      <a href="https://simryoko.com" class="wa-btn" style="background:#6C63FF">💬 AI Live Chat</a>
     </div>
   </div>
 
   <div class="footer">
-    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://wa.me/19402382990">WhatsApp +1 940 238 2990</a></p>
+    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://simryoko.com">Live Chat</a></p>
     <p style="margin-top:8px;color:#ddd;">SimRyoko — Powered by Xigro Co Limited, Hong Kong</p>
   </div>
 </div>
@@ -468,7 +468,7 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
     ${price ? `<p class="price-note">Same plan from $${price.toFixed(2)}</p>` : ''}
   </div>
   <div class="footer">
-    <p>Questions? <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://wa.me/19402382990">WhatsApp +1 940 238 2990</a></p>
+    <p>Questions? <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://simryoko.com">Live Chat</a></p>
     <p style="margin-top:6px;"><a href="${renewUrl}?unsubscribe=1" style="color:#ddd;">Unsubscribe from reminders</a></p>
   </div>
 </div>

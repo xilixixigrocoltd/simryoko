@@ -65,11 +65,11 @@
     </div>
 
     <div class="btn-group">
-      <a href="https://wa.me/19402382990?text=Hi%2C%20I%20just%20ordered%20a%20SimRyoko%20eSIM%20and%20need%20help%20with%20installation." class="btn-wa" target="_blank">💬 WhatsApp Support</a>
+      <a href="https://simryoko.com" class="btn-wa" target="_blank">💬 AI Live Chat</a>
       <a href="/shop.html" class="btn-more">Browse More Plans</a>
     </div>
 
-    <p class="spam-note">📧 No email? Check spam or <a href="https://wa.me/19402382990" style="color:#667eea">WhatsApp us</a> — we'll resend.<br/>Email: <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea">xilixi@xigrocoltd.com</a></p>
+    <p class="spam-note">📧 No email? Check spam or <a href="mailto:support@simryoko.com" style="color:#667eea">email us</a> — we'll resend.<br/>Email: <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea">xilixi@xigrocoltd.com</a></p>
   </div>
 
   <!-- 推荐返利模块 -->
@@ -120,7 +120,7 @@ function copyRef() {
 function shareRef() {
   const text = `I just bought an eSIM from SimRyoko — instant activation, great prices! Use my link for your next trip: ${window._refLink}`;
   if (navigator.share) { navigator.share({ title: 'SimRyoko eSIM', text, url: window._refLink }); }
-  else { window.open(`https://wa.me/?text=${encodeURIComponent(text)}`); }
+  else { navigator.clipboard?.writeText(text).then(()=>alert('Copied! Share with friends.')); }
 }
 // 预填邮箱（如果 URL 有 email 参数）
 const _em = new URLSearchParams(location.search).get('email');
