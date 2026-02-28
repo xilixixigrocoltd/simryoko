@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>SimRyoko eSIM — Global Travel SIM</title>
-<meta name="description" content="Instant eSIM for 200+ countries. Buy, scan, go. No physical SIM needed. From $2.">
+<meta name="description" content="Instant eSIM for 200+ countries. Buy, scan, go. No physical SIM needed. From $4.">
 <meta name="theme-color" content="#667eea">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" href="/img/icon-192.png" type="image/png">
 <!-- Open Graph -->
 <meta property="og:title" content="SimRyoko eSIM — Stay Connected Anywhere">
-<meta property="og:description" content="Instant eSIM for 200+ countries. From $2. No physical SIM needed.">
+<meta property="og:description" content="Instant eSIM for 200+ countries. From $4. No physical SIM needed.">
 <meta property="og:image" content="https://simryoko.com/img/tma-banner.png">
 <meta property="og:url" content="https://simryoko.com/app.html">
 <meta property="og:type" content="website">
@@ -157,6 +157,13 @@
   .email-setup button { width:100%; padding:12px; background:var(--btn); color:var(--btn-text); border:none; border-radius:10px; font-weight:600; cursor:pointer; font-size:.9rem; }
 </style>
 <link rel="canonical" href="https://simryoko.com/app.html">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5F6FMKR7J4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date()); gtag('config', 'G-5F6FMKR7J4');
+</script>
 </head>
 <body>
 
@@ -167,7 +174,7 @@
     <button class="lang-btn" id="langBtn" onclick="toggleLang()">中文</button>
   </div>
   <h1 id="headerTitle">Global eSIM Store</h1>
-  <p id="headerSub">2,600+ plans · Instant delivery · From $2</p>
+  <p id="headerSub">2,600+ plans · Instant delivery · From $4</p>
 </div>
 
 <!-- Shop Tab Page -->
@@ -341,7 +348,7 @@ let currentLang = localStorage.getItem('lang') ||
 const I18N = {
   en: {
     headerTitle: 'Global eSIM Store',
-    headerSub: '2,600+ plans · Instant delivery · From $2',
+    headerSub: '2,600+ plans · Instant delivery · From $4',
     searchPlaceholder: 'Search country…',
     filterAll: '🌍 All', filterAsia: '🌏 Asia', filterEurope: '🇪🇺 Europe',
     filterAmericas: '🌎 Americas', filterPopular: '⭐ Popular',
@@ -359,7 +366,7 @@ const I18N = {
   },
   zh: {
     headerTitle: 'eSIM 全球商城',
-    headerSub: '2600+ 款套餐 · 即时发货 · 最低 $2',
+    headerSub: '2600+ 款套餐 · 即时发货 · 最低 $4',
     searchPlaceholder: '搜索目的地…',
     filterAll: '🌍 全部', filterAsia: '🌏 亚洲', filterEurope: '🇪🇺 欧洲',
     filterAmericas: '🌎 美洲', filterPopular: '⭐ 热门',
@@ -514,7 +521,7 @@ async function openPlan(code) {
   // 懒加载：如果套餐尚未加载，现在才拉取
   if (!dest.plans) {
     try {
-      const r = await fetch(`/api/products?country=${code}&pageSize=20`);
+      const r = await fetch(`/api/products?country=${code}&pageSize=50`);
       const j = await r.json();
       dest.plans = j.data?.list || [];
       dest.minPrice = dest.plans.length > 0
@@ -534,11 +541,16 @@ async function openPlan(code) {
   document.getElementById('sheetSub').textContent = `${dest.plans.length} ${currentLang === 'zh' ? '款套餐可选' : 'plans available'}`;
 
   // 渲染套餐选项
-  document.getElementById('planOptions').innerHTML = currentCountryPlans.slice(0, 8).map((p, i) => `
+  document.getElementById('planOptions').innerHTML = currentCountryPlans.slice(0, 20).map((p, i) => `
     <div class="plan-option${i === 0 ? ' selected' : ''}" onclick="selectOption(${i}, this)" data-id="${i}">
       <div class="plan-option-left">
-        <div class="plan-option-data">${p.name || (p.description || '').split(' ').slice(0, 3).join(' ')}</div>
-        <div class="plan-option-dur">${currentLang === 'zh' ? '有效期: ' : 'Valid: '}${p.validityDays ? p.validityDays + (currentLang === 'zh' ? '天' : ' days') : '—'}</div>
+        <div class="plan-option-data">${(() => {
+          const mb = p.dataAmount;
+          const days = p.validityDays;
+          const dataStr = mb ? (mb >= 1024 ? (mb/1024|0)+'GB' : mb+'MB') : (currentLang==='zh' ? '无限流量' : 'Unlimited');
+          return dataStr + (days ? ' · ' + days + (currentLang==='zh' ? '天' : 'd') : '');
+        })()}</div>
+        <div class="plan-option-dur">${p.nameEn || p.name || ''}</div>
       </div>
       <div class="plan-option-price">$${parseFloat(p.price).toFixed(2)}</div>
     </div>
