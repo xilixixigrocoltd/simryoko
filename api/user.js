@@ -37,7 +37,7 @@ async function handleOrders(req, res) {
   if (!applyRateLimit(req, res, 20, 60000)) return;
   const email = req.query.email?.toLowerCase();
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Valid email required' });
-  const allOrders = store.listOrders();
+  const allOrders = await store.listOrders();
   const userOrders = allOrders
     .filter(o => o.email?.toLowerCase() === email)
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
