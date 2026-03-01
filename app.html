@@ -475,6 +475,7 @@ function filterPlans() {
   if (q) {
     result = result.filter(p =>
       p.name?.toLowerCase().includes(q) ||
+      p.nameCn?.includes(q) ||
       p.code?.toLowerCase().includes(q)
     );
   }
@@ -492,7 +493,7 @@ function renderPlans() {
     <div class="plan-item" onclick="openPlan('${d.code}')">
       <div class="plan-flag">${d.flag || '🌐'}</div>
       <div class="plan-info">
-        <div class="plan-country">${d.name}</div>
+        <div class="plan-country">${currentLang === 'zh' ? (d.nameCn || d.name) : d.name}</div>
         <div class="plan-detail">${d.plans ? d.plans.length + ' ' + (currentLang === 'zh' ? '个套餐' : 'plans') : (currentLang === 'zh' ? '点击查看套餐' : 'Tap to view plans')}</div>
       </div>
       <div class="plan-price">${d.minPrice ? (t('from') + ' $' + d.minPrice.toFixed(2)) : '›'}</div>
@@ -508,7 +509,7 @@ async function openPlan(code) {
   if (!dest) return;
 
   // 先打开 sheet，显示加载状态
-  document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${dest.name}`;
+  document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${currentLang === 'zh' ? (dest.nameCn || dest.name) : dest.name}`;
   document.getElementById('sheetSub').textContent = currentLang === 'zh' ? '加载中...' : 'Loading...';
   document.getElementById('planOptions').innerHTML = `<div style="text-align:center;padding:30px;color:#888;font-size:24px">⏳</div>`;
   selectedPlan = null;
@@ -537,7 +538,7 @@ async function openPlan(code) {
   }
 
   currentCountryPlans = [...dest.plans].sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
-  document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${dest.name}`;
+  document.getElementById('sheetCountry').textContent = `${dest.flag || '🌐'} ${currentLang === 'zh' ? (dest.nameCn || dest.name) : dest.name}`;
   document.getElementById('sheetSub').textContent = `${dest.plans.length} ${currentLang === 'zh' ? '款套餐可选' : 'plans available'}`;
 
   // 渲染套餐选项
