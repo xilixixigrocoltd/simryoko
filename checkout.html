@@ -277,6 +277,19 @@
         <div class="co-pay-tab-name">USDT</div>
         <div class="co-pay-tab-sub">TRC-20</div>
       </div>
+      <div class="co-pay-tab" id="pm-wallet" onclick="selectPayment('wallet')" style="display:none">
+        <div class="co-pay-tab-icon">⚡</div>
+        <div class="co-pay-tab-name">Quick Pay</div>
+        <div class="co-pay-tab-sub">Apple/Google</div>
+      </div>
+    </div>
+
+    <!-- Apple Pay / Google Pay / Link section -->
+    <div class="co-pay-detail" id="wallet-section" style="display:none">
+      <div id="payment-request-button" style="margin:8px 0"></div>
+      <div style="color:#888;font-size:12px;text-align:center;margin-top:8px">
+        🔒 Apple Pay · Google Pay · Link — Powered by Stripe
+      </div>
     </div>
 
     <!-- Card section -->
@@ -430,6 +443,36 @@ function mountStripeCard(retries) {
     hidePostalCode: true
   });
   cardElement.mount('#stripe-card-element');
+
+  // Apple Pay / Google Pay / Link - Payment Request Button
+  const pr = stripe.paymentRequest({
+    country: 'HK',
+    currency: 'usd',
+    total: { label: 'SimRyoko eSIM', amount: 100 },
+    requestPayerName: true,
+    requestPayerEmail: true,
+  });
+  const prButton = stripeElements.create('paymentRequestButton', { paymentRequest: pr });
+  pr.canMakePayment().then(result => {
+    if (result) {
+      document.getElementById('pm-wallet').style.display = '';
+      prButton.mount('#payment-request-button');
+    }
+  });
+  pr.on('paymentmethod', async (ev) => {
+    const email = document.getElementById('co-email')?.value || ev.payerEmail;
+    const res = await fetch('/api/checkout', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ productId: orderData?.productId || orderData?.id, email, paymentMethod: 'card' })
+    });
+    const { clientSecret } = await res.json();
+    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, { payment_method: ev.paymentMethod.id }, { handleActions: false });
+    if (error) { ev.complete('fail'); return; }
+    ev.complete('success');
+    if (paymentIntent.status === 'requires_action') await stripe.confirmCardPayment(clientSecret);
+    window.location.href = '/success.html?session=' + paymentIntent.id;
+  });
   cardElement.on('change', function(event) {
     const errEl = document.getElementById('stripe-card-error');
     if (event.error) {
