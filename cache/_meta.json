@@ -453,7 +453,7 @@
       "name": "Bhutan",
       "nameCn": "不丹",
       "flag": "🇧🇹",
-      "total": 2
+      "total": 4
     },
     {
       "code": "BO",
@@ -481,7 +481,7 @@
       "name": "Botswana",
       "nameCn": "博茨瓦纳",
       "flag": "🇧🇼",
-      "total": 43
+      "total": 47
     },
     {
       "code": "BR",
@@ -502,7 +502,7 @@
       "name": "Brunei",
       "nameCn": "文莱",
       "flag": "🇧🇳",
-      "total": 34
+      "total": 38
     },
     {
       "code": "BG",
@@ -1500,5 +1500,5 @@
     }
   ],
   "count": 214,
-  "generatedAt": "2026-03-11T07:27:01.113414Z"
+  "generatedAt": "2026-03-11T19:27:02.092822Z"
 }
