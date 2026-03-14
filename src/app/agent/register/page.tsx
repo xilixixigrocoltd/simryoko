@@ -231,4 +231,4 @@ export default function AgentRegister() {
             ← 返回首页
           </Link>
         </div>
-      </</div>
+      </div>
