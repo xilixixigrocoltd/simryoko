@@ -17,7 +17,7 @@ export interface Product {
 }
 
 export default function ProductCard({ product }: { product: Product }) {
-  const { region, country, flag, dataAmount, duration, price, currency = "¥", popular } = product;
+  const { region, country, flag, dataAmount, duration, price, currency = "$", popular } = product;
 
   return (
     <motion.div
