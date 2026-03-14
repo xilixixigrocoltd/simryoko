@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 
 // 内存存储（生产环境应使用数据库）
 const agents: any[] = []
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
+const JWT_SECRET = process.env.JWT_SECRET || 'simryoko-jwt-secret-change-in-production'
 
 // 代理登录
 export async function POST(req: NextRequest) {

@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 // 内存存储
 const orders: any[] = []
 const agents: any[] = []
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
+const JWT_SECRET = process.env.JWT_SECRET || 'simryoko-jwt-secret-change-in-production'
 
 // 验证JWT
 function verifyToken(token: string) {

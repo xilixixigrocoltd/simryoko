@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /agent/
+Disallow: /api/
+
+Sitemap: https://simryoko.com/sitemap.xml
