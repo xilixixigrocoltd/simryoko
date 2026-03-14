@@ -254,12 +254,15 @@ module.exports = async (req, res) => {
 
   let event;
   try {
-    if (webhookSecret && sig) {
-      event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
-    } else {
-      event = JSON.parse(rawBody.toString());
-      console.warn('[stripe-webhook] ⚠️ No webhook secret configured');
+    if (!webhookSecret) {
+      console.error('[stripe-webhook] ❌ STRIPE_WEBHOOK_SECRET not configured');
+      return res.status(500).json({ error: 'Webhook secret not configured' });
     }
+    if (!sig) {
+      console.error('[stripe-webhook] ❌ Missing stripe-signature header');
+      return res.status(400).json({ error: 'Missing signature' });
+    }
+    event = stripe.webhooks.constructEvent(rawBody, sig, webhookSecret);
   } catch (err) {
     console.error('[stripe-webhook] Signature verification failed:', err.message);
     return res.status(400).json({ error: `Webhook Error: ${err.message}` });

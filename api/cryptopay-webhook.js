@@ -17,12 +17,18 @@ async function handleWebhook(req, res) {
     const rawBody = JSON.stringify(req.body);
     const signature = req.headers['crypto-pay-api-signature'];
     
-    // 验证签名（如果配置了 CRYPTOPAY_TOKEN）
-    if (signature && process.env.CRYPTOPAY_TOKEN) {
-      if (!verifyWebhookSignature(rawBody, signature)) {
-        console.warn('[cryptopay-webhook] Invalid signature');
-        return res.status(401).json({ error: 'Invalid signature' });
-      }
+    // 验证签名（强制）
+    if (!process.env.CRYPTOPAY_TOKEN) {
+      console.error('[cryptopay-webhook] ❌ CRYPTOPAY_TOKEN not configured');
+      return res.status(500).json({ error: 'Webhook token not configured' });
+    }
+    if (!signature) {
+      console.error('[cryptopay-webhook] ❌ Missing crypto-pay-api-signature header');
+      return res.status(401).json({ error: 'Missing signature' });
+    }
+    if (!verifyWebhookSignature(rawBody, signature)) {
+      console.warn('[cryptopay-webhook] Invalid signature');
+      return res.status(401).json({ error: 'Invalid signature' });
     }
 
     const { update_type, payload: invoice } = req.body;
