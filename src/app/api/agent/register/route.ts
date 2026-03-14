@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// 内存存储
+const agents: any[] = []
 
 // 生成API Key
 function generateApiKey(): string {
@@ -24,10 +24,7 @@ export async function POST(req: NextRequest) {
     }
 
     // 检查邮箱是否已存在
-    const existingAgent = await prisma.agent.findUnique({
-      where: { email }
-    })
-
+    const existingAgent = agents.find(a => a.email === email)
     if (existingAgent) {
       return NextResponse.json(
         { error: '该邮箱已注册' },
@@ -42,34 +39,19 @@ export async function POST(req: NextRequest) {
     const apiKey = generateApiKey()
 
     // 创建代理
-    const agent = await prisma.agent.create({
-      data: {
-        email,
-        password: hashedPassword,
-        name,
-        phone,
-        telegramId,
-        apiKey,
-        balance: 0,
-        level: 'BRONZE'
-      }
-    })
-
-    // 处理推荐码
-    if (referralCode) {
-      const referrer = await prisma.agent.findFirst({
-        where: { apiKey: referralCode }
-      })
-
-      if (referrer) {
-        await prisma.referral.create({
-          data: {
-            agentId: referrer.id,
-            referredId: agent.id
-          }
-        })
-      }
+    const agent = {
+      id: crypto.randomUUID(),
+      email,
+      password: hashedPassword,
+      name,
+      phone,
+      telegramId,
+      apiKey,
+      balance: 0,
+      level: 'BRONZE',
+      createdAt: new Date()
     }
+    agents.push(agent)
 
     return NextResponse.json({
       success: true,

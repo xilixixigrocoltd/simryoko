@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// 内存存储
+const orders: any[] = []
+const agents: any[] = []
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
 
 // 验证JWT
@@ -32,29 +33,18 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '20')
 
-    // 构建查询条件
-    const where: any = { agentId: payload.agentId }
+    // 过滤订单
+    let agentOrders = orders.filter(o => o.agentId === payload.agentId)
     if (status) {
-      where.status = status.toUpperCase()
+      agentOrders = agentOrders.filter(o => o.status === status.toUpperCase())
     }
 
-    // 查询订单
-    const [orders, total] = await Promise.all([
-      prisma.order.findMany({
-        where,
-        orderBy: { createdAt: 'desc' },
-        skip: (page - 1) * limit,
-        take: limit,
-        include: {
-          customer: true
-        }
-      }),
-      prisma.order.count({ where })
-    ])
+    const total = agentOrders.length
+    const paginatedOrders = agentOrders.slice((page - 1) * limit, page * limit)
 
     return NextResponse.json({
       success: true,
-      orders,
+      orders: paginatedOrders,
       pagination: {
         page,
         limit,
@@ -87,10 +77,7 @@ export async function POST(req: NextRequest) {
     const { productId, productName, productData, productDays, cost, price, customerId } = await req.json()
 
     // 检查代理余额
-    const agent = await prisma.agent.findUnique({
-      where: { id: payload.agentId }
-    })
-
+    const agent = agents.find(a => a.id === payload.agentId)
     if (!agent || agent.balance < cost) {
       return NextResponse.json(
         { error: '余额不足' },
@@ -102,32 +89,28 @@ export async function POST(req: NextRequest) {
     const profit = price - cost
 
     // 创建订单
-    const order = await prisma.order.create({
-      data: {
-        agentId: payload.agentId,
-        customerId,
-        productId,
-        productName,
-        productData,
-        productDays,
-        cost,
-        price,
-        profit,
-        status: 'PENDING',
-        paymentMethod: 'BALANCE',
-        paymentStatus: 'PENDING'
-      }
-    })
+    const order = {
+      id: crypto.randomUUID(),
+      agentId: payload.agentId,
+      customerId,
+      productId,
+      productName,
+      productData,
+      productDays,
+      cost,
+      price,
+      profit,
+      status: 'PENDING',
+      paymentMethod: 'BALANCE',
+      paymentStatus: 'PENDING',
+      createdAt: new Date()
+    }
+    orders.push(order)
 
     // 扣除余额
-    await prisma.agent.update({
-      where: { id: payload.agentId },
-      data: {
-        balance: { decrement: cost },
-        totalSpend: { increment: cost },
-        totalOrders: { increment: 1 }
-      }
-    })
+    agent.balance -= cost
+    agent.totalSpend = (agent.totalSpend || 0) + cost
+    agent.totalOrders = (agent.totalOrders || 0) + 1
 
     return NextResponse.json({
       success: true,

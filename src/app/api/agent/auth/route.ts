@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
+// 内存存储（生产环境应使用数据库）
+const agents: any[] = []
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key'
 
 // 代理登录
@@ -12,9 +12,7 @@ export async function POST(req: NextRequest) {
     const { email, password } = await req.json()
 
     // 查找代理
-    const agent = await prisma.agent.findUnique({
-      where: { email }
-    })
+    const agent = agents.find(a => a.email === email)
 
     if (!agent) {
       return NextResponse.json(
@@ -33,17 +31,14 @@ export async function POST(req: NextRequest) {
     }
 
     // 更新最后登录时间
-    await prisma.agent.update({
-      where: { id: agent.id },
-      data: { lastLoginAt: new Date() }
-    })
+    agent.lastLoginAt = new Date()
 
     // 生成JWT
     const token = jwt.sign(
       { 
         agentId: agent.id, 
         email: agent.email,
-        level: agent.level 
+        level: agent.level || 'standard'
       },
       JWT_SECRET,
       { expiresIn: '7d' }
@@ -56,8 +51,8 @@ export async function POST(req: NextRequest) {
         id: agent.id,
         email: agent.email,
         name: agent.name,
-        level: agent.level,
-        balance: agent.balance,
+        level: agent.level || 'standard',
+        balance: agent.balance || 0,
         apiKey: agent.apiKey
       }
     })
