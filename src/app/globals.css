@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+  /* SimRyoko Brand Colors */
+  --color-brand-50: #f0f5ff;
+  --color-brand-100: #e0eaff;
+  --color-brand-200: #c7d7fe;
+  --color-brand-300: #a4bcfd;
+  --color-brand-400: #7c9cfb;
+  --color-brand-500: #5b7bf5;
+  --color-brand-600: #4361ee;
+  --color-brand-700: #3549d4;
+  --color-brand-800: #2d3dab;
+  --color-brand-900: #2a3887;
+  --color-brand-950: #1a2252;
+
+  /* Accent */
+  --color-accent-400: #f472b6;
+  --color-accent-500: #ec4899;
+  --color-accent-600: #db2777;
+
+  /* Font */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  @apply bg-white text-gray-900 antialiased;
+}
