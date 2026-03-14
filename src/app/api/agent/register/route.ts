@@ -2,17 +2,18 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { z } from 'zod'
+import { Agent } from '@/types/agent'
 
-// 内存存储
-const agents: any[] = []
+// 内存存储（⚠️ 生产环境必须使用数据库，否则重启丢失数据）
+const agents: Agent[] = []
 
 // 输入验证schema
 const registerSchema = z.object({
   email: z.string().email('邮箱格式不正确'),
-  password: z.string().min(6, '密码至少6位'),
-  name: z.string().min(2, '姓名至少2位'),
-  phone: z.string().optional(),
-  telegramId: z.string().optional(),
+  password: z.string().min(8, '密码至少8位').regex(/[A-Z]/, '密码需包含大写字母').regex(/[a-z]/, '密码需包含小写字母').regex(/[0-9]/, '密码需包含数字'),
+  name: z.string().min(2, '姓名至少2位').max(50, '姓名最多50位'),
+  phone: z.string().regex(/^\+?[\d\s-]{8,20}$/, '手机号格式不正确').optional(),
+  telegramId: z.string().regex(/^[a-zA-Z0-9_]{5,32}$/, 'Telegram ID格式不正确').optional(),
   referralCode: z.string().optional()
 })
 
@@ -47,13 +48,13 @@ export async function POST(req: NextRequest) {
     }
 
     // 加密密码
-    const hashedPassword = await bcrypt.hash(password, 10)
+    const hashedPassword = await bcrypt.hash(password, 12)
 
     // 生成API Key
     const apiKey = generateApiKey()
 
     // 创建代理
-    const agent = {
+    const agent: Agent = {
       id: crypto.randomUUID(),
       email,
       password: hashedPassword,

@@ -1,15 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
+import { Agent, Order, JWTPayload } from '@/types/agent'
 
-// 内存存储
-const orders: any[] = []
-const agents: any[] = []
-const JWT_SECRET = process.env.JWT_SECRET || 'simryoko-jwt-secret-change-in-production'
+// 内存存储（⚠️ 生产环境必须使用数据库，否则重启丢失数据）
+const orders: Order[] = []
+const agents: Agent[] = []
+
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required')
+}
 
 // 验证JWT
-function verifyToken(token: string) {
+function verifyToken(token: string): JWTPayload | null {
   try {
-    return jwt.verify(token, JWT_SECRET) as { agentId: string; email: string; level: string }
+    return jwt.verify(token, JWT_SECRET) as JWTPayload
   } catch {
     return null
   }
@@ -89,7 +94,7 @@ export async function POST(req: NextRequest) {
     const profit = price - cost
 
     // 创建订单
-    const order = {
+    const order: Order = {
       id: crypto.randomUUID(),
       agentId: payload.agentId,
       customerId,

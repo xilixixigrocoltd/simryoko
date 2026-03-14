@@ -1,10 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import { Agent, JWTPayload } from '@/types/agent'
 
-// 内存存储（生产环境应使用数据库）
-const agents: any[] = []
-const JWT_SECRET = process.env.JWT_SECRET || 'simryoko-jwt-secret-change-in-production'
+// 内存存储（⚠️ 生产环境必须使用数据库，否则重启丢失数据）
+const agents: Agent[] = []
+
+const JWT_SECRET = process.env.JWT_SECRET
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required')
+}
 
 // 代理登录
 export async function POST(req: NextRequest) {
@@ -38,7 +43,7 @@ export async function POST(req: NextRequest) {
       { 
         agentId: agent.id, 
         email: agent.email,
-        level: agent.level || 'standard'
+        level: agent.level 
       },
       JWT_SECRET,
       { expiresIn: '7d' }
@@ -51,8 +56,8 @@ export async function POST(req: NextRequest) {
         id: agent.id,
         email: agent.email,
         name: agent.name,
-        level: agent.level || 'standard',
-        balance: agent.balance || 0,
+        level: agent.level,
+        balance: agent.balance,
         apiKey: agent.apiKey
       }
     })
