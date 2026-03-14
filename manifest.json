@@ -102,5 +102,12 @@
   "edge_side_panel": {
     "preferred_width": 400
   },
-  "display_override": ["standalone", "minimal-ui"]
+  "display_override": ["standalone", "minimal-ui"],
+  "share_target": {
+    "action": "/shop.html",
+    "method": "GET",
+    "params": {
+      "text": "q"
+    }
+  }
 }

@@ -1,0 +1,154 @@
+// SimRyoko Agent Database Schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Agent {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  name          String
+  phone         String?
+  telegramId    String?
+  
+  // 代理级别
+  level         AgentLevel @default(BRONZE)
+  
+  // 财务
+  balance       Float    @default(0)
+  totalRecharge Float    @default(0)
+  totalSpend    Float    @default(0)
+  
+  // 统计
+  totalOrders   Int      @default(0)
+  totalCustomers Int     @default(0)
+  
+  // 安全
+  password      String
+  apiKey        String   @unique
+  
+  // 关系
+  orders        Order[]
+  customers     Customer[]
+  referrals     Referral[]
+  
+  // 时间戳
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  lastLoginAt   DateTime?
+  
+  @@map("agents")
+}
+
+model Order {
+  id          String   @id @default(cuid())
+  
+  // 关联
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  customerId  String?
+  customer    Customer? @relation(fields: [customerId], references: [id])
+  
+  // 产品
+  productId   String
+  productName String
+  productData String   // 流量
+  productDays String   // 天数
+  
+  // 价格
+  cost        Float    // 我们的成本
+  price       Float    // 代理售价
+  profit      Float    // 代理利润
+  
+  // 状态
+  status      OrderStatus @default(PENDING)
+  
+  // eSIM
+  iccid       String?
+  qrCode      String?
+  activationCode String?
+  
+  // 支付
+  paymentMethod String
+  paymentStatus PaymentStatus @default(PENDING)
+  
+  // 时间戳
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  paidAt      DateTime?
+  activatedAt DateTime?
+  
+  @@map("orders")
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  
+  // 关联
+  agentId   String
+  agent     Agent    @relation(fields: [agentId], references: [id])
+  
+  // 信息
+  email     String?
+  phone     String?
+  name      String?
+  
+  // 订单
+  orders    Order[]
+  
+  // 时间戳
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("customers")
+}
+
+model Referral {
+  id          String   @id @default(cuid())
+  
+  // 关联
+  agentId     String
+  agent       Agent    @relation(fields: [agentId], references: [id])
+  
+  // 被推荐人
+  referredId  String?
+  referred    Agent?   @relation("ReferredBy", fields: [referredId], references: [id])
+  
+  // 佣金
+  commission  Float    @default(0)
+  
+  // 时间戳
+  createdAt   DateTime @default(now())
+  
+  @@map("referrals")
+}
+
+// 枚举
+enum AgentLevel {
+  BRONZE    // 普通代理 +15%
+  SILVER    // 银牌代理 +10%
+  GOLD      // 金牌代理 +5%
+  PLATINUM  // 铂金代理 +3%
+}
+
+enum OrderStatus {
+  PENDING     // 待支付
+  PAID        // 已支付
+  PROCESSING  // 处理中
+  COMPLETED   // 已完成
+  CANCELLED   // 已取消
+  REFUNDED    // 已退款
+}
+
+enum PaymentStatus {
+  PENDING     // 待支付
+  PAID        // 已支付
+  FAILED      // 支付失败
+  REFUNDED    // 已退款
+}

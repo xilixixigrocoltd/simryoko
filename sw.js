@@ -1,5 +1,5 @@
-// SimRyoko Service Worker v1.1.0 — 2026-03-14
-const CACHE_NAME = 'simryoko-v1.1';
+// SimRyoko Service Worker v1.2.0 — 2026-03-14
+const CACHE_NAME = 'simryoko-v1.2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',

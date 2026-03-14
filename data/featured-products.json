@@ -1,0 +1,117 @@
+{
+  "version": "2026-03-14",
+  "strategy": "高利润优先",
+  "categories": [
+    {
+      "id": "europe-regional",
+      "name": "欧洲区域套餐",
+      "priority": "P0",
+      "reason": "利润率500-750%，成本极低",
+      "products": [
+        {
+          "name": "欧洲 10GB/30天 (28国)",
+          "cost": 4.10,
+          "price": 35.00,
+          "margin": 754,
+          "countries": ["德国", "法国", "意大利", "西班牙", "荷兰", "比利时", "奥地利", "瑞士", "北欧等28国"],
+          "tags": ["高利润", "区域套餐", "主推"]
+        },
+        {
+          "name": "欧洲 20GB/30天 (28国)",
+          "cost": 6.50,
+          "price": 49.00,
+          "margin": 654,
+          "countries": ["德国", "法国", "意大利", "西班牙", "荷兰", "比利时", "奥地利", "瑞士", "北欧等28国"],
+          "tags": ["高利润", "区域套餐", "主推"]
+        }
+      ]
+    },
+    {
+      "id": "eastern-europe-unlimited",
+      "name": "东欧无限流量",
+      "priority": "P0",
+      "reason": "利润率332-548%，长时段高利润",
+      "products": [
+        {
+          "name": "波兰 无限流量/30天",
+          "cost": 14.90,
+          "price": 72.50,
+          "margin": 387,
+          "tags": ["无限流量", "高利润", "主推"]
+        },
+        {
+          "name": "捷克 无限流量/30天",
+          "cost": 12.90,
+          "price": 68.60,
+          "margin": 332,
+          "tags": ["无限流量", "高利润", "主推"]
+        },
+        {
+          "name": "爱尔兰 无限流量/30天",
+          "cost": 12.70,
+          "price": 68.80,
+          "margin": 342,
+          "tags": ["无限流量", "高利润", "主推"]
+        }
+      ]
+    },
+    {
+      "id": "asia-popular",
+      "name": "亚洲热门目的地",
+      "priority": "P1",
+      "reason": "中国出境游客首选",
+      "products": [
+        {
+          "name": "日本 10GB/30天",
+          "cost": 8.50,
+          "price": 25.00,
+          "margin": 194,
+          "tags": ["热门", "樱花季", "推荐"]
+        },
+        {
+          "name": "韩国 10GB/30天",
+          "cost": 7.20,
+          "price": 22.00,
+          "margin": 206,
+          "tags": ["热门", "K-pop", "推荐"]
+        },
+        {
+          "name": "泰国 无限流量/8天",
+          "cost": 5.90,
+          "price": 19.90,
+          "margin": 237,
+          "tags": ["热门", "性价比", "推荐"]
+        },
+        {
+          "name": "新加坡 10GB/30天",
+          "cost": 6.80,
+          "price": 20.00,
+          "margin": 194,
+          "tags": ["热门", "商务", "推荐"]
+        }
+      ]
+    },
+    {
+      "id": "usa",
+      "name": "美国套餐",
+      "priority": "P1",
+      "reason": "商务出行首选",
+      "products": [
+        {
+          "name": "美国 20GB/30天",
+          "cost": 17.40,
+          "price": 49.00,
+          "margin": 181,
+          "tags": ["商务", "热门", "推荐"]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "totalFeatured": 10,
+    "p0Products": 5,
+    "p1Products": 5,
+    "averageMargin": 385,
+    "targetCustomers": ["欧洲旅行者", "数字游民", "中国出境游客", "商务出行"]
+  }
+}

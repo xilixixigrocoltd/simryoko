@@ -1322,3 +1322,79 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     --border: #2a2a3e;
   }
 }
+
+/* =============================================
+   MOBILE POLISH v4 — 2026-03-14
+   ============================================= */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn-primary { box-shadow: none; border: 2px solid white; }
+  .dest-card { border-width: 2px; }
+  .product-card { border-width: 2px; }
+  .chip { border: 1px solid var(--text); }
+  .nav { border-bottom-width: 2px; }
+}
+
+/* 360px — Galaxy S series, older small Androids */
+@media (max-width: 360px) {
+  .hero h1 { font-size: 26px; }
+  .hero-desc { font-size: 13px; }
+  .container { padding: 0 14px; }
+  .btn-lg { padding: 12px 16px; font-size: 14px; }
+  .stats-bar { grid-template-columns: 1fr 1fr; gap: 0; }
+  .stat-item .num { font-size: 20px; }
+  .stat-item .label { font-size: 10px; }
+  .dest-grid { grid-template-columns: 1fr !important; }
+  .products-grid { grid-template-columns: 1fr !important; gap: 12px; }
+  .pc-price { font-size: 18px; }
+  .section-h { font-size: 20px; }
+  .footer-nav { gap: 16px; }
+  .footer-col h4 { font-size: 13px; }
+}
+
+/* Notch/Dynamic Island safe areas — left/right */
+@supports (padding-left: env(safe-area-inset-left)) {
+  .container {
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+  }
+  .nav-inner {
+    padding-left: max(24px, env(safe-area-inset-left));
+    padding-right: max(24px, env(safe-area-inset-right));
+  }
+}
+
+/* Fix iOS input zoom — ensure inputs are 16px+ */
+@media (max-width: 768px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  input[type="search"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Landscape phone fix */
+@media (max-height: 500px) and (orientation: landscape) {
+  .hero { padding: 24px 0 0; }
+  .hero-inner { padding-bottom: 24px; }
+  .hero h1 { font-size: 24px; }
+  .stats-bar { display: none; }
+  .nav-inner { height: 48px; }
+}
+
+/* Touch: prevent accidental double-tap zoom on buttons */
+.btn, .pc-btn, .chip, .dest-card, .product-card, .nav-toggle {
+  touch-action: manipulation;
+}
+
+/* Smooth pull-to-refresh feel in PWA */
+@media (display-mode: standalone) {
+  body {
+    overscroll-behavior-y: contain;
+  }
+}

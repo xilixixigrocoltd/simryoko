@@ -51,12 +51,12 @@ module.exports = {
   // 通知渠道配置
   NOTIFICATION: {
     telegram: {
-      // 使用 TOOLS.md 中的配置
-      botToken: '8764732212:AAH7bqyX3Vi6bdP5esZhspLvUDrkURaBaNc',
+      // 从环境变量读取（安全）
+      botToken: process.env.TELEGRAM_BOT_TOKEN || '',
       // 群组和频道ID
-      adminChatId: '7867683484', // 直接消息
-      groupChatId: '-1003847622485', // Simryokoesim 群组
-      channelChatId: '-1003642242507', // SimRyoko eSIM 频道
+      adminChatId: process.env.TELEGRAM_ADMIN_ID || '7867683484',
+      groupChatId: process.env.TELEGRAM_GROUP_ID || '-1003847622485',
+      channelChatId: process.env.TELEGRAM_CHANNEL_ID || '-1003642242507',
     },
   },
 

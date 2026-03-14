@@ -5,17 +5,20 @@ const compression = require('compression');
 // 绝对路径
 const ROOT_DIR = '/data/data/com.termux/files/home/.openclaw/workspace/esim-shop';
 
-// 环境变量
-process.env.API_BASE      = 'https://ciuh32wky.xigrocoltd.com/api';
-process.env.AGENT_USERNAME= 'lx001';
-process.env.AGENT_PASSWORD= '123123';
-process.env.USDT_WALLET   = 'TBuhpRpFPV1HkdfaPEdxsKgTE43jV911rL';
-process.env.SMTP_HOST     = 'smtp.exmail.qq.com';
-process.env.SMTP_PORT     = '465';
-process.env.SMTP_USER     = 'xilixi@xigrocoltd.com';
-process.env.SMTP_PASS     = 'x8F7Jr4gn8i9Y95m';
-process.env.FROM_EMAIL    = 'xilixi@xigrocoltd.com';
-process.env.FROM_NAME     = 'SimRyoko';
+// 加载环境变量
+require('dotenv').config();
+
+// 验证必需环境变量（Vercel环境跳过严格检查）
+const isVercel = process.env.VERCEL === '1';
+const requiredEnv = ['AGENT_PASSWORD', 'SMTP_PASS', 'USDT_WALLET'];
+for (const key of requiredEnv) {
+  if (!process.env[key]) {
+    console.error(`Warning: ${key} environment variable is not set`);
+    if (!isVercel) {
+      process.exit(1);
+    }
+  }
+}
 
 const app = express();
 
@@ -33,7 +36,17 @@ app.use(compression({
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use((req, res, next) => { res.setHeader('Access-Control-Allow-Origin', '*'); next(); });
+// CORS配置
+const corsOrigins = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['https://simryoko.com'];
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (corsOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
 
 // 监控 API 路由
 const dashboardRouter = require('./monitoring/dashboard');
@@ -76,11 +89,18 @@ app.use('/monitoring', express.static(path.join(ROOT_DIR, 'monitoring'), {
 // 404 fallback
 app.use((req, res) => res.sendFile(path.join(ROOT_DIR, 'index.html')));
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`\n🚀 SimRyoko running → http://localhost:${PORT}`);
-  console.log(`   Shop:      http://localhost:${PORT}/shop.html`);
-  console.log(`   API test:  http://localhost:${PORT}/api/products?country=JP`);
-  console.log(`   监控面板:  http://localhost:${PORT}/monitoring/dashboard.html`);
-  console.log(`   监控API:   http://localhost:${PORT}/api/monitoring/dashboard/overview\n`);
-});
+// Vercel Serverless 适配
+if (process.env.VERCEL) {
+  // Vercel 环境：导出 handler
+  module.exports = app;
+} else {
+  // 本地环境：监听端口
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`\n🚀 SimRyoko running → http://localhost:${PORT}`);
+    console.log(`   Shop:      http://localhost:${PORT}/shop.html`);
+    console.log(`   API test:  http://localhost:${PORT}/api/products?country=JP`);
+    console.log(`   监控面板:  http://localhost:${PORT}/monitoring/dashboard.html`);
+    console.log(`   监控API:   http://localhost:${PORT}/api/monitoring/dashboard/overview\n`);
+  });
+}
