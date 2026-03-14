@@ -1,6 +1,8 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
+:root {
   /* SimRyoko Brand Colors */
   --color-brand-50: #f0f5ff;
   --color-brand-100: #e0eaff;
@@ -18,11 +20,9 @@
   --color-accent-400: #f472b6;
   --color-accent-500: #ec4899;
   --color-accent-600: #db2777;
-
-  /* Font */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
   @apply bg-white text-gray-900 antialiased;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
