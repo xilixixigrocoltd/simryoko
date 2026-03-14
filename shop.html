@@ -2,13 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
   <title>eSIM Shop — SimRyoko</title>
   <meta name="description" content="Buy eSIM for 200+ countries. Japan, Korea, Europe & more. From $4. Instant delivery."/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "eSIM Shop",
+    "description": "Buy eSIM for 200+ countries. Instant delivery.",
+    "url": "https://simryoko.com/shop.html"
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "SimRyoko eSIM",
+    "description": "eSIM data plans for 200+ countries worldwide",
+    "brand": {
+      "@type": "Brand",
+      "name": "SimRyoko"
+    },
+    "offers": {
+      "@type": "AggregateOffer",
+      "lowPrice": "4",
+      "priceCurrency": "USD",
+      "offerCount": "2600"
+    }
+  }
+  </script>
+
   <meta property="og:title" content="SimRyoko eSIM Shop — 200+ Countries"/>
   <meta property="og:description" content="Instant eSIM for travel. 2,600+ plans. From $4."/>
   <meta property="og:image" content="https://simryoko.com/img/tma-banner.png"/>
+  <meta property="og:url" content="https://simryoko.com/shop.html"/>
+  <meta name="twitter:card" content="summary_large_image"/>
   <link rel="canonical" href="https://simryoko.com/shop.html"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link rel="manifest" href="/manifest.json"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236C63FF'/><text y='.9em' font-size='65' x='15'>📡</text></svg>"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
@@ -1553,7 +1585,7 @@ preloadPopular();
 // 用户自行选择目的地，不自动弹出
 </script>
 <script src="/js/i18n.js"></script>
-<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/js/sw.js').catch(()=>{});</script>
+<script>if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js').catch(()=>{});</script>
 
 
 </body>

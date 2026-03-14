@@ -1,7 +1,20 @@
+# SimRyoko Robots.txt
+# https://simryoko.com
+
 User-agent: *
 Allow: /
+
+# Disallow private/transactional pages
 Disallow: /api/
 Disallow: /payment.html
+Disallow: /checkout.html
 Disallow: /success.html
 
+# Sitemap
 Sitemap: https://simryoko.com/sitemap.xml
+
+# Crawl-delay (optional, for polite crawling)
+Crawl-delay: 1
+
+# Host directive (for search engines)
+Host: simryoko.com

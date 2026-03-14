@@ -1,0 +1,441 @@
+openapi: 3.0.0
+info:
+  title: SimRyoko API
+  description: SimRyoko eSIM电商平台API
+  version: 2.0.0
+  contact:
+    name: SimRyoko Team
+    email: support@simryoko.com
+
+servers:
+  - url: https://ciuh32wky.xigrocoltd.com/api
+    description: Production
+  - url: http://localhost:3000/api
+    description: Development
+
+paths:
+  /products:
+    get:
+      summary: 获取产品列表
+      description: 支持多维度筛选和排序
+      tags:
+        - Products
+      parameters:
+        - name: country
+          in: query
+          description: 国家代码
+          schema:
+            type: string
+            example: jp
+        - name: type
+          in: query
+          description: 产品类型
+          schema:
+            type: string
+            enum: [local, regional, global]
+        - name: min_price
+          in: query
+          description: 最低价格
+          schema:
+            type: number
+            example: 5
+        - name: max_price
+          in: query
+          description: 最高价格
+          schema:
+            type: number
+            example: 20
+        - name: data_size
+          in: query
+          description: 流量大小
+          schema:
+            type: string
+            enum: [500MB, 1GB, 3GB, 5GB, 10GB, unlimited]
+        - name: valid_days
+          in: query
+          description: 有效期
+          schema:
+            type: integer
+            enum: [3, 7, 15, 30, 365]
+        - name: has_voice
+          in: query
+          description: 是否支持语音
+          schema:
+            type: boolean
+        - name: sort
+          in: query
+          description: 排序方式
+          schema:
+            type: string
+            enum: [price_asc, price_desc, popular, newest]
+            default: popular
+        - name: page
+          in: query
+          description: 页码
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: 每页数量
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  data:
+                    type: object
+                    properties:
+                      products:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Product'
+                      pagination:
+                        $ref: '#/components/schemas/Pagination'
+        '400':
+          description: 参数错误
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /products/{id}:
+    get:
+      summary: 获取产品详情
+      tags:
+        - Products
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/ProductDetail'
+        '404':
+          description: 产品不存在
+
+  /inventory/{id}:
+    get:
+      summary: 获取产品库存
+      description: 实时库存查询
+      tags:
+        - Inventory
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      productId:
+                        type: integer
+                      stock:
+                        type: integer
+                      available:
+                        type: boolean
+                      status:
+                        type: string
+                        enum: [in_stock, low_stock, out_of_stock]
+
+  /orders:
+    post:
+      summary: 创建订单
+      tags:
+        - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - items
+                - customer
+              properties:
+                items:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      productId:
+                        type: integer
+                      quantity:
+                        type: integer
+                        minimum: 1
+                customer:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                    phone:
+                      type: string
+                couponCode:
+                  type: string
+      responses:
+        '201':
+          description: 创建成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/Order'
+
+  /orders/{id}:
+    get:
+      summary: 获取订单详情
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    $ref: '#/components/schemas/OrderDetail'
+
+  /orders/{id}/topup:
+    post:
+      summary: 订单续费
+      description: 为现有eSIM续费
+      tags:
+        - Orders
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                packageId:
+                  type: integer
+      responses:
+        '200':
+          description: 续费成功
+
+  /esim/{iccid}/usage:
+    get:
+      summary: 查询eSIM使用
+      description: 查询eSIM流量使用情况
+      tags:
+        - eSIM
+      parameters:
+        - name: iccid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 成功
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      iccid:
+                        type: string
+                      totalMB:
+                        type: integer
+                      usedMB:
+                        type: integer
+                      remainingMB:
+                        type: integer
+                      usedPercent:
+                        type: number
+                      expiryDate:
+                        type: string
+                        format: date-time
+                      daysLeft:
+                        type: integer
+                      lowData:
+                        type: boolean
+                      expiringSoon:
+                        type: boolean
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          enum: [local, regional, global]
+        price:
+          type: number
+        originalPrice:
+          type: number
+        dataSize:
+          type: integer
+          description: MB
+        validDays:
+          type: integer
+        country:
+          $ref: '#/components/schemas/Country'
+        stock:
+          type: integer
+        soldCount:
+          type: integer
+        isHot:
+          type: boolean
+        hasVoice:
+          type: boolean
+
+    ProductDetail:
+      allOf:
+        - $ref: '#/components/schemas/Product'
+        - type: object
+          properties:
+            description:
+              type: string
+            features:
+              type: array
+              items:
+                type: string
+            operator:
+              type: string
+            rating:
+              type: number
+            reviewCount:
+            type: integer
+
+    Country:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        flag:
+          type: string
+
+    Pagination:
+      type: object
+      properties:
+        page:
+          type: integer
+        limit:
+          type: integer
+        total:
+          type: integer
+        totalPages:
+          type: integer
+
+    Order:
+      type: object
+      properties:
+        id:
+          type: string
+        totalAmount:
+          type: number
+        discount:
+          type: number
+        finalAmount:
+          type: number
+        status:
+          type: string
+          enum: [pending, paid, completed, cancelled]
+        createdAt:
+          type: string
+          format: date-time
+
+    OrderDetail:
+      allOf:
+        - $ref: '#/components/schemas/Order'
+        - type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  product:
+                    $ref: '#/components/schemas/Product'
+                  quantity:
+                    type: integer
+            customer:
+              type: object
+              properties:
+                email:
+                  type: string
+                phone:
+                  type: string
+
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+            message:
+              type: string
+            details:
+              type: object

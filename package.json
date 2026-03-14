@@ -1,19 +1,40 @@
 {
-  "name": "esim-shop",
+  "name": "simryoko-tests",
   "version": "1.0.0",
-  "description": "eSIM B2B/B2C storefront powered by SimRyoko",
   "scripts": {
-    "dev": "vercel dev",
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=unit",
+    "test:e2e": "jest --testPathPattern=e2e",
+    "test:smoke": "node tests/smoke-test.js",
+    "lint": "echo 'Lint check'",
+    "build": "echo 'Build check'",
     "start": "node server.js"
   },
-  "dependencies": {
-    "axios": "^1.6.0",
-    "express": "^5.2.1",
-    "nodemailer": "^6.9.0",
-    "qrcode": "^1.5.3",
-    "stripe": "^14.0.0"
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "node-fetch": "^2.6.0",
+    "supertest": "^6.3.0"
   },
-  "engines": {
-    "node": ">=18"
-  }
+  "dependencies": {
+    "axios": "^1.13.6",
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  },
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xilixixigrocoltd/simryoko.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/xilixixigrocoltd/simryoko/issues"
+  },
+  "homepage": "https://github.com/xilixixigrocoltd/simryoko#readme"
 }

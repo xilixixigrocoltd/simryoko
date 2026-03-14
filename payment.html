@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
   <title>Complete Payment — SimRyoko</title>
   <meta name="description" content="Complete your USDT payment for SimRyoko eSIM. Auto-delivery within minutes."/>
+  <meta property="og:title" content="Complete Payment — SimRyoko"/>
+  <meta property="og:description" content="Complete your USDT payment for SimRyoko eSIM. Auto-delivery within minutes."/>
+  <meta property="og:url" content="https://simryoko.com/payment.html"/>
   <meta name="robots" content="noindex"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
@@ -138,6 +141,6 @@ async function pollStatus() {
 setTimeout(pollStatus, 15000); // 15秒后开始第一次查询
 </script>
 <script src="/js/i18n.js"></script>
-<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/js/sw.js").catch(()=>{});</script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});</script>
 </body>
 </html>

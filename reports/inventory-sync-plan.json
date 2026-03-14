@@ -1,0 +1,50 @@
+{
+  "generated_at": "2026-03-13T20:52:24.214967",
+  "current_status": {
+    "total_products": 1290,
+    "stock_default_999": 1290,
+    "sold_zero": true,
+    "old_data_count": 75
+  },
+  "problems": [
+    {
+      "issue": "库存数据为默认值",
+      "severity": "高",
+      "detail": "100%产品库存显示为999，API可能不返回真实库存",
+      "impact": "无法判断真实库存，可能导致超卖"
+    },
+    {
+      "issue": "销量数据缺失",
+      "severity": "高",
+      "detail": "所有产品销量为0，API可能不返回销量数据",
+      "impact": "无法分析热销产品，无法做销售预测"
+    }
+  ],
+  "recommendation": "混合方案（实时库存+本地销量）",
+  "phases": [
+    {
+      "name": "立即实施",
+      "duration": "1-2天",
+      "tasks": [
+        "库存显示优化",
+        "销量统计启动"
+      ]
+    },
+    {
+      "name": "短期优化",
+      "duration": "1周",
+      "tasks": [
+        "实时库存查询",
+        "销量分析看板"
+      ]
+    },
+    {
+      "name": "长期完善",
+      "duration": "1个月",
+      "tasks": [
+        "智能库存管理",
+        "价格优化"
+      ]
+    }
+  ]
+}

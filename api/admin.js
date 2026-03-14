@@ -7,14 +7,22 @@ const { sendEsimEmail } = require('./_email');
 const { getBalance, placeOrder, apiCall } = require('./_agent');
 const { notifyAdmin } = require('./_notify');
 
-const VERCEL_TOKEN  = process.env.VERCEL_TOKEN  || '';
-const PROJECT_ID    = process.env.VERCEL_PROJECT_ID || 'prj_SbPkDXGAojvyJhkpz0iiBix0m13L';
+const VERCEL_TOKEN  = process.env.VERCEL_TOKEN;
+const PROJECT_ID    = process.env.VERCEL_PROJECT_ID;
 const API_BASE      = process.env.API_BASE       || 'https://ciuh32wky.xigrocoltd.com/api';
-const AGENT_USER    = process.env.AGENT_USERNAME || 'lx001';
-const AGENT_PASS    = process.env.AGENT_PASSWORD || '123123';
-const CRON_SECRET   = process.env.CRON_SECRET    || 'simryoko-cron-2026';
-const TG_BOT_TOKEN  = process.env.TELEGRAM_BOT_TOKEN || '8764732212:AAH7bqyX3Vi6bdP5esZhspLvUDrkURaBaNc';
-const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID   || '7867683484';
+const AGENT_USER    = process.env.AGENT_USERNAME;
+const AGENT_PASS    = process.env.AGENT_PASSWORD;
+const CRON_SECRET   = process.env.CRON_SECRET;
+const TG_BOT_TOKEN  = process.env.TELEGRAM_BOT_TOKEN;
+const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
+
+// 验证必需环境变量
+const requiredEnv = ['VERCEL_TOKEN', 'VERCEL_PROJECT_ID', 'AGENT_USERNAME', 'AGENT_PASSWORD', 'CRON_SECRET', 'TELEGRAM_BOT_TOKEN', 'ADMIN_CHAT_ID'];
+for (const key of requiredEnv) {
+  if (!process.env[key]) {
+    console.error(`[admin] Missing required env var: ${key}`);
+  }
+}
 
 function auth(req, res) {
   const secret = req.headers['x-cron-secret'] || req.query.secret;

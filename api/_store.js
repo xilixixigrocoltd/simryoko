@@ -10,14 +10,18 @@ const ORDER_TTL = 30 * 24 * 3600; // 订单保留 30 天
 const memCache  = new Map();
 const MEM_TTL   = 30 * 1000; // 30 秒内存缓存
 
-// ── CF 配置（硬编码 fallback，防止 env 丢失时 crash）──────────────────────────
+// ── CF 配置（必须从环境变量读取）────────────────────────────────────────────
 function env() {
-  return {
-    accountId:   process.env.CF_ACCOUNT_ID    || 'c78c07c8b86f0f642b476f5a93c9947e',
-    namespaceId: process.env.CF_KV_NAMESPACE_ID || '47826a9b43c84e6f9a0dbcc6660ecf04',
-    email:       process.env.CF_API_EMAIL      || 'xilixi@xigrocoltd.com',
-    apiKey:      process.env.CF_API_KEY        || 'd293950de661bbe95c7ca91242cd00476c33e',
-  };
+  const accountId = process.env.CF_ACCOUNT_ID;
+  const namespaceId = process.env.CF_KV_NAMESPACE_ID;
+  const email = process.env.CF_API_EMAIL;
+  const apiKey = process.env.CF_API_KEY;
+  
+  if (!accountId || !namespaceId || !email || !apiKey) {
+    throw new Error('Cloudflare KV credentials missing in environment variables');
+  }
+  
+  return { accountId, namespaceId, email, apiKey };
 }
 
 function headers() {

@@ -1,0 +1,1690 @@
+{
+  "generated_at": "2026-03-13T20:41:25.848857",
+  "total_loss_products": 45,
+  "total_potential_loss": 134.0,
+  "categories": {
+    "severe": {
+      "count": 4,
+      "products": [
+        {
+          "id": 2594,
+          "name": "津巴布韦 1GB/7天",
+          "nameEn": "Zimcom - 1 GB - 7 days",
+          "type": "local",
+          "retail": 19.0,
+          "cost": 42.6,
+          "loss": 23.6,
+          "loss_pct": 55.39906103286385,
+          "countries": [
+            "ZW"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Zimcom",
+          "status": "active"
+        },
+        {
+          "id": 1927,
+          "name": "黎巴嫩 1GB/7天",
+          "nameEn": "Salbeh - 1 GB - 7 days",
+          "type": "local",
+          "retail": 9.5,
+          "cost": 20.46,
+          "loss": 10.96,
+          "loss_pct": 53.567937438905176,
+          "countries": [
+            "LB"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Salbeh",
+          "status": "active"
+        },
+        {
+          "id": 2498,
+          "name": "多哥 1GB/7天",
+          "nameEn": "Atakora Mobile - 1 GB - 7 days",
+          "type": "local",
+          "retail": 9.5,
+          "cost": 18.46,
+          "loss": 8.96,
+          "loss_pct": 48.5373781148429,
+          "countries": [
+            "TG"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Atakora Mobile",
+          "status": "active"
+        },
+        {
+          "id": 1928,
+          "name": "利比里亚 1GB/7天",
+          "nameEn": "Mariocom - 1 GB - 7 days",
+          "type": "local",
+          "retail": 9.5,
+          "cost": 13.98,
+          "loss": 4.48,
+          "loss_pct": 32.04577968526466,
+          "countries": [
+            "LR"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Mariocom",
+          "status": "active"
+        }
+      ]
+    },
+    "high": {
+      "count": 0,
+      "products": []
+    },
+    "medium": {
+      "count": 6,
+      "products": [
+        {
+          "id": 2721,
+          "name": "开曼群岛 20GB/30天",
+          "nameEn": "Atlantis Telecom - 20 GB - 30 days",
+          "type": "local",
+          "retail": 60.0,
+          "cost": 72.72,
+          "loss": 12.719999999999999,
+          "loss_pct": 17.49174917491749,
+          "countries": [
+            "KY"
+          ],
+          "dataSize": 20480,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Atlantis Telecom",
+          "status": "active"
+        },
+        {
+          "id": 2378,
+          "name": "留尼汪 无限流量/30天",
+          "nameEn": "Reunion Mobile - Unlimited - 30 days",
+          "type": "local",
+          "retail": 74.0,
+          "cost": 84.0,
+          "loss": 10.0,
+          "loss_pct": 11.904761904761903,
+          "countries": [
+            "RE"
+          ],
+          "dataSize": 0,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Reunion Mobile",
+          "status": "active"
+        },
+        {
+          "id": 2282,
+          "name": "尼日尔 无限流量/7天",
+          "nameEn": "Letecom - Unlimited - 7 days",
+          "type": "local",
+          "retail": 53.5,
+          "cost": 62.86,
+          "loss": 9.36,
+          "loss_pct": 14.8902322621699,
+          "countries": [
+            "NE"
+          ],
+          "dataSize": 0,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Letecom",
+          "status": "active"
+        },
+        {
+          "id": 1881,
+          "name": "大洋洲 无限流量/5天 (覆盖8国)",
+          "nameEn": "Oceanlink - Unlimited - 5 days",
+          "type": "regional",
+          "retail": 19.5,
+          "cost": 23.58,
+          "loss": 4.079999999999998,
+          "loss_pct": 17.30279898218829,
+          "countries": [
+            "AU",
+            "FJ",
+            "NR",
+            "NZ",
+            "PG",
+            "WS",
+            "TO",
+            "VU"
+          ],
+          "dataSize": 0,
+          "validDays": 5,
+          "stock": 999,
+          "operator": "Oceanlink",
+          "status": "active"
+        },
+        {
+          "id": 2625,
+          "name": "PT-AZ 无限流量/5天",
+          "nameEn": "Pico - Unlimited - 5 days",
+          "type": "local",
+          "retail": 19.5,
+          "cost": 22.78,
+          "loss": 3.280000000000001,
+          "loss_pct": 14.398595258999125,
+          "countries": [
+            "PT-AZ"
+          ],
+          "dataSize": 0,
+          "validDays": 5,
+          "stock": 999,
+          "operator": "Pico",
+          "status": "active"
+        },
+        {
+          "id": 2271,
+          "name": "纳米比亚 1GB/7天",
+          "nameEn": "Nama - 1 GB - 7 days",
+          "type": "local",
+          "retail": 9.5,
+          "cost": 11.26,
+          "loss": 1.7599999999999998,
+          "loss_pct": 15.630550621669625,
+          "countries": [
+            "NA"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Nama",
+          "status": "active"
+        }
+      ]
+    },
+    "low": {
+      "count": 35,
+      "products": [
+        {
+          "id": 2283,
+          "name": "尼日尔 无限流量/10天",
+          "nameEn": "Letecom - Unlimited - 10 days",
+          "type": "local",
+          "retail": 84.0,
+          "cost": 90.88,
+          "loss": 6.8799999999999955,
+          "loss_pct": 7.570422535211263,
+          "countries": [
+            "NE"
+          ],
+          "dataSize": 0,
+          "validDays": 10,
+          "stock": 999,
+          "operator": "Letecom",
+          "status": "active"
+        },
+        {
+          "id": 1807,
+          "name": "智利 无限流量/15天",
+          "nameEn": "Altoque - Unlimited - 15 days",
+          "type": "local",
+          "retail": 50.0,
+          "cost": 54.48,
+          "loss": 4.479999999999997,
+          "loss_pct": 8.22320117474302,
+          "countries": [
+            "CL"
+          ],
+          "dataSize": 0,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Altoque",
+          "status": "active"
+        },
+        {
+          "id": 1687,
+          "name": "海地 无限流量/10天",
+          "nameEn": "Bon Bagay - Unlimited - 10 days",
+          "type": "local",
+          "retail": 99.0,
+          "cost": 102.68,
+          "loss": 3.680000000000007,
+          "loss_pct": 3.5839501363459356,
+          "countries": [
+            "HT"
+          ],
+          "dataSize": 0,
+          "validDays": 10,
+          "stock": 999,
+          "operator": "Bon Bagay",
+          "status": "active"
+        },
+        {
+          "id": 1675,
+          "name": "荷兰加勒比区 无限流量/10天",
+          "nameEn": "Hatonet - Unlimited - 10 days",
+          "type": "local",
+          "retail": 99.0,
+          "cost": 102.68,
+          "loss": 3.680000000000007,
+          "loss_pct": 3.5839501363459356,
+          "countries": [
+            "BQ"
+          ],
+          "dataSize": 0,
+          "validDays": 10,
+          "stock": 999,
+          "operator": "Hatonet",
+          "status": "active"
+        },
+        {
+          "id": 2440,
+          "name": "苏里南 无限流量/10天",
+          "nameEn": "Pondocom - Unlimited - 10 days",
+          "type": "local",
+          "retail": 68.0,
+          "cost": 71.36,
+          "loss": 3.3599999999999994,
+          "loss_pct": 4.708520179372196,
+          "countries": [
+            "SR"
+          ],
+          "dataSize": 0,
+          "validDays": 10,
+          "stock": 999,
+          "operator": "Pondocom",
+          "status": "active"
+        },
+        {
+          "id": 1683,
+          "name": "瓜德罗普 无限流量/15天",
+          "nameEn": "Guanet - Unlimited - 15 days",
+          "type": "local",
+          "retail": 49.0,
+          "cost": 52.12,
+          "loss": 3.1199999999999974,
+          "loss_pct": 5.9861857252494195,
+          "countries": [
+            "GP"
+          ],
+          "dataSize": 0,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Guanet",
+          "status": "active"
+        },
+        {
+          "id": 1573,
+          "name": "刚果(金) 5GB/30天",
+          "nameEn": "Pondu Mobile - 5 GB - 30 days",
+          "type": "local",
+          "retail": 25.0,
+          "cost": 27.24,
+          "loss": 2.2399999999999984,
+          "loss_pct": 8.22320117474302,
+          "countries": [
+            "CD"
+          ],
+          "dataSize": 5120,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Pondu Mobile",
+          "status": "active"
+        },
+        {
+          "id": 2272,
+          "name": "纳米比亚 2GB/15天",
+          "nameEn": "Nama - 2 GB - 15 days",
+          "type": "local",
+          "retail": 19.5,
+          "cost": 21.66,
+          "loss": 2.16,
+          "loss_pct": 9.97229916897507,
+          "countries": [
+            "NA"
+          ],
+          "dataSize": 2048,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Nama",
+          "status": "active"
+        },
+        {
+          "id": 2181,
+          "name": "摩尔多瓦 无限流量/10天",
+          "nameEn": "Soroca Mobile - Unlimited - 10 days",
+          "type": "local",
+          "retail": 35.0,
+          "cost": 37.08,
+          "loss": 2.0799999999999983,
+          "loss_pct": 5.60949298813376,
+          "countries": [
+            "MD"
+          ],
+          "dataSize": 0,
+          "validDays": 10,
+          "stock": 999,
+          "operator": "Soroca Mobile",
+          "status": "active"
+        },
+        {
+          "id": 2281,
+          "name": "尼日尔 无限流量/5天",
+          "nameEn": "Letecom - Unlimited - 5 days",
+          "type": "local",
+          "retail": 44.5,
+          "cost": 46.5,
+          "loss": 2.0,
+          "loss_pct": 4.301075268817205,
+          "countries": [
+            "NE"
+          ],
+          "dataSize": 0,
+          "validDays": 5,
+          "stock": 999,
+          "operator": "Letecom",
+          "status": "active"
+        },
+        {
+          "id": 1424,
+          "name": "摩洛哥 无限流量/7天",
+          "nameEn": "Choukran - Unlimited - 7 days",
+          "type": "local",
+          "retail": 35.0,
+          "cost": 36.12,
+          "loss": 1.1199999999999974,
+          "loss_pct": 3.1007751937984427,
+          "countries": [
+            "MA"
+          ],
+          "dataSize": 0,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Choukran",
+          "status": "active"
+        },
+        {
+          "id": 1660,
+          "name": "多米尼克 3GB/30天",
+          "nameEn": "Vaina Communications - 3 GB - 30 days",
+          "type": "local",
+          "retail": 17.0,
+          "cost": 17.96,
+          "loss": 0.9600000000000009,
+          "loss_pct": 5.345211581291764,
+          "countries": [
+            "DM"
+          ],
+          "dataSize": 3072,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Vaina Communications",
+          "status": "active"
+        },
+        {
+          "id": 2273,
+          "name": "纳米比亚 3GB/30天",
+          "nameEn": "Nama - 3 GB - 30 days",
+          "type": "local",
+          "retail": 29.0,
+          "cost": 29.8,
+          "loss": 0.8000000000000007,
+          "loss_pct": 2.684563758389264,
+          "countries": [
+            "NA"
+          ],
+          "dataSize": 3072,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Nama",
+          "status": "active"
+        },
+        {
+          "id": 1746,
+          "name": "博茨瓦纳 5GB/30天",
+          "nameEn": "Maun Telecom - 5 GB - 30 days",
+          "type": "local",
+          "retail": 35.0,
+          "cost": 35.8,
+          "loss": 0.7999999999999972,
+          "loss_pct": 2.234636871508372,
+          "countries": [
+            "BW"
+          ],
+          "dataSize": 5120,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Maun Telecom",
+          "status": "active"
+        },
+        {
+          "id": 1880,
+          "name": "大洋洲 无限流量/3天 (覆盖8国)",
+          "nameEn": "Oceanlink - Unlimited - 3 days",
+          "type": "regional",
+          "retail": 11.5,
+          "cost": 12.22,
+          "loss": 0.7200000000000006,
+          "loss_pct": 5.891980360065471,
+          "countries": [
+            "AU",
+            "FJ",
+            "NR",
+            "NZ",
+            "PG",
+            "WS",
+            "TO",
+            "VU"
+          ],
+          "dataSize": 0,
+          "validDays": 3,
+          "stock": 999,
+          "operator": "Oceanlink",
+          "status": "active"
+        },
+        {
+          "id": 2477,
+          "name": "斯威士兰 1GB/7天",
+          "nameEn": "Eswatini Communications - 1 GB - 7 days",
+          "type": "local",
+          "retail": 9.5,
+          "cost": 10.14,
+          "loss": 0.6400000000000006,
+          "loss_pct": 6.311637080867856,
+          "countries": [
+            "SZ"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Eswatini Communications",
+          "status": "active"
+        },
+        {
+          "id": 2478,
+          "name": "斯威士兰 2GB/15天",
+          "nameEn": "Eswatini Communications - 2 GB - 15 days",
+          "type": "local",
+          "retail": 18.5,
+          "cost": 19.06,
+          "loss": 0.5599999999999987,
+          "loss_pct": 2.9380902413431205,
+          "countries": [
+            "SZ"
+          ],
+          "dataSize": 2048,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Eswatini Communications",
+          "status": "active"
+        },
+        {
+          "id": 1744,
+          "name": "博茨瓦纳 2GB/15天",
+          "nameEn": "Maun Telecom - 2 GB - 15 days",
+          "type": "local",
+          "retail": 16.0,
+          "cost": 16.56,
+          "loss": 0.5599999999999987,
+          "loss_pct": 3.3816425120772875,
+          "countries": [
+            "BW"
+          ],
+          "dataSize": 2048,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Maun Telecom",
+          "status": "active"
+        },
+        {
+          "id": 1659,
+          "name": "多米尼克 2GB/15天",
+          "nameEn": "Vaina Communications - 2 GB - 15 days",
+          "type": "local",
+          "retail": 13.0,
+          "cost": 13.48,
+          "loss": 0.4800000000000004,
+          "loss_pct": 3.5608308605341277,
+          "countries": [
+            "DM"
+          ],
+          "dataSize": 2048,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Vaina Communications",
+          "status": "active"
+        },
+        {
+          "id": 1553,
+          "name": "布基纳法索 1GB/7天",
+          "nameEn": "Volta - 1 GB - 7 days",
+          "type": "local",
+          "retail": 7.0,
+          "cost": 7.48,
+          "loss": 0.4800000000000004,
+          "loss_pct": 6.417112299465246,
+          "countries": [
+            "BF"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Volta",
+          "status": "active"
+        },
+        {
+          "id": 2341,
+          "name": "巴布亚新几内亚 10GB/30天",
+          "nameEn": "Sivoli Mobile - 10 GB - 30 days",
+          "type": "local",
+          "retail": 43.0,
+          "cost": 43.48,
+          "loss": 0.4799999999999969,
+          "loss_pct": 1.1039558417663222,
+          "countries": [
+            "PG"
+          ],
+          "dataSize": 10240,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Sivoli Mobile",
+          "status": "active"
+        },
+        {
+          "id": 2624,
+          "name": "PT-AZ 无限流量/3天",
+          "nameEn": "Pico - Unlimited - 3 days",
+          "type": "local",
+          "retail": 11.5,
+          "cost": 11.9,
+          "loss": 0.40000000000000036,
+          "loss_pct": 3.3613445378151288,
+          "countries": [
+            "PT-AZ"
+          ],
+          "dataSize": 0,
+          "validDays": 3,
+          "stock": 999,
+          "operator": "Pico",
+          "status": "active"
+        },
+        {
+          "id": 2586,
+          "name": "萨摩亚 5GB/30天",
+          "nameEn": "Faaf Mobile - 5 GB - 30 days",
+          "type": "local",
+          "retail": 23.5,
+          "cost": 23.9,
+          "loss": 0.3999999999999986,
+          "loss_pct": 1.673640167364011,
+          "countries": [
+            "WS"
+          ],
+          "dataSize": 5120,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Faaf Mobile",
+          "status": "active"
+        },
+        {
+          "id": 2274,
+          "name": "纳米比亚 5GB/30天",
+          "nameEn": "Nama - 5 GB - 30 days",
+          "type": "local",
+          "retail": 48.0,
+          "cost": 48.4,
+          "loss": 0.3999999999999986,
+          "loss_pct": 0.8264462809917326,
+          "countries": [
+            "NA"
+          ],
+          "dataSize": 5120,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Nama",
+          "status": "active"
+        },
+        {
+          "id": 1743,
+          "name": "博茨瓦纳 1GB/7天",
+          "nameEn": "Maun Telecom - 1 GB - 7 days",
+          "type": "local",
+          "retail": 8.5,
+          "cost": 8.82,
+          "loss": 0.3200000000000003,
+          "loss_pct": 3.6281179138322024,
+          "countries": [
+            "BW"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Maun Telecom",
+          "status": "active"
+        },
+        {
+          "id": 1638,
+          "name": "安圭拉 1GB/7天",
+          "nameEn": "Dolphin Mobile - 1 GB - 7 days",
+          "type": "local",
+          "retail": 7.0,
+          "cost": 7.32,
+          "loss": 0.3200000000000003,
+          "loss_pct": 4.371584699453555,
+          "countries": [
+            "AI"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Dolphin Mobile",
+          "status": "active"
+        },
+        {
+          "id": 1531,
+          "name": "喀麦隆 1GB/7天",
+          "nameEn": "Kamtok Telecom - 1 GB - 7 days",
+          "type": "local",
+          "retail": 5.5,
+          "cost": 5.82,
+          "loss": 0.3200000000000003,
+          "loss_pct": 5.498281786941585,
+          "countries": [
+            "CM"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Kamtok Telecom",
+          "status": "active"
+        },
+        {
+          "id": 2438,
+          "name": "苏里南 无限流量/5天",
+          "nameEn": "Pondocom - Unlimited - 5 days",
+          "type": "local",
+          "retail": 36.5,
+          "cost": 36.74,
+          "loss": 0.240000000000002,
+          "loss_pct": 0.6532389765922754,
+          "countries": [
+            "SR"
+          ],
+          "dataSize": 0,
+          "validDays": 5,
+          "stock": 999,
+          "operator": "Pondocom",
+          "status": "active"
+        },
+        {
+          "id": 2583,
+          "name": "萨摩亚 1GB/7天",
+          "nameEn": "Faaf Mobile - 1 GB - 7 days",
+          "type": "local",
+          "retail": 6.0,
+          "cost": 6.24,
+          "loss": 0.2400000000000002,
+          "loss_pct": 3.8461538461538494,
+          "countries": [
+            "WS"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Faaf Mobile",
+          "status": "active"
+        },
+        {
+          "id": 2584,
+          "name": "萨摩亚 2GB/15天",
+          "nameEn": "Faaf Mobile - 2 GB - 15 days",
+          "type": "local",
+          "retail": 11.0,
+          "cost": 11.24,
+          "loss": 0.2400000000000002,
+          "loss_pct": 2.1352313167259807,
+          "countries": [
+            "WS"
+          ],
+          "dataSize": 2048,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Faaf Mobile",
+          "status": "active"
+        },
+        {
+          "id": 1554,
+          "name": "布基纳法索 2GB/15天",
+          "nameEn": "Volta - 2 GB - 15 days",
+          "type": "local",
+          "retail": 13.5,
+          "cost": 13.74,
+          "loss": 0.2400000000000002,
+          "loss_pct": 1.746724890829696,
+          "countries": [
+            "BF"
+          ],
+          "dataSize": 2048,
+          "validDays": 15,
+          "stock": 999,
+          "operator": "Volta",
+          "status": "active"
+        },
+        {
+          "id": 1536,
+          "name": "冈比亚 1GB/7天",
+          "nameEn": "Wassu Telecom - 1 GB - 7 days",
+          "type": "local",
+          "retail": 9.5,
+          "cost": 9.66,
+          "loss": 0.16000000000000014,
+          "loss_pct": 1.656314699792962,
+          "countries": [
+            "GM"
+          ],
+          "dataSize": 1024,
+          "validDays": 7,
+          "stock": 999,
+          "operator": "Wassu Telecom",
+          "status": "active"
+        },
+        {
+          "id": 2585,
+          "name": "萨摩亚 3GB/30天",
+          "nameEn": "Faaf Mobile - 3 GB - 30 days",
+          "type": "local",
+          "retail": 15.0,
+          "cost": 15.08,
+          "loss": 0.08000000000000007,
+          "loss_pct": 0.5305039787798413,
+          "countries": [
+            "WS"
+          ],
+          "dataSize": 3072,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Faaf Mobile",
+          "status": "active"
+        },
+        {
+          "id": 1883,
+          "name": "大洋洲 无限流量/10天 (覆盖8国)",
+          "nameEn": "Oceanlink - Unlimited - 10 days",
+          "type": "regional",
+          "retail": 35.0,
+          "cost": 35.08,
+          "loss": 0.0799999999999983,
+          "loss_pct": 0.22805017103762343,
+          "countries": [
+            "AU",
+            "FJ",
+            "NR",
+            "NZ",
+            "PG",
+            "WS",
+            "TO",
+            "VU"
+          ],
+          "dataSize": 0,
+          "validDays": 10,
+          "stock": 999,
+          "operator": "Oceanlink",
+          "status": "active"
+        },
+        {
+          "id": 1661,
+          "name": "多米尼克 5GB/30天",
+          "nameEn": "Vaina Communications - 5 GB - 30 days",
+          "type": "local",
+          "retail": 29.0,
+          "cost": 29.08,
+          "loss": 0.0799999999999983,
+          "loss_pct": 0.27510316368637655,
+          "countries": [
+            "DM"
+          ],
+          "dataSize": 5120,
+          "validDays": 30,
+          "stock": 999,
+          "operator": "Vaina Communications",
+          "status": "active"
+        }
+      ]
+    }
+  },
+  "all_products": [
+    {
+      "id": 2594,
+      "name": "津巴布韦 1GB/7天",
+      "nameEn": "Zimcom - 1 GB - 7 days",
+      "type": "local",
+      "retail": 19.0,
+      "cost": 42.6,
+      "loss": 23.6,
+      "loss_pct": 55.39906103286385,
+      "countries": [
+        "ZW"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Zimcom",
+      "status": "active"
+    },
+    {
+      "id": 2721,
+      "name": "开曼群岛 20GB/30天",
+      "nameEn": "Atlantis Telecom - 20 GB - 30 days",
+      "type": "local",
+      "retail": 60.0,
+      "cost": 72.72,
+      "loss": 12.719999999999999,
+      "loss_pct": 17.49174917491749,
+      "countries": [
+        "KY"
+      ],
+      "dataSize": 20480,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Atlantis Telecom",
+      "status": "active"
+    },
+    {
+      "id": 1927,
+      "name": "黎巴嫩 1GB/7天",
+      "nameEn": "Salbeh - 1 GB - 7 days",
+      "type": "local",
+      "retail": 9.5,
+      "cost": 20.46,
+      "loss": 10.96,
+      "loss_pct": 53.567937438905176,
+      "countries": [
+        "LB"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Salbeh",
+      "status": "active"
+    },
+    {
+      "id": 2378,
+      "name": "留尼汪 无限流量/30天",
+      "nameEn": "Reunion Mobile - Unlimited - 30 days",
+      "type": "local",
+      "retail": 74.0,
+      "cost": 84.0,
+      "loss": 10.0,
+      "loss_pct": 11.904761904761903,
+      "countries": [
+        "RE"
+      ],
+      "dataSize": 0,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Reunion Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2282,
+      "name": "尼日尔 无限流量/7天",
+      "nameEn": "Letecom - Unlimited - 7 days",
+      "type": "local",
+      "retail": 53.5,
+      "cost": 62.86,
+      "loss": 9.36,
+      "loss_pct": 14.8902322621699,
+      "countries": [
+        "NE"
+      ],
+      "dataSize": 0,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Letecom",
+      "status": "active"
+    },
+    {
+      "id": 2498,
+      "name": "多哥 1GB/7天",
+      "nameEn": "Atakora Mobile - 1 GB - 7 days",
+      "type": "local",
+      "retail": 9.5,
+      "cost": 18.46,
+      "loss": 8.96,
+      "loss_pct": 48.5373781148429,
+      "countries": [
+        "TG"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Atakora Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2283,
+      "name": "尼日尔 无限流量/10天",
+      "nameEn": "Letecom - Unlimited - 10 days",
+      "type": "local",
+      "retail": 84.0,
+      "cost": 90.88,
+      "loss": 6.8799999999999955,
+      "loss_pct": 7.570422535211263,
+      "countries": [
+        "NE"
+      ],
+      "dataSize": 0,
+      "validDays": 10,
+      "stock": 999,
+      "operator": "Letecom",
+      "status": "active"
+    },
+    {
+      "id": 1928,
+      "name": "利比里亚 1GB/7天",
+      "nameEn": "Mariocom - 1 GB - 7 days",
+      "type": "local",
+      "retail": 9.5,
+      "cost": 13.98,
+      "loss": 4.48,
+      "loss_pct": 32.04577968526466,
+      "countries": [
+        "LR"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Mariocom",
+      "status": "active"
+    },
+    {
+      "id": 1807,
+      "name": "智利 无限流量/15天",
+      "nameEn": "Altoque - Unlimited - 15 days",
+      "type": "local",
+      "retail": 50.0,
+      "cost": 54.48,
+      "loss": 4.479999999999997,
+      "loss_pct": 8.22320117474302,
+      "countries": [
+        "CL"
+      ],
+      "dataSize": 0,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Altoque",
+      "status": "active"
+    },
+    {
+      "id": 1881,
+      "name": "大洋洲 无限流量/5天 (覆盖8国)",
+      "nameEn": "Oceanlink - Unlimited - 5 days",
+      "type": "regional",
+      "retail": 19.5,
+      "cost": 23.58,
+      "loss": 4.079999999999998,
+      "loss_pct": 17.30279898218829,
+      "countries": [
+        "AU",
+        "FJ",
+        "NR",
+        "NZ",
+        "PG",
+        "WS",
+        "TO",
+        "VU"
+      ],
+      "dataSize": 0,
+      "validDays": 5,
+      "stock": 999,
+      "operator": "Oceanlink",
+      "status": "active"
+    },
+    {
+      "id": 1687,
+      "name": "海地 无限流量/10天",
+      "nameEn": "Bon Bagay - Unlimited - 10 days",
+      "type": "local",
+      "retail": 99.0,
+      "cost": 102.68,
+      "loss": 3.680000000000007,
+      "loss_pct": 3.5839501363459356,
+      "countries": [
+        "HT"
+      ],
+      "dataSize": 0,
+      "validDays": 10,
+      "stock": 999,
+      "operator": "Bon Bagay",
+      "status": "active"
+    },
+    {
+      "id": 1675,
+      "name": "荷兰加勒比区 无限流量/10天",
+      "nameEn": "Hatonet - Unlimited - 10 days",
+      "type": "local",
+      "retail": 99.0,
+      "cost": 102.68,
+      "loss": 3.680000000000007,
+      "loss_pct": 3.5839501363459356,
+      "countries": [
+        "BQ"
+      ],
+      "dataSize": 0,
+      "validDays": 10,
+      "stock": 999,
+      "operator": "Hatonet",
+      "status": "active"
+    },
+    {
+      "id": 2440,
+      "name": "苏里南 无限流量/10天",
+      "nameEn": "Pondocom - Unlimited - 10 days",
+      "type": "local",
+      "retail": 68.0,
+      "cost": 71.36,
+      "loss": 3.3599999999999994,
+      "loss_pct": 4.708520179372196,
+      "countries": [
+        "SR"
+      ],
+      "dataSize": 0,
+      "validDays": 10,
+      "stock": 999,
+      "operator": "Pondocom",
+      "status": "active"
+    },
+    {
+      "id": 2625,
+      "name": "PT-AZ 无限流量/5天",
+      "nameEn": "Pico - Unlimited - 5 days",
+      "type": "local",
+      "retail": 19.5,
+      "cost": 22.78,
+      "loss": 3.280000000000001,
+      "loss_pct": 14.398595258999125,
+      "countries": [
+        "PT-AZ"
+      ],
+      "dataSize": 0,
+      "validDays": 5,
+      "stock": 999,
+      "operator": "Pico",
+      "status": "active"
+    },
+    {
+      "id": 1683,
+      "name": "瓜德罗普 无限流量/15天",
+      "nameEn": "Guanet - Unlimited - 15 days",
+      "type": "local",
+      "retail": 49.0,
+      "cost": 52.12,
+      "loss": 3.1199999999999974,
+      "loss_pct": 5.9861857252494195,
+      "countries": [
+        "GP"
+      ],
+      "dataSize": 0,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Guanet",
+      "status": "active"
+    },
+    {
+      "id": 1573,
+      "name": "刚果(金) 5GB/30天",
+      "nameEn": "Pondu Mobile - 5 GB - 30 days",
+      "type": "local",
+      "retail": 25.0,
+      "cost": 27.24,
+      "loss": 2.2399999999999984,
+      "loss_pct": 8.22320117474302,
+      "countries": [
+        "CD"
+      ],
+      "dataSize": 5120,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Pondu Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2272,
+      "name": "纳米比亚 2GB/15天",
+      "nameEn": "Nama - 2 GB - 15 days",
+      "type": "local",
+      "retail": 19.5,
+      "cost": 21.66,
+      "loss": 2.16,
+      "loss_pct": 9.97229916897507,
+      "countries": [
+        "NA"
+      ],
+      "dataSize": 2048,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Nama",
+      "status": "active"
+    },
+    {
+      "id": 2181,
+      "name": "摩尔多瓦 无限流量/10天",
+      "nameEn": "Soroca Mobile - Unlimited - 10 days",
+      "type": "local",
+      "retail": 35.0,
+      "cost": 37.08,
+      "loss": 2.0799999999999983,
+      "loss_pct": 5.60949298813376,
+      "countries": [
+        "MD"
+      ],
+      "dataSize": 0,
+      "validDays": 10,
+      "stock": 999,
+      "operator": "Soroca Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2281,
+      "name": "尼日尔 无限流量/5天",
+      "nameEn": "Letecom - Unlimited - 5 days",
+      "type": "local",
+      "retail": 44.5,
+      "cost": 46.5,
+      "loss": 2.0,
+      "loss_pct": 4.301075268817205,
+      "countries": [
+        "NE"
+      ],
+      "dataSize": 0,
+      "validDays": 5,
+      "stock": 999,
+      "operator": "Letecom",
+      "status": "active"
+    },
+    {
+      "id": 2271,
+      "name": "纳米比亚 1GB/7天",
+      "nameEn": "Nama - 1 GB - 7 days",
+      "type": "local",
+      "retail": 9.5,
+      "cost": 11.26,
+      "loss": 1.7599999999999998,
+      "loss_pct": 15.630550621669625,
+      "countries": [
+        "NA"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Nama",
+      "status": "active"
+    },
+    {
+      "id": 1424,
+      "name": "摩洛哥 无限流量/7天",
+      "nameEn": "Choukran - Unlimited - 7 days",
+      "type": "local",
+      "retail": 35.0,
+      "cost": 36.12,
+      "loss": 1.1199999999999974,
+      "loss_pct": 3.1007751937984427,
+      "countries": [
+        "MA"
+      ],
+      "dataSize": 0,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Choukran",
+      "status": "active"
+    },
+    {
+      "id": 1660,
+      "name": "多米尼克 3GB/30天",
+      "nameEn": "Vaina Communications - 3 GB - 30 days",
+      "type": "local",
+      "retail": 17.0,
+      "cost": 17.96,
+      "loss": 0.9600000000000009,
+      "loss_pct": 5.345211581291764,
+      "countries": [
+        "DM"
+      ],
+      "dataSize": 3072,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Vaina Communications",
+      "status": "active"
+    },
+    {
+      "id": 2273,
+      "name": "纳米比亚 3GB/30天",
+      "nameEn": "Nama - 3 GB - 30 days",
+      "type": "local",
+      "retail": 29.0,
+      "cost": 29.8,
+      "loss": 0.8000000000000007,
+      "loss_pct": 2.684563758389264,
+      "countries": [
+        "NA"
+      ],
+      "dataSize": 3072,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Nama",
+      "status": "active"
+    },
+    {
+      "id": 1746,
+      "name": "博茨瓦纳 5GB/30天",
+      "nameEn": "Maun Telecom - 5 GB - 30 days",
+      "type": "local",
+      "retail": 35.0,
+      "cost": 35.8,
+      "loss": 0.7999999999999972,
+      "loss_pct": 2.234636871508372,
+      "countries": [
+        "BW"
+      ],
+      "dataSize": 5120,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Maun Telecom",
+      "status": "active"
+    },
+    {
+      "id": 1880,
+      "name": "大洋洲 无限流量/3天 (覆盖8国)",
+      "nameEn": "Oceanlink - Unlimited - 3 days",
+      "type": "regional",
+      "retail": 11.5,
+      "cost": 12.22,
+      "loss": 0.7200000000000006,
+      "loss_pct": 5.891980360065471,
+      "countries": [
+        "AU",
+        "FJ",
+        "NR",
+        "NZ",
+        "PG",
+        "WS",
+        "TO",
+        "VU"
+      ],
+      "dataSize": 0,
+      "validDays": 3,
+      "stock": 999,
+      "operator": "Oceanlink",
+      "status": "active"
+    },
+    {
+      "id": 2477,
+      "name": "斯威士兰 1GB/7天",
+      "nameEn": "Eswatini Communications - 1 GB - 7 days",
+      "type": "local",
+      "retail": 9.5,
+      "cost": 10.14,
+      "loss": 0.6400000000000006,
+      "loss_pct": 6.311637080867856,
+      "countries": [
+        "SZ"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Eswatini Communications",
+      "status": "active"
+    },
+    {
+      "id": 2478,
+      "name": "斯威士兰 2GB/15天",
+      "nameEn": "Eswatini Communications - 2 GB - 15 days",
+      "type": "local",
+      "retail": 18.5,
+      "cost": 19.06,
+      "loss": 0.5599999999999987,
+      "loss_pct": 2.9380902413431205,
+      "countries": [
+        "SZ"
+      ],
+      "dataSize": 2048,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Eswatini Communications",
+      "status": "active"
+    },
+    {
+      "id": 1744,
+      "name": "博茨瓦纳 2GB/15天",
+      "nameEn": "Maun Telecom - 2 GB - 15 days",
+      "type": "local",
+      "retail": 16.0,
+      "cost": 16.56,
+      "loss": 0.5599999999999987,
+      "loss_pct": 3.3816425120772875,
+      "countries": [
+        "BW"
+      ],
+      "dataSize": 2048,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Maun Telecom",
+      "status": "active"
+    },
+    {
+      "id": 1659,
+      "name": "多米尼克 2GB/15天",
+      "nameEn": "Vaina Communications - 2 GB - 15 days",
+      "type": "local",
+      "retail": 13.0,
+      "cost": 13.48,
+      "loss": 0.4800000000000004,
+      "loss_pct": 3.5608308605341277,
+      "countries": [
+        "DM"
+      ],
+      "dataSize": 2048,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Vaina Communications",
+      "status": "active"
+    },
+    {
+      "id": 1553,
+      "name": "布基纳法索 1GB/7天",
+      "nameEn": "Volta - 1 GB - 7 days",
+      "type": "local",
+      "retail": 7.0,
+      "cost": 7.48,
+      "loss": 0.4800000000000004,
+      "loss_pct": 6.417112299465246,
+      "countries": [
+        "BF"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Volta",
+      "status": "active"
+    },
+    {
+      "id": 2341,
+      "name": "巴布亚新几内亚 10GB/30天",
+      "nameEn": "Sivoli Mobile - 10 GB - 30 days",
+      "type": "local",
+      "retail": 43.0,
+      "cost": 43.48,
+      "loss": 0.4799999999999969,
+      "loss_pct": 1.1039558417663222,
+      "countries": [
+        "PG"
+      ],
+      "dataSize": 10240,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Sivoli Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2624,
+      "name": "PT-AZ 无限流量/3天",
+      "nameEn": "Pico - Unlimited - 3 days",
+      "type": "local",
+      "retail": 11.5,
+      "cost": 11.9,
+      "loss": 0.40000000000000036,
+      "loss_pct": 3.3613445378151288,
+      "countries": [
+        "PT-AZ"
+      ],
+      "dataSize": 0,
+      "validDays": 3,
+      "stock": 999,
+      "operator": "Pico",
+      "status": "active"
+    },
+    {
+      "id": 2586,
+      "name": "萨摩亚 5GB/30天",
+      "nameEn": "Faaf Mobile - 5 GB - 30 days",
+      "type": "local",
+      "retail": 23.5,
+      "cost": 23.9,
+      "loss": 0.3999999999999986,
+      "loss_pct": 1.673640167364011,
+      "countries": [
+        "WS"
+      ],
+      "dataSize": 5120,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Faaf Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2274,
+      "name": "纳米比亚 5GB/30天",
+      "nameEn": "Nama - 5 GB - 30 days",
+      "type": "local",
+      "retail": 48.0,
+      "cost": 48.4,
+      "loss": 0.3999999999999986,
+      "loss_pct": 0.8264462809917326,
+      "countries": [
+        "NA"
+      ],
+      "dataSize": 5120,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Nama",
+      "status": "active"
+    },
+    {
+      "id": 1743,
+      "name": "博茨瓦纳 1GB/7天",
+      "nameEn": "Maun Telecom - 1 GB - 7 days",
+      "type": "local",
+      "retail": 8.5,
+      "cost": 8.82,
+      "loss": 0.3200000000000003,
+      "loss_pct": 3.6281179138322024,
+      "countries": [
+        "BW"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Maun Telecom",
+      "status": "active"
+    },
+    {
+      "id": 1638,
+      "name": "安圭拉 1GB/7天",
+      "nameEn": "Dolphin Mobile - 1 GB - 7 days",
+      "type": "local",
+      "retail": 7.0,
+      "cost": 7.32,
+      "loss": 0.3200000000000003,
+      "loss_pct": 4.371584699453555,
+      "countries": [
+        "AI"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Dolphin Mobile",
+      "status": "active"
+    },
+    {
+      "id": 1531,
+      "name": "喀麦隆 1GB/7天",
+      "nameEn": "Kamtok Telecom - 1 GB - 7 days",
+      "type": "local",
+      "retail": 5.5,
+      "cost": 5.82,
+      "loss": 0.3200000000000003,
+      "loss_pct": 5.498281786941585,
+      "countries": [
+        "CM"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Kamtok Telecom",
+      "status": "active"
+    },
+    {
+      "id": 2438,
+      "name": "苏里南 无限流量/5天",
+      "nameEn": "Pondocom - Unlimited - 5 days",
+      "type": "local",
+      "retail": 36.5,
+      "cost": 36.74,
+      "loss": 0.240000000000002,
+      "loss_pct": 0.6532389765922754,
+      "countries": [
+        "SR"
+      ],
+      "dataSize": 0,
+      "validDays": 5,
+      "stock": 999,
+      "operator": "Pondocom",
+      "status": "active"
+    },
+    {
+      "id": 2583,
+      "name": "萨摩亚 1GB/7天",
+      "nameEn": "Faaf Mobile - 1 GB - 7 days",
+      "type": "local",
+      "retail": 6.0,
+      "cost": 6.24,
+      "loss": 0.2400000000000002,
+      "loss_pct": 3.8461538461538494,
+      "countries": [
+        "WS"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Faaf Mobile",
+      "status": "active"
+    },
+    {
+      "id": 2584,
+      "name": "萨摩亚 2GB/15天",
+      "nameEn": "Faaf Mobile - 2 GB - 15 days",
+      "type": "local",
+      "retail": 11.0,
+      "cost": 11.24,
+      "loss": 0.2400000000000002,
+      "loss_pct": 2.1352313167259807,
+      "countries": [
+        "WS"
+      ],
+      "dataSize": 2048,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Faaf Mobile",
+      "status": "active"
+    },
+    {
+      "id": 1554,
+      "name": "布基纳法索 2GB/15天",
+      "nameEn": "Volta - 2 GB - 15 days",
+      "type": "local",
+      "retail": 13.5,
+      "cost": 13.74,
+      "loss": 0.2400000000000002,
+      "loss_pct": 1.746724890829696,
+      "countries": [
+        "BF"
+      ],
+      "dataSize": 2048,
+      "validDays": 15,
+      "stock": 999,
+      "operator": "Volta",
+      "status": "active"
+    },
+    {
+      "id": 1536,
+      "name": "冈比亚 1GB/7天",
+      "nameEn": "Wassu Telecom - 1 GB - 7 days",
+      "type": "local",
+      "retail": 9.5,
+      "cost": 9.66,
+      "loss": 0.16000000000000014,
+      "loss_pct": 1.656314699792962,
+      "countries": [
+        "GM"
+      ],
+      "dataSize": 1024,
+      "validDays": 7,
+      "stock": 999,
+      "operator": "Wassu Telecom",
+      "status": "active"
+    },
+    {
+      "id": 2585,
+      "name": "萨摩亚 3GB/30天",
+      "nameEn": "Faaf Mobile - 3 GB - 30 days",
+      "type": "local",
+      "retail": 15.0,
+      "cost": 15.08,
+      "loss": 0.08000000000000007,
+      "loss_pct": 0.5305039787798413,
+      "countries": [
+        "WS"
+      ],
+      "dataSize": 3072,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Faaf Mobile",
+      "status": "active"
+    },
+    {
+      "id": 1883,
+      "name": "大洋洲 无限流量/10天 (覆盖8国)",
+      "nameEn": "Oceanlink - Unlimited - 10 days",
+      "type": "regional",
+      "retail": 35.0,
+      "cost": 35.08,
+      "loss": 0.0799999999999983,
+      "loss_pct": 0.22805017103762343,
+      "countries": [
+        "AU",
+        "FJ",
+        "NR",
+        "NZ",
+        "PG",
+        "WS",
+        "TO",
+        "VU"
+      ],
+      "dataSize": 0,
+      "validDays": 10,
+      "stock": 999,
+      "operator": "Oceanlink",
+      "status": "active"
+    },
+    {
+      "id": 1661,
+      "name": "多米尼克 5GB/30天",
+      "nameEn": "Vaina Communications - 5 GB - 30 days",
+      "type": "local",
+      "retail": 29.0,
+      "cost": 29.08,
+      "loss": 0.0799999999999983,
+      "loss_pct": 0.27510316368637655,
+      "countries": [
+        "DM"
+      ],
+      "dataSize": 5120,
+      "validDays": 30,
+      "stock": 999,
+      "operator": "Vaina Communications",
+      "status": "active"
+    }
+  ]
+}

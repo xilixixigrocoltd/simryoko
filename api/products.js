@@ -7,17 +7,55 @@ const path = require('path');
 
 // 静态缓存目录（预生成 JSON，Vercel 部署时随代码发布）
 const CACHE_DIR = path.join(__dirname, '..', 'cache');
+const CLEANED_FILE = path.join(__dirname, '..', 'data', 'products-cleaned.json');
+const DATA_FILE = fs.existsSync(path.join(__dirname, '..', 'data', 'products-cleaned.json'))
+  ? path.join(__dirname, '..', 'data', 'products-cleaned.json')
+  : path.join(__dirname, '..', 'data', 'products-full.json');
 
+// 读取完整产品数据（由 sync-products.js 每小时同步）
+function readFullProducts() {
+  try {
+    if (!fs.existsSync(DATA_FILE)) return null;
+    const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    // 检查数据新鲜度（2小时内有效）
+    if (data.metadata?.updatedAt) {
+      const age = Date.now() - new Date(data.metadata.updatedAt).getTime();
+      if (age > 2 * 60 * 60 * 1000) return null; // 超过2小时降级到 API
+    }
+    return data;
+  } catch { return null; }
+}
+
+// 从完整数据中获取指定国家的产品
+function getProductsByCountry(fullData, country) {
+  if (!country) return fullData.products;
+  return fullData.products.filter(p =>
+    p.countries?.some(c => c.code === country)
+  );
+}
+
+// 兼容旧缓存读取
 function readStaticCache(country) {
+  // 优先使用完整数据
+  const fullData = readFullProducts();
+  if (fullData) {
+    const products = getProductsByCountry(fullData, country);
+    return {
+      generatedAt: fullData.metadata.updatedAt,
+      total: products.length,
+      list: products
+    };
+  }
+
+  // 降级到旧缓存
   try {
     const key  = country || '_global';
     const file = path.join(CACHE_DIR, `${key}.json`);
     if (!fs.existsSync(file)) return null;
     const data = JSON.parse(fs.readFileSync(file, 'utf8'));
-    // 用 generatedAt 字段检查新鲜度（24小时内有效）
     if (data.generatedAt) {
       const age = Date.now() - new Date(data.generatedAt).getTime();
-      if (age > 24 * 60 * 60 * 1000) return null; // 超过24小时降级到 API
+      if (age > 24 * 60 * 60 * 1000) return null;
     }
     return data;
   } catch { return null; }
@@ -81,19 +119,51 @@ async function fetchMergedPage({ country, page, pageSize, search }) {
 }
 
 /**
- * 格式化产品字段：不暴露代理价，补充流量/天数
+ * 格式化产品字段：支持双价格体系，完整字段
  */
 function formatProduct(p) {
   return {
+    // 基础信息
     id:           p.id,
     name:         p.name,
     nameEn:       p.nameEn,
     type:         p.type,
-    price:        parseFloat(p.price),
+
+    // 双价格体系
+    price:        parseFloat(p.price),           // 建议零售价
+    agentPrice:   parseFloat(p.agentPrice),      // 代理商成本价（内部使用）
+
+    // 产品描述
+    description:  p.description || '',
+    descriptionEn: p.descriptionEn || '',
+    features:     p.features || [],
+
+    // 流量和有效期（新API字段名）
+    dataSize:     p.dataSize || null,          // 流量(MB)
+    dataAmount:   p.dataSize || null,          // 兼容旧字段
+    validDays:    p.validDays || null,          // 有效期(天)
+    validityDays: p.validDays || null,          // 兼容旧字段
+
+    // 覆盖国家
     countries:    p.countries || [],
-    description:  p.description || p.descriptionEn || '',
-    dataAmount:   p.dataSize   || p.dataAmount   || p.data_size   || null,
-    validityDays: p.validDays  || p.validityDays || p.validity_days || null,
+
+    // 运营商信息
+    operator:     p.thirdPartyData?.operatorTitle || '',
+    operatorData: p.thirdPartyData || {},
+
+    // 库存和销量
+    stock:        p.stock || 0,
+    soldCount:    p.soldCount || 0,
+
+    // 标记
+    isHot:        p.isHot || false,
+    isRecommend:  p.isRecommend || false,
+
+    // 图片
+    image:        p.image || '',
+
+    // 状态
+    status:       p.status || 'active',
   };
 }
 

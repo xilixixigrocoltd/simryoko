@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
   <title>SimRyoko — eSIM for Global Travel. Instant. Affordable.</title>
   <meta name="description" content="Buy eSIM data plans for 215+ countries. Instant delivery to your email. No physical SIM. No roaming. From $4."/>
+  <link rel="canonical" href="https://simryoko.com/"/>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "SimRyoko",
+    "url": "https://simryoko.com",
+    "logo": "https://simryoko.com/img/logo.png",
+    "description": "Buy eSIM data plans for 215+ countries. Instant delivery. No physical SIM. From $4.",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "email": "support@simryoko.com",
+      "contactType": "customer service"
+    },
+    "sameAs": [
+      "https://twitter.com/simryoko",
+      "https://instagram.com/simryoko"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SimRyoko eSIM Shop",
+    "url": "https://simryoko.com",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://simryoko.com/shop.html?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
   <!-- OG / Social -->
   <meta property="og:title" content="SimRyoko — eSIM for Global Travel"/>
   <meta property="og:description" content="2,600+ eSIM plans for 215+ countries. Instant delivery. No physical SIM. From $4."/>
@@ -21,7 +55,7 @@
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css"/>
   <!-- PWA -->
   <link rel="manifest" href="/manifest.json"/>
-  <meta name="theme-color" content="#667eea"/>
+  <meta name="theme-color" content="#6C63FF"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
   <meta name="apple-mobile-web-app-title" content="SimRyoko"/>
@@ -751,12 +785,13 @@ async function installPWA() {
 /* === AOS 补充动效 === */
 [data-aos]{transition-duration:0.7s!important;}
 </style>
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     AOS.init({ once: true, offset: 60, easing: 'ease-out-cubic' });
   });
 </script>
+<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 
 </body>
 </html>

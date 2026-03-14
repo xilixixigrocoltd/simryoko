@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
   <title>Checkout — SimRyoko</title>
   <meta name="description" content="Secure eSIM checkout. Instant delivery."/>
+  <meta property="og:title" content="Checkout — SimRyoko"/>
+  <meta property="og:description" content="Secure eSIM checkout. Instant delivery."/>
+  <meta property="og:url" content="https://simryoko.com/checkout.html"/>
   <meta name="robots" content="noindex"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
@@ -195,6 +198,8 @@
     .co-g-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
   </style>
 <link rel="canonical" href="https://simryoko.com/checkout.html">
+  <link rel="manifest" href="/manifest.json"/>
+  <meta name="theme-color" content="#6C63FF"/>
 </head>
 <body>
 
@@ -774,5 +779,6 @@ async function submitOrder() {
 // Stripe 就绪后再加载产品（避免竞态条件）
 initStripe().then(() => loadProduct());
 </script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});</script>
 </body>
 </html>

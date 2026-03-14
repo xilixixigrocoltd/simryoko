@@ -1,0 +1,46 @@
+ID,名称,英文名称,类型,规格,零售价,成本价,亏损金额,亏损比例,库存,状态,建议
+2594,"津巴布韦 1GB/7天","Zimcom - 1 GB - 7 days",local,"1GB/7天",19.00,42.60,23.60,55.4%,999,active,立即下架
+2721,"开曼群岛 20GB/30天","Atlantis Telecom - 20 GB - 30 days",local,"20GB/30天",60.00,72.72,12.72,17.5%,999,active,调价或下架
+1927,"黎巴嫩 1GB/7天","Salbeh - 1 GB - 7 days",local,"1GB/7天",9.50,20.46,10.96,53.6%,999,active,立即下架
+2378,"留尼汪 无限流量/30天","Reunion Mobile - Unlimited - 30 days",local,"0MB/30天",74.00,84.00,10.00,11.9%,999,active,调价或下架
+2282,"尼日尔 无限流量/7天","Letecom - Unlimited - 7 days",local,"0MB/7天",53.50,62.86,9.36,14.9%,999,active,调价或下架
+2498,"多哥 1GB/7天","Atakora Mobile - 1 GB - 7 days",local,"1GB/7天",9.50,18.46,8.96,48.5%,999,active,立即下架
+2283,"尼日尔 无限流量/10天","Letecom - Unlimited - 10 days",local,"0MB/10天",84.00,90.88,6.88,7.6%,999,active,调价或下架
+1928,"利比里亚 1GB/7天","Mariocom - 1 GB - 7 days",local,"1GB/7天",9.50,13.98,4.48,32.0%,999,active,立即下架
+1807,"智利 无限流量/15天","Altoque - Unlimited - 15 days",local,"0MB/15天",50.00,54.48,4.48,8.2%,999,active,调价或下架
+1881,"大洋洲 无限流量/5天 (覆盖8国)","Oceanlink - Unlimited - 5 days",regional,"0MB/5天",19.50,23.58,4.08,17.3%,999,active,调价或下架
+1687,"海地 无限流量/10天","Bon Bagay - Unlimited - 10 days",local,"0MB/10天",99.00,102.68,3.68,3.6%,999,active,调价或下架
+1675,"荷兰加勒比区 无限流量/10天","Hatonet - Unlimited - 10 days",local,"0MB/10天",99.00,102.68,3.68,3.6%,999,active,调价或下架
+2440,"苏里南 无限流量/10天","Pondocom - Unlimited - 10 days",local,"0MB/10天",68.00,71.36,3.36,4.7%,999,active,调价或下架
+2625,"PT-AZ 无限流量/5天","Pico - Unlimited - 5 days",local,"0MB/5天",19.50,22.78,3.28,14.4%,999,active,调价或下架
+1683,"瓜德罗普 无限流量/15天","Guanet - Unlimited - 15 days",local,"0MB/15天",49.00,52.12,3.12,6.0%,999,active,调价或下架
+1573,"刚果(金) 5GB/30天","Pondu Mobile - 5 GB - 30 days",local,"5GB/30天",25.00,27.24,2.24,8.2%,999,active,调价或下架
+2272,"纳米比亚 2GB/15天","Nama - 2 GB - 15 days",local,"2GB/15天",19.50,21.66,2.16,10.0%,999,active,调价或下架
+2181,"摩尔多瓦 无限流量/10天","Soroca Mobile - Unlimited - 10 days",local,"0MB/10天",35.00,37.08,2.08,5.6%,999,active,调价或下架
+2281,"尼日尔 无限流量/5天","Letecom - Unlimited - 5 days",local,"0MB/5天",44.50,46.50,2.00,4.3%,999,active,调价或下架
+2271,"纳米比亚 1GB/7天","Nama - 1 GB - 7 days",local,"1GB/7天",9.50,11.26,1.76,15.6%,999,active,调价或下架
+1424,"摩洛哥 无限流量/7天","Choukran - Unlimited - 7 days",local,"0MB/7天",35.00,36.12,1.12,3.1%,999,active,调价或下架
+1660,"多米尼克 3GB/30天","Vaina Communications - 3 GB - 30 days",local,"3GB/30天",17.00,17.96,0.96,5.3%,999,active,调价或下架
+2273,"纳米比亚 3GB/30天","Nama - 3 GB - 30 days",local,"3GB/30天",29.00,29.80,0.80,2.7%,999,active,调价或下架
+1746,"博茨瓦纳 5GB/30天","Maun Telecom - 5 GB - 30 days",local,"5GB/30天",35.00,35.80,0.80,2.2%,999,active,调价或下架
+1880,"大洋洲 无限流量/3天 (覆盖8国)","Oceanlink - Unlimited - 3 days",regional,"0MB/3天",11.50,12.22,0.72,5.9%,999,active,调价或下架
+2477,"斯威士兰 1GB/7天","Eswatini Communications - 1 GB - 7 days",local,"1GB/7天",9.50,10.14,0.64,6.3%,999,active,调价或下架
+2478,"斯威士兰 2GB/15天","Eswatini Communications - 2 GB - 15 days",local,"2GB/15天",18.50,19.06,0.56,2.9%,999,active,调价或下架
+1744,"博茨瓦纳 2GB/15天","Maun Telecom - 2 GB - 15 days",local,"2GB/15天",16.00,16.56,0.56,3.4%,999,active,调价或下架
+1659,"多米尼克 2GB/15天","Vaina Communications - 2 GB - 15 days",local,"2GB/15天",13.00,13.48,0.48,3.6%,999,active,调价或下架
+1553,"布基纳法索 1GB/7天","Volta - 1 GB - 7 days",local,"1GB/7天",7.00,7.48,0.48,6.4%,999,active,调价或下架
+2341,"巴布亚新几内亚 10GB/30天","Sivoli Mobile - 10 GB - 30 days",local,"10GB/30天",43.00,43.48,0.48,1.1%,999,active,调价或下架
+2624,"PT-AZ 无限流量/3天","Pico - Unlimited - 3 days",local,"0MB/3天",11.50,11.90,0.40,3.4%,999,active,调价或下架
+2586,"萨摩亚 5GB/30天","Faaf Mobile - 5 GB - 30 days",local,"5GB/30天",23.50,23.90,0.40,1.7%,999,active,调价或下架
+2274,"纳米比亚 5GB/30天","Nama - 5 GB - 30 days",local,"5GB/30天",48.00,48.40,0.40,0.8%,999,active,调价或下架
+1743,"博茨瓦纳 1GB/7天","Maun Telecom - 1 GB - 7 days",local,"1GB/7天",8.50,8.82,0.32,3.6%,999,active,调价或下架
+1638,"安圭拉 1GB/7天","Dolphin Mobile - 1 GB - 7 days",local,"1GB/7天",7.00,7.32,0.32,4.4%,999,active,调价或下架
+1531,"喀麦隆 1GB/7天","Kamtok Telecom - 1 GB - 7 days",local,"1GB/7天",5.50,5.82,0.32,5.5%,999,active,调价或下架
+2438,"苏里南 无限流量/5天","Pondocom - Unlimited - 5 days",local,"0MB/5天",36.50,36.74,0.24,0.7%,999,active,调价或下架
+2583,"萨摩亚 1GB/7天","Faaf Mobile - 1 GB - 7 days",local,"1GB/7天",6.00,6.24,0.24,3.8%,999,active,调价或下架
+2584,"萨摩亚 2GB/15天","Faaf Mobile - 2 GB - 15 days",local,"2GB/15天",11.00,11.24,0.24,2.1%,999,active,调价或下架
+1554,"布基纳法索 2GB/15天","Volta - 2 GB - 15 days",local,"2GB/15天",13.50,13.74,0.24,1.7%,999,active,调价或下架
+1536,"冈比亚 1GB/7天","Wassu Telecom - 1 GB - 7 days",local,"1GB/7天",9.50,9.66,0.16,1.7%,999,active,调价或下架
+2585,"萨摩亚 3GB/30天","Faaf Mobile - 3 GB - 30 days",local,"3GB/30天",15.00,15.08,0.08,0.5%,999,active,调价或下架
+1883,"大洋洲 无限流量/10天 (覆盖8国)","Oceanlink - Unlimited - 10 days",regional,"0MB/10天",35.00,35.08,0.08,0.2%,999,active,调价或下架
+1661,"多米尼克 5GB/30天","Vaina Communications - 5 GB - 30 days",local,"5GB/30天",29.00,29.08,0.08,0.3%,999,active,调价或下架

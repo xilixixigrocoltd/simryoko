@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <title>SimRyoko eSIM — Global Travel SIM</title>
 <meta name="description" content="Instant eSIM for 200+ countries. Buy, scan, go. No physical SIM needed. From $4.">
 <meta name="theme-color" content="#667eea">
@@ -898,7 +898,7 @@ loadPlans();
 <script>
 // PWA Service Worker 注册
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/js/sw.js').catch(() => {});
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
 </script>
 </body>

@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
   <title>eSIM Delivered! — SimRyoko</title>
   <meta name="description" content="Your SimRyoko eSIM has been delivered to your email. Check your inbox for the QR code."/>
+  <meta property="og:title" content="eSIM Delivered! — SimRyoko"/>
+  <meta property="og:description" content="Your SimRyoko eSIM has been delivered to your email. Check your inbox for the QR code."/>
+  <meta property="og:url" content="https://simryoko.com/success.html"/>
   <meta name="robots" content="noindex"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
@@ -170,6 +173,6 @@ if (_em) document.getElementById('refEmail').value = _em;
   }
 </script>
 <script src="/js/i18n.js"></script>
-<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/js/sw.js").catch(()=>{});</script>
+<script>if("serviceWorker"in navigator)navigator.serviceWorker.register("/sw.js").catch(()=>{});</script>
 </body>
 </html>
