@@ -55,7 +55,7 @@ export default function Home() {
   }, []);
 
   const handleBuy = (product: Product) => {
-    window.location.href = `/checkout?productId=${product.id}`;
+    window.location.href = `/products/${product.id}`;
   };
 
   return (
