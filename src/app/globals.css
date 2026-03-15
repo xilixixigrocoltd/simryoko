@@ -113,6 +113,16 @@ html {
   .text-3xl {
     font-size: 1.75rem;
   }
+
+  /* Full-width product cards on small screens */
+  .grid.sm\:grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  /* Compact feature items */
+  .space-y-3 > * + * {
+    margin-top: 0.5rem;
+  }
 }
 
 @media (max-width: 375px) {
@@ -156,6 +166,19 @@ html {
   .hover\:shadow-lg:active {
     box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
   }
+
+  /* Faster tap response */
+  * {
+    touch-action: manipulation;
+  }
+}
+
+/* Haptic-like visual feedback for product cards */
+@media (hover: none) and (pointer: coarse) {
+  .product-card-touch:active {
+    transform: scale(0.98);
+    transition: transform 0.08s ease-out;
+  }
 }
 
 /* Pull-to-refresh prevention in PWA */
@@ -179,6 +202,11 @@ html {
 }
 .overflow-x-auto::-webkit-scrollbar {
   display: none;
+}
+
+/* Mobile bottom nav safe area */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 /* Selection color */

@@ -393,6 +393,7 @@ const extendedSlugs: Array<[string, string, string, string, string, string, stri
   ['mayotte', '马约特', 'Mayotte', 'マヨット', EAST_AFRICA, 'Africa', 'YT'],
   ['gibraltar', '直布罗陀', 'Gibraltar', 'ジブラルタル', EUROPE_SOUTH, 'Europe', 'GI'],
   ['faroe-islands', '法罗群岛', 'Faroe Islands', 'フェロー諸島', EUROPE_NORTH, 'Europe', 'FO'],
+  ['greenland', '格陵兰', 'Greenland', 'グリーンランド', EUROPE_NORTH, 'North America', 'GL'],
 ];
 
 const extendedCountries: CountryData[] = extendedSlugs.map(([slug, zh, en, ja, region, continent, code]) => ({

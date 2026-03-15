@@ -96,7 +96,7 @@ export default function ProductCard({ product, onBuy }: ProductCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.4 }}
-      className={`relative flex flex-col rounded-2xl border bg-white p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-lg active:shadow-md ${
+      className={`product-card-touch relative flex flex-col rounded-2xl border bg-white p-5 sm:p-6 shadow-sm transition-shadow hover:shadow-lg active:shadow-md ${
         isPopular
           ? "border-brand-500 ring-2 ring-brand-500/20"
           : "border-gray-200"

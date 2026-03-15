@@ -199,11 +199,29 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 bg-white py-12">
+      <footer className="border-t border-gray-100 bg-white py-12 pb-24 md:pb-12">
         <div className="mx-auto max-w-7xl px-6 text-center">
           <p className="text-sm text-gray-400">© 2026 SimRyoko. All rights reserved.</p>
         </div>
       </footer>
+
+      {/* Mobile Bottom Nav */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-gray-200 bg-white/95 backdrop-blur-lg md:hidden safe-area-bottom">
+        <div className="flex items-center justify-around py-2">
+          <a href="/" className="flex flex-col items-center gap-0.5 px-3 py-1 text-brand-600">
+            <Globe className="h-5 w-5" />
+            <span className="text-[10px] font-medium">首页</span>
+          </a>
+          <a href="#products" className="flex flex-col items-center gap-0.5 px-3 py-1 text-gray-500">
+            <Zap className="h-5 w-5" />
+            <span className="text-[10px] font-medium">套餐</span>
+          </a>
+          <a href="https://t.me/Simryokoesimbot" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-0.5 px-3 py-1 text-gray-500">
+            <Headphones className="h-5 w-5" />
+            <span className="text-[10px] font-medium">客服</span>
+          </a>
+        </div>
+      </div>
     </main>
   );
 }
