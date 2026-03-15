@@ -489,17 +489,21 @@ async function handleB2BRegister(req, res) {
 
     // 3. Telegram 通知 gg
     try {
-      const BOT_TOKEN = process.env.BOT_TOKEN || '8764732212:AAH7bqyX3Vi6bdP5esZhspLvUDrkURaBaNc';
-      const ADMIN_ID  = process.env.ADMIN_CHAT_ID || '7867683484';
-      await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: ADMIN_ID,
-          text: `🤝 新代理注册\n👤 ${name} | ${company}\n📧 ${email}\n🏢 ${typeLabel}\n📊 ${volume||'未填写'}\n💬 ${telegram||'无'}`,
-          parse_mode: 'HTML'
-        })
-      });
+      const BOT_TOKEN = process.env.BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
+      const ADMIN_ID  = process.env.ADMIN_CHAT_ID || process.env.TELEGRAM_ADMIN_ID;
+      if (!BOT_TOKEN || !ADMIN_ID) {
+        console.warn('[b2b-register] Telegram notification skipped: missing BOT_TOKEN or ADMIN_ID');
+      } else {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            chat_id: ADMIN_ID,
+            text: `🤝 新代理注册\n👤 ${name} | ${company}\n📧 ${email}\n🏢 ${typeLabel}\n📊 ${volume||'未填写'}\n💬 ${telegram||'无'}`,
+            parse_mode: 'HTML'
+          })
+        });
+      }
     } catch(_) {}
 
     return res.status(200).json({ success: true });
