@@ -6,14 +6,42 @@ const store = require('./_store');
 const { users, subscriptions } = require('./_users');
 const { applyRateLimit, setCors } = require('./_ratelimit');
 const { notifyNewOrder } = require('./_notify');
+const crypto = require('crypto');
+
+// 验证用户请求签名（防止邮箱遍历攻击）
+function verifyUserRequest(req) {
+  const signature = req.headers['x-user-signature'];
+  const timestamp = req.headers['x-user-timestamp'];
+  const email = (req.method === 'GET' ? req.query.email : req.body?.email)?.toLowerCase();
+  
+  if (!signature || !timestamp || !email) return { valid: false, email: null };
+  
+  // 检查时间戳（5分钟内有效）
+  const ts = parseInt(timestamp);
+  if (isNaN(ts) || Math.abs(Date.now() - ts) > 5 * 60 * 1000) {
+    return { valid: false, email: null };
+  }
+  
+  // 验证签名：HMAC(email + timestamp, USER_API_SECRET)
+  const secret = process.env.USER_API_SECRET || process.env.JWT_SECRET || '';
+  if (!secret) return { valid: false, email: null };
+  
+  const payload = `${email}:${timestamp}`;
+  const expectedSig = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+  
+  if (signature !== expectedSig) return { valid: false, email: null };
+  return { valid: true, email };
+}
 
 // ── profile ───────────────────────────────────────────────────────────────────
 async function handleProfile(req, res) {
   setCors(req, res, 'GET, POST, OPTIONS');
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (!applyRateLimit(req, res, 30, 60000)) return;
-  const email = (req.method === 'GET' ? req.query.email : req.body?.email)?.toLowerCase();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Valid email required' });
+  
+  // 验证请求签名
+  const { valid, email } = verifyUserRequest(req);
+  if (!valid) return res.status(401).json({ error: 'Unauthorized. Valid signature required.' });
   if (req.method === 'GET') return res.json({ success: true, data: sanitize(users.upsert(email)) });
   if (req.method === 'POST') {
     const { telegramId, language, autoRenew, usageAlerts, pushSubscription } = req.body;
@@ -35,8 +63,10 @@ async function handleOrders(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
   if (!applyRateLimit(req, res, 20, 60000)) return;
-  const email = req.query.email?.toLowerCase();
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return res.status(400).json({ error: 'Valid email required' });
+  
+  // 验证请求签名
+  const { valid, email } = verifyUserRequest(req);
+  if (!valid) return res.status(401).json({ error: 'Unauthorized. Valid signature required.' });
   const allOrders = await store.listOrders();
   const userOrders = allOrders
     .filter(o => o.email?.toLowerCase() === email)

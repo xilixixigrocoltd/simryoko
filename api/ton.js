@@ -78,11 +78,14 @@ async function handleWebhook(req, res) {
   try {
     const rawBody = JSON.stringify(req.body);
     const signature = req.headers['crypto-pay-api-signature'];
-    if (signature && process.env.CRYPTOPAY_TOKEN) {
-      if (!verifyWebhookSignature(rawBody, signature)) {
-        console.warn('[ton/webhook] Invalid signature');
-        return res.status(401).json({ error: 'Invalid signature' });
-      }
+    // 强制验证签名：必须提供签名且 CRYPTOPAY_TOKEN 已配置
+    if (!signature || !process.env.CRYPTOPAY_TOKEN) {
+      console.warn('[ton/webhook] Missing signature or CRYPTOPAY_TOKEN');
+      return res.status(401).json({ error: 'Missing signature or token' });
+    }
+    if (!verifyWebhookSignature(rawBody, signature)) {
+      console.warn('[ton/webhook] Invalid signature');
+      return res.status(401).json({ error: 'Invalid signature' });
     }
 
     const { update_type, payload: invoice } = req.body;

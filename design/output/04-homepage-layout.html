@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SimRyoko eSIM — 首页</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="03-components.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', system-ui, sans-serif; color: #111827; background: #F9FAFB; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(8px);
+      border-bottom: 1px solid #E5E7EB;
+      height: 64px;
+    }
+    .navbar .container {
+      display: flex; align-items: center; justify-content: space-between; height: 100%;
+    }
+    .navbar__logo { font-size: 24px; font-weight: 700; color: #FF6B35; text-decoration: none; }
+    .navbar__links { display: flex; gap: 32px; list-style: none; }
+    .navbar__links a { text-decoration: none; font-size: 16px; color: #374151; font-weight: 500; }
+    .navbar__links a:hover { color: #FF6B35; }
+    .navbar__actions { display: flex; gap: 12px; align-items: center; }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #1E3A5F 0%, #2D5F8A 100%);
+      color: #fff; padding: 80px 0; text-align: center;
+    }
+    .hero__title { font-size: 56px; font-weight: 700; line-height: 62px; margin-bottom: 16px; }
+    .hero__subtitle { font-size: 18px; line-height: 28px; opacity: 0.9; margin-bottom: 32px; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .hero__search { max-width: 560px; margin: 0 auto; }
+
+    /* ===== SECTION ===== */
+    .section { padding: 64px 0; }
+    .section__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; }
+    .section__title { font-size: 32px; font-weight: 600; }
+    .section__link { font-size: 16px; color: #FF6B35; text-decoration: none; font-weight: 500; }
+
+    /* ===== PRODUCT GRID ===== */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* ===== REGION TABS ===== */
+    .region-tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+    .region-tab {
+      padding: 8px 20px; border-radius: 9999px; border: 1px solid #E5E7EB;
+      background: #fff; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s;
+    }
+    .region-tab:hover, .region-tab.active { background: #FF6B35; color: #fff; border-color: #FF6B35; }
+
+    /* ===== FEATURES ===== */
+    .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+    .feature-card {
+      background: #fff; border-radius: 16px; padding: 32px; text-align: center;
+      border: 1px solid #E5E7EB; transition: all 0.2s;
+    }
+    .feature-card:hover { box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    .feature-card__icon { font-size: 40px; margin-bottom: 16px; }
+    .feature-card__title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+    .feature-card__desc { font-size: 14px; color: #6B7280; line-height: 20px; }
+
+    /* ===== FOOTER ===== */
+    .footer { background: #1E3A5F; color: #fff; padding: 48px 0 24px; }
+    .footer__grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 32px; margin-bottom: 32px; }
+    .footer__col-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .footer__links { list-style: none; }
+    .footer__links li { margin-bottom: 8px; }
+    .footer__links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
+    .footer__links a:hover { color: #fff; }
+    .footer__bottom { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; text-align: center; font-size: 14px; opacity: 0.6; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero__title { font-size: 32px; line-height: 40px; }
+      .hero { padding: 48px 0; }
+      .navbar__links { display: none; }
+      .product-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="/" class="navbar__logo">SimRyoko</a>
+      <ul class="navbar__links">
+        <li><a href="/products">全部套餐</a></li>
+        <li><a href="/regions">地区</a></li>
+        <li><a href="/guide">使用指南</a></li>
+        <li><a href="/about">关于我们</a></li>
+      </ul>
+      <div class="navbar__actions">
+        <button class="btn-icon" aria-label="搜索">🔍</button>
+        <button class="btn-icon" aria-label="购物车">🛒</button>
+        <button class="btn-icon" aria-label="账户">👤</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <h1 class="hero__title">全球eSIM，一站购齐</h1>
+      <p class="hero__subtitle">覆盖214个国家和地区，即买即用，无需换卡。旅行、出差、留学的最佳通信方案。</p>
+      <div class="hero__search">
+        <div class="input-search-wrapper">
+          <span class="search-icon">🔍</span>
+          <input type="text" class="input-search" placeholder="搜索国家或地区…" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOT PRODUCTS -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">🔥 热门套餐</h2>
+        <a href="/products" class="section__link">查看全部 →</a>
+      </div>
+      <div class="product-grid">
+
+        <!-- Card 1 -->
+        <div class="product-card">
+          <span class="product-card__badge product-card__badge--hot">热销</span>
+          <div class="product-card__header">
+            <span class="product-card__flag">🇯🇵</span>
+            <span class="product-card__country">日本</span>
+          </div>
+          <div class="product-card__operator">Moshi Moshi</div>
+          <div>
+            <span class="product-card__price">$4.00</span>
+            <span class="product-card__original-price">$8.00</span>
+            <span class="product-card__discount">省50%</span>
+          </div>
+          <div class="product-card__specs">
+            <span>📶 1GB / 7天</span>
+            <span>🌐 覆盖日本全国</span>
+          </div>
+          <div class="product-card__status">🟢 库存充足</div>
+          <button class="btn-primary" style="width:100%">立即购买</button>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="product-card">
+          <div class="product-card__header">
+            <span class="product-card__flag">🇰🇷</span>
+            <span class="product-card__country">韩国</span>
+          </div>
+          <div class="product-card__operator">K-Connect</div>
+          <div>
+            <span class="product-card__price">$5.50</span>
+            <span class="product-card__original-price">$10.00</span>
+            <span class="product-card__discount">省45%</span>
+          </div>
+          <div class="product-card__specs">
+            <span>📶 2GB / 7天</span>
+            <span>🌐 覆盖韩国全国</span>
+          </div>
+          <div class="product-card__status">🟢 库存充足</div>
+          <button class="btn-primary" style="width:100%">立即购买</button>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="product-card">
+          <span class="product-card__badge product-card__badge--voice">语音</span>
+          <div class="product-card__header">
+            <span class="product-card__flag">🇹🇭</span>
+            <span class="product-card__country">泰国</span>
+          </div>
+          <div class="product-card__operator">Thai Connect</div>
+          <div>
+            <span class="product-card__price">$3.50</span>
+            <span class="product-card__original-price">$7.00</span>
+            <span class="product-card__discount">省50%</span>
+          </div>
+          <div class="product-card__specs">
+            <span>📶 1GB / 5天</span>
+            <span>📞 含语音通话</span>
+          </div>
+          <div class="product-card__status">🟢 库存充足</div>
+          <button class="btn-primary" style="width:100%">立即购买</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- BROWSE BY REGION -->
+  <section class="section" style="background:#fff;">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">🌍 按地区浏览</h2>
+      </div>
+      <div class="region-tabs">
+        <button class="region-tab active">全部</button>
+        <button class="region-tab">亚洲</button>
+        <button class="region-tab">欧洲</button>
+        <button class="region-tab">北美</button>
+        <button class="region-tab">东南亚</button>
+        <button class="region-tab">大洋洲</button>
+        <button class="region-tab">中东</button>
+        <button class="region-tab">非洲</button>
+        <button class="region-tab">南美</button>
+      </div>
+      <div class="product-grid">
+        <!-- 按地区筛选的产品卡片在此动态渲染 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="section">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">为什么选择 SimRyoko？</h2>
+      </div>
+      <div class="features">
+        <div class="feature-card">
+          <div class="feature-card__icon">⚡</div>
+          <h3 class="feature-card__title">即买即用</h3>
+          <p class="feature-card__desc">购买后扫码激活，无需等待实体卡邮寄</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">🌍</div>
+          <h3 class="feature-card__title">全球覆盖</h3>
+          <p class="feature-card__desc">214个国家和地区，一站式解决出行通信</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">💰</div>
+          <h3 class="feature-card__title">价格优惠</h3>
+          <p class="feature-card__desc">比传统漫游费节省高达90%</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-card__icon">🛡️</div>
+          <h3 class="feature-card__title">安全可靠</h3>
+          <p class="feature-card__desc">正规运营商合作，品质有保障</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__grid">
+        <div>
+          <h4 class="footer__col-title">SimRyoko</h4>
+          <ul class="footer__links">
+            <li><a href="/about">关于我们</a></li>
+            <li><a href="/contact">联系方式</a></li>
+            <li><a href="/blog">博客</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__col-title">产品</h4>
+          <ul class="footer__links">
+            <li><a href="/products">全部套餐</a></li>
+            <li><a href="/regions">按地区浏览</a></li>
+            <li><a href="/global">全球套餐</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__col-title">帮助</h4>
+          <ul class="footer__links">
+            <li><a href="/guide">使用指南</a></li>
+            <li><a href="/faq">常见问题</a></li>
+            <li><a href="/support">客服支持</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer__col-title">法律</h4>
+          <ul class="footer__links">
+            <li><a href="/privacy">隐私政策</a></li>
+            <li><a href="/terms">服务条款</a></li>
+            <li><a href="/refund">退款政策</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__bottom">© 2026 SimRyoko. All rights reserved.</div>
+    </div>
+  </footer>
+
+</body>
+</html>

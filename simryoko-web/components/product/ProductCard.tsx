@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: Product }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ y: -4 }}
-      className="relative bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-shadow border border-gray-100"
+      className="relative bg-white rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-xl active:shadow-md transition-shadow border border-gray-100"
     >
       {product.popular && (
         <span className="absolute -top-3 left-4 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">

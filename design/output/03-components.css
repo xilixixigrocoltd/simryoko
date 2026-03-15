@@ -1,0 +1,281 @@
+/* SimRyoko Design System — Component Styles */
+/* Generated 2026-03-15 */
+
+/* ========== CSS Custom Properties ========== */
+:root {
+  --color-primary-100: #FFF5F0;
+  --color-primary-500: #FF6B35;
+  --color-primary-600: #E55A2B;
+  --color-secondary-100: #E8F4F8;
+  --color-secondary-500: #1E3A5F;
+  --color-success-100: #D1FAE5;
+  --color-success-500: #10B981;
+  --color-warning-100: #FEF3C7;
+  --color-warning-500: #F59E0B;
+  --color-error-100: #FEE2E2;
+  --color-error-500: #EF4444;
+  --color-info-100: #DBEAFE;
+  --color-info-500: #3B82F6;
+  --color-neutral-50: #F9FAFB;
+  --color-neutral-100: #F3F4F6;
+  --color-neutral-200: #E5E7EB;
+  --color-neutral-300: #D1D5DB;
+  --color-neutral-500: #6B7280;
+  --color-neutral-700: #374151;
+  --color-neutral-900: #111827;
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+  --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+  --transition: all 0.2s ease;
+}
+
+/* ========== BUTTON ========== */
+
+/* Primary Button */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 12px 24px;
+  background: var(--color-primary-500);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.btn-primary:hover {
+  background: var(--color-primary-600);
+}
+.btn-primary:active {
+  transform: scale(0.95);
+}
+.btn-primary:disabled {
+  background: #FED7CC;
+  cursor: not-allowed;
+}
+.btn-primary.loading {
+  pointer-events: none;
+  opacity: 0.8;
+}
+.btn-primary.loading::after {
+  content: "";
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  border: 2px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 12px 24px;
+  background: transparent;
+  color: var(--color-secondary-500);
+  font-size: 16px;
+  font-weight: 500;
+  border: 2px solid var(--color-secondary-500);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-secondary:hover {
+  background: var(--color-secondary-500);
+  color: #fff;
+}
+.btn-secondary:disabled {
+  border-color: var(--color-neutral-300);
+  color: var(--color-neutral-300);
+  cursor: not-allowed;
+}
+
+/* Icon Button */
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: var(--color-neutral-100);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.btn-icon:hover {
+  background: var(--color-neutral-200);
+}
+
+/* ========== INPUT ========== */
+
+.input-text {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  background: #fff;
+  border: 1px solid var(--color-neutral-200);
+  border-radius: 8px;
+  font-size: 16px;
+  color: var(--color-neutral-900);
+  transition: var(--transition);
+  outline: none;
+}
+.input-text::placeholder {
+  color: var(--color-neutral-500);
+}
+.input-text:focus {
+  border: 2px solid var(--color-primary-500);
+}
+.input-text.error {
+  border: 2px solid var(--color-error-500);
+}
+.input-text.success {
+  border: 2px solid var(--color-success-500);
+}
+
+/* Search Input */
+.input-search {
+  width: 100%;
+  height: 64px;
+  padding: 0 24px 0 56px;
+  background: #fff;
+  border: 2px solid var(--color-neutral-200);
+  border-radius: 32px;
+  font-size: 18px;
+  color: var(--color-neutral-900);
+  transition: var(--transition);
+  outline: none;
+}
+.input-search:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 0 4px var(--color-primary-100);
+}
+.input-search-wrapper {
+  position: relative;
+}
+.input-search-wrapper .search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 24px;
+  height: 24px;
+  color: var(--color-neutral-500);
+}
+
+/* ========== PRODUCT CARD ========== */
+
+.product-card {
+  width: 100%;
+  max-width: 360px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  padding: 24px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.product-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.product-card__flag {
+  font-size: 24px;
+}
+.product-card__country {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-neutral-900);
+}
+.product-card__operator {
+  font-size: 14px;
+  color: var(--color-neutral-500);
+  margin-bottom: 16px;
+}
+.product-card__price {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-primary-500);
+}
+.product-card__original-price {
+  font-size: 16px;
+  color: var(--color-neutral-500);
+  text-decoration: line-through;
+  margin-left: 8px;
+}
+.product-card__discount {
+  font-size: 14px;
+  color: var(--color-success-500);
+  font-weight: 600;
+  margin-left: 8px;
+}
+.product-card__specs {
+  margin: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--color-neutral-700);
+}
+.product-card__status {
+  font-size: 14px;
+  color: var(--color-success-500);
+  margin-bottom: 16px;
+}
+.product-card__badge {
+  position: absolute;
+  top: 0;
+  right: 24px;
+  padding: 4px 12px;
+  border-radius: 0 0 8px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+}
+.product-card__badge--hot {
+  background: var(--color-error-500);
+}
+.product-card__badge--voice {
+  background: #8B5CF6;
+}
+
+/* ========== TAG ========== */
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tag--hot { background: #FF6B35; color: #fff; }
+.tag--new { background: #10B981; color: #fff; }
+.tag--recommend { background: #3B82F6; color: #fff; }
+.tag--voice { background: #8B5CF6; color: #fff; }
+.tag--save { background: rgba(16,185,129,0.1); color: #10B981; }
+
+/* ========== ANIMATIONS ========== */
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
