@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import jwt from 'jsonwebtoken'
 import { Agent, Order, JWTPayload } from '@/types/agent'
-
-// 内存存储（⚠️ 生产环境必须使用数据库，否则重启丢失数据）
-const orders: Order[] = []
-const agents: Agent[] = []
+import { agents, orders } from '@/lib/store'
 
 const JWT_SECRET: string = process.env.JWT_SECRET || ''
 if (!JWT_SECRET) {

@@ -2,9 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { Agent, JWTPayload } from '@/types/agent'
-
-// 内存存储（⚠️ 生产环境必须使用数据库，否则重启丢失数据）
-const agents: Agent[] = []
+import { agents } from '@/lib/store'
 
 const JWT_SECRET: string = process.env.JWT_SECRET || ''
 if (!JWT_SECRET) {

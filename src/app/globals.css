@@ -25,4 +25,164 @@
 body {
   @apply bg-white text-gray-900 antialiased;
   font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* ===== Mobile Responsive Optimizations ===== */
+
+/* Safe area insets for notched devices (iPhone X+) */
+@supports (padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  footer {
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Touch-friendly minimum tap targets (44px per WCAG 2.1) */
+@media (max-width: 768px) {
+  a, button {
+    min-height: 44px;
+  }
+
+  /* Ensure adequate spacing between interactive elements */
+  nav a + a,
+  nav button + button {
+    margin-top: 2px;
+  }
+
+  /* Better input sizing on mobile */
+  input, select, textarea {
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+}
+
+/* Prevent horizontal overflow on mobile */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px; /* nav height */
+}
+
+/* Mobile hamburger menu animation */
+.mobile-menu-enter {
+  animation: slideDown 0.25s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* PWA standalone mode adjustments */
+@media (display-mode: standalone) {
+  nav {
+    padding-top: env(safe-area-inset-top);
+  }
+}
+
+/* ===== 375px-428px Mobile Optimizations ===== */
+@media (max-width: 428px) {
+  h1 {
+    font-size: 2rem !important;
+    line-height: 1.2;
+  }
+
+  .grid {
+    gap: 1rem;
+  }
+
+  * {
+    word-break: break-word;
+  }
+
+  /* Tighter section padding */
+  section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* Better price display on small screens */
+  .text-3xl {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 375px) {
+  h1 {
+    font-size: 1.75rem !important;
+  }
+
+  /* Even tighter on SE/mini */
+  nav .text-xl {
+    font-size: 1rem;
+  }
+
+  section {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* iPhone 14 Pro Max / larger phones (428px) */
+@media (min-width: 414px) and (max-width: 428px) {
+  /* Slightly more breathing room on larger phones */
+  .grid {
+    gap: 1.25rem;
+  }
+}
+
+/* ===== Touch Interaction Enhancements ===== */
+@media (hover: none) and (pointer: coarse) {
+  /* Active states for touch devices (no hover) */
+  a:active, button:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  /* Disable hover effects on touch */
+  .hover\:shadow-lg:hover {
+    box-shadow: none;
+  }
+
+  /* Better touch feedback on cards */
+  .hover\:shadow-lg:active {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  }
+}
+
+/* Pull-to-refresh prevention in PWA */
+@media (display-mode: standalone) {
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
+/* Swipe-back gesture hint (iOS PWA) */
+@media (display-mode: standalone) {
+  main {
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Momentum scrolling for product lists */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.overflow-x-auto::-webkit-scrollbar {
+  display: none;
+}
+
+/* Selection color */
+::selection {
+  background: var(--color-brand-200);
+  color: var(--color-brand-900);
 }

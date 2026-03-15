@@ -3,9 +3,7 @@ import bcrypt from 'bcryptjs'
 import crypto from 'crypto'
 import { z } from 'zod'
 import { Agent } from '@/types/agent'
-
-// 内存存储（⚠️ 生产环境必须使用数据库，否则重启丢失数据）
-const agents: Agent[] = []
+import { agents } from '@/lib/store'
 
 // 输入验证schema
 const registerSchema = z.object({
