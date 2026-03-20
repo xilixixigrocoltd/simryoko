@@ -47,7 +47,7 @@ NEXT_PUBLIC_API_URL=https://api.simryoko.com
 
 | Secret | 值 | 状态 |
 |--------|-----|------|
-| VERCEL_TOKEN | [Vercel Token] | ⬜ |
+| VERCEL_TOKEN | `[Vercel Token]` | ⬜ |
 | VERCEL_PROJECT_ID | prj_SbPkDXGAojvyJhkpz0iiBix0m13L | ⬜ |
 | VERCEL_ORG_ID | [待提供] | ⬜ |
 
