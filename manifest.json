@@ -1,7 +1,7 @@
 {
   "name": "SimRyoko eSIM",
   "short_name": "SimRyoko",
-  "description": "Global eSIM plans — instant delivery, travel anywhere",
+  "description": "Global eSIM plans \u2014 instant delivery, travel anywhere",
   "start_url": "/app.html",
   "scope": "/",
   "display": "standalone",
@@ -76,7 +76,11 @@
       "label": "Easy checkout"
     }
   ],
-  "categories": ["travel", "utilities", "shopping"],
+  "categories": [
+    "travel",
+    "utilities",
+    "shopping"
+  ],
   "lang": "en",
   "dir": "ltr",
   "prefer_related_applications": false,
@@ -85,13 +89,23 @@
       "name": "Browse Plans",
       "short_name": "Shop",
       "url": "/shop.html",
-      "icons": [{"src": "/img/icon-96.png", "sizes": "96x96"}]
+      "icons": [
+        {
+          "src": "/img/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     },
     {
       "name": "My Orders",
       "short_name": "Orders",
       "url": "/app.html#orders",
-      "icons": [{"src": "/img/icon-96.png", "sizes": "96x96"}]
+      "icons": [
+        {
+          "src": "/img/icon-96.png",
+          "sizes": "96x96"
+        }
+      ]
     }
   ],
   "related_applications": [],
@@ -102,12 +116,16 @@
   "edge_side_panel": {
     "preferred_width": 400
   },
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "share_target": {
     "action": "/shop.html",
     "method": "GET",
     "params": {
       "text": "q"
     }
-  }
+  },
+  "version": "20260320-v2"
 }
