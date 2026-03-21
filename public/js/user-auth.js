@@ -1,7 +1,7 @@
 // User API 签名工具
 // 用于生成访问 /api/user/* 端点的签名
 
-const USER_API_SECRET = 'simryoko-user-api-secret'; // 必须与后端一致
+const USER_API_SECRET = 'simkaze-user-api-secret'; // 必须与后端一致
 
 // 生成 HMAC-SHA256 签名
 function generateUserSignature(email, timestamp) {

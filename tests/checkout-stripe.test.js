@@ -1,5 +1,5 @@
 /**
- * SimRyoko 核心支付链路测试
+ * SimKaze 核心支付链路测试
  * checkout → stripe-webhook 端到端测试
  */
 

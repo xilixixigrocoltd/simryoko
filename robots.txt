@@ -1,5 +1,5 @@
 # SimRyoko Robots.txt
-# https://simryoko.com
+# https://simkaze.com
 
 User-agent: *
 Allow: /
@@ -11,10 +11,10 @@ Disallow: /checkout.html
 Disallow: /success.html
 
 # Sitemap
-Sitemap: https://simryoko.com/sitemap.xml
+Sitemap: https://simkaze.com/sitemap.xml
 
 # Crawl-delay (optional, for polite crawling)
 Crawl-delay: 1
 
 # Host directive (for search engines)
-Host: simryoko.com
+Host: simkaze.com

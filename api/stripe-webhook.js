@@ -105,10 +105,10 @@ async function buildAndSubmitEvidence(stripe, dispute) {
 
   // 3. 组装证据文本
   const productDesc =
-    `SimRyoko eSIM is a digital product (electronic SIM card) delivered instantly via email. ` +
+    `SimKaze eSIM is a digital product (electronic SIM card) delivered instantly via email. ` +
     `eSIMs are intangible goods — once the activation code and QR code are issued, the product ` +
     `has been fully delivered and cannot be "returned." ` +
-    `Customer agreed to our Terms of Service at simryoko.com/terms.html, which clearly states ` +
+    `Customer agreed to our Terms of Service at simkaze.com/terms.html, which clearly states ` +
     `that all digital product sales are final and non-refundable once delivered.`;
 
   const uncategorizedText =
@@ -124,12 +124,12 @@ async function buildAndSubmitEvidence(stripe, dispute) {
     `\n` +
     `${deliveryProof}\n` +
     `TERMS OF SERVICE:\n` +
-    `Customer agreed to Terms of Service at simryoko.com/terms.html at the time of purchase, ` +
+    `Customer agreed to Terms of Service at simkaze.com/terms.html at the time of purchase, ` +
     `which explicitly states that eSIM products are non-refundable digital goods. ` +
     `The customer received the eSIM activation QR code and ICCID by email immediately after payment.\n` +
     `\n` +
     `MERCHANT STATEMENT:\n` +
-    `SimRyoko (Xigro Co Limited, Hong Kong) provides legitimate eSIM services. ` +
+    `SimKaze (Xigro Co Limited, Hong Kong) provides legitimate eSIM services. ` +
     `The product was delivered as described. We have no record of any complaint or refund request ` +
     `from this customer prior to this dispute. The charge is valid and authorized.`;
 

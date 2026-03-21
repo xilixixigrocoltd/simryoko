@@ -1,5 +1,5 @@
 // =============================================
-// SimRyoko — Shared Utilities
+// SimKaze — Shared Utilities
 // =============================================
 
 const API = window.location.hostname === 'localhost' ? 'http://localhost:3000' : '';

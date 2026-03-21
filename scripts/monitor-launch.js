@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SimRyoko 上线监控脚本
+ * SimKaze 上线监控脚本
  * 监控网站状态、支付成功率、错误率
  */
 
@@ -8,7 +8,7 @@ const axios = require('axios');
 
 // 配置
 const CONFIG = {
-  siteUrl: 'https://simryoko.com',
+  siteUrl: 'https://simkaze.com',
   checkInterval: 5 * 60 * 1000, // 5分钟
   alertThreshold: {
     responseTime: 5000, // 5秒
@@ -69,7 +69,7 @@ async function monitor() {
   const result = await checkWebsite();
   
   if (result.status === 'down') {
-    const alertMsg = `🚨 *SimRyoko 网站告警*\n\n` +
+    const alertMsg = `🚨 *SimKaze 网站告警*\n\n` +
       `状态: ❌ 无法访问\n` +
       `时间: ${new Date().toLocaleString('zh-CN')}\n` +
       `错误: ${result.error}\n\n` +
@@ -77,7 +77,7 @@ async function monitor() {
     await sendTelegramAlert(alertMsg);
     console.error('[Monitor] Website is DOWN!', result.error);
   } else if (result.responseTime > CONFIG.alertThreshold.responseTime) {
-    const alertMsg = `⚠️ *SimRyoko 性能警告*\n\n` +
+    const alertMsg = `⚠️ *SimKaze 性能警告*\n\n` +
       `响应时间: ${result.responseTime}ms\n` +
       `阈值: ${CONFIG.alertThreshold.responseTime}ms\n` +
       `时间: ${new Date().toLocaleString('zh-CN')}\n\n` +
@@ -90,7 +90,7 @@ async function monitor() {
 }
 
 // 启动监控
-console.log('🚀 SimRyoko 上线监控启动');
+console.log('🚀 SimKaze 上线监控启动');
 console.log(`📊 监控地址: ${CONFIG.siteUrl}`);
 console.log(`⏱️ 检查间隔: ${CONFIG.checkInterval / 1000}秒`);
 

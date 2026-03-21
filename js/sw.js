@@ -1,5 +1,5 @@
-// SimRyoko Service Worker — PWA Support + Push Notifications
-const CACHE = 'simryoko-v1';
+// SimKaze Service Worker — PWA Support + Push Notifications
+const CACHE = 'simkaze-v1';
 const PRECACHE = [
   '/',
   '/app.html',
@@ -52,19 +52,19 @@ self.addEventListener('fetch', e => {
 self.addEventListener('push', e => {
   if (!e.data) return;
   let data;
-  try { data = e.data.json(); } catch { data = { title: 'SimRyoko', body: e.data.text() }; }
+  try { data = e.data.json(); } catch { data = { title: 'SimKaze', body: e.data.text() }; }
 
   const opts = {
     body: data.body || '',
     icon: '/img/icon-192.png',
     badge: '/img/icon-192.png',
-    tag: data.tag || 'simryoko',
+    tag: data.tag || 'simkaze',
     data: data.url ? { url: data.url } : {},
     actions: data.actions || [],
     vibrate: [100, 50, 100],
   };
 
-  e.waitUntil(self.registration.showNotification(data.title || 'SimRyoko', opts));
+  e.waitUntil(self.registration.showNotification(data.title || 'SimKaze', opts));
 });
 
 // 点击通知：跳转到指定页面

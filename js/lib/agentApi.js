@@ -1,5 +1,5 @@
 /**
- * Agent API - SimRyoko eSIM Agent API Wrapper
+ * Agent API - SimKaze eSIM Agent API Wrapper
  * Handles communication with backend代理商API
  */
 

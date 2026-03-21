@@ -12,7 +12,7 @@
 ```
 1. 打开 Figma (figma.com)
 2. 点击 "New Design File"
-3. 命名: "SimRyoko-Design-System-v2.0"
+3. 命名: "SimKaze-Design-System-v2.0"
 4. 创建5个Page:
    - 🎨 Design System
    - 📱 Home
@@ -31,7 +31,7 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│ SimRyoko Design System v2.0                                │
+│ SimKaze Design System v2.0                                │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ┌─────────────────────────────────────────────────────┐   │

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SimRyoko eSIM API Server
+ * SimKaze eSIM API Server
  * Endpoints:
  *   GET /api/products     - List products (filter, search, paginate)
  *   GET /api/products/:id - Single product detail
@@ -18,9 +18,9 @@ const app = express();
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : [
-      'https://simryoko.com',
-      'https://www.simryoko.com',
-      'https://api.simryoko.com',
+      'https://simkaze.com',
+      'https://www.simkaze.com',
+      'https://api.simkaze.com',
       'http://localhost:3000',
       'http://localhost:5173'
     ];
@@ -132,7 +132,7 @@ app.get('/api/inventory/:id', (req, res) => {
 // ─── Start ───
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`SimRyoko API running on port ${PORT}`);
+  console.log(`SimKaze API running on port ${PORT}`);
   console.log(`Products loaded: ${products.length}`);
 });
 

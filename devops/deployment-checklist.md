@@ -1,4 +1,4 @@
-# SimRyoko 部署检查清单
+# SimKaze 部署检查清单
 
 **日期**: 2026-03-14  
 **负责人**: DevOps-Lead  
@@ -14,9 +14,9 @@
 |------|------|------|
 | 1.1 | 登录 https://vercel.com/dashboard | ⬜ |
 | 1.2 | 获取 Organization ID (team_xxxxxxxx 或 user_xxxxxxxx) | ⬜ |
-| 1.3 | 连接 GitHub 仓库 (xilixixigrocoltd/simryoko) | ⬜ |
+| 1.3 | 连接 GitHub 仓库 (xilixixigrocoltd/simkaze) | ⬜ |
 | 1.4 | 设置环境变量（见下方列表） | ⬜ |
-| 1.5 | 配置自定义域名 (simryoko.com) | ⬜ |
+| 1.5 | 配置自定义域名 (simkaze.com) | ⬜ |
 
 **环境变量清单**:
 ```
@@ -40,7 +40,7 @@ CF_API_KEY=...
 
 # 其他
 CRON_SECRET=随机字符串
-NEXT_PUBLIC_API_URL=https://api.simryoko.com
+NEXT_PUBLIC_API_URL=https://api.simkaze.com
 ```
 
 ### 2. GitHub Secrets
@@ -52,7 +52,7 @@ NEXT_PUBLIC_API_URL=https://api.simryoko.com
 | VERCEL_ORG_ID | [待提供] | ⬜ |
 
 **操作步骤**:
-1. 访问 https://github.com/xilixixigrocoltd/simryoko/settings/secrets
+1. 访问 https://github.com/xilixixigrocoltd/simkaze/settings/secrets
 2. 点击 "New repository secret"
 3. 添加上述3个secrets
 
@@ -61,18 +61,18 @@ NEXT_PUBLIC_API_URL=https://api.simryoko.com
 | 步骤 | 操作 | 状态 |
 |------|------|------|
 | 3.1 | 登录 https://dash.cloudflare.com | ⬜ |
-| 3.2 | 选择 simryoko.com | ⬜ |
+| 3.2 | 选择 simkaze.com | ⬜ |
 | 3.3 | DNS → 添加 CNAME: @ → cname.vercel-dns.com (Proxied) | ⬜ |
 | 3.4 | SSL/TLS → 选择 "Full (strict)" | ⬜ |
 | 3.5 | 添加 Page Rules（见下方） | ⬜ |
 
 **Page Rules**:
 ```
-规则1: api.simryoko.com/*
+规则1: api.simkaze.com/*
 - 缓存: Bypass
 - SSL: Full (strict)
 
-规则2: simryoko.com/*
+规则2: simkaze.com/*
 - 缓存: Standard
 - Edge TTL: 2 hours
 - Browser TTL: 1 hour
@@ -87,7 +87,7 @@ NEXT_PUBLIC_API_URL=https://api.simryoko.com
 | 步骤 | 操作 | 状态 |
 |------|------|------|
 | 4.1 | 注册 https://sentry.io | ⬜ |
-| 4.2 | 创建项目 "simryoko" | ⬜ |
+| 4.2 | 创建项目 "simkaze" | ⬜ |
 | 4.3 | 获取 DSN | ⬜ |
 | 4.4 | 添加到环境变量 SENTRY_DSN | ⬜ |
 
@@ -115,8 +115,8 @@ NEXT_PUBLIC_API_URL=https://api.simryoko.com
 
 | 检查项 | 命令/URL | 期望结果 |
 |--------|----------|----------|
-| 首页访问 | https://simryoko.com | 200 OK |
-| API健康 | https://api.simryoko.com/health | {status: "ok"} |
+| 首页访问 | https://simkaze.com | 200 OK |
+| API健康 | https://api.simkaze.com/health | {status: "ok"} |
 | SSL证书 | SSL Labs测试 | A+评级 |
 | 安全头 | securityheaders.com | A评级 |
 | 性能 | PageSpeed Insights | >90分 |
@@ -131,7 +131,7 @@ NEXT_PUBLIC_API_URL=https://api.simryoko.com
 
 set -e
 
-echo "🚀 SimRyoko 部署脚本"
+echo "🚀 SimKaze 部署脚本"
 
 # 1. 检查环境变量
 echo "📋 检查环境变量..."

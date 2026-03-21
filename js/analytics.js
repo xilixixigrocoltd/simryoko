@@ -1,5 +1,5 @@
 /**
- * SimRyoko — Google Analytics 4 集成
+ * SimKaze — Google Analytics 4 集成
  * 使用方法：在 Vercel 环境变量中设置 GA4_ID，或直接替换下面的 MEASUREMENT_ID
  *
  * 关键转化事件：

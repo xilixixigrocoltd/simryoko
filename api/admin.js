@@ -98,7 +98,7 @@ async function handleTokenRefresh(req, res) {
       if (lastDepId) {
         await axios.post(
           'https://api.vercel.com/v13/deployments?forceNew=1&withCache=0',
-          { deploymentId: lastDepId, name: 'simryoko', target: 'production' },
+          { deploymentId: lastDepId, name: 'simkaze', target: 'production' },
           { headers: { Authorization: `Bearer ${VERCEL_TOKEN}` } }
         );
       }
@@ -222,7 +222,7 @@ async function handleResend(req, res) {
 async function handleRegisterStripeWebhook(req, res) {
   const StripeLib = require('stripe');
   const stripe = new StripeLib(process.env.STRIPE_SECRET_KEY);
-  const webhookUrl = 'https://simryoko.com/api/stripe-webhook';
+  const webhookUrl = 'https://simkaze.com/api/stripe-webhook';
 
   try {
     // 先检查是否已存在
@@ -248,7 +248,7 @@ async function handleRegisterStripeWebhook(req, res) {
         'charge.refunded',
         'payment_intent.payment_failed',
       ],
-      description: 'SimRyoko risk monitoring — disputes & refunds',
+      description: 'SimKaze risk monitoring — disputes & refunds',
     });
 
     // 自动存入 Vercel 环境变量
@@ -323,8 +323,8 @@ async function handleB2BApply(req, res) {
     });
     await sendRawEmail({
       to: email,
-      subject: `Your SimRyoko Partner Application — ${company}`,
-      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px"><h2>Application Received! 🎉</h2><p>Hi ${name}, we received your application for <b>${company}</b> and will reply within 24 hours.</p><p>Contact: <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://simryoko.com">Live Chat</a></p></div>`
+      subject: `Your SimKaze Partner Application — ${company}`,
+      html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px"><h2>Application Received! 🎉</h2><p>Hi ${name}, we received your application for <b>${company}</b> and will reply within 24 hours.</p><p>Contact: <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://simkaze.com">Live Chat</a></p></div>`
     });
     return res.status(200).json({ success: true });
   } catch (err) {
@@ -353,7 +353,7 @@ async function handleFollowup(req, res) {
       // 生成推荐码（邮箱 hash 前6位，与 referral.js 一致）
       const crypto = require('crypto');
       const refCode = crypto.createHash('sha256').update(order.email.toLowerCase()).digest('hex').substring(0, 6).toUpperCase();
-      const refLink = `https://simryoko.com?ref=${refCode}`;
+      const refLink = `https://simkaze.com?ref=${refCode}`;
 
       const html = `
 <!DOCTYPE html><html><head><meta charset="utf-8"><style>
@@ -375,7 +375,7 @@ p{color:#555;line-height:1.7}
   <div class="body">
     <div class="stars">★★★★★</div>
     <p>Hi there!</p>
-    <p>It's been a few days since you used your <b>${order.productName || 'SimRyoko eSIM'}</b>. We hope your trip was amazing and the eSIM kept you connected throughout! 🌍</p>
+    <p>It's been a few days since you used your <b>${order.productName || 'SimKaze eSIM'}</b>. We hope your trip was amazing and the eSIM kept you connected throughout! 🌍</p>
 
     <h2>📝 Share your experience</h2>
     <p>Your feedback helps other travelers make better choices. Would you mind leaving a quick review?</p>
@@ -390,10 +390,10 @@ p{color:#555;line-height:1.7}
     </div>
 
     <p>Minimum payout: $10 USDT · Paid on request · No expiry</p>
-    <p>Questions? Reply to this email or <a href="https://simryoko.com" style="color:#667eea">Live Chat</a>.</p>
-    <p>See you on your next trip! 🦞<br><b>SimRyoko Team</b></p>
+    <p>Questions? Reply to this email or <a href="https://simkaze.com" style="color:#667eea">Live Chat</a>.</p>
+    <p>See you on your next trip! 🦞<br><b>SimKaze Team</b></p>
   </div>
-  <div class="footer">SimRyoko · <a href="https://simryoko.com" style="color:#667eea">simryoko.com</a> · <a href="mailto:noreply@simryoko.com" style="color:#667eea">Unsubscribe</a></div>
+  <div class="footer">SimKaze · <a href="https://simkaze.com" style="color:#667eea">simkaze.com</a> · <a href="mailto:noreply@simkaze.com" style="color:#667eea">Unsubscribe</a></div>
 </div></body></html>`;
 
       try {
@@ -462,7 +462,7 @@ async function handleB2BRegister(req, res) {
     // 2. 欢迎邮件发给申请人
     await sendRawEmail({
       to: email,
-      subject: `Welcome to SimRyoko Partner Program 🌏 — ${company}`,
+      subject: `Welcome to SimKaze Partner Program 🌏 — ${company}`,
       html: `<div style="font-family:Inter,sans-serif;max-width:600px;margin:0 auto;padding:32px;background:#f8f9ff">
         <div style="background:#fff;border-radius:16px;padding:32px;border:1px solid #e5e7eb">
           <div style="text-align:center;margin-bottom:28px">
@@ -470,7 +470,7 @@ async function handleB2BRegister(req, res) {
             <h1 style="font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#667eea,#764ba2);-webkit-background-clip:text;-webkit-text-fill-color:transparent">Application Received!</h1>
           </div>
           <p style="color:#444;line-height:1.7;margin-bottom:16px">Hi <b>${name}</b>,</p>
-          <p style="color:#444;line-height:1.7;margin-bottom:16px">Thanks for applying to the SimRyoko Partner Program. We've received your application for <b>${company}</b>.</p>
+          <p style="color:#444;line-height:1.7;margin-bottom:16px">Thanks for applying to the SimKaze Partner Program. We've received your application for <b>${company}</b>.</p>
           <p style="color:#444;line-height:1.7;margin-bottom:24px">Our team will review your application and send you:</p>
           <div style="background:#f8f9ff;border-radius:12px;padding:18px;margin-bottom:24px">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;font-size:14px">✅ &nbsp;Custom wholesale pricing sheet</div>
@@ -480,8 +480,8 @@ async function handleB2BRegister(req, res) {
           <p style="color:#444;line-height:1.7;margin-bottom:24px">Expect a reply <b>within 24 hours</b>. Check your spam folder just in case.</p>
           <div style="border-top:1px solid #e5e7eb;padding-top:20px;font-size:13px;color:#888">
             Questions? Reach us at <a href="mailto:xilixi@xigrocoltd.com" style="color:#667eea">xilixi@xigrocoltd.com</a> or 
-            <a href="https://simryoko.com" style="color:#667eea">Live Chat</a><br><br>
-            SimRyoko Partner Team · <a href="https://simryoko.com/b2b.html" style="color:#667eea">simryoko.com/b2b.html</a>
+            <a href="https://simkaze.com" style="color:#667eea">Live Chat</a><br><br>
+            SimKaze Partner Team · <a href="https://simkaze.com/b2b.html" style="color:#667eea">simkaze.com/b2b.html</a>
           </div>
         </div>
       </div>`
