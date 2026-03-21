@@ -2,120 +2,120 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Main Pages -->
   <url>
-    <loc>https://simryoko.com/</loc>
+    <loc>https://simkaze.com/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/shop.html</loc>
+    <loc>https://simkaze.com/shop.html</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/blog.html</loc>
+    <loc>https://simkaze.com/blog.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/app.html</loc>
+    <loc>https://simkaze.com/app.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Country eSIM Pages -->
   <url>
-    <loc>https://simryoko.com/japan-esim.html</loc>
+    <loc>https://simkaze.com/japan-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/korea-esim.html</loc>
+    <loc>https://simkaze.com/korea-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/china-esim.html</loc>
+    <loc>https://simkaze.com/china-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/europe-esim.html</loc>
+    <loc>https://simkaze.com/europe-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/usa-esim.html</loc>
+    <loc>https://simkaze.com/usa-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/australia-esim.html</loc>
+    <loc>https://simkaze.com/australia-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/india-esim.html</loc>
+    <loc>https://simkaze.com/india-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/thailand-esim.html</loc>
+    <loc>https://simkaze.com/thailand-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/singapore-esim.html</loc>
+    <loc>https://simkaze.com/singapore-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/philippines-esim.html</loc>
+    <loc>https://simkaze.com/philippines-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/uae-esim.html</loc>
+    <loc>https://simkaze.com/uae-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/southeast-asia-esim.html</loc>
+    <loc>https://simkaze.com/southeast-asia-esim.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <!-- Informational Pages -->
   <url>
-    <loc>https://simryoko.com/esim-vs-sim.html</loc>
+    <loc>https://simkaze.com/esim-vs-sim.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/how-to-install-esim-iphone.html</loc>
+    <loc>https://simkaze.com/how-to-install-esim-iphone.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <!-- B2B Pages -->
   <url>
-    <loc>https://simryoko.com/b2b.html</loc>
+    <loc>https://simkaze.com/b2b.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/b2b-register.html</loc>
+    <loc>https://simkaze.com/b2b-register.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <!-- Legal Pages -->
   <url>
-    <loc>https://simryoko.com/terms.html</loc>
+    <loc>https://simkaze.com/terms.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://simryoko.com/privacy.html</loc>
+    <loc>https://simkaze.com/privacy.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
