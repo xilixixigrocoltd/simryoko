@@ -23,24 +23,24 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Inter', -apple-system, sans-serif; color: #1a1a2e; }
-  .hero { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 20px; text-align: center; }
+  .hero { background: linear-gradient(135deg, #6C63FF 0%, #764ba2 100%); color: white; padding: 80px 20px; text-align: center; }
   .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 800; margin-bottom: 16px; }
   .hero p { font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 32px; }
   .badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 50px; padding: 6px 18px; font-size: 0.9rem; margin-bottom: 20px; }
-  .btn-primary { display: inline-block; background: white; color: #667eea; font-weight: 700; font-size: 1.1rem; padding: 16px 40px; border-radius: 50px; text-decoration: none; transition: transform 0.2s; }
+  .btn-primary { display: inline-block; background: white; color: #6C63FF; font-weight: 700; font-size: 1.1rem; padding: 16px 40px; border-radius: 50px; text-decoration: none; transition: transform 0.2s; }
   .btn-primary:hover { transform: translateY(-2px); }
   .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
   .plans { padding: 60px 20px; background: #f8f9ff; }
   .plans h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
   .plan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 900px; margin: 0 auto; }
   .plan-card { background: white; border-radius: 16px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); border: 2px solid transparent; transition: border-color 0.2s; }
-  .plan-card:hover { border-color: #667eea; }
-  .plan-card.featured { border-color: #667eea; }
-  .plan-data { font-size: 2rem; font-weight: 800; color: #667eea; }
+  .plan-card:hover { border-color: #6C63FF; }
+  .plan-card.featured { border-color: #6C63FF; }
+  .plan-data { font-size: 2rem; font-weight: 800; color: #6C63FF; }
   .plan-duration { color: #888; margin: 4px 0 16px; }
   .plan-price { font-size: 1.8rem; font-weight: 700; }
   .plan-price span { font-size: 1rem; font-weight: 400; color: #888; }
-  .plan-btn { display: block; text-align: center; background: #667eea; color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 600; margin-top: 20px; }
+  .plan-btn { display: block; text-align: center; background: #6C63FF; color: white; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: 600; margin-top: 20px; }
   .features { padding: 60px 20px; }
   .features h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
   .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
@@ -52,7 +52,7 @@
   .how-it-works h2 { text-align: center; font-size: 2rem; margin-bottom: 40px; }
   .steps { display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; }
   .step { display: flex; align-items: flex-start; gap: 16px; }
-  .step-num { background: #667eea; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
+  .step-num { background: #6C63FF; color: white; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; }
   .step-text h3 { font-size: 1.05rem; margin-bottom: 4px; }
   .step-text p { color: #666; font-size: 0.9rem; }
   .faq { padding: 60px 20px; }
@@ -61,15 +61,15 @@
   .faq-item { border-bottom: 1px solid #eee; padding: 20px 0; }
   .faq-item h3 { font-size: 1.05rem; margin-bottom: 8px; color: #1a1a2e; }
   .faq-item p { color: #555; line-height: 1.7; font-size: 0.95rem; }
-  .cta-bottom { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; }
+  .cta-bottom { background: linear-gradient(135deg, #6C63FF 0%, #764ba2 100%); color: white; padding: 60px 20px; text-align: center; }
   .cta-bottom h2 { font-size: 2rem; margin-bottom: 16px; }
   .cta-bottom p { opacity: 0.9; margin-bottom: 32px; }
-  .btn-white { display: inline-block; background: white; color: #667eea; font-weight: 700; padding: 16px 40px; border-radius: 50px; text-decoration: none; }
+  .btn-white { display: inline-block; background: white; color: #6C63FF; font-weight: 700; padding: 16px 40px; border-radius: 50px; text-decoration: none; }
   footer { background: #1a1a2e; color: #999; padding: 30px 20px; text-align: center; font-size: 0.9rem; }
   footer a { color: #999; text-decoration: none; margin: 0 12px; }
   .nav { background: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.08); }
-  .nav-logo { font-weight: 800; font-size: 1.3rem; color: #667eea; text-decoration: none; }
-  .nav-cta { background: #667eea; color: white; padding: 10px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
+  .nav-logo { font-weight: 800; font-size: 1.3rem; color: #6C63FF; text-decoration: none; }
+  .nav-cta { background: #6C63FF; color: white; padding: 10px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 0.95rem; }
 </style>
 <script src="/js/analytics.js"></script>
 <!-- Google Analytics 4 -->
@@ -106,7 +106,7 @@
         <a href="/shop.html?country=JP" class="plan-btn">Get This Plan</a>
       </div>
       <div class="plan-card featured">
-        <div style="background:#667eea;color:white;font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:12px;">MOST POPULAR</div>
+        <div style="background:#6C63FF;color:white;font-size:.8rem;font-weight:700;padding:4px 12px;border-radius:20px;display:inline-block;margin-bottom:12px;">MOST POPULAR</div>
         <div class="plan-data">5 GB</div>
         <div class="plan-duration">30 Days</div>
         <div class="plan-price">$15.00 <span>/plan</span></div>
