@@ -5,1281 +5,1253 @@
       "name": "Japan",
       "nameCn": "日本",
       "flag": "🇯🇵",
-      "total": 74
+      "total": 35
     },
     {
       "code": "KR",
       "name": "South Korea",
       "nameCn": "韩国",
       "flag": "🇰🇷",
-      "total": 74
+      "total": 35
     },
     {
       "code": "TH",
       "name": "Thailand",
       "nameCn": "泰国",
       "flag": "🇹🇭",
-      "total": 81
+      "total": 35
     },
     {
       "code": "SG",
       "name": "Singapore",
       "nameCn": "新加坡",
       "flag": "🇸🇬",
-      "total": 81
+      "total": 35
     },
     {
       "code": "TW",
       "name": "Taiwan",
       "nameCn": "台湾",
       "flag": "🇹🇼",
-      "total": 74
+      "total": 35
     },
     {
       "code": "HK",
       "name": "Hong Kong",
       "nameCn": "香港",
       "flag": "🇭🇰",
-      "total": 86
+      "total": 35
     },
     {
       "code": "MY",
       "name": "Malaysia",
       "nameCn": "马来西亚",
       "flag": "🇲🇾",
-      "total": 86
+      "total": 35
     },
     {
       "code": "ID",
       "name": "Indonesia",
       "nameCn": "印度尼西亚",
       "flag": "🇮🇩",
-      "total": 74
+      "total": 35
     },
     {
       "code": "PH",
       "name": "Philippines",
       "nameCn": "菲律宾",
       "flag": "🇵🇭",
-      "total": 80
+      "total": 47
     },
     {
       "code": "VN",
       "name": "Vietnam",
       "nameCn": "越南",
       "flag": "🇻🇳",
-      "total": 74
+      "total": 35
     },
     {
       "code": "CN",
       "name": "China",
       "nameCn": "中国",
       "flag": "🇨🇳",
-      "total": 74
+      "total": 35
     },
     {
       "code": "MO",
       "name": "Macao",
       "nameCn": "澳门",
       "flag": "🇲🇴",
-      "total": 80
+      "total": 47
     },
     {
       "code": "US",
       "name": "United States",
       "nameCn": "美国",
       "flag": "🇺🇸",
-      "total": 82
+      "total": 23
     },
     {
       "code": "GB",
       "name": "United Kingdom",
       "nameCn": "英国",
       "flag": "🇬🇧",
-      "total": 98
+      "total": 33
     },
     {
       "code": "AU",
       "name": "Australia",
       "nameCn": "澳大利亚",
       "flag": "🇦🇺",
-      "total": 75
+      "total": 21
     },
     {
       "code": "CA",
       "name": "Canada",
       "nameCn": "加拿大",
       "flag": "🇨🇦",
-      "total": 72
+      "total": 21
     },
     {
       "code": "NZ",
       "name": "New Zealand",
       "nameCn": "新西兰",
       "flag": "🇳🇿",
-      "total": 68
+      "total": 33
     },
     {
       "code": "DE",
       "name": "Europe",
       "nameCn": "德国",
       "flag": "🇪🇺",
-      "total": 80
+      "total": 21
     },
     {
       "code": "FR",
       "name": "France",
       "nameCn": "法国",
       "flag": "🇫🇷",
-      "total": 74
+      "total": 21
     },
     {
       "code": "IT",
       "name": "Italy",
       "nameCn": "意大利",
       "flag": "🇮🇹",
-      "total": 86
+      "total": 21
     },
     {
       "code": "ES",
       "name": "Spain",
       "nameCn": "西班牙",
       "flag": "🇪🇸",
-      "total": 92
+      "total": 33
     },
     {
       "code": "PT",
       "name": "Portugal",
       "nameCn": "葡萄牙",
       "flag": "🇵🇹",
-      "total": 86
+      "total": 33
     },
     {
       "code": "NL",
       "name": "Netherlands",
       "nameCn": "荷兰",
       "flag": "🇳🇱",
-      "total": 98
+      "total": 39
     },
     {
       "code": "CH",
       "name": "Switzerland",
       "nameCn": "瑞士",
       "flag": "🇨🇭",
-      "total": 63
+      "total": 21
     },
     {
       "code": "AT",
       "name": "Austria",
       "nameCn": "奥地利",
       "flag": "🇦🇹",
-      "total": 87
+      "total": 21
     },
     {
       "code": "BE",
       "name": "Belgium",
       "nameCn": "比利时",
       "flag": "🇧🇪",
-      "total": 86
+      "total": 33
     },
     {
       "code": "PL",
       "name": "Poland",
       "nameCn": "波兰",
       "flag": "🇵🇱",
-      "total": 86
+      "total": 33
     },
     {
       "code": "SE",
       "name": "Sweden",
       "nameCn": "瑞典",
       "flag": "🇸🇪",
-      "total": 92
+      "total": 33
     },
     {
       "code": "NO",
       "name": "Norway",
       "nameCn": "挪威",
       "flag": "🇳🇴",
-      "total": 62
+      "total": 21
     },
     {
       "code": "DK",
       "name": "Denmark",
       "nameCn": "丹麦",
       "flag": "🇩🇰",
-      "total": 86
+      "total": 21
     },
     {
       "code": "FI",
       "name": "Finland",
       "nameCn": "芬兰",
       "flag": "🇫🇮",
-      "total": 92
+      "total": 21
     },
     {
       "code": "AE",
       "name": "United Arab Emirates",
       "nameCn": "阿联酋",
       "flag": "🇦🇪",
-      "total": 58
+      "total": 21
     },
     {
       "code": "SA",
       "name": "Saudi Arabia",
       "nameCn": "沙特阿拉伯",
       "flag": "🇸🇦",
-      "total": 59
+      "total": 21
     },
     {
       "code": "QA",
       "name": "Qatar",
       "nameCn": "卡塔尔",
       "flag": "🇶🇦",
-      "total": 57
+      "total": 22
     },
     {
       "code": "TR",
       "name": "Turkey",
       "nameCn": "土耳其",
       "flag": "🇹🇷",
-      "total": 65
+      "total": 21
     },
     {
       "code": "EG",
       "name": "Egypt",
       "nameCn": "埃及",
       "flag": "🇪🇬",
-      "total": 62
+      "total": 21
     },
     {
       "code": "IL",
       "name": "Israel",
       "nameCn": "以色列",
       "flag": "🇮🇱",
-      "total": 51
+      "total": 21
     },
     {
       "code": "JO",
       "name": "Jordan",
       "nameCn": "约旦",
       "flag": "🇯🇴",
-      "total": 51
+      "total": 21
     },
     {
       "code": "OM",
       "name": "Oman",
       "nameCn": "阿曼",
       "flag": "🇴🇲",
-      "total": 58
+      "total": 22
     },
     {
       "code": "KW",
       "name": "Kuwait",
       "nameCn": "科威特",
       "flag": "🇰🇼",
-      "total": 52
+      "total": 21
     },
     {
       "code": "BH",
       "name": "Bahrain",
       "nameCn": "巴林",
       "flag": "🇧🇭",
-      "total": 55
+      "total": 21
     },
     {
       "code": "IN",
       "name": "India",
       "nameCn": "印度",
       "flag": "🇮🇳",
-      "total": 73
+      "total": 35
     },
     {
       "code": "BD",
       "name": "Bangladesh",
       "nameCn": "孟加拉国",
       "flag": "🇧🇩",
-      "total": 80
+      "total": 35
     },
     {
       "code": "PK",
       "name": "Pakistan",
       "nameCn": "巴基斯坦",
       "flag": "🇵🇰",
-      "total": 79
+      "total": 40
     },
     {
       "code": "LK",
       "name": "Sri Lanka",
       "nameCn": "斯里兰卡",
       "flag": "🇱🇰",
-      "total": 68
+      "total": 35
     },
     {
       "code": "NP",
       "name": "Nepal",
       "nameCn": "尼泊尔",
       "flag": "🇳🇵",
-      "total": 19
+      "total": 11
     },
     {
       "code": "AF",
       "name": "Afghanistan",
       "nameCn": "阿富汗",
       "flag": "🇦🇫",
-      "total": 27
+      "total": 15
     },
     {
       "code": "AL",
       "name": "Albania",
       "nameCn": "阿尔巴尼亚",
       "flag": "🇦🇱",
-      "total": 67
+      "total": 21
     },
     {
       "code": "DZ",
       "name": "Algeria",
       "nameCn": "阿尔及利亚",
       "flag": "🇩🇿",
-      "total": 51
+      "total": 21
     },
     {
       "code": "AD",
       "name": "Andorra",
       "nameCn": "安道尔",
       "flag": "🇦🇩",
-      "total": 62
+      "total": 21
     },
     {
       "code": "AI",
       "name": "Anguilla",
       "nameCn": "安圭拉",
       "flag": "🇦🇮",
-      "total": 36
+      "total": 21
     },
     {
       "code": "AG",
       "name": "Antigua and Barbuda",
       "nameCn": "安提瓜和巴布达",
       "flag": "🇦🇬",
-      "total": 46
+      "total": 21
     },
     {
       "code": "AR",
       "name": "Argentina",
       "nameCn": "阿根廷",
       "flag": "🇦🇷",
-      "total": 59
+      "total": 21
     },
     {
       "code": "AM",
       "name": "Armenia",
       "nameCn": "亚美尼亚",
       "flag": "🇦🇲",
-      "total": 39
+      "total": 21
     },
     {
       "code": "AW",
       "name": "Aruba",
       "nameCn": "阿鲁巴",
       "flag": "🇦🇼",
-      "total": 49
+      "total": 21
     },
     {
       "code": "AZ",
       "name": "Azerbaijan",
       "nameCn": "阿塞拜疆",
       "flag": "🇦🇿",
-      "total": 39
+      "total": 21
     },
     {
       "code": "BQ-SA",
       "name": "BQ-SA",
       "nameCn": "BQ-SA",
       "flag": "🌐",
-      "total": 18
+      "total": 14
     },
     {
       "code": "BQ-SE",
       "name": "BQ-SE",
       "nameCn": "BQ-SE",
       "flag": "🌐",
-      "total": 20
+      "total": 15
     },
     {
       "code": "BS",
       "name": "Bahamas",
       "nameCn": "巴哈马",
       "flag": "🇧🇸",
-      "total": 52
+      "total": 21
     },
     {
       "code": "BB",
       "name": "Barbados",
       "nameCn": "巴巴多斯",
       "flag": "🇧🇧",
-      "total": 46
+      "total": 21
     },
     {
       "code": "BY",
       "name": "Belarus",
       "nameCn": "白俄罗斯",
       "flag": "🇧🇾",
-      "total": 37
+      "total": 21
     },
     {
       "code": "BZ",
       "name": "Belize",
       "nameCn": "伯利兹",
       "flag": "🇧🇿",
-      "total": 38
+      "total": 21
     },
     {
       "code": "BJ",
       "name": "Benin",
       "nameCn": "贝宁",
       "flag": "🇧🇯",
-      "total": 18
+      "total": 10
     },
     {
       "code": "BM",
       "name": "Bermuda",
       "nameCn": "百慕大",
       "flag": "🇧🇲",
-      "total": 46
-    },
-    {
-      "code": "BT",
-      "name": "Bhutan",
-      "nameCn": "不丹",
-      "flag": "🇧🇹",
-      "total": 4
+      "total": 21
     },
     {
       "code": "BO",
       "name": "Bolivia",
       "nameCn": "玻利维亚",
       "flag": "🇧🇴",
-      "total": 52
+      "total": 21
     },
     {
       "code": "BQ",
       "name": "Bonaire, Sint Eustatius and Saba",
       "nameCn": "荷兰加勒比区",
       "flag": "🇧🇶",
-      "total": 50
+      "total": 21
     },
     {
       "code": "BA",
       "name": "Bosnia and Herzegovina",
       "nameCn": "波黑",
       "flag": "🇧🇦",
-      "total": 56
+      "total": 15
     },
     {
       "code": "BW",
       "name": "Botswana",
       "nameCn": "博茨瓦纳",
       "flag": "🇧🇼",
-      "total": 47
+      "total": 21
     },
     {
       "code": "BR",
       "name": "Brazil",
       "nameCn": "巴西",
       "flag": "🇧🇷",
-      "total": 49
+      "total": 21
     },
     {
       "code": "VG",
       "name": "British Virgin Islands",
       "nameCn": "英属维尔京群岛",
       "flag": "🇻🇬",
-      "total": 38
+      "total": 25
     },
     {
       "code": "BN",
       "name": "Brunei",
       "nameCn": "文莱",
       "flag": "🇧🇳",
-      "total": 38
+      "total": 21
     },
     {
       "code": "BG",
       "name": "Bulgaria",
       "nameCn": "保加利亚",
       "flag": "🇧🇬",
-      "total": 52
+      "total": 6
     },
     {
       "code": "BF",
       "name": "Burkina Faso",
       "nameCn": "布基纳法索",
       "flag": "🇧🇫",
-      "total": 23
+      "total": 10
     },
     {
       "code": "CY-NC",
       "name": "CY-NC",
       "nameCn": "CY-NC",
       "flag": "🌐",
-      "total": 22
+      "total": 10
     },
     {
       "code": "KH",
       "name": "Cambodia",
       "nameCn": "柬埔寨",
       "flag": "🇰🇭",
-      "total": 80
+      "total": 35
     },
     {
       "code": "CM",
       "name": "Cameroon",
       "nameCn": "喀麦隆",
       "flag": "🇨🇲",
-      "total": 49
+      "total": 21
     },
     {
       "code": "CV",
       "name": "Cape Verde",
       "nameCn": "佛得角",
       "flag": "🇨🇻",
-      "total": 28
+      "total": 10
     },
     {
       "code": "KY",
       "name": "Cayman Islands",
       "nameCn": "开曼群岛",
       "flag": "🇰🇾",
-      "total": 45
+      "total": 27
     },
     {
       "code": "CF",
       "name": "Central African Republic",
       "nameCn": "中非共和国",
       "flag": "🇨🇫",
-      "total": 23
+      "total": 10
     },
     {
       "code": "TD",
       "name": "Chad",
       "nameCn": "乍得",
       "flag": "🇹🇩",
-      "total": 41
+      "total": 25
     },
     {
       "code": "CL",
       "name": "Chile",
       "nameCn": "智利",
       "flag": "🇨🇱",
-      "total": 61
+      "total": 21
     },
     {
       "code": "CO",
       "name": "Colombia",
       "nameCn": "哥伦比亚",
       "flag": "🇨🇴",
-      "total": 47
+      "total": 21
     },
     {
       "code": "CD",
       "name": "Congo, Democratic Republic",
       "nameCn": "刚果(金)",
       "flag": "🇨🇩",
-      "total": 50
+      "total": 21
     },
     {
       "code": "CG",
       "name": "Congo, Republic",
       "nameCn": "刚果(布)",
       "flag": "🇨🇬",
-      "total": 25
+      "total": 6
     },
     {
       "code": "CR",
       "name": "Costa Rica",
       "nameCn": "哥斯达黎加",
       "flag": "🇨🇷",
-      "total": 49
+      "total": 21
     },
     {
       "code": "HR",
       "name": "Croatia",
       "nameCn": "克罗地亚",
       "flag": "🇭🇷",
-      "total": 80
+      "total": 21
     },
     {
       "code": "CW",
       "name": "Curacao",
       "nameCn": "库拉索",
       "flag": "🇨🇼",
-      "total": 49
+      "total": 21
     },
     {
       "code": "CY",
       "name": "Cyprus",
       "nameCn": "塞浦路斯",
       "flag": "🇨🇾",
-      "total": 92
+      "total": 21
     },
     {
       "code": "CZ",
       "name": "Czech Republic",
       "nameCn": "捷克",
       "flag": "🇨🇿",
-      "total": 86
+      "total": 21
     },
     {
       "code": "DM",
       "name": "Dominica",
       "nameCn": "多米尼克",
       "flag": "🇩🇲",
-      "total": 46
+      "total": 21
     },
     {
       "code": "DO",
       "name": "Dominican Republic",
       "nameCn": "多米尼加",
       "flag": "🇩🇴",
-      "total": 49
+      "total": 21
     },
     {
       "code": "ES-XCI",
       "name": "ES-XCI",
       "nameCn": "ES-XCI",
       "flag": "🌐",
-      "total": 22
+      "total": 10
     },
     {
       "code": "EC",
       "name": "Ecuador",
       "nameCn": "厄瓜多尔",
       "flag": "🇪🇨",
-      "total": 48
+      "total": 21
     },
     {
       "code": "SV",
       "name": "El Salvador",
       "nameCn": "萨尔瓦多",
       "flag": "🇸🇻",
-      "total": 59
+      "total": 33
     },
     {
       "code": "EE",
       "name": "Estonia",
       "nameCn": "爱沙尼亚",
       "flag": "🇪🇪",
-      "total": 80
+      "total": 21
     },
     {
       "code": "ET",
       "name": "Ethiopia",
       "nameCn": "埃塞俄比亚",
       "flag": "🇪🇹",
-      "total": 16
+      "total": 10
     },
     {
       "code": "FR-GP",
       "name": "FR-GP",
       "nameCn": "FR-GP",
       "flag": "🌐",
-      "total": 22
+      "total": 15
     },
     {
       "code": "FO",
       "name": "Faroe Islands",
       "nameCn": "法罗群岛",
       "flag": "🇫🇴",
-      "total": 45
+      "total": 21
     },
     {
       "code": "FJ",
       "name": "Fiji",
       "nameCn": "斐济",
       "flag": "🇫🇯",
-      "total": 64
+      "total": 21
     },
     {
       "code": "GF",
       "name": "French Guiana",
       "nameCn": "法属圭亚那",
       "flag": "🇬🇫",
-      "total": 62
+      "total": 21
     },
     {
       "code": "PF",
       "name": "French Polynesia",
       "nameCn": "法属波利尼西亚",
       "flag": "🇵🇫",
-      "total": 34
+      "total": 21
     },
     {
       "code": "GB-SCT",
       "name": "GB-SCT",
       "nameCn": "GB-SCT",
       "flag": "🌐",
-      "total": 18
+      "total": 6
     },
     {
       "code": "GG",
       "name": "GG",
       "nameCn": "GG",
       "flag": "🇬🇬",
-      "total": 34
+      "total": 21
     },
     {
       "code": "GP-MG",
       "name": "GP-MG",
       "nameCn": "GP-MG",
       "flag": "🌐",
-      "total": 28
+      "total": 22
     },
     {
       "code": "GA",
       "name": "Gabon",
       "nameCn": "加蓬",
       "flag": "🇬🇦",
-      "total": 32
+      "total": 15
     },
     {
       "code": "GM",
       "name": "Gambia",
       "nameCn": "冈比亚",
       "flag": "🇬🇲",
-      "total": 44
+      "total": 21
     },
     {
       "code": "GE",
       "name": "Georgia",
       "nameCn": "格鲁吉亚",
       "flag": "🇬🇪",
-      "total": 62
+      "total": 21
     },
     {
       "code": "GH",
       "name": "Ghana",
       "nameCn": "加纳",
       "flag": "🇬🇭",
-      "total": 51
+      "total": 21
     },
     {
       "code": "GI",
       "name": "Gibraltar",
       "nameCn": "直布罗陀",
       "flag": "🇬🇮",
-      "total": 66
+      "total": 21
     },
     {
       "code": "GR",
       "name": "Greece",
       "nameCn": "希腊",
       "flag": "🇬🇷",
-      "total": 92
+      "total": 21
     },
     {
       "code": "GL",
       "name": "Greenland",
       "nameCn": "格陵兰",
       "flag": "🇬🇱",
-      "total": 26
+      "total": 15
     },
     {
       "code": "GD",
       "name": "Grenada",
       "nameCn": "格林纳达",
       "flag": "🇬🇩",
-      "total": 34
+      "total": 16
     },
     {
       "code": "GP",
       "name": "Guadeloupe",
       "nameCn": "瓜德罗普",
       "flag": "🇬🇵",
-      "total": 61
-    },
-    {
-      "code": "GU",
-      "name": "Guam",
-      "nameCn": "关岛",
-      "flag": "🇬🇺",
-      "total": 6
+      "total": 21
     },
     {
       "code": "GT",
       "name": "Guatemala",
       "nameCn": "危地马拉",
       "flag": "🇬🇹",
-      "total": 48
-    },
-    {
-      "code": "GN",
-      "name": "Guinea",
-      "nameCn": "几内亚",
-      "flag": "🇬🇳",
-      "total": 9
+      "total": 21
     },
     {
       "code": "GW",
       "name": "Guinea-Bissau",
       "nameCn": "几内亚比绍",
       "flag": "🇬🇼",
-      "total": 19
+      "total": 10
     },
     {
       "code": "GY",
       "name": "Guyana",
       "nameCn": "圭亚那",
       "flag": "🇬🇾",
-      "total": 54
+      "total": 21
     },
     {
       "code": "HT",
       "name": "Haiti",
       "nameCn": "海地",
       "flag": "🇭🇹",
-      "total": 50
+      "total": 21
     },
     {
       "code": "HN",
       "name": "Honduras",
       "nameCn": "洪都拉斯",
       "flag": "🇭🇳",
-      "total": 55
+      "total": 21
     },
     {
       "code": "HU",
       "name": "Hungary",
       "nameCn": "匈牙利",
       "flag": "🇭🇺",
-      "total": 92
+      "total": 21
     },
     {
       "code": "IS",
       "name": "Iceland",
       "nameCn": "冰岛",
       "flag": "🇮🇸",
-      "total": 62
+      "total": 21
     },
     {
       "code": "IR",
       "name": "Iran",
       "nameCn": "伊朗",
       "flag": "🇮🇷",
-      "total": 22
+      "total": 15
     },
     {
       "code": "IQ",
       "name": "Iraq",
       "nameCn": "伊拉克",
       "flag": "🇮🇶",
-      "total": 39
+      "total": 15
     },
     {
       "code": "IE",
       "name": "Ireland",
       "nameCn": "爱尔兰",
       "flag": "🇮🇪",
-      "total": 93
+      "total": 21
     },
     {
       "code": "IM",
       "name": "Isle of Man",
       "nameCn": "马恩岛",
       "flag": "🇮🇲",
-      "total": 45
+      "total": 15
     },
     {
       "code": "CI",
       "name": "Ivory Coast",
       "nameCn": "科特迪瓦",
       "flag": "🇨🇮",
-      "total": 47
+      "total": 21
     },
     {
       "code": "JM",
       "name": "Jamaica",
       "nameCn": "牙买加",
       "flag": "🇯🇲",
-      "total": 46
+      "total": 21
     },
     {
       "code": "JE",
       "name": "Jersey",
       "nameCn": "泽西岛",
       "flag": "🇯🇪",
-      "total": 47
+      "total": 21
     },
     {
       "code": "KZ",
       "name": "Kazakhstan",
       "nameCn": "哈萨克斯坦",
       "flag": "🇰🇿",
-      "total": 46
+      "total": 21
     },
     {
       "code": "KE",
       "name": "Kenya",
       "nameCn": "肯尼亚",
       "flag": "🇰🇪",
-      "total": 60
+      "total": 21
     },
     {
       "code": "XK",
       "name": "Kosovo",
       "nameCn": "科索沃",
       "flag": "🇽🇰",
-      "total": 39
+      "total": 21
     },
     {
       "code": "KG",
       "name": "Kyrgyzstan",
       "nameCn": "吉尔吉斯斯坦",
       "flag": "🇰🇬",
-      "total": 22
+      "total": 10
     },
     {
       "code": "LA",
       "name": "Laos",
       "nameCn": "老挝",
       "flag": "🇱🇦",
-      "total": 67
+      "total": 37
     },
     {
       "code": "LV",
       "name": "Latvia",
       "nameCn": "拉脱维亚",
       "flag": "🇱🇻",
-      "total": 91
+      "total": 32
     },
     {
       "code": "LB",
       "name": "Lebanon",
       "nameCn": "黎巴嫩",
       "flag": "🇱🇧",
-      "total": 15
+      "total": 10
     },
     {
       "code": "LS",
       "name": "Lesotho",
       "nameCn": "莱索托",
       "flag": "🇱🇸",
-      "total": 6
+      "total": 5
     },
     {
       "code": "LR",
       "name": "Liberia",
       "nameCn": "利比里亚",
       "flag": "🇱🇷",
-      "total": 41
+      "total": 21
     },
     {
       "code": "LI",
       "name": "Liechtenstein",
       "nameCn": "列支敦士登",
       "flag": "🇱🇮",
-      "total": 74
+      "total": 21
     },
     {
       "code": "LT",
       "name": "Lithuania",
       "nameCn": "立陶宛",
       "flag": "🇱🇹",
-      "total": 92
+      "total": 33
     },
     {
       "code": "LU",
       "name": "Luxembourg",
       "nameCn": "卢森堡",
       "flag": "🇱🇺",
-      "total": 89
+      "total": 32
     },
     {
       "code": "MG",
       "name": "Madagascar",
       "nameCn": "马达加斯加",
       "flag": "🇲🇬",
-      "total": 44
+      "total": 21
     },
     {
       "code": "MW",
       "name": "Malawi",
       "nameCn": "马拉维",
       "flag": "🇲🇼",
-      "total": 37
+      "total": 20
     },
     {
       "code": "ML",
       "name": "Mali",
       "nameCn": "马里",
       "flag": "🇲🇱",
-      "total": 47
+      "total": 25
     },
     {
       "code": "MT",
       "name": "Malta",
       "nameCn": "马耳他",
       "flag": "🇲🇹",
-      "total": 85
+      "total": 33
     },
     {
       "code": "MQ",
       "name": "Martinique",
       "nameCn": "马提尼克",
       "flag": "🇲🇶",
-      "total": 46
-    },
-    {
-      "code": "MR",
-      "name": "Mauritania",
-      "nameCn": "毛里塔尼亚",
-      "flag": "🇲🇷",
-      "total": 5
+      "total": 23
     },
     {
       "code": "MU",
       "name": "Mauritius",
       "nameCn": "毛里求斯",
       "flag": "🇲🇺",
-      "total": 32
+      "total": 16
     },
     {
       "code": "YT",
       "name": "Mayotte",
       "nameCn": "马约特",
       "flag": "🇾🇹",
-      "total": 27
+      "total": 21
     },
     {
       "code": "MX",
       "name": "Mexico",
       "nameCn": "墨西哥",
       "flag": "🇲🇽",
-      "total": 91
+      "total": 21
     },
     {
       "code": "MD",
       "name": "Moldova",
       "nameCn": "摩尔多瓦",
       "flag": "🇲🇩",
-      "total": 50
+      "total": 31
     },
     {
       "code": "MC",
       "name": "Monaco",
       "nameCn": "摩纳哥",
       "flag": "🇲🇨",
-      "total": 34
+      "total": 21
     },
     {
       "code": "MN",
       "name": "Mongolia",
       "nameCn": "蒙古",
       "flag": "🇲🇳",
-      "total": 52
+      "total": 21
     },
     {
       "code": "ME",
       "name": "Montenegro",
       "nameCn": "黑山",
       "flag": "🇲🇪",
-      "total": 70
+      "total": 31
     },
     {
       "code": "MS",
       "name": "Montserrat",
       "nameCn": "蒙特塞拉特",
       "flag": "🇲🇸",
-      "total": 46
+      "total": 21
     },
     {
       "code": "MA",
       "name": "Morocco",
       "nameCn": "摩洛哥",
       "flag": "🇲🇦",
-      "total": 52
+      "total": 21
     },
     {
       "code": "MZ",
       "name": "Mozambique",
       "nameCn": "莫桑比克",
       "flag": "🇲🇿",
-      "total": 42
+      "total": 21
     },
     {
       "code": "NA",
       "name": "Namibia",
       "nameCn": "纳米比亚",
       "flag": "🇳🇦",
-      "total": 6
+      "total": 4
     },
     {
       "code": "NR",
       "name": "Nauru",
       "nameCn": "瑙鲁",
       "flag": "🇳🇷",
-      "total": 19
+      "total": 2
     },
     {
       "code": "AN",
       "name": "Netherlands Antilles",
       "nameCn": "荷属安的列斯",
       "flag": "🇦🇳",
-      "total": 33
+      "total": 15
     },
     {
       "code": "NI",
       "name": "Nicaragua",
       "nameCn": "尼加拉瓜",
       "flag": "🇳🇮",
-      "total": 53
+      "total": 21
     },
     {
       "code": "NE",
       "name": "Niger",
       "nameCn": "尼日尔",
       "flag": "🇳🇪",
-      "total": 12
+      "total": 9
     },
     {
       "code": "NG",
       "name": "Nigeria",
       "nameCn": "尼日利亚",
       "flag": "🇳🇬",
-      "total": 48
+      "total": 26
     },
     {
       "code": "MK",
       "name": "North Macedonia",
       "nameCn": "北马其顿",
       "flag": "🇲🇰",
-      "total": 74
+      "total": 33
     },
     {
       "code": "PT-AZ",
       "name": "PT-AZ",
       "nameCn": "PT-AZ",
       "flag": "🌐",
-      "total": 30
+      "total": 20
     },
     {
       "code": "PT-MA",
       "name": "PT-MA",
       "nameCn": "PT-MA",
       "flag": "🌐",
-      "total": 33
+      "total": 21
     },
     {
       "code": "PS",
       "name": "Palestine",
       "nameCn": "巴勒斯坦",
       "flag": "🇵🇸",
-      "total": 44
+      "total": 15
     },
     {
       "code": "PA",
       "name": "Panama",
       "nameCn": "巴拿马",
       "flag": "🇵🇦",
-      "total": 57
+      "total": 21
     },
     {
       "code": "PG",
       "name": "Papua New Guinea",
       "nameCn": "巴布亚新几内亚",
       "flag": "🇵🇬",
-      "total": 43
+      "total": 16
     },
     {
       "code": "PY",
       "name": "Paraguay",
       "nameCn": "巴拉圭",
       "flag": "🇵🇾",
-      "total": 52
+      "total": 21
     },
     {
       "code": "PE",
       "name": "Peru",
       "nameCn": "秘鲁",
       "flag": "🇵🇪",
-      "total": 48
+      "total": 22
     },
     {
       "code": "PR",
       "name": "Puerto Rico",
       "nameCn": "波多黎各",
       "flag": "🇵🇷",
-      "total": 22
+      "total": 6
     },
     {
       "code": "RE",
       "name": "Reunion",
       "nameCn": "留尼汪",
       "flag": "🇷🇪",
-      "total": 52
+      "total": 33
     },
     {
       "code": "RO",
       "name": "Romania",
       "nameCn": "罗马尼亚",
       "flag": "🇷🇴",
-      "total": 92
+      "total": 33
     },
     {
       "code": "RU",
       "name": "Russia",
       "nameCn": "俄罗斯",
       "flag": "🇷🇺",
-      "total": 27
+      "total": 15
     },
     {
       "code": "RW",
       "name": "Rwanda",
       "nameCn": "卢旺达",
       "flag": "🇷🇼",
-      "total": 38
+      "total": 25
     },
     {
       "code": "BL",
       "name": "Saint Barthelemy",
       "nameCn": "圣巴泰勒米",
       "flag": "🇧🇱",
-      "total": 50
+      "total": 15
     },
     {
       "code": "KN",
       "name": "Saint Kitts and Nevis",
       "nameCn": "圣基茨和尼维斯",
       "flag": "🇰🇳",
-      "total": 46
+      "total": 21
     },
     {
       "code": "LC",
       "name": "Saint Lucia",
       "nameCn": "圣卢西亚",
       "flag": "🇱🇨",
-      "total": 46
+      "total": 21
     },
     {
       "code": "MF",
       "name": "Saint Martin",
       "nameCn": "法属圣马丁",
       "flag": "🇲🇫",
-      "total": 45
+      "total": 24
     },
     {
       "code": "VC",
       "name": "Saint Vincent and the Grenadines",
       "nameCn": "圣文森特和格林纳丁斯",
       "flag": "🇻🇨",
-      "total": 46
+      "total": 25
     },
     {
       "code": "WS",
       "name": "Samoa",
       "nameCn": "萨摩亚",
       "flag": "🇼🇸",
-      "total": 36
+      "total": 15
     },
     {
       "code": "SM",
@@ -1293,212 +1265,191 @@
       "name": "Senegal",
       "nameCn": "塞内加尔",
       "flag": "🇸🇳",
-      "total": 44
+      "total": 21
     },
     {
       "code": "RS",
       "name": "Serbia",
       "nameCn": "塞尔维亚",
       "flag": "🇷🇸",
-      "total": 68
+      "total": 33
     },
     {
       "code": "SC",
       "name": "Seychelles",
       "nameCn": "塞舌尔",
       "flag": "🇸🇨",
-      "total": 49
+      "total": 26
     },
     {
       "code": "SL",
       "name": "Sierra Leone",
       "nameCn": "塞拉利昂",
       "flag": "🇸🇱",
-      "total": 50
+      "total": 28
     },
     {
       "code": "SX",
       "name": "Sint Maarten",
       "nameCn": "荷属圣马丁",
       "flag": "🇸🇽",
-      "total": 21
+      "total": 15
     },
     {
       "code": "SK",
       "name": "Slovakia",
       "nameCn": "斯洛伐克",
       "flag": "🇸🇰",
-      "total": 86
+      "total": 33
     },
     {
       "code": "SI",
       "name": "Slovenia",
       "nameCn": "斯洛文尼亚",
       "flag": "🇸🇮",
-      "total": 92
+      "total": 33
     },
     {
       "code": "ZA",
       "name": "South Africa",
       "nameCn": "南非",
       "flag": "🇿🇦",
-      "total": 56
-    },
-    {
-      "code": "SD",
-      "name": "Sudan",
-      "nameCn": "苏丹",
-      "flag": "🇸🇩",
-      "total": 5
+      "total": 27
     },
     {
       "code": "SR",
       "name": "Suriname",
       "nameCn": "苏里南",
       "flag": "🇸🇷",
-      "total": 48
+      "total": 30
     },
     {
       "code": "SZ",
       "name": "Swaziland",
       "nameCn": "斯威士兰",
       "flag": "🇸🇿",
-      "total": 31
+      "total": 18
     },
     {
       "code": "TJ",
       "name": "Tajikistan",
       "nameCn": "塔吉克斯坦",
       "flag": "🇹🇯",
-      "total": 37
+      "total": 26
     },
     {
       "code": "TZ",
       "name": "Tanzania",
       "nameCn": "坦桑尼亚",
       "flag": "🇹🇿",
-      "total": 68
+      "total": 33
     },
     {
       "code": "TL",
       "name": "Timor-Leste",
       "nameCn": "东帝汶",
       "flag": "🇹🇱",
-      "total": 35
+      "total": 21
     },
     {
       "code": "TG",
       "name": "Togo",
       "nameCn": "多哥",
       "flag": "🇹🇬",
-      "total": 17
+      "total": 11
     },
     {
       "code": "TO",
       "name": "Tonga",
       "nameCn": "汤加",
       "flag": "🇹🇴",
-      "total": 44
+      "total": 20
     },
     {
       "code": "TT",
       "name": "Trinidad and Tobago",
       "nameCn": "特立尼达和多巴哥",
       "flag": "🇹🇹",
-      "total": 52
+      "total": 25
     },
     {
       "code": "TN",
       "name": "Tunisia",
       "nameCn": "突尼斯",
       "flag": "🇹🇳",
-      "total": 68
+      "total": 32
     },
     {
       "code": "TC",
       "name": "Turks and Caicos Islands",
       "nameCn": "特克斯和凯科斯群岛",
       "flag": "🇹🇨",
-      "total": 46
-    },
-    {
-      "code": "VI",
-      "name": "U.S. Virgin Islands",
-      "nameCn": "美属维尔京群岛",
-      "flag": "🇻🇮",
-      "total": 12
+      "total": 25
     },
     {
       "code": "USPR",
       "name": "USPR",
       "nameCn": "USPR",
       "flag": "🌐",
-      "total": 34
+      "total": 15
     },
     {
       "code": "UG",
       "name": "Uganda",
       "nameCn": "乌干达",
       "flag": "🇺🇬",
-      "total": 60
+      "total": 26
     },
     {
       "code": "UA",
       "name": "Ukraine",
       "nameCn": "乌克兰",
       "flag": "🇺🇦",
-      "total": 74
+      "total": 33
     },
     {
       "code": "UY",
       "name": "Uruguay",
       "nameCn": "乌拉圭",
       "flag": "🇺🇾",
-      "total": 48
+      "total": 22
     },
     {
       "code": "UZ",
       "name": "Uzbekistan",
       "nameCn": "乌兹别克斯坦",
       "flag": "🇺🇿",
-      "total": 46
+      "total": 21
     },
     {
       "code": "VU",
       "name": "Vanuatu",
       "nameCn": "瓦努阿图",
       "flag": "🇻🇺",
-      "total": 34
+      "total": 10
     },
     {
       "code": "VA",
       "name": "Vatican City",
       "nameCn": "梵蒂冈",
       "flag": "🇻🇦",
-      "total": 22
-    },
-    {
-      "code": "VE",
-      "name": "Venezuela",
-      "nameCn": "委内瑞拉",
-      "flag": "🇻🇪",
-      "total": 14
+      "total": 10
     },
     {
       "code": "ZM",
       "name": "Zambia",
       "nameCn": "赞比亚",
       "flag": "🇿🇲",
-      "total": 32
+      "total": 15
     },
     {
       "code": "ZW",
       "name": "Zimbabwe",
       "nameCn": "津巴布韦",
       "flag": "🇿🇼",
-      "total": 12
+      "total": 11
     }
   ],
-  "count": 214,
-  "generatedAt": "2026-03-22T08:24:32.575926Z"
+  "count": 207,
+  "generatedAt": "2026-03-23T08:26:24.728544Z"
 }
