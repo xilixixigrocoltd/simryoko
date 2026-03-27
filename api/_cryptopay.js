@@ -41,7 +41,7 @@ async function createInvoice({ asset = 'TON', amount, description, payload, expi
   return callApi('createInvoice', {
     asset,
     amount: String(amount),
-    description: description || 'eSIM Purchase — SimKaze',
+    description: description || 'eSIM Purchase — SimRyoko',
     payload: payload || '',
     allow_comments: false,
     allow_anonymous: false,

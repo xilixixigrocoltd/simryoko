@@ -1,5 +1,5 @@
 {
-  "name": "simkaze-tests",
+  "name": "SimRyoko-tests",
   "version": "1.0.0",
   "scripts": {
     "test": "jest",
@@ -28,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/xilixixigrocoltd/simkaze.git"
+    "url": "https://github.com/xilixixigrocoltd/SimRyoko.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "bugs": {
-    "url": "https://github.com/xilixixigrocoltd/simkaze/issues"
+    "url": "https://github.com/xilixixigrocoltd/SimRyoko/issues"
   },
-  "homepage": "https://github.com/xilixixigrocoltd/simkaze#readme"
+  "homepage": "https://github.com/xilixixigrocoltd/SimRyoko#readme"
 }

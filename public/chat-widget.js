@@ -1,5 +1,5 @@
 /**
- * SimKaze Chat Widget - Vanilla JS Version
+ * SimRyoko Chat Widget - Vanilla JS Version
  * For static HTML sites
  */
 
@@ -12,7 +12,7 @@
     telegramLink: 'https://t.me/Simryokoesimbot',
     position: 'bottom-right',
     primaryColor: '#FF6B35',
-    botName: 'SimKaze客服',
+    botName: 'SimRyoko客服',
     botAvatar: '🤖'
   };
 
@@ -27,8 +27,8 @@
     '查询用量': '购买后登录账户查看，或联系客服查询。',
     '退款': '未激活24小时内可退款，已激活不支持退款。如需退款请联系人工客服。',
     '支付': '支持信用卡(Stripe)、USDT、TON支付。',
-    '客服': 'Telegram: @Simryokoesimbot\n邮箱: support@simkaze.com',
-    '联系': 'Telegram: @Simryokoesimbot\n邮箱: support@simkaze.com',
+    '客服': 'Telegram: @Simryokoesimbot\n邮箱: support@simryoko.com',
+    '联系': 'Telegram: @Simryokoesimbot\n邮箱: support@simryoko.com',
     '有效期': '从激活日开始计算，套餐标注天数内有效。',
     '区别': '与Airalo同样的网络，更好的中文服务。价格更优，支持USDT支付。'
   };
@@ -36,16 +36,16 @@
   // State
   let isOpen = false;
   let messages = [
-    { type: 'bot', text: '您好！我是SimKaze智能客服 🤖\n\n我可以帮您：\n• 查询产品/价格\n• 解答eSIM使用问题\n• 转接人工客服\n\n请问有什么可以帮您？' }
+    { type: 'bot', text: '您好！我是SimRyoko智能客服 🤖\n\n我可以帮您：\n• 查询产品/价格\n• 解答eSIM使用问题\n• 转接人工客服\n\n请问有什么可以帮您？' }
   ];
 
   // Create widget HTML
   function createWidget() {
     const widget = document.createElement('div');
-    widget.id = 'simkaze-chat-widget';
+    widget.id = 'SimRyoko-chat-widget';
     widget.innerHTML = `
       <style>
-        #simkaze-chat-widget {
+        #SimRyoko-chat-widget {
           --primary: ${CONFIG.primaryColor};
           --primary-dark: #e55a2b;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

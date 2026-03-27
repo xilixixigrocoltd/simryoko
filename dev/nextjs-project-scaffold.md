@@ -1,6 +1,6 @@
 # Next.js 项目脚手架 v1.0
 
-**用途**: 快速创建SimKaze项目  
+**用途**: 快速创建SimRyoko项目  
 **技术栈**: Next.js 14 + TypeScript + Tailwind CSS  
 **预计时间**: 15分钟
 
@@ -10,7 +10,7 @@
 
 ```bash
 # 1. 创建项目
-npx create-next-app@latest simkaze-web \
+npx create-next-app@latest SimRyoko-web \
   --typescript \
   --tailwind \
   --eslint \
@@ -20,7 +20,7 @@ npx create-next-app@latest simkaze-web \
   --use-npm
 
 # 2. 进入项目
-cd simkaze-web
+cd SimRyoko-web
 
 # 3. 安装依赖
 npm install \
@@ -48,7 +48,7 @@ npm install -D \
 ## 第二步：目录结构
 
 ```
-simkaze-web/
+SimRyoko-web/
 ├── app/                          # Next.js App Router
 │   ├── layout.tsx               # 根布局
 │   ├── page.tsx                 # 首页
@@ -225,7 +225,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ['simkaze.com', 'cdn.simkaze.com'],
+    domains: ['simryoko.com', 'cdn.simryoko.com'],
   },
   i18n: {
     locales: ['zh-CN', 'en', 'ja', 'ko'],

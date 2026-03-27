@@ -1,4 +1,4 @@
-# SimKaze 上线报告
+# SimRyoko 上线报告
 
 **上线时间**: 2026-03-14 23:10 CST  
 **报告时间**: 2026-03-14 23:15 CST  
@@ -24,7 +24,7 @@
 | 代理后台系统 | ✅ | 登录/注册/订单管理 |
 | 产品精简 | ✅ | 1,872产品，精选10款高利润 |
 | 安全修复 | ✅ | 环境变量化 |
-| 正式上线 | ✅ | https://simkaze.com |
+| 正式上线 | ✅ | https://simryoko.com |
 
 ---
 
@@ -69,10 +69,10 @@
 
 ## 📞 联系信息
 
-- **网站**: https://simkaze.com
+- **网站**: https://simryoko.com
 - **Telegram**: @Simryokoesimbot
-- **邮箱**: support@simkaze.com
+- **邮箱**: support@simryoko.com
 
 ---
 
-**🎉 SimKaze eSIM 正式上线！**
+**🎉 SimRyoko eSIM 正式上线！**

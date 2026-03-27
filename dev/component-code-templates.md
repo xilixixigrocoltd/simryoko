@@ -392,7 +392,7 @@ export function PriceComparison() {
             <thead className="bg-secondary-500 text-white">
               <tr>
                 <th className="px-6 py-4 text-left">产品</th>
-                <th className="px-6 py-4 text-center">SimKaze</th>
+                <th className="px-6 py-4 text-center">SimRyoko</th>
                 <th className="px-6 py-4 text-center">Airalo</th>
                 <th className="px-6 py-4 text-center">节省</th>
               </tr>

@@ -1,4 +1,4 @@
-# SimKaze Design System Specification v2.0
+# SimRyoko Design System Specification v2.0
 
 **Generated**: 2026-03-14  
 **Status**: Production Ready

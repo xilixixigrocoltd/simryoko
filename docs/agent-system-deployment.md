@@ -1,4 +1,4 @@
-# SimKaze 代理后台系统部署文档
+# SimRyoko 代理后台系统部署文档
 
 ## 📋 系统架构
 
@@ -29,8 +29,8 @@
 
 ```bash
 # 克隆代码
-git clone https://github.com/xilixixigrocoltd/simkaze.git
-cd simkaze
+git clone https://github.com/xilixixigrocoltd/SimRyoko.git
+cd SimRyoko
 
 # 安装依赖
 npm install
@@ -45,7 +45,7 @@ cp .env.example .env
 
 ```env
 # 数据库（必填）
-DATABASE_URL="postgresql://simkaze:simkaze123@localhost:5432/simkaze?schema=public"
+DATABASE_URL="postgresql://SimRyoko:SimRyoko123@localhost:5432/SimRyoko?schema=public"
 
 # JWT密钥（必填，生产环境请修改）
 JWT_SECRET="your-super-secret-jwt-key-change-this-in-production"
@@ -70,11 +70,11 @@ chmod +x scripts/setup-db.sh
 
 ```bash
 # 创建数据库
-createdb simkaze
+createdb SimRyoko
 
 # 创建用户
-createuser -P simkaze
-# 密码: simkaze123
+createuser -P SimRyoko
+# 密码: SimRyoko123
 ```
 
 ### 4. 数据库迁移
@@ -121,7 +121,7 @@ vercel --prod
 |--------|-----|
 | `DATABASE_URL` | 你的数据库URL |
 | `JWT_SECRET` | 你的JWT密钥 |
-| `NEXT_PUBLIC_SITE_URL` | https://simkaze.com |
+| `NEXT_PUBLIC_SITE_URL` | https://simryoko.com |
 
 ## 📊 数据库模型
 
@@ -160,7 +160,7 @@ vercel --prod
 | 环境 | URL |
 |------|-----|
 | 开发 | http://localhost:3000 |
-| 生产 | https://simkaze.com |
+| 生产 | https://simryoko.com |
 
 ## 📁 代理后台路径
 
@@ -202,4 +202,4 @@ npx prisma migrate reset
 ## 📞 支持
 
 - Telegram: @Simryokoesimbot
-- Email: support@simkaze.com
+- Email: support@simryoko.com

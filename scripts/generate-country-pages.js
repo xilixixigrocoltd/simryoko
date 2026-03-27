@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SimKaze Country Landing Page Generator
+ * SimRyoko Country Landing Page Generator
  * Generates SEO-optimized landing pages for 214 countries/regions
  * Created: 2026-03-14
  */
@@ -267,14 +267,14 @@ function generatePage(country) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${country.name} eSIM — Stay Connected in ${country.name} from $${country.price} | SimKaze</title>
-<meta name="description" content="Best ${country.name} eSIM deals. Instant activation, no physical SIM needed. Data plans from $${country.price}. Buy ${country.name} eSIM online at SimKaze.">
+<title>${country.name} eSIM — Stay Connected in ${country.name} from $${country.price} | SimRyoko</title>
+<meta name="description" content="Best ${country.name} eSIM deals. Instant activation, no physical SIM needed. Data plans from $${country.price}. Buy ${country.name} eSIM online at SimRyoko.">
 <meta name="keywords" content="${country.name} eSIM, eSIM ${country.name}, ${country.name} data plan, ${country.name} travel SIM, ${country.name} internet">
-<meta property="og:title" content="${country.name} eSIM — From $${country.price} | SimKaze">
+<meta property="og:title" content="${country.name} eSIM — From $${country.price} | SimRyoko">
 <meta property="og:description" content="Stay connected in ${country.name} with instant eSIM activation. No physical SIM, no roaming fees. Plans from $${country.price}.">
-<meta property="og:url" content="https://simkaze.com/countries/${country.slug}-esim">
-<meta property="og:image" content="https://simkaze.com/img/og/${country.code.toLowerCase()}-og.jpg">
-<link rel="canonical" href="https://simkaze.com/countries/${country.slug}-esim">
+<meta property="og:url" content="https://simryoko.com/countries/${country.slug}-esim">
+<meta property="og:image" content="https://simryoko.com/img/og/${country.code.toLowerCase()}-og.jpg">
+<link rel="canonical" href="https://simryoko.com/countries/${country.slug}-esim">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="/js/analytics.js"></script>
@@ -346,7 +346,7 @@ footer a{color:#999;text-decoration:none;margin:0 12px}
 </head>
 <body>
 <nav class="nav">
-  <a href="/" class="nav-logo">${country.emoji} SimKaze</a>
+  <a href="/" class="nav-logo">${country.emoji} SimRyoko</a>
   <div class="nav-links">
     <a href="/shop">Shop</a>
     <a href="/how-to-install-esim-iphone">Install Guide</a>
@@ -426,7 +426,7 @@ footer a{color:#999;text-decoration:none;margin:0 12px}
 </section>
 
 <section class="features">
-  <h2>Why Choose SimKaze for ${country.name}?</h2>
+  <h2>Why Choose SimRyoko for ${country.name}?</h2>
   <div class="feature-grid">
     <div class="feature-item">
       <div class="feature-icon">⚡</div>
@@ -511,7 +511,7 @@ footer a{color:#999;text-decoration:none;margin:0 12px}
 </section>
 
 <footer>
-  <p>© 2026 SimKaze. All rights reserved.</p>
+  <p>© 2026 SimRyoko. All rights reserved.</p>
   <p style="margin-top:8px">
     <a href="/terms">Terms</a>
     <a href="/privacy">Privacy</a>
@@ -527,7 +527,7 @@ const ld = {
   "@type": "Product",
   "name": "${country.name} eSIM",
   "description": "eSIM data plan for ${country.name}. Instant activation, ${country.carrier} network coverage.",
-  "brand": {"@type": "Brand", "name": "SimKaze"},
+  "brand": {"@type": "Brand", "name": "SimRyoko"},
   "offers": {
     "@type": "AggregateOffer",
     "lowPrice": "${country.price}",
@@ -560,7 +560,7 @@ for (const country of allCountries) {
 
 // Generate index/sitemap for countries
 const indexContent = allCountries.map(c => 
-  `<url><loc>https://simkaze.com/countries/${c.slug}-esim</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`
+  `<url><loc>https://simryoko.com/countries/${c.slug}-esim</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>`
 ).join('\n');
 
 const sitemapAddition = `<!-- Country pages sitemap entries (${count} pages) -->\n${indexContent}`;
@@ -575,9 +575,9 @@ for (const c of allCountries) {
 }
 
 let indexHtml = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>eSIM for 200+ Countries — SimKaze</title>
+<title>eSIM for 200+ Countries — SimRyoko</title>
 <meta name="description" content="Buy eSIM for 200+ countries. Instant activation, affordable data plans. Compare eSIM plans for every destination.">
-<link rel="canonical" href="https://simkaze.com/countries">
+<link rel="canonical" href="https://simryoko.com/countries">
 <style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',-apple-system,sans-serif;color:#1a1a2e;background:#f8f9ff}
 .header{background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;padding:60px 20px;text-align:center}
 .header h1{font-size:2.5rem;font-weight:800;margin-bottom:12px}
@@ -602,7 +602,7 @@ for (const [region, countries] of Object.entries(regionGroups)) {
   indexHtml += `</div></div>`;
 }
 
-indexHtml += `</div><footer><p>© 2026 SimKaze</p></footer></body></html>`;
+indexHtml += `</div><footer><p>© 2026 SimRyoko</p></footer></body></html>`;
 fs.writeFileSync(path.join(OUTPUT_DIR, 'index.html'), indexHtml);
 
 console.log(`✅ Generated ${count} country landing pages`);

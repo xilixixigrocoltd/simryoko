@@ -1,5 +1,5 @@
 /**
- * SimKaze i18n — 多语言切换系统
+ * SimRyoko i18n — 多语言切换系统
  * 支持: en (English) | zh (中文)
  */
 
@@ -123,7 +123,7 @@ const TRANSLATIONS = {
     'b2b.hero.subtitle': 'Wholesale eSIM rates for travel agents, tour operators, and digital resellers. Up to 85% margins.',
     'b2b.apply': 'Apply for Partnership',
     'b2b.margins': 'Example Margins',
-    'b2b.benefits.title': 'Why Partner with SimKaze?',
+    'b2b.benefits.title': 'Why Partner with SimRyoko?',
   },
 
   zh: {
@@ -245,19 +245,19 @@ const TRANSLATIONS = {
     'b2b.hero.subtitle': '为旅行社、旅游运营商和数字产品分销商提供批发 eSIM 价格，利润空间最高达 85%。',
     'b2b.apply': '申请合作',
     'b2b.margins': '利润参考',
-    'b2b.benefits.title': '为什么选择 SimKaze？',
+    'b2b.benefits.title': '为什么选择 SimRyoko？',
   }
 };
 
 // ─── 核心函数 ───────────────────────────────────────
 
 function getLang() {
-  return localStorage.getItem('simkaze_lang') || 
+  return localStorage.getItem('SimRyoko_lang') || 
     (navigator.language.startsWith('zh') ? 'zh' : 'en');
 }
 
 function setLang(lang) {
-  localStorage.setItem('simkaze_lang', lang);
+  localStorage.setItem('SimRyoko_lang', lang);
   applyLang(lang);
   updateToggle(lang);
 }

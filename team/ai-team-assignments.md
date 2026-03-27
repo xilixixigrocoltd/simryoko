@@ -1,4 +1,4 @@
-# SimKaze AI团队成员执行任务清单
+# SimRyoko AI团队成员执行任务清单
 
 **生成时间**: 2026-03-14 23:30  
 **团队规模**: 5个AI角色  
@@ -19,7 +19,7 @@
 **上午 (9:00-12:00)**
 ```
 □ 1. 创建Figma项目文件
-   - 文件命名: "SimKaze-Design-System-v2.0"
+   - 文件命名: "SimRyoko-Design-System-v2.0"
    - 创建5个Page: Design System / Home / Country / Search / Assets
 
 □ 2. 设置色彩系统
@@ -78,13 +78,13 @@
 **上午 (9:00-12:00)**
 ```bash
 # 1. 项目初始化
-npx create-next-app@latest simkaze-web \
+npx create-next-app@latest SimRyoko-web \
   --typescript \
   --tailwind \
   --app \
   --use-npm
 
-cd simkaze-web
+cd SimRyoko-web
 
 # 2. 安装依赖
 npm install framer-motion lucide-react @headlessui/react
@@ -300,7 +300,7 @@ app.listen(3001, () => {
 **上午 (9:00-12:00)**
 ```
 □ 1. 熟悉产品架构
-   读取: reports/simkaze-complete-design-spec-v2.md
+   读取: reports/SimRyoko-complete-design-spec-v2.md
    
    关键数据记忆:
    - 总产品: 2,720款

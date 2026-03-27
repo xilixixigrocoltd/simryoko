@@ -37,7 +37,7 @@ app.use(compression({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // CORS配置
-const corsOrigins = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['https://simkaze.com'];
+const corsOrigins = process.env.CORS_ORIGINS ? process.env.CORS_ORIGINS.split(',') : ['https://simryoko.com'];
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (corsOrigins.includes(origin)) {
@@ -104,7 +104,7 @@ if (process.env.VERCEL) {
   // 本地环境：监听端口
   const PORT = process.env.PORT || 3000;
   app.listen(PORT, () => {
-    console.log(`\n🚀 SimKaze running → http://localhost:${PORT}`);
+    console.log(`\n🚀 SimRyoko running → http://localhost:${PORT}`);
     console.log(`   Shop:      http://localhost:${PORT}/shop.html`);
     console.log(`   API test:  http://localhost:${PORT}/api/products?country=JP`);
     console.log(`   监控面板:  http://localhost:${PORT}/monitoring/dashboard.html`);

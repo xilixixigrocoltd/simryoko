@@ -41,7 +41,7 @@ async function handleIntent(req, res) {
       amount: amountCents, currency: 'usd', receipt_email: email,
       payment_method_types: [pmType],
       metadata: { orderId: order.orderId, productId: String(product.id), email, refCode: refCode || '' },
-      description: `SimKaze eSIM — ${order.productName}`
+      description: `SimRyoko eSIM — ${order.productName}`
     });
 
     return res.json({ success: true, clientSecret: intent.client_secret, orderId: order.orderId, amount: product.price });

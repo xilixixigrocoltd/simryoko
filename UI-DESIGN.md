@@ -1,4 +1,4 @@
-# SimKaze eSIM UI/UX Design System
+# SimRyoko eSIM UI/UX Design System
 
 > Version 1.0 | Last Updated: March 2026
 

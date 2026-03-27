@@ -15,12 +15,12 @@
     },
     "long": {
       "format": "Full product page description (150-200 words)",
-      "template": "Planning a trip to {country}? Stay connected with SimKaze's {country} eSIM. Get {data} of blazing-fast 4G/5G data valid for {validity} days, powered by {carrier}'s reliable network.\n\n**What's included:**\n- {data} high-speed data\n- {validity}-day validity (starts on first use)\n- {carrier} network coverage\n- 4G/LTE speeds (5G where available)\n- Hotspot/tethering supported\n\n**How it works:**\n1. Purchase your {country} eSIM plan\n2. Receive QR code instantly via email\n3. Scan with your phone's camera\n4. Connect to {carrier} when you arrive\n\nPerfect for travelers visiting {cities}. No need to find a local SIM shop or deal with airport kiosks. Install before your flight and connect the moment you land.\n\nCompatible with iPhone XS and newer, Samsung Galaxy S20+, Google Pixel 3+, and 200+ other eSIM devices.\n\n24/7 customer support available via chat and email.",
+      "template": "Planning a trip to {country}? Stay connected with SimRyoko's {country} eSIM. Get {data} of blazing-fast 4G/5G data valid for {validity} days, powered by {carrier}'s reliable network.\n\n**What's included:**\n- {data} high-speed data\n- {validity}-day validity (starts on first use)\n- {carrier} network coverage\n- 4G/LTE speeds (5G where available)\n- Hotspot/tethering supported\n\n**How it works:**\n1. Purchase your {country} eSIM plan\n2. Receive QR code instantly via email\n3. Scan with your phone's camera\n4. Connect to {carrier} when you arrive\n\nPerfect for travelers visiting {cities}. No need to find a local SIM shop or deal with airport kiosks. Install before your flight and connect the moment you land.\n\nCompatible with iPhone XS and newer, Samsung Galaxy S20+, Google Pixel 3+, and 200+ other eSIM devices.\n\n24/7 customer support available via chat and email.",
       "examples": []
     },
     "seo_meta": {
-      "title": "{country} eSIM — Stay Connected from ${price} | SimKaze",
-      "description": "Best {country} eSIM deals. Instant activation, {carrier} network. Data plans from ${price}. No roaming fees. Buy {country} eSIM at SimKaze.",
+      "title": "{country} eSIM — Stay Connected from ${price} | SimRyoko",
+      "description": "Best {country} eSIM deals. Instant activation, {carrier} network. Data plans from ${price}. No roaming fees. Buy {country} eSIM at SimRyoko.",
       "h1": "{country} eSIM — Travel Data Plans"
     },
     "email_marketing": {
@@ -32,9 +32,9 @@
       "preview_text": "Instant activation, no roaming fees. {country} data from ${price}."
     },
     "social_media": {
-      "twitter": "✈️ Heading to {country}? Skip the roaming fees! Get a {country} eSIM from just ${price}. Instant activation, {carrier} network. 🌐 simkaze.com/countries/{slug}-esim #eSIM #{countryHashtag} #Travel",
-      "instagram": "🌍 {country} eSIM from ${price}\n\n✅ Instant delivery\n✅ No roaming fees\n✅ {carrier} 4G/5G\n✅ Works on iPhone & Android\n\nLink in bio 👆\n\n#eSIM #{countryHashtag} #TravelTech #DigitalNomad #SimKaze",
-      "facebook": "Planning a trip to {country}? 🌐\n\nForget expensive roaming charges! Our {country} eSIM gets you connected in minutes:\n\n📱 Instant QR code delivery\n💰 Plans from just ${price}\n📶 {carrier} 4G/5G network\n🔄 Keep your home number\n\nGet yours → simkaze.com/countries/{slug}-esim"
+      "twitter": "✈️ Heading to {country}? Skip the roaming fees! Get a {country} eSIM from just ${price}. Instant activation, {carrier} network. 🌐 simryoko.com/countries/{slug}-esim #eSIM #{countryHashtag} #Travel",
+      "instagram": "🌍 {country} eSIM from ${price}\n\n✅ Instant delivery\n✅ No roaming fees\n✅ {carrier} 4G/5G\n✅ Works on iPhone & Android\n\nLink in bio 👆\n\n#eSIM #{countryHashtag} #TravelTech #DigitalNomad #SimRyoko",
+      "facebook": "Planning a trip to {country}? 🌐\n\nForget expensive roaming charges! Our {country} eSIM gets you connected in minutes:\n\n📱 Instant QR code delivery\n💰 Plans from just ${price}\n📶 {carrier} 4G/5G network\n🔄 Keep your home number\n\nGet yours → simryoko.com/countries/{slug}-esim"
     }
   },
   "generated": "2026-03-14",

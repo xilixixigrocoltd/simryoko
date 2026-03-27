@@ -60,9 +60,9 @@ function applyRateLimit(req, res, limit = 30, windowMs = 60000) {
 
 // Allowed origins for CORS
 const ALLOWED_ORIGINS = [
-  'https://simkaze.com',
-  'https://www.simkaze.com',
-  'https://simkaze-xilixixigrocoltdcoms-projects.vercel.app',
+  'https://simryoko.com',
+  'https://www.simryoko.com',
+  'https://SimRyoko-xilixixigrocoltdcoms-projects.vercel.app',
 ];
 
 /**

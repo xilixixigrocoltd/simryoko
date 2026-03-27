@@ -1,5 +1,5 @@
-// 邮件发送模块 — SimKaze
-// 主通道: Resend API (simkaze.com) | 备用: nodemailer SMTP
+// 邮件发送模块 — SimRyoko
+// 主通道: Resend API (simryoko.com) | 备用: nodemailer SMTP
 const axios = require('axios');
 const nodemailer = require('nodemailer');
 
@@ -38,7 +38,7 @@ async function sendEmail({ from, to, subject, html, attachments }) {
       console.error('[email] Resend failed:', e.message);
       _notifyEmailFail(to, subject, e.message).catch(() => {});
       try {
-        const smtpFrom = `"SimKaze eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
+        const smtpFrom = `"SimRyoko eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
         // nodemailer CID 附件格式与 Resend 不同，需转换
         const smtpAttachments = (attachments || []).map(a => ({
           filename: a.filename,
@@ -53,7 +53,7 @@ async function sendEmail({ from, to, subject, html, attachments }) {
       }
     }
   }
-  const smtpFrom = `"SimKaze eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
+  const smtpFrom = `"SimRyoko eSIM" <${process.env.SMTP_USER || 'xilixi@xigrocoltd.com'}>`;
   return smtpTransporter.sendMail({ from: smtpFrom, to, subject, html });
 }
 
@@ -192,7 +192,7 @@ async function sendEsimEmail({ to, productName, lpaString, qrCodeUrl, iccid, act
 <div class="wrap">
   <div class="header">
     <h1>Your eSIM is Ready! 🎉</h1>
-    <p>SimKaze — Instant connectivity, anywhere</p>
+    <p>SimRyoko — Instant connectivity, anywhere</p>
   </div>
 
   <div class="body">
@@ -241,11 +241,11 @@ async function sendEsimEmail({ to, productName, lpaString, qrCodeUrl, iccid, act
       </div>
       <div class="step step-ios">
         <div class="step-num">3</div>
-        <div class="step-text">Label it (e.g. "SimKaze JP") → leave it <strong>OFF</strong> until you land</div>
+        <div class="step-text">Label it (e.g. "SimRyoko JP") → leave it <strong>OFF</strong> until you land</div>
       </div>
       <div class="step step-ios">
         <div class="step-num">4</div>
-        <div class="step-text">At your destination: go to <strong>Settings → Cellular → SimKaze</strong> → turn it ON</div>
+        <div class="step-text">At your destination: go to <strong>Settings → Cellular → SimRyoko</strong> → turn it ON</div>
       </div>
     </div>
 
@@ -288,21 +288,21 @@ async function sendEsimEmail({ to, productName, lpaString, qrCodeUrl, iccid, act
     <!-- Support CTA -->
     <div class="wa-box">
       <p>🙋 Need help with installation? We reply in under 30 minutes.</p>
-      <a href="https://simkaze.com" class="wa-btn" style="background:#6C63FF">💬 AI Live Chat</a>
+      <a href="https://simryoko.com" class="wa-btn" style="background:#6C63FF">💬 AI Live Chat</a>
     </div>
   </div>
 
   <div class="footer">
-    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://simkaze.com">Live Chat</a></p>
+    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://simryoko.com">Live Chat</a></p>
     <p>🤖 Track data usage: <a href="https://t.me/Simryokoesimbot">@Simryokoesimbot</a></p>
-    <p style="margin-top:10px;color:#ccc;">SimKaze — Powered by Xigro Co Limited, Hong Kong</p>
+    <p style="margin-top:10px;color:#ccc;">SimRyoko — Powered by Xigro Co Limited, Hong Kong</p>
   </div>
 </div>
 </body>
 </html>`;
 
   await sendEmail({
-    from: 'SimKaze eSIM <noreply@simkaze.com>',
+    from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `${flag} Your eSIM is Ready — ${productName}`,
     html,
@@ -407,20 +407,20 @@ async function sendPaymentPendingEmail({ to, productName, amount, walletAddress,
     <!-- Support CTA -->
     <div class="wa-box">
       <p>🙋 Paid but haven't received your eSIM? We'll resolve it in under 30 minutes.</p>
-      <a href="https://simkaze.com" class="wa-btn" style="background:#6C63FF">💬 AI Live Chat</a>
+      <a href="https://simryoko.com" class="wa-btn" style="background:#6C63FF">💬 AI Live Chat</a>
     </div>
   </div>
 
   <div class="footer">
-    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://simkaze.com">Live Chat</a></p>
-    <p style="margin-top:8px;color:#ddd;">SimKaze — Powered by Xigro Co Limited, Hong Kong</p>
+    <p>📧 <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> &nbsp;|&nbsp; 💬 <a href="https://simryoko.com">Live Chat</a></p>
+    <p style="margin-top:8px;color:#ddd;">SimRyoko — Powered by Xigro Co Limited, Hong Kong</p>
   </div>
 </div>
 </body>
 </html>`;
 
   await sendEmail({
-    from: 'SimKaze eSIM <noreply@simkaze.com>',
+    from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `⏳ Action Required: Send ${amount} USDT to get your eSIM`,
     html
@@ -468,7 +468,7 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
     ${price ? `<p class="price-note">Same plan from $${price.toFixed(2)}</p>` : ''}
   </div>
   <div class="footer">
-    <p>Questions? <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://simkaze.com">Live Chat</a></p>
+    <p>Questions? <a href="mailto:xilixi@xigrocoltd.com">xilixi@xigrocoltd.com</a> | <a href="https://simryoko.com">Live Chat</a></p>
     <p style="margin-top:6px;"><a href="${renewUrl}?unsubscribe=1" style="color:#ddd;">Unsubscribe from reminders</a></p>
   </div>
 </div>
@@ -476,7 +476,7 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
 </html>`;
 
   await sendEmail({
-    from: 'SimKaze eSIM <noreply@simkaze.com>',
+    from: 'SimRyoko eSIM <noreply@simryoko.com>',
     to,
     subject: `${urgencyText} — ${productName}`,
     html
@@ -485,7 +485,7 @@ async function sendRenewalReminderEmail({ to, productName, daysLeft, expiryDate,
 
 // Generic raw email sender
 async function sendRawEmail({ to, subject, html }) {
-  await sendEmail({ from: 'SimKaze <noreply@simkaze.com>', to, subject, html });
+  await sendEmail({ from: 'SimRyoko <noreply@simryoko.com>', to, subject, html });
 }
 
 module.exports = { sendEsimEmail, sendPaymentPendingEmail, sendRenewalReminderEmail, sendRawEmail };

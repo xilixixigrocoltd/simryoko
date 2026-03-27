@@ -1,4 +1,4 @@
-# SimKaze 前端缺失页面清单
+# SimRyoko 前端缺失页面清单
 
 **日期**: 2026-03-14  
 **负责人**: FullStack-Dev  
