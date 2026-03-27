@@ -1,4 +1,4 @@
-# SimRyoko 安全修复清单
+# SimKaze 安全修复清单
 
 **日期**: 2026-03-14  
 **负责人**: Security-Lead  
@@ -20,9 +20,9 @@ from fastapi.middleware.cors import CORSMiddleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://simryoko.com",
-        "https://www.simryoko.com",
-        "https://api.simryoko.com",
+        "https://simkaze.com",
+        "https://www.simkaze.com",
+        "https://api.simkaze.com",
         "http://localhost:3000"  # 开发环境
     ],
     allow_credentials=True,
@@ -35,7 +35,7 @@ app.add_middleware(
 
 ### 2. 数据库密码硬编码
 
-**问题**: `password='SimRyoko123'`
+**问题**: `password='simkaze123'`
 
 **修复**:
 ```python

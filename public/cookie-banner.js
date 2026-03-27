@@ -1,12 +1,12 @@
 /**
- * SimRyoko Cookie Consent Banner
+ * SimKaze Cookie Consent Banner
  * GDPR合规 - 用户同意后才加载GA4
  */
 
 (function() {
   'use strict';
   
-  const COOKIE_KEY = 'SimRyoko_cookie_consent';
+  const COOKIE_KEY = 'simkaze_cookie_consent';
   const GA_ID = 'G-5F6FMKR7J4';
   
   // 检查是否已同意

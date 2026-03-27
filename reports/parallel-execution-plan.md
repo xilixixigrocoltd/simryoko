@@ -1,4 +1,4 @@
-# SimRyoko 并行执行计划
+# SimKaze 并行执行计划
 
 **版本**: v1.0  
 **模式**: UI/UX 与开发同步并行  
@@ -48,7 +48,7 @@ UI/UX:          UI/UX:          UI/UX:          UI/UX:
 
 **Figma文件结构:**
 ```
-📁 SimRyoko-Design-v2.0
+📁 SimKaze-Design-v2.0
 ├── 🎨 Page 1: Design System (Day 1完成)
 │   ├── Colors (品牌色/功能色)
 │   ├── Typography (字体层级)
@@ -202,7 +202,7 @@ Day 3: UI首页设计 → Day 5: 开发首页实现
 | Day 17 | 搜索页设计完成 | Search Page Design | 开发开始实现 |
 | Day 21 | 搜索/账户/多语言上线 | /search /account | 可访问 |
 | Day 24 | 设计走查完成 | 问题清单 | 开发开始修复 |
-| Day 28 | 全站上线 | simryoko.com v2.0 | 验收通过 |
+| Day 28 | 全站上线 | simkaze.com v2.0 | 验收通过 |
 
 ---
 
@@ -257,13 +257,13 @@ Day 3: UI首页设计 → Day 5: 开发首页实现
 
 ```
 Figma:
-├── SimRyoko-Design-v2.0 (主文件)
-├── SimRyoko-Home-Desktop
-├── SimRyoko-Home-Mobile
-├── SimRyoko-Country-JP
-├── SimRyoko-Regional-Asia
-├── SimRyoko-Global
-└── SimRyoko-Components
+├── SimKaze-Design-v2.0 (主文件)
+├── SimKaze-Home-Desktop
+├── SimKaze-Home-Mobile
+├── SimKaze-Country-JP
+├── SimKaze-Regional-Asia
+├── SimKaze-Global
+└── SimKaze-Components
 
 代码:
 ├── /components

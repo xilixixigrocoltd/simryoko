@@ -2,7 +2,7 @@
 
 ## 系统概述
 
-SimRyoko 监控告警系统为 eSIM 电商平台提供全面的实时监控能力，包括性能指标、错误追踪、资源监控和业务事件分析。
+SimKaze 监控告警系统为 eSIM 电商平台提供全面的实时监控能力，包括性能指标、错误追踪、资源监控和业务事件分析。
 
 ## 架构设计
 
@@ -90,7 +90,7 @@ paymentFailureRate: { critical: 20%, error: 15%, warning: 10% }
 **通知渠道：**
 
 - **Telegram 群组**: @Simryokoesim (ID: -1003847622485)
-- **Telegram 频道**: @SimRyoko eSIM (ID: -1003642242507)
+- **Telegram 频道**: @SimKaze eSIM (ID: -1003642242507)
 - **个人消息**: 管理员 (ID: 7867683484)
 
 **通知策略：**

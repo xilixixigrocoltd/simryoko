@@ -56,7 +56,7 @@ async function handleCreate(req, res) {
 
     let invoice = null, payUrl = null;
     try {
-      invoice = await createInvoice({ asset, amount: invoiceAmount, description: `SimRyoko eSIM — ${order.productName}`, payload: JSON.stringify({ orderId: order.orderId }), expires_in: 3600 });
+      invoice = await createInvoice({ asset, amount: invoiceAmount, description: `SimKaze eSIM — ${order.productName}`, payload: JSON.stringify({ orderId: order.orderId }), expires_in: 3600 });
       payUrl = invoice.bot_invoice_url || invoice.pay_url;
     } catch (e) { console.warn('[ton/create] CryptoPay error:', e.message); }
 

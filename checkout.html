@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes"/>
-  <title>Checkout — SimRyoko</title>
+  <title>Checkout — SimKaze</title>
   <meta name="description" content="Secure eSIM checkout. Instant delivery."/>
-  <meta property="og:title" content="Checkout — SimRyoko"/>
+  <meta property="og:title" content="Checkout — SimKaze"/>
   <meta property="og:description" content="Secure eSIM checkout. Instant delivery."/>
-  <meta property="og:url" content="https://simryoko.com/checkout.html"/>
+  <meta property="og:url" content="https://simkaze.com/checkout.html"/>
   <meta name="robots" content="noindex"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="/css/style.css"/>
@@ -197,7 +197,7 @@
     .co-guarantee-item:last-child { margin-bottom: 0; }
     .co-g-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
   </style>
-<link rel="canonical" href="https://simryoko.com/checkout.html">
+<link rel="canonical" href="https://simkaze.com/checkout.html">
   <link rel="manifest" href="/manifest.json"/>
   <meta name="theme-color" content="#6C63FF"/>
 </head>
@@ -205,7 +205,7 @@
 
 <!-- Nav -->
 <nav class="co-nav">
-  <a href="/" class="co-nav-logo">📡 SimRyoko</a>
+  <a href="/" class="co-nav-logo">📡 SimKaze</a>
   <a href="/shop.html" class="co-nav-back">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
     Change plan
@@ -376,7 +376,7 @@
 
   <!-- Guarantee -->
   <div class="co-guarantee">
-    <div class="co-guarantee-title">🛡️ SimRyoko Guarantee</div>
+    <div class="co-guarantee-title">🛡️ SimKaze Guarantee</div>
     <div class="co-guarantee-item">
       <span class="co-g-icon">⚡</span>
       <span>Instant eSIM delivery to your email</span>
@@ -453,7 +453,7 @@ function mountStripeCard(retries) {
   const pr = stripe.paymentRequest({
     country: 'HK',
     currency: 'usd',
-    total: { label: 'SimRyoko eSIM', amount: 100 },
+    total: { label: 'SimKaze eSIM', amount: 100 },
     requestPayerName: true,
     requestPayerEmail: true,
   });
@@ -533,7 +533,7 @@ function renderSummary() {
   document.getElementById('coDest').textContent  = dest + ' eSIM';
   document.getElementById('coPlan').textContent  = `${dataStr} · ${days} days`;
   document.getElementById('coPrice').textContent = formatPrice(product.price);
-  document.title = `Checkout — ${dest} eSIM — SimRyoko`;
+  document.title = `Checkout — ${dest} eSIM — SimKaze`;
 }
 
 function selectPayment(method) {
@@ -633,7 +633,7 @@ async function submitOrder() {
       if (payUrl) {
         window.location = payUrl;
       } else {
-        alert(`TON payment not available.\nOrder: ${orderId}\nAmount: ${amount} ${asset}\nEmail: support@simryoko.com`);
+        alert(`TON payment not available.\nOrder: ${orderId}\nAmount: ${amount} ${asset}\nEmail: support@simkaze.com`);
         btn.textContent = '💎 Pay via Telegram →';
         btn.disabled = false;
       }

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SimRyoko 发版前API冒烟测试
+ * SimKaze 发版前API冒烟测试
  * 快速验证核心接口可用性
  */
 
@@ -17,7 +17,7 @@ const tests = [
 ];
 
 async function runSmokeTest() {
-  console.log('🧪 SimRyoko API 冒烟测试');
+  console.log('🧪 SimKaze API 冒烟测试');
   console.log(`URL: ${BASE_URL}\n`);
   
   let passed = 0;

@@ -1,4 +1,4 @@
-# SimRyoko 文档清单与使用指南
+# SimKaze 文档清单与使用指南
 
 **统计日期**: 2026-03-14  
 **文档总数**: 26个  
@@ -30,7 +30,7 @@
 |---|------|------|------|
 | 1 | `design/figma-design-system-template.md` | 591行 | Figma设计系统模板 |
 | 2 | `reports/figma-design-spec-v1.md` | 1811行 | 详细设计规格 |
-| 3 | `reports/SimRyoko-complete-design-spec-v2.md` | 625行 | 产品融合设计规格 |
+| 3 | `reports/simkaze-complete-design-spec-v2.md` | 625行 | 产品融合设计规格 |
 | 4 | `reports/airalo-deep-analysis-for-team.md` | 583行 | Airalo竞品分析 |
 | 5 | `management/design-review-checklist.md` | 1662行 | 设计评审检查清单 |
 | 6 | `reports/department-reports/01-技术团队-实施指南.md` | 169行 | 技术约束参考 |
@@ -63,7 +63,7 @@
 | 1 | `reports/department-reports/02-销售团队-作战手册.md` | 171行 | 销售话术与策略 |
 | 2 | `reports/department-reports/03-客服团队-知识库.md` | 219行 | 产品知识参考 |
 | 3 | `reports/终极战略报告-v3.1-完整版.md` | 442行 | 战略方向 |
-| 4 | `reports/SimRyoko-complete-design-spec-v2.md` | 625行 | 产品架构了解 |
+| 4 | `reports/simkaze-complete-design-spec-v2.md` | 625行 | 产品架构了解 |
 
 **销售团队可用文档: 4个**
 
@@ -75,7 +75,7 @@
 |---|------|------|------|
 | 1 | `reports/department-reports/03-客服团队-知识库.md` | 219行 | 客服知识库 |
 | 2 | `reports/department-reports/02-销售团队-作战手册.md` | 171行 | 销售话术参考 |
-| 3 | `reports/SimRyoko-complete-design-spec-v2.md` | 625行 | 产品信息 |
+| 3 | `reports/simkaze-complete-design-spec-v2.md` | 625行 | 产品信息 |
 
 **客服团队可用文档: 3个**
 
@@ -126,7 +126,7 @@
 | 文档 | 用途 | 使用人 |
 |------|------|--------|
 | `figma-design-spec-v1.md` | 设计参考 | UI+前端 |
-| `SimRyoko-complete-design-spec-v2.md` | 产品架构 | 全员 |
+| `simkaze-complete-design-spec-v2.md` | 产品架构 | 全员 |
 | `airalo-deep-analysis-for-team.md` | 竞品参考 | 全员 |
 | `终极战略报告-v3.1-完整版.md` | 战略方向 | 管理层+PM |
 | `department-reports/` | 部门专用 | 各部门 |

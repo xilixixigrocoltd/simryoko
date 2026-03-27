@@ -6,10 +6,10 @@ const store = require('./_store');
 const { setCors, applyRateLimit } = require('./_ratelimit');
 const { notifyAdmin } = require('./_notify');
 
-const CRON_SECRET     = process.env.CRON_SECRET || 'SimRyoko-cron-2026';
+const CRON_SECRET     = process.env.CRON_SECRET || 'simkaze-cron-2026';
 const COMMISSION_RATE = 0.10;  // 10%
 const PAYOUT_MIN      = 10;    // 最低起付 $10
-const BASE_URL        = 'https://simryoko.com';
+const BASE_URL        = 'https://simkaze.com';
 
 module.exports = async (req, res) => {
   setCors(req, res, 'GET, POST, OPTIONS');

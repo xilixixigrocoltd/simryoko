@@ -1,6 +1,6 @@
 # GitHub Issues 任务清单
 
-**项目**: SimRyoko Web v2.0  
+**项目**: SimKaze Web v2.0  
 **里程碑**: 4周上线  
 **生成日期**: 2026-03-14
 
@@ -52,7 +52,7 @@
 **标题**: [Frontend] 初始化Next.js项目并配置Tailwind
 
 **描述**:
-创建SimRyoko Web项目，配置设计系统
+创建SimKaze Web项目，配置设计系统
 
 **任务清单**:
 - [ ] 创建Next.js项目 (TypeScript + Tailwind)

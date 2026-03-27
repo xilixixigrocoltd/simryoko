@@ -1,4 +1,4 @@
-# SimRyoko Design System v2.0 — 完整设计规范
+# SimKaze Design System v2.0 — 完整设计规范
 
 > 生成时间: 2026-03-15  
 > 基于 figma-design-system-template.md

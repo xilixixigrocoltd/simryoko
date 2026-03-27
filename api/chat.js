@@ -8,7 +8,7 @@ const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/
 
 // FAQ knowledge base
 const FAQ_KNOWLEDGE = `
-SimRyoko eSIM常见问题：
+SimKaze eSIM常见问题：
 
 1. 什么是eSIM？
 eSIM是嵌入式SIM卡，无需实体卡即可使用。购买后通过二维码激活，支持iPhone和Android。
@@ -33,7 +33,7 @@ eSIM是嵌入式SIM卡，无需实体卡即可使用。购买后通过二维码�
 
 8. 客服联系方式？
 Telegram: @Simryokoesimbot
-邮箱: support@simryoko.com
+邮箱: support@simkaze.com
 
 9. 与Airalo有什么区别？
 同样的网络，更好的中文服务。价格更优，支持USDT支付。
@@ -91,7 +91,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({
         contents: [{
           parts: [{
-            text: `你是SimRyoko eSIM的智能客服助手。请根据以下知识库回答用户问题：
+            text: `你是SimKaze eSIM的智能客服助手。请根据以下知识库回答用户问题：
 
 ${FAQ_KNOWLEDGE}
 

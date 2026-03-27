@@ -52,7 +52,7 @@ function toMB(val) { if (val == null) return null; const str = String(val).trim(
 // ── renewal/remind ────────────────────────────────────────────────────────────
 async function handleRenewalRemind(req, res) {
   const auth = req.headers['authorization'];
-  if (auth !== `Bearer ${process.env.CRON_SECRET || 'SimRyoko-cron-2026'}`) return res.status(401).json({ error: 'Unauthorized' });
+  if (auth !== `Bearer ${process.env.CRON_SECRET || 'simkaze-cron-2026'}`) return res.status(401).json({ error: 'Unauthorized' });
   try {
     const expiring = subscriptions.expiringSoon(3);
     let sent = 0, skipped = 0;
@@ -60,7 +60,7 @@ async function handleRenewalRemind(req, res) {
       if (sub.reminderSent) { skipped++; continue; }
       const daysLeft = Math.max(0, Math.ceil((new Date(sub.expiryDate) - Date.now()) / 86400000));
       try {
-        await sendRenewalReminderEmail({ to: sub.email, productName: sub.productName, daysLeft, expiryDate: sub.expiryDate, renewUrl: `https://simryoko.com/shop.html?renew=${sub.id}&email=${encodeURIComponent(sub.email)}`, price: sub.price });
+        await sendRenewalReminderEmail({ to: sub.email, productName: sub.productName, daysLeft, expiryDate: sub.expiryDate, renewUrl: `https://simkaze.com/shop.html?renew=${sub.id}&email=${encodeURIComponent(sub.email)}`, price: sub.price });
         subscriptions.update(sub.id, { reminderSent: true });
         sent++;
       } catch (e) {

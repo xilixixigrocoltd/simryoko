@@ -1,4 +1,4 @@
-# SimRyoko 安全修复报告
+# SimKaze 安全修复报告
 
 **日期**: 2026-03-14 13:10  
 **执行**: 龙虾  
@@ -22,9 +22,9 @@ app.use(cors());
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(',')
   : [
-      'https://simryoko.com',
-      'https://www.simryoko.com',
-      'https://api.simryoko.com',
+      'https://simkaze.com',
+      'https://www.simkaze.com',
+      'https://api.simkaze.com',
       'http://localhost:3000',
       'http://localhost:5173'
     ];
@@ -47,11 +47,11 @@ app.use(cors({
 
 ### 2. ✅ 数据库密码硬编码 → 已移除
 
-**文件**: `SimRyoko-api/main.py`
+**文件**: `simkaze-api/main.py`
 
 **修复前**:
 ```python
-password=os.getenv('DB_PASSWORD', 'SimRyoko123'),
+password=os.getenv('DB_PASSWORD', 'simkaze123'),
 ```
 
 **修复后**:
@@ -65,7 +65,7 @@ if not db_password:
 
 ### 3. ✅ 无API认证 → 已添加JWT
 
-**文件**: `SimRyoko-api/main.py`
+**文件**: `simkaze-api/main.py`
 
 **新增**:
 ```python
@@ -92,7 +92,7 @@ def verify_token(credentials: HTTPAuthorizationCredentials = Security(security))
 
 ### 4. ✅ 订单金额客户端可控 → 已服务端校验
 
-**文件**: `SimRyoko-api/main.py`
+**文件**: `simkaze-api/main.py`
 
 **修复前**:
 ```python
@@ -125,7 +125,7 @@ async def create_order(order: Order, user: dict = Depends(verify_token)):
 
 ### 5. ✅ Webhook无签名验证 → 已添加
 
-**文件**: `SimRyoko-api/main.py`
+**文件**: `simkaze-api/main.py`
 
 **修复后**:
 ```python
@@ -200,13 +200,13 @@ DB_PASSWORD=your_secure_password
 DB_HOST=localhost
 DB_PORT=5432
 DB_USER=postgres
-DB_NAME=SimRyoko
+DB_NAME=simkaze
 
 # JWT
 JWT_SECRET=your_random_jwt_secret_min_32_chars
 
 # CORS
-ALLOWED_ORIGINS=https://simryoko.com,https://www.simryoko.com
+ALLOWED_ORIGINS=https://simkaze.com,https://www.simkaze.com
 
 # Webhook
 N8N_WEBHOOK_SECRET=your_webhook_secret
